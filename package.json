@@ -2,7 +2,7 @@
   "name": "solid-blog",
   "scripts": {
     "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 2222",
-    "dev:hugo": "hugo",
+    "dev:hugo": "hugo --noBuildLock",
     "dev:copy": "cp -r _output/category src/routes; cp -r _output/posts src/routes; cp -r _output/tags src/routes;",
     "build": "solid-start build",
     "start": "solid-start start"

@@ -42,6 +42,7 @@ export default function Root() {
         <Title>SolidStart - Bare</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script innerHTML={`!function(){let e=localStorage.getItem('customer-theme')||''; if(e===''){e = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';};document.documentElement.setAttribute("class", e)}()`} />
       </Head>
       <Body class='bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
         <Suspense>

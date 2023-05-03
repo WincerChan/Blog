@@ -1,5 +1,5 @@
-import { createSignal } from "solid-js";
-import { setTheme } from "./Provider";
+import { Accessor, For, createSignal, onMount } from "solid-js";
+import { setTheme, theme } from "./Provider";
 
 const ThemeMapping = [
     ["light", "浅色模式"],
@@ -14,42 +14,63 @@ const IconMapping: { [key: string]: string } = {
 }
 
 type ThemeMenuProps = {
-    switchMode: (mode: string) => void,
-    show: boolean,
-    setShow: (show: boolean) => void,
-    currTheme: string | null
+    show: Accessor<boolean>,
+    toggleShow: (e: MouseEvent) => void,
 }
 
 
-const ThemeMenu = ({ show, setShow, currTheme }: ThemeMenuProps) => {
-    const handleClick = (key: string) => {
-        setShow(!show);
+const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
+    const handleClick = (e: MouseEvent, key: string) => {
+        toggleShow(e)
         setTheme({ theme: key })
+        localStorage.setItem("customer-theme", key)
     };
+
+
+    onMount(() => {
+        const userSelect = localStorage.getItem("customer-theme") || ""
+        setTheme({ theme: userSelect })
+    })
 
     return (
         <div class={`absolute shadow-round text-sm right-0 bg-ers z-1 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-33" : "max-h-0"}`}>
-            {
-                ThemeMapping.map((theme) => (
-                    <div onClick={() => handleClick(theme[0])} class={`cursor-pointer bg-menuHover pr-3 py-2.5 whitespace-nowrap flex items-center ${currTheme == theme[0] ? 'text-menuActive' : ''}`}>
-                        <div class={`${IconMapping[theme[0]]} mx-2 w-5 h-5`}></div>
-                        <span>{theme[1]}</span>
-                        <span>{theme[0] === currTheme}</span>
-                    </div>
-                ))
-            }
+            <For each={ThemeMapping}>
+                {
+                    themeItem => (
+                        <div onClick={(e) => handleClick(e, themeItem[0])} class={`cursor-pointer bg-menuHover pr-3 py-2.5 whitespace-nowrap flex items-center ${theme.theme == themeItem[0] ? 'text-menuActive' : ''}`}>
+                            <div class={`${IconMapping[themeItem[0]]} mx-2 w-5 h-5`}></div>
+                            <span>{themeItem[1]}</span>
+                        </div>
+                    )
+                }
+            </For>
         </div>
     )
 }
 
 const ToggleButton = () => {
     const [show, setShow] = createSignal(false);
+    const toggleShow = (e: MouseEvent) => {
+        e.preventDefault()
+        const curr = show()
+        setShow(!curr)
+        if (!curr) document.addEventListener("click", handleClickOutside)
+        else document.removeEventListener("click", handleClickOutside)
+    }
+    let self: HTMLLIElement;
+
+
+    const handleClickOutside = (e: MouseEvent) => {
+        if (!self.contains(e.target as Node)) {
+            toggleShow(e)
+        }
+    };
     return (
-        <li onClick={() => { setShow(!show()) }} class="bg-menuHover trans-linear relative">
-            <button title="Switch Theme" class={`h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
+        <li ref={self!} class="bg-menuHover trans-linear relative">
+            <button onClick={(e) => toggleShow(e)} title="Switch Theme" class={`h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
                 <i class="i-carbon-window-black-saturation w-6 h-6" />
             </button>
-            <ThemeMenu show={show} setShow={setShow} />
+            <ThemeMenu show={show} toggleShow={toggleShow} />
         </li>
     )
 }
