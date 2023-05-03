@@ -1,0 +1,21 @@
+{{ $published := where .CurrentSection.RegularPages "Params.published" "!=" false }}
+{{ if eq .Type "base" }}
+{{ $published = sort $published "Params.Weight" "desc"  }}
+{{ end }}
+{
+  "type": "{{ .Type }}",
+  "term": "{{ .Title }}",
+  "pages": [
+    {{ range $index, $page := $published }}
+    {
+      "title": "{{ $page.Title }}",
+      {{ with $page.Params.subtitle }}"subtitle": "{{ $page.Params.subtitle }}",{{ end }}
+      "slug": "{{ $page.Slug }}",  
+      "cover": "{{ $page.Params.cover }}",
+      "words": {{ $page.WordCount }},
+      "category": "{{ $page.Params.category }}",
+      "date": "{{ $page.Date.Format `2006-01-02T15:04:05+0800` }}"
+    }{{ if lt $index (sub (len $published) 1) }},{{ end }}
+    {{ end }}
+  ]
+}

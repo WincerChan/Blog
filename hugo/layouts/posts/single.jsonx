@@ -1,0 +1,33 @@
+{
+    "title": "{{ .Title }}",
+    "date": "{{ .Date.Format `2006-01-02T15:04:05+0800` }}",
+    "updated": "{{ (.Params.Updated | time).Format `2006-01-02T15:04:05+0800` }}",
+    "cover": "{{ .Params.Cover }}",
+    "slug": "{{ replace .RelPermalink `.jsonx` `` }}",
+    "tags": {{ .Params.Tags | jsonify }},
+    {{ with .Params.encrypt_pwd }}"password": "{{ . }}",{{ end }}
+    {{ with .Params.Mathrender }}"mathrender": true,{{ end }}
+    "category": "{{ .Params.Category }}",
+    {{ with .Summary }}"summary": {{ . | replaceRE `(?m)(?s:<(style|script).*(style|script)>)` `` | plainify | jsonify }},{{ end }}
+    {{ with .Params.Subtitle }}"subtitle": "{{ .}}",{{ end }}
+    "words": {{ .WordCount }},
+    "content": {{ (replace .Content `<hr>` `<hr/>`) | replaceRE `style=".*"` `` | replaceRE `<code>(.|\n)*?<\/code>` `` | safeHTML | jsonify }},
+    {{ with .TableOfContents }}
+    "toc": {{ . | jsonify }},
+    {{ end }}
+    "neighbours": {
+        {{ $pre := .PrevInSection }}
+        {{ with .NextInSection}}
+        "next": {
+            "title": "{{ .Title }}",
+            "slug": "{{ replace .RelPermalink `.jsonx` `` }}"
+        }{{ with $pre }},{{ end }}
+        {{ end }}
+        {{ with $pre }}
+        "prev": {
+            "title": "{{ .Title }}",
+            "slug": "{{ replace .RelPermalink `.jsonx` `` }}"
+        }
+        {{ end }}
+    }
+}

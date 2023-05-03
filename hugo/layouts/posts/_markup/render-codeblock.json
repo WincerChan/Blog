@@ -1,0 +1,2 @@
+{{ $lang := .Attributes.lang | default .Type }}
+<Pre lang="{{ $lang}}" content="{{ .Inner | base64Encode }}"><code>{{ .Inner }}</code></Pre>

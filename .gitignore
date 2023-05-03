@@ -1,0 +1,30 @@
+
+dist
+.solid
+.output
+.vercel
+.netlify
+netlify
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+src/routes/tags
+src/routes/category
+src/routes/posts
+*.launch
+.settings/
+
+# Temp
+gitignore
+
+# System Files
+.DS_Store
+Thumbs.db
+hugo/content/
+_output/
+resources

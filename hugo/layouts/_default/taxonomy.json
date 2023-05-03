@@ -1,0 +1,17 @@
+{{ $published := where .Data.Pages "Params.published" "!=" false }}
+{{ $terms := slice }}
+
+{{ if eq .Type "category" }}
+    {{ range .Site.Taxonomies.category }}
+        {{ $terms = $terms | append (dict "title" .Page.Title "count" .Count) }}
+    {{ end }}
+{{ else }}
+    {{ range .Site.Taxonomies.tags }}
+        {{ $terms = $terms | append (dict "title" .Page.Title "count" .Count) }}
+    {{ end }}
+{{ end }}
+
+{
+  "term": "{{ .Title }}",
+  "pages": {{ $terms | jsonify }}
+}

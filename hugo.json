@@ -1,0 +1,90 @@
+{
+    "baseURL": "https://blog.itswincer.com",
+    "title": "Wincer's Blog",
+    "author": {
+        "name": "Wincer"
+    },
+    "avatar": "https://ae01.alicdn.com/kf/HTB1DdGHXizxK1RjSspj763S.pXax.png",
+    "cdnURL": "https://cdn.blog.itswincer.net",
+    "description": "这里是 @Wincer,喜欢折腾新技术,却没多大耐心。个人博客会写得比较杂,包括日常吐槽、技术踩坑,偶尔会写正经一点的。欢迎订阅 RSS(•̀ᴗ•́)。",
+    "keywords": "Blog, 博客, Web, 生活, Wincer, Linux, Dev, FreeBSD, Elixir, Python, JavaScript",
+    "hasCJKLanguage": true,
+    "DisablePathToLower": true,
+    "uglyURLs": false,
+    "publishDir": "_output",
+    "contentDir": "hugo/content",
+    "layoutDir": "hugo/layouts",
+    "assetDir": "hugo/assets",
+    "markup": {
+        "tableOfContents": {
+            "endLevel": 5
+        }
+    },
+    "permalinks": {
+        "posts": "posts/:slug",
+        "base": "/base/:slug"
+    },
+    "taxonomies": {
+        "category": "category",
+        "tag": "tags"
+    },
+    "outputs": {
+        "taxonomy": [
+            "JSON",
+            "SITEMAP"
+        ],
+        "page": [
+            "JSONX"
+        ],
+        "section": [
+            "JSON",
+            "SITEMAP"
+        ],
+        "term": [
+            "JSON"
+        ],
+        "home": [
+            "JSON",
+            "SITEMAP",
+            "ATOM",
+            "MANIFEST"
+        ]
+    },
+    "outputFormats": {
+        "JSONX": {
+            "mediatype": "application/jsonx",
+            "ishtml": false,
+            "isplaintext": true,
+            "nougly": false,
+            "notAlternative": true,
+            "permalinkable": false
+        },
+        "ATOM": {
+            "mediatype": "application/atom+xml",
+            "baseName": "atom",
+            "isPlainText": true,
+            "isHTML": false,
+            "noUgly": false,
+            "rel": "alternate"
+        },
+        "MANIFEST": {
+            "mediatype": "application/manifest+json",
+            "baseName": "manifest",
+            "isPlainText": true,
+            "isHTML": false,
+            "noUgly": false,
+            "rel": "manifest"
+        }
+    },
+    "mediaTypes": {
+        "application/jsonx": {
+            "suffixes": "jsonx"
+        },
+        "application/atom+xml": {
+            "suffixes": "xml"
+        },
+        "application/manifest+json": {
+            "suffixes": "webmanifest"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{{ $published := where .Data.Pages "Params.published" "!=" false }}
+{
+  "term": "{{ .Title }}",
+  "pages": [
+    {{ range $index, $page := $published }}
+    {
+      "title": "{{ $page.Title }}",
+      {{ with $page.Params.Subtitle }}"subtitle": "{{ . }}",{{ end }}
+      "slug": "{{ replace $page.RelPermalink `.jsonx` `` }}",
+      "cover": "{{ $page.Params.cover }}",
+      "words": {{ $page.WordCount }},
+      "category": "{{ $page.Params.category }}",
+      "date": "{{ $page.Date.Format `2006-01-02T15:04:05+0800` }}"
+    }{{ if lt $index (sub (len $published) 1) }},{{ end }}
+    {{ end }}
+  ]
+}

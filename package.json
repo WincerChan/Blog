@@ -1,0 +1,35 @@
+{
+  "name": "solid-blog",
+  "scripts": {
+    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 2222",
+    "dev:hugo": "hugo",
+    "dev:copy": "cp -r _output/category src/routes; cp -r _output/posts src/routes; cp -r _output/tags src/routes;",
+    "build": "solid-start build",
+    "start": "solid-start start"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@iconify-json/carbon": "^1.1.16",
+    "@types/node": "^18.11.18",
+    "@unocss/reset": "^0.51.8",
+    "@unocss/transformer-directives": "^0.51.8",
+    "highlight.js": "^11.8.0",
+    "js-base64": "^3.7.5",
+    "solid-start-cloudflare-pages": "^0.2.26",
+    "solid-start-static": "^0.2.26",
+    "typescript": "^4.9.4",
+    "undici": "^5.22.0",
+    "unocss": "^0.51.8",
+    "vite": "^4.1.4",
+    "zod": "^3.21.4"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^0.28.2",
+    "@solidjs/router": "^0.8.2",
+    "solid-js": "^1.7.2",
+    "solid-start": "^0.2.26"
+  },
+  "engines": {
+    "node": ">=16.8"
+  }
+}
