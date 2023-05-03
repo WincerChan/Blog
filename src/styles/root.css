@@ -117,19 +117,19 @@ section h4 {
 }
 
 section a {
-  @apply transition relative duration-200 ease-linear text-[var(--menu-hover-text)] hover: text-[var(--menu-hover-bg)] px-.5 text-link
+  @apply transition relative duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] px-.5 text-link
 }
 
 section hr {
-  @apply seprator my-8 <lg: mx-4 w-24 border-none;
+  @apply seprator my-8 <lg:mx-4 w-24 border-none;
 }
 
 section blockquote {
-  @apply border-l-4 border-[var(--head-border)] my-4 pl-3 <md: mr-4;
+  @apply border-l-4 border-[var(--head-border)] my-4 pl-3 <md:mr-4;
 }
 
 section>p {
-  @apply <md: mx-4
+  @apply <md:mx-4
 }
 
 section table {

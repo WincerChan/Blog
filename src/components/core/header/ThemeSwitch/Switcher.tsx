@@ -28,8 +28,11 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
 
     onMount(() => {
-        const userSelect = localStorage.getItem("customer-theme") || ""
-        setTheme({ theme: userSelect })
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!!localStorage.getItem("customer-theme")) return
+            const newColorScheme = e.matches ? 'dark' : '';
+            setTheme({ theme: newColorScheme })
+        })
     })
 
     return (
