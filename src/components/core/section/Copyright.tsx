@@ -1,4 +1,4 @@
-import siteConfig from "~/../hugo.json";
+import siteConfig from "@/hugo.json";
 import { BlogDetailed } from "~/schema/Post";
 import { formatDate } from "~/utils";
 

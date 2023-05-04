@@ -13,9 +13,6 @@ netlify
 /.idea
 .project
 .classpath
-src/routes/tags
-src/routes/category
-src/routes/posts
 *.launch
 .settings/
 

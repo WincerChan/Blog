@@ -73,7 +73,7 @@ const PostLayout = ({ children, rawBlog, relates }) => {
     }
     let wrapper: JSXElement
     if (!!blog.password) wrapper = <ProtectBlog source={children} />
-    else wrapper = <section innerHTML={children} />
+    else wrapper = <section>{children}</section>
     const headParams = constructHeadParams(blog);
 
     return (

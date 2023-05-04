@@ -1,10 +1,14 @@
+import posts from '@/_output/index.json';
+import { Suspense, lazy } from 'solid-js';
 import { A } from "solid-start";
-import posts from '~/../_output/index.json';
-import { LatestBlog, OtherBlogs } from "~/components/core/section/Card";
-import MainLayout from "~/components/layouts/MainLayout";
+import EmptyLayout from '~/components/layouts/EmptyLayout';
 import { BlogMinimalSchema } from "~/schema/Post";
 
-export default function Home() {
+const MainLayout = lazy(() => import("~/components/layouts/MainLayout"));
+const OtherBlogs = lazy(() => import("~/components/core/section/OtherCards"))
+const LatestBlog = lazy(() => import("~/components/core/section/LatestCard"))
+
+const Home = () => {
   const recentPosts = posts.pages.map((post) => BlogMinimalSchema.parse(post));
   return (
     <MainLayout page={recentPosts[0]}>
@@ -14,3 +18,9 @@ export default function Home() {
     </MainLayout>
   );
 }
+
+const LazyHome = () => {
+  return <Suspense fallback={<EmptyLayout />}><Home /></Suspense>
+}
+
+export default LazyHome

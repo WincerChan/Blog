@@ -1,6 +1,6 @@
+import { default as siteConf } from "@/hugo.json";
 import { For } from "solid-js";
 import { Meta } from "solid-start";
-import { default as siteConf } from "~/../hugo.json";
 import { HeadParamsTyoe } from "~/schema/Head";
 
 const OpenGraph = ({ params }: { params: HeadParamsTyoe }) => {

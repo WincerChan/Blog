@@ -1,5 +1,6 @@
 import { JSX } from "solid-js";
 import { HeadParamsTyoe } from "~/schema/Head";
+import { isBrowser } from "~/utils";
 import Footer from "../core/footer";
 import BackTop from "../core/footer/backTop";
 import Header from "../core/header";
@@ -13,6 +14,7 @@ type ContentLayoutProps = {
     headParams: HeadParamsTyoe
 }
 
+isBrowser && document.querySelector("#xxx")?.remove();
 const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
     return (
         <>

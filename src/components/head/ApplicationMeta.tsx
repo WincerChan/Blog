@@ -1,6 +1,6 @@
 
+import siteConfig from "@/hugo.json";
 import { Link, Meta } from "solid-start";
-import siteConfig from "~/../hugo.json";
 const ApplicationMeta = () => {
     return (
         <>

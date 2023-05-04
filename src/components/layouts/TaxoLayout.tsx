@@ -1,6 +1,6 @@
 import { HeadParamsSchema } from "~/schema/Head";
 import { BlogMinimal, BlogMinimalSchema } from "~/schema/Post";
-import { OtherBlogs } from "../core/section/Card";
+import OtherBlogs from "../core/section/OtherCards";
 import ArticleTitle from "../core/section/Title";
 import ContentLayout from "./ContentLayout";
 

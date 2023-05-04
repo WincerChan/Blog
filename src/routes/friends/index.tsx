@@ -1,27 +1,15 @@
-import { For } from 'solid-js';
-import friendPage from '~/../_output/base/friends/index.json';
-import friendLinks from "~/../hugo/content/friends.json";
-import FriendLink from '~/components/core/section/FriendLink';
-import PageLayout from '~/components/layouts/PageLayout';
-import { PageSchema } from '~/schema/Page';
+import { Suspense, lazy } from "solid-js";
+import EmptyLayout from "~/components/layouts/EmptyLayout";
 
+const Friends = lazy(() => import("~/components/page/Friends"))
 
-const Friend = () => {
-    const page = PageSchema.parse(friendPage);
+const LazyFriends = () => {
     return (
-        <PageLayout page={page} showComment={true}>
-            <section innerHTML={friendPage.content} />
-            <div class='grid sm:grid-cols-2 grid-cols-1 gap-6 mt-6'>
-                <For each={friendLinks}>
-                    {
-                        link => <FriendLink {...link} />
-                    }
-                </For>
-            </div>
-        </PageLayout>
+        <Suspense fallback={<EmptyLayout />}>
+            <Friends />
+        </Suspense >
     )
 }
 
-
-export default Friend;
+export default LazyFriends;
 

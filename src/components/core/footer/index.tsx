@@ -1,5 +1,5 @@
+import config from "@/hugo.json";
 import { createMemo } from "solid-js";
-import config from "~/../hugo.json";
 
 const SINCE = 2017
 

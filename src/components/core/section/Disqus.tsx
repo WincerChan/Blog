@@ -1,5 +1,5 @@
+import siteConf from "@/hugo.json";
 import { Accessor, createEffect, createSignal } from "solid-js";
-import siteConf from "~/../hugo.json";
 
 const disqusShort = "wincer"
 

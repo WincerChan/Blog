@@ -1,3 +1,4 @@
+import path from "path";
 import staticAdpater from "solid-start-static";
 import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
@@ -9,10 +10,17 @@ import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
 const isProd = process.env.NODE_ENV === "production";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "~": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "")
+    }
+  },
   define: {
     __WORDS: wordsCount,
     __TAGS: randomTags,
-    __TOTAL_POSTS: totalPosts
+    __TOTAL_POSTS: totalPosts,
+    __IS_PROD: isProd
   },
   plugins: [
     { ...jsonxPlugin(), enforce: "pre" },

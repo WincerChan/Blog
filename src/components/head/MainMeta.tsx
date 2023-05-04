@@ -1,5 +1,5 @@
+import siteConf from '@/hugo.json';
 import { Link, Meta, Title } from 'solid-start';
-import siteConf from '~/../hugo.json';
 import { HeadParamsTyoe } from '~/schema/Head';
 
 const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {

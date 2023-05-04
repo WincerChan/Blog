@@ -1,11 +1,35 @@
 import crypto from "crypto-js";
 import { readFileSync } from "fs";
+import hljs from 'highlight.js';
+
 import path from "path";
 import { BlogDetailed, BlogMinimal } from "../src/schema/Post";
 import { padTo32 } from "../src/utils";
 
 type sameTagsArgs = {
     [key: string]: BlogDetailed[]
+}
+
+const loadHighlightLanguage = (content) => {
+    const regex = /lang=\"(.+?)\"/g
+
+    let match;
+    let languages = [];
+
+    while ((match = regex.exec(content)) !== null) {
+        languages.push(match[1]);
+    }
+    let supportLangs = hljs.listLanguages()
+    let uniqueLangs = [...new Set(languages)].filter(lang => supportLangs.includes(lang));
+
+
+    const langRegisterList = uniqueLangs.filter(lang => !!lang && lang != 'other').map(lang => (
+        `import ${lang} from 'highlight.js/lib/languages/${lang}'\nhljs.registerLanguage('${lang}', ${lang});`
+    ))
+    if (langRegisterList.length !== 0) {
+        langRegisterList.unshift("import hljs from 'highlight.js/lib/core';")
+    }
+    return langRegisterList.join("\n")
 }
 
 
@@ -69,23 +93,29 @@ const encryptBlog = (pwd, content) => {
 const PostLoader = (parsedContent: BlogDetailed) => {
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
     let { content, ...rest } = parsedContent
+    parsedContent.content = undefined
+    const langRegister = loadHighlightLanguage(content)
     if (parsedContent.password) {
         content = encryptBlog(parsedContent.password, content)
     }
     const transformedCode = `
-        import PostLayout from "~/components/layouts/PostLayout"
-        import Img from "~/components/lazy/Img"
         import { A } from "solid-start"
-        import { lazy } from "solid-js";
+        import { lazy, Suspense } from "solid-js";
+        import EmptyLayout from "~/components/layouts/EmptyLayout"
+        ${langRegister ? langRegister : ""}
 
         const MathRender = lazy(() => import("~/components/lazy/MathRender"))
+        const Img = lazy(() => import("~/components/lazy/Img"))
         const Pre = lazy(() => import("~/components/lazy/Pre"))
+        const PostLayout = lazy(() => import("~/components/layouts/PostLayout"))
         
         const Post = () => {
             return (
-                <PostLayout rawBlog={${JSON.stringify(rest)}} relates={${JSON.stringify(relates)}}>
-                    ${content}
-                </PostLayout>
+                <Suspense fallback={<EmptyLayout />}>
+                    <PostLayout rawBlog={${JSON.stringify(rest)}} relates={${JSON.stringify(relates)}}>
+                        ${content}
+                    </PostLayout>
+                </Suspense>
             )
         }
         export default Post;
@@ -96,4 +126,4 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     }
 }
 
-export default PostLoader;
+export default PostLoader

@@ -1,25 +1,26 @@
 import path from "path";
 import PostLoader from "./PostLoader";
 
-const loader = async (code: string, id: string) => {
-
-}
 
 const PageLoader = (parsedContent) => {
     const { content, ...rest } = parsedContent
     const transformedCode = `
-                import PageLayout from "~/components/layouts/PageLayout";
                 import { PageSchema } from "~/schema/Page";
                 import Img from "~/components/lazy/Img"
                 import { A } from "solid-start"
+                import {Suspense, lazy} from "solid-js";
+                import EmptyLayout from "~/components/layouts/EmptyLayout"
                 
+                const PageLayout = lazy(() => import("~/components/layouts/PageLayout"))
                 const About = () => {
                     return (
+                <Suspense fallback={<EmptyLayout />}>
                         <PageLayout page={${JSON.stringify(rest)}} showComment={true}>
                             <section>
                                 ${content}
                             </section>
                         </PageLayout>
+                </Suspense>
                     )
                 }
                 
@@ -33,10 +34,16 @@ const PageLoader = (parsedContent) => {
 
 const TaxoLoader = (content, type) => {
     const transformedCode = `
-                import TaxoLayout from "~/components/layouts/TaxoLayout";
+                import {Suspense} from "solid-js";
+                import { lazy } from "solid-js";
+                import EmptyLayout from "~/components/layouts/EmptyLayout"
+
+                const TaxoLayout = lazy(() => import("~/components/layouts/TaxoLayout"))
                 const Taxo = () => {
                     return (
+                <Suspense fallback={<EmptyLayout />}>
                         <TaxoLayout rawTaxo={${content}} type="${type}" />
+                </Suspense>
                     )
                 }
                 export default Taxo;
@@ -60,7 +67,7 @@ const checkType = (id: string) => {
 }
 
 export default function () {
-    return {
+    const plugin = {
         name: 'jsonx-plugin',
         async transform(content: string, id: string) {
             if (path.extname(id) !== '.jsonx') {
@@ -69,7 +76,7 @@ export default function () {
             const parsedContent = JSON.parse(content);
             const _type = checkType(id)
             if (_type === 'base') {
-                return PageLoader(content, parsedContent)
+                return PageLoader(parsedContent)
             } else if (_type === 'post') {
                 return PostLoader(parsedContent)
             } else if (_type === 'tags') {
@@ -83,4 +90,5 @@ export default function () {
             };
         }
     };
+    return plugin
 }

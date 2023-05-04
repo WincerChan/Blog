@@ -1,9 +1,9 @@
-import basePage from "~/../_output/base/index.json";
+import basePage from "@/_output/base/index.json";
 import Logo from "./Logo";
 import Pages from "./Pages";
 import Tools from "./Tools";
 
-import siteConfig from "~/../hugo.json";
+import siteConfig from "@/hugo.json";
 
 const Nav = ({ children }) => {
     return (

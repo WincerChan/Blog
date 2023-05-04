@@ -1,6 +1,6 @@
+import categoryPage from "@/_output/category/index.json";
 import { For } from "solid-js";
 import { A } from "solid-start";
-import categoryPage from "~/../_output/category/index.json";
 import Seprator from "./Seprator";
 
 const Category = () => {

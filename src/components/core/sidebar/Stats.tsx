@@ -1,4 +1,4 @@
-import Category from "~/../_output/category/index.json";
+import Category from "@/_output/category/index.json";
 import Seprator from "./Seprator";
 
 const Stats = () => {
