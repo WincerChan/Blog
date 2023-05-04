@@ -25,6 +25,5 @@ gitignore
 # System Files
 .DS_Store
 Thumbs.db
-hugo/content/
 _output/
 resources

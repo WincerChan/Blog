@@ -4,7 +4,6 @@ echo "Starting install npm packages..."
 npm install -g pnpm
 echo "Cloning Blogs..."
 git clone -b new_blog https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
-mv _blogs/content hugo/
 pnpm i
 echo "hugo Building..."
 pnpm dev:hugo
