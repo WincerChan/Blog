@@ -1,7 +1,17 @@
+import { JSX } from "solid-js";
+import { HeadParamsTyoe } from "~/schema/Head";
+import Footer from "../core/footer";
 import Header from "../core/header";
 import { BlogSideBar, SideBar } from "../core/sidebar";
+import { BlogPostParams } from "../core/sidebar/types";
 
-const ContentLayout = ({ children, blog }) => {
+type ContentLayoutProps = {
+    blog?: BlogPostParams,
+    children: JSX.Element,
+    headParams: HeadParamsTyoe
+}
+
+const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
     return (
         <>
             <Header />
@@ -11,6 +21,7 @@ const ContentLayout = ({ children, blog }) => {
                 </article>
                 {blog ? <BlogSideBar blog={blog} /> : <SideBar />}
             </main>
+            <Footer />
         </>
     );
 };

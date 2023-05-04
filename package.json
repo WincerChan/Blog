@@ -1,9 +1,9 @@
 {
   "name": "solid-blog",
   "scripts": {
-    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 2222",
+    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 5000",
     "dev:hugo": "hugo --noBuildLock",
-    "dev:copy": "cp -r _output/category src/routes; cp -r _output/posts src/routes; cp -r _output/tags src/routes;",
+    "dev:copy": "cp -r _output/category src/routes; cp -r _output/posts src/routes; cp -r _output/tags src/routes; cp _output/base/about/index.json src/routes/about.jsonx;",
     "build": "solid-start build",
     "start": "solid-start start"
   },

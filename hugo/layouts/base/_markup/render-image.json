@@ -1,2 +1,2 @@
-<Img style={{ "{{" }} width: '{{ .Title }}' {{ "}}" }} className="mx-auto" src="{{ .Destination | safeURL }}"
+<Img style={{ "'" }} width: {{ .Title }} {{ "'" }} src="{{ .Destination | safeURL }}"
     alt="{{ .Text }}" />

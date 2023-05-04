@@ -1,5 +1,5 @@
-import siteConf from "@/hugo.json";
 import { z } from "zod";
+import siteConf from "~/../hugo.json";
 
 export const HeadParamsSchema = z.object({
     title: z.string().default(""),

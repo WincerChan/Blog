@@ -167,3 +167,7 @@ b {
 .ex-link {
   @apply w-5 h-5 underline-none ml-2px i-carbon-html-reference -top-1px relative;
 }
+
+section img {
+  @apply mx-auto
+}

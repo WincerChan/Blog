@@ -11,7 +11,7 @@
       "summary": {{ $page.Summary | replaceRE `(?m)(?s:<(style|script).*(style|script)>)` `` | plainify | jsonify }},
       {{ end }}
       "subtitle": "{{ $page.Params.subtitle }}",
-      "slug": "{{ replace $page.RelPermalink `.jsonx` `` }}",
+      "slug": "{{ replace $page.RelPermalink `index.jsonx` `` }}",
       "cover": "{{ $page.Params.cover }}",
       "category": "{{ $page.Params.category }}",
       "date": "{{ $page.Date.Format `2006-01-02T15:04:05+0800` }}"

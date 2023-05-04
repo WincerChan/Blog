@@ -1,5 +1,5 @@
 {{ if strings.HasPrefix .Destination "http" }}
-  <a href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }} target="_blank"><span>{{ .Text }}</span><span className="ex-link" /></a>
+  <a href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }} target="_blank"><span>{{ .Text }}</span><span class="ex-link" /></a>
 {{ else }}
-  <Link prefetch={false} href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }}>{{ .Text }}</Link>
+  <A prefetch={false} href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }}>{{ .Text }}</A>
 {{ end }}
