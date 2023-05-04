@@ -34,5 +34,10 @@
   },
   "engines": {
     "node": ">=16.8"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "solid-start@0.2.26": "patches/solid-start@0.2.26.patch"
+    }
   }
 }

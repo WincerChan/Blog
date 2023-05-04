@@ -1,0 +1,19 @@
+diff --git a/fs-router/path-utils.js b/fs-router/path-utils.js
+index 123693dbc83ba5100b00c9d3f6b65f1c55a808e1..2055f2cde0c3ac272c56dd77b05971218bba80a3 100644
+--- a/fs-router/path-utils.js
++++ b/fs-router/path-utils.js
+@@ -5,7 +5,7 @@
+  */
+ export function toPath(id, removePathlessLayouts = true) {
+   const idWithoutIndex = id.endsWith("/index") ? id.slice(0, -"index".length) : id;
+-  return (
++  const realPath = (
+     removePathlessLayouts ? idWithoutIndex.replace(/\/\([^)/]+\)/g, "") : idWithoutIndex
+   ).replace(/\[([^\/]+)\]/g, (_, m) => {
+     if (m.length > 3 && m.startsWith("...")) {
+@@ -16,4 +16,5 @@ export function toPath(id, removePathlessLayouts = true) {
+     }
+     return `:${m}`;
+   });
++  return encodeURI(realPath)
+ }

@@ -34,6 +34,23 @@ const calculateDateDifference = (startDate: Date, endDate: Date) => {
     return result;
 }
 
+const shuffle = (array: string[]) => {
+    let currentIndex = array.length, randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
 type FetchArgs = Parameters<typeof fetch>;
 
 const fetcher = async (url: string) => {
@@ -45,4 +62,4 @@ const range = (end: number, step = 1) =>
     Array.from({ length: end }, (_, i) => i * step);
 
 
-export { isBrowser, formatDate, calculateDateDifference, fetcher, range };
+export { isBrowser, formatDate, calculateDateDifference, fetcher, range, shuffle };
