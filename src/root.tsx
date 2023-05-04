@@ -1,16 +1,12 @@
 // @refresh reload
 import '@unocss/reset/tailwind.css';
-import { Suspense } from "solid-js";
 import {
   Body,
-  ErrorBoundary,
   FileRoutes,
   Head,
   Html,
-  Meta,
   Routes,
   Scripts,
-  Title,
   useNavigate,
   useParams
 } from "solid-start";
@@ -37,22 +33,14 @@ function RedirectWithTrailingSlash() {
 
 export default function Root() {
   return (
-    <Html lang="en" class={theme.theme}>
-      <Head>
-        <Title>SolidStart - Bare</Title>
-        <Meta charset="utf-8" />
-        <Meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script innerHTML={`!function(){let e=localStorage.getItem('customer-theme')||''; if(e===''){e = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';};document.documentElement.setAttribute("class", e)}()`} />
-      </Head>
+    <Html lang="zh-CN" class={theme.theme}>
+      <Head />
       <Body class='bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
-        <Suspense>
-          <ErrorBoundary>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </ErrorBoundary>
-        </Suspense>
+        <Routes>
+          <FileRoutes />
+        </Routes>
         <Scripts />
+        <script innerHTML={`if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}`} />
       </Body>
     </Html>
   );

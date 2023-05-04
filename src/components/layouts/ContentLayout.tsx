@@ -5,6 +5,7 @@ import BackTop from "../core/footer/backTop";
 import Header from "../core/header";
 import { BlogSideBar, SideBar } from "../core/sidebar";
 import { BlogPostParams } from "../core/sidebar/types";
+import HeadTag from "../head";
 
 type ContentLayoutProps = {
     blog?: BlogPostParams,
@@ -15,6 +16,7 @@ type ContentLayoutProps = {
 const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
     return (
         <>
+            <HeadTag headParams={headParams} />
             <Header />
             <main class="w-view md:grid grid-cols-50 md:mx-4 lg:mx-auto">
                 <article class="mb-4 2xl:col-span-37 leading-7 col-span-36 md:mr-4 lg:mr-8 text-justify">

@@ -3,9 +3,9 @@
   "scripts": {
     "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 5000",
     "dev:hugo": "hugo --noBuildLock",
-    "dev:copy": "cp -r _output/category src/routes; cp -r _output/posts src/routes; cp -r _output/tags src/routes; cp _output/base/about/index.json src/routes/about.jsonx;",
-    "build": "solid-start build",
-    "start": "solid-start start"
+    "dev:copy": "cp -r _output/category src/routes; cp -r _output/posts src/routes; cp -r _output/tags src/routes; cp _output/base/about/index.json src/routes/about.jsonx; cp _output/*.xml public/;",
+    "build": "pnpm dev:hugo;pnpm dev:copy;solid-start build",
+    "start": "solid-start start --port 5000"
   },
   "type": "module",
   "devDependencies": {
@@ -23,6 +23,7 @@
     "undici": "^5.22.0",
     "unocss": "^0.51.8",
     "vite": "^4.1.4",
+    "vite-plugin-pwa": "^0.14.7",
     "zod": "^3.21.4"
   },
   "dependencies": {

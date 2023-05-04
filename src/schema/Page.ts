@@ -6,6 +6,7 @@ export const PageSchema = z.object({
     cover: z.string().optional(),
     content: z.string(),
     slug: z.string(),
+    summary: z.string()
 })
 
 export type BasePage = z.infer<typeof PageSchema>;

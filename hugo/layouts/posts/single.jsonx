@@ -3,7 +3,7 @@
     "date": "{{ .Date.Format `2006-01-02T15:04:05+0800` }}",
     "updated": "{{ (.Params.Updated | time).Format `2006-01-02T15:04:05+0800` }}",
     "cover": "{{ .Params.Cover }}",
-    "slug": "{{ replace .RelPermalink `.jsonx` `` }}",
+    "slug": "{{ replace .RelPermalink `index.jsonx` `` }}",
     "tags": {{ .Params.Tags | jsonify }},
     {{ with .Params.encrypt_pwd }}"password": "{{ . }}",{{ end }}
     {{ with .Params.Mathrender }}"mathrender": true,{{ end }}
@@ -20,13 +20,13 @@
         {{ with .NextInSection}}
         "next": {
             "title": "{{ .Title }}",
-            "slug": "{{ replace .RelPermalink `.jsonx` `` }}"
+            "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
         }{{ with $pre }},{{ end }}
         {{ end }}
         {{ with $pre }}
         "prev": {
             "title": "{{ .Title }}",
-            "slug": "{{ replace .RelPermalink `.jsonx` `` }}"
+            "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
         }
         {{ end }}
     }

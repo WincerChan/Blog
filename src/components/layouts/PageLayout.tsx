@@ -14,8 +14,8 @@ type PageLayoutProps = {
 const constructHeadParams = (page: BasePage) => {
     return HeadParamsSchema.parse({
         title: page.title,
-        description: page.content.slice(0, 68),
-        pageURL: page.slug
+        description: page.summary,
+        pageURL: page.slug,
     })
 }
 

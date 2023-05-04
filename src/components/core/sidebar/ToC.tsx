@@ -6,7 +6,7 @@ const ToC = ({ toc }: BlogPostParams) => {
     const [visible, setVisible] = createSignal(false);
     return (
         <>
-            <button onClick={(e) => { setVisible(true) }} class="fixed md:hidden bottom-20 right-6 z-10 rounded shadow-round bg-[var(--ers-bg)]">
+            <button title="ToC" onClick={(e) => { setVisible(true) }} class="fixed md:hidden bottom-20 right-6 z-10 rounded shadow-round bg-[var(--ers-bg)]">
                 <i class="i-carbon-catalog w-6 h-6 m-2 text-[var(--meta-bg)]"></i>
             </button>
             <div onClick={() => { setVisible(false) }} class={`${visible() ? '' : 'hidden'} fixed w-full h-screen top-0 left-0 bg-[var(--meta-bg)] bg-opacity-50`} />

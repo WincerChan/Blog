@@ -70,7 +70,7 @@ const PostLayout = ({ children, rawBlog, relates }) => {
     }
     const headParams = constructHeadParams(blog);
     return (
-        <ContentLayout blog={blogParams} >
+        <ContentLayout blog={blogParams} headParams={headParams} >
             <LazyImg class="w-full blog-cover rounded object-cover mb-6" src={blog.cover} alt={blog.cover} />
             <PostMeta blog={blog} />
             <ExpiredNotify date={blog.updated} />

@@ -16,7 +16,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                     <LazyImg width={352} height={304} class="object-cover rounded h-coverMain w-coverMain" src={blog.cover} alt={`${blog.title}-cover`} />
                 </A>
                 <div class="flex flex-col <md:px-4 text-[15px] h-coverMain <lg:pt-4">
-                    <A href={blog.slug}>
+                    <A link={true} href={blog.slug}>
                         <h2 title={blog.title} class="lg:text-[1.7rem] text-[1.4rem] text-title font-headline font-medium !leading-relaxed">{blog.title}</h2>
                     </A>
                     {
