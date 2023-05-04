@@ -1,6 +1,8 @@
+import crypto from "crypto-js";
 import { readFileSync } from "fs";
 import path from "path";
-import { BlogDetailed, BlogMinimal } from "~/schema/Post";
+import { BlogDetailed, BlogMinimal } from "../src/schema/Post";
+import { padTo32 } from "../src/utils";
 
 type sameTagsArgs = {
     [key: string]: BlogDetailed[]
@@ -59,9 +61,17 @@ const getSameTaxoBlogs = (tags: string[], category: string, slug: string) => {
     return findRelatedPosts(sameTagBlogs, sameCateBlogs)
 }
 
+const encryptBlog = (pwd, content) => {
+    const key = crypto.enc.Hex.parse(padTo32(pwd ? pwd : ""))
+    return crypto.AES.encrypt(content, key, { iv: key }).toString()
+}
+
 const PostLoader = (parsedContent: BlogDetailed) => {
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
-    const { content, ...rest } = parsedContent
+    let { content, ...rest } = parsedContent
+    if (parsedContent.password) {
+        content = encryptBlog(parsedContent.password, content)
+    }
     const transformedCode = `
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"

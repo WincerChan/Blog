@@ -63,10 +63,9 @@ const constructHeadParams = (blog: BlogDetailed) => {
     })
 }
 
-const useEncrypt = (rawContent: string, passwd: string | undefined, children: JSXElement) => {
-    const key = enc.Hex.parse(padTo32(passwd ? passwd : ""))
+const useEncrypt = (passwd: string | undefined, children: JSXElement) => {
     const [show, setShow] = createSignal(false)
-    const [content, setContent] = createSignal(passwd ? AES.encrypt(rawContent, key, { iv: key }).toString() : "")
+    const [content, setContent] = createSignal(children)
     const [error, setError] = createSignal(false)
     if (!passwd) return <section>{children}</section>
 
@@ -104,7 +103,7 @@ const PostLayout = ({ children, rawBlog, relates }) => {
         toc: blog.toc,
         relates: relates?.map(r => BlogScoreSchema.parse(r))
     }
-    children = useEncrypt(blog.content, blog.password, children)
+    children = useEncrypt(blog.password, children)
     const headParams = constructHeadParams(blog);
 
     return (
