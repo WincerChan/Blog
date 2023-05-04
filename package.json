@@ -14,6 +14,7 @@
     "@types/node": "^18.11.18",
     "@unocss/reset": "^0.51.8",
     "@unocss/transformer-directives": "^0.51.8",
+    "crypto-js": "^4.1.1",
     "highlight.js": "^11.8.0",
     "js-base64": "^3.7.5",
     "katex": "^0.16.7",

@@ -35,6 +35,9 @@ devDependencies:
   '@unocss/transformer-directives':
     specifier: ^0.51.8
     version: 0.51.8
+  crypto-js:
+    specifier: ^4.1.1
+    version: 4.1.1
   highlight.js:
     specifier: ^11.8.0
     version: 11.8.0
@@ -2578,6 +2581,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+    dev: true
 
   /crypto-random-string@2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}

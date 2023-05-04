@@ -1,7 +1,9 @@
+import { AES, enc } from "crypto-js";
+import { JSXElement, Show, createSignal } from "solid-js";
 import { A } from "solid-start";
 import { HeadParamsSchema } from "~/schema/Head";
 import { BlogDetailed, BlogDetailedSchema, BlogScoreSchema } from "~/schema/Post";
-import { calculateDateDifference, formatDate } from "~/utils";
+import { calculateDateDifference, formatDate, padTo32 } from "~/utils";
 import Copyright from "../core/section/Copyright";
 import DisqusComment from "../core/section/Disqus";
 import TagCollection from "../core/section/Tag";
@@ -61,6 +63,40 @@ const constructHeadParams = (blog: BlogDetailed) => {
     })
 }
 
+const useEncrypt = (rawContent: string, passwd: string | undefined, children: JSXElement) => {
+    const key = enc.Hex.parse(padTo32(passwd ? passwd : ""))
+    const [show, setShow] = createSignal(false)
+    const [content, setContent] = createSignal(passwd ? AES.encrypt(rawContent, key, { iv: key }).toString() : "")
+    const [error, setError] = createSignal(false)
+    if (!passwd) return <section>{children}</section>
+
+    const handleDecrypt = (e) => {
+        e.preventDefault()
+        const input = (e.currentTarget[0] as HTMLInputElement).value
+        const key = enc.Hex.parse(padTo32(input))
+        try {
+            const decrypted = AES.decrypt(content(), key, { iv: key })
+            setContent(decrypted.toString(enc.Utf8))
+            setShow(true)
+            setError(false)
+        } catch (error) {
+            setError(true)
+        }
+    }
+    return (
+        <>
+            <Show when={!show()}>
+                <form onSubmit={handleDecrypt} class="flex space-x-4 my-6 <md:mx-4">
+                    <input type="text" class="card-outline bg-[var(--cc)] px-4 py-1.5 rounded flex-grow" placeholder="你面前的是一个未知的领域，输入密码才能继续前进。" />
+                    <button title="解密" class="font-headline px-4 card-outline rounded">解密</button>
+                </form>
+            </Show>
+            <Show when={error()}><b>密码错误，这个未知的领域离你还很遥远。</b></Show>
+            <Show when={show()}><section innerHTML={content()} /></Show>
+        </>
+    )
+}
+
 
 const PostLayout = ({ children, rawBlog, relates }) => {
     const blog = BlogDetailedSchema.parse(rawBlog)
@@ -68,15 +104,15 @@ const PostLayout = ({ children, rawBlog, relates }) => {
         toc: blog.toc,
         relates: relates?.map(r => BlogScoreSchema.parse(r))
     }
+    children = useEncrypt(blog.content, blog.password, children)
     const headParams = constructHeadParams(blog);
+
     return (
         <ContentLayout blog={blogParams} headParams={headParams} >
             <LazyImg class="w-full blog-cover rounded object-cover mb-6" src={blog.cover} alt={blog.cover} />
             <PostMeta blog={blog} />
             <ExpiredNotify date={blog.updated} />
-            <section>
-                {children}
-            </section>
+            {children}
             <Copyright {...blog} />
             <Neighbours {...blog} />
             <DisqusComment slug={headParams.pageURL} />
