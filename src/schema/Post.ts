@@ -6,7 +6,7 @@ export const BlogDetailedSchema = z.object({
     title: z.string(),
     date: z.string().transform((v) => new Date(v)),
     updated: z.string().transform((v) => new Date(v)),
-    content: z.string(),
+    content: z.string().optional(),
     cover: z.string(),
     tags: z.array(z.coerce.string()),
     summary: z.string().optional(),

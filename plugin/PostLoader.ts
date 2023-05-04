@@ -1,9 +1,9 @@
 import { readFileSync } from "fs";
 import path from "path";
-import { BlogMinimal } from "~/schema/Post";
+import { BlogDetailed, BlogMinimal } from "~/schema/Post";
 
 type sameTagsArgs = {
-    [key: string]: BlogMinimal[]
+    [key: string]: BlogDetailed[]
 }
 
 
@@ -59,8 +59,9 @@ const getSameTaxoBlogs = (tags: string[], category: string, slug: string) => {
     return findRelatedPosts(sameTagBlogs, sameCateBlogs)
 }
 
-const PostLoader = (content: string, parsedContent: BlogMinimal) => {
+const PostLoader = (parsedContent: BlogDetailed) => {
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
+    const { content, ...rest } = parsedContent
     const transformedCode = `
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
@@ -69,10 +70,11 @@ const PostLoader = (content: string, parsedContent: BlogMinimal) => {
 
         const MathRender = lazy(() => import("~/components/lazy/MathRender"))
         const Pre = lazy(() => import("~/components/lazy/Pre"))
+        
         const Post = () => {
             return (
-                <PostLayout rawBlog={${content}} relates={${JSON.stringify(relates)}}>
-                    ${parsedContent.content}
+                <PostLayout rawBlog={${JSON.stringify(rest)}} relates={${JSON.stringify(relates)}}>
+                    ${content}
                 </PostLayout>
             )
         }

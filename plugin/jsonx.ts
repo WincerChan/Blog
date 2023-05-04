@@ -5,7 +5,8 @@ const loader = async (code: string, id: string) => {
 
 }
 
-const PageLoader = (content, parsedContent) => {
+const PageLoader = (parsedContent) => {
+    const { content, ...rest } = parsedContent
     const transformedCode = `
                 import PageLayout from "~/components/layouts/PageLayout";
                 import { PageSchema } from "~/schema/Page";
@@ -14,9 +15,9 @@ const PageLoader = (content, parsedContent) => {
                 
                 const About = () => {
                     return (
-                        <PageLayout page={${content}} showComment={true}>
+                        <PageLayout page={${JSON.stringify(rest)}} showComment={true}>
                             <section>
-                                ${parsedContent.content}
+                                ${content}
                             </section>
                         </PageLayout>
                     )
@@ -70,7 +71,7 @@ export default function () {
             if (_type === 'base') {
                 return PageLoader(content, parsedContent)
             } else if (_type === 'post') {
-                return PostLoader(content, parsedContent)
+                return PostLoader(parsedContent)
             } else if (_type === 'tags') {
                 return TaxoLoader(content, '标签')
             } else if (_type === 'category') {
