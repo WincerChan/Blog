@@ -27,7 +27,7 @@ const TaxoLayout = ({ rawTaxo, type }: TaxoLayoutProps) => {
     return (
         <ContentLayout headParams={headParams} >
             <ArticleTitle title={headParams.title} />
-            <OtherBlogs posts={blogsByTerm} />
+            <OtherBlogs posts={() => blogsByTerm} />
         </ContentLayout>
     )
 }

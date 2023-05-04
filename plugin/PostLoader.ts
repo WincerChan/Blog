@@ -64,8 +64,11 @@ const PostLoader = (content: string, parsedContent: BlogMinimal) => {
     const transformedCode = `
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
-        import Pre from "~/components/lazy/Pre"
         import { A } from "solid-start"
+        import { lazy } from "solid-js";
+
+        const MathRender = lazy(() => import("~/components/lazy/MathRender"))
+        const Pre = lazy(() => import("~/components/lazy/Pre"))
         const Post = () => {
             return (
                 <PostLayout rawBlog={${content}} relates={${JSON.stringify(relates)}}>

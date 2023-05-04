@@ -9,7 +9,7 @@ import { PageSchema } from '~/schema/Page';
 const Friend = () => {
     const page = PageSchema.parse(friendPage);
     return (
-        <PageLayout page={page}>
+        <PageLayout page={page} showComment={true}>
             <section innerHTML={friendPage.content} />
             <div class='grid sm:grid-cols-2 grid-cols-1 gap-6 mt-6'>
                 <For each={friendLinks}>

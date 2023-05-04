@@ -60,15 +60,15 @@ const CompactBlog = ({ blog }: BlogProps) => {
     )
 }
 type BlogCardsProps = {
-    posts: BlogMinimal[],
+    posts: () => BlogMinimal[],
     description?: string
 }
 const OtherBlogs = ({ posts, description }: BlogCardsProps) => {
     return (
         <>
-            <p class="text-xl font-headline <md:mx-4 leading-loose mb-6 mt-4">{description ? description : `共计 ${posts.length} 篇文章`}</p>
+            <p class="text-xl font-headline <md:mx-4 leading-loose mb-6 mt-4">{description ? description : `共计 ${posts().length} 篇文章`}</p>
             <div class="lg:grid grid-cols-3 gap-6 <md:mx-4">
-                <For each={posts}>
+                <For each={posts()}>
                     {
                         post => (
                             <CompactBlog blog={post} />

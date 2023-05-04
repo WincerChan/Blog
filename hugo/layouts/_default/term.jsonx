@@ -6,7 +6,7 @@
     {
       "title": "{{ $page.Title }}",
       {{ with $page.Params.Subtitle }}"subtitle": "{{ . }}",{{ end }}
-      "slug": "{{ replace $page.RelPermalink `.jsonx` `` }}",
+      "slug": "{{ replace $page.RelPermalink `index.jsonx` `` }}",
       "cover": "{{ $page.Params.cover }}",
       "words": {{ $page.WordCount }},
       "category": "{{ $page.Params.category }}",

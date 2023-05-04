@@ -14,7 +14,7 @@ const PageLoader = (content, parsedContent) => {
                 
                 const About = () => {
                     return (
-                        <PageLayout page={${content}}>
+                        <PageLayout page={${content}} showComment={true}>
                             <section>
                                 ${parsedContent.content}
                             </section>
