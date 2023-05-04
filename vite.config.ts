@@ -4,10 +4,16 @@ import UnoCSS from 'unocss/vite';
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import jsonxPlugin from "./plugin/jsonx";
+import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
 
 const isProd = process.env.NODE_ENV === "production";
 
 export default defineConfig({
+  define: {
+    __WORDS: wordsCount,
+    __TAGS: randomTags,
+    __TOTAL_POSTS: totalPosts
+  },
   plugins: [
     { ...jsonxPlugin(), enforce: "pre" },
     solid({ adapter: staticAdpater(), extensions: [".jsonx"] }),
