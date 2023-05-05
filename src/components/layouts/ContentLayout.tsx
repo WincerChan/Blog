@@ -8,6 +8,7 @@ import Header from "../core/header";
 import { BlogSideBar, SideBar } from "../core/sidebar";
 import { BlogPostParams } from "../core/sidebar/types";
 import HeadTag from "../head";
+nProgress.configure({ showSpinner: false })
 
 type ContentLayoutProps = {
     blog?: BlogPostParams,
