@@ -1,5 +1,5 @@
 import siteConf from "@/hugo.json";
-import { Accessor, createEffect, createSignal, onMount } from "solid-js";
+import { Accessor, Show, createEffect, createSignal } from "solid-js";
 import { isBrowser } from "~/utils";
 
 const disqusShort = "wincer"
@@ -32,12 +32,12 @@ const DisqusButton = ({ nowLoad }: { nowLoad: Accessor<Boolean> }) => {
     return (
         <>
             <div id="disqus_thread" class={`w-full ${!visibility() ? 'min-h-64' : ''}`}></div>
-            {visibility() &&
-                <>
-                    {errorMsg() === "" ? <></> : <p class="mb-4"><b>{errorMsg()}</b></p>}
-                    <button onClick={load} title="点击加载评论" class="p-3 font-headline w-full leading-8 rounded card-outline">点击以加载 Disqus 评论</button>
-                </>
-            }
+            <Show when={errorMsg()}>
+                <p class="mb-4"><b>{errorMsg()}</b></p>
+            </Show>
+            <Show when={visibility() && !nowLoad()}>
+                <button onClick={load} title="点击加载评论" class="p-3 font-headline w-full leading-8 rounded card-outline">点击以加载 Disqus 评论</button>
+            </Show>
         </>
     )
 }
@@ -61,7 +61,8 @@ const DisqusComment = ({ slug }: { slug: string }) => {
         })
         observer.observe(self as HTMLDivElement)
     })
-    onMount(() => {
+    createEffect(() => {
+        if (!visible()) return
         if (typeof DISQUS !== "undefined") DISQUS.reset({
             reload: true, config: function () {
                 this.page.url = pageCanonical;

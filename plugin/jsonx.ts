@@ -45,13 +45,13 @@ const TaxoLoader = (content, type) => {
 }
 
 const checkType = (id: string) => {
-    if (id.includes('about')) {
+    if (id.includes('/about/')) {
         return 'base';
-    } else if (id.includes('posts')) {
+    } else if (id.includes('/posts/')) {
         return 'post';
-    } else if (id.includes('tags')) {
+    } else if (id.includes('/tags/')) {
         return 'tags'
-    } else if (id.includes('category')) {
+    } else if (id.includes('/category/')) {
         return 'category'
     }
 }
