@@ -12,14 +12,14 @@ import {
 } from "solid-start";
 import 'uno.css';
 import '~/styles/root.css';
-import { theme } from './components/core/header/ThemeSwitch/Provider';
+import { val } from './components/core/header/ThemeSwitch/Provider';
 
 
 export default function Root() {
   return (
-    <Html lang="zh-CN" class={theme.theme}>
+    <Html lang="zh-CN" class={val.theme}>
       <Head />
-      <Body class='bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
+      <Body class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
         <Suspense>
           <Routes>
             <FileRoutes />

@@ -1,4 +1,4 @@
-import { JSXElement, lazy } from "solid-js";
+import { JSXElement, Show, lazy } from "solid-js";
 import { A } from "solid-start";
 import { HeadParamsSchema } from "~/schema/Head";
 import { BlogDetailed, BlogDetailedSchema, BlogScoreSchema } from "~/schema/Post";
@@ -15,28 +15,30 @@ import ContentLayout from "./ContentLayout";
 const ProtectBlog = lazy(() => import("./EncryptBlock"))
 
 const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
+    const isRecently = (new Date().getTime() - blog.date.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
-        <LazyBg dataSrc={blog.cover} class="bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)]" >
-            <div class="flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose">
-                <span>{formatDate(blog.date)}</span>
-                <div class="h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)]"></div>
-                <TagCollection tags={blog.tags} />
-            </div>
-            <ArticleTitle title={blog.title} words={blog.words} />
-            {blog.subtitle && <h2 class="text-2xl <md:mx-4 font-headline leading-relaxed <md:leading-relaxed <md:text-[1.4rem]">{blog.subtitle}</h2>}
-        </LazyBg>
+        <>
+            <LazyBg dataSrc={blog.cover} class="bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)]" >
+                <div class="flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose">
+                    <span>{formatDate(blog.date)}</span>
+                    <div class="h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)]"></div>
+                    <TagCollection tags={blog.tags} />
+                </div>
+                <ArticleTitle title={blog.title} words={blog.words} />
+                <Show when={!!blog.subtitle}>
+                    <h2 class="text-2xl <md:mx-4 font-headline leading-relaxed <md:leading-relaxed <md:text-[1.4rem]">{blog.subtitle}</h2>
+                </Show>
+            </LazyBg>
+            <Show when={!isRecently}>
+                <div class="pl-3 my-4 border-l-4 border-[#f9c116] pr-4">
+                    <p>本文最近一次更新于{calculateDateDifference(blog.date, new Date())}前，其中的内容很可能已经有所发展或是发生改变。</p>
+                </div>
+            </Show>
+
+        </>
     )
 }
 
-const ExpiredNotify = ({ date }: { date: Date }) => {
-    // 90 days
-    if ((new Date().getTime() - date.getTime()) < 90 * 24 * 60 * 60 * 1000) return <></>
-    return (
-        <div class="pl-3 my-4 border-l-4 border-[#f9c116]">
-            <p>本文最近一次更新于{calculateDateDifference(date, new Date())}前，其中的内容很可能已经有所发展或是发生改变。</p>
-        </div>
-    )
-}
 
 const Neighbours = ({ neighbours }: BlogDetailed) => {
     const { prev, next } = neighbours;
@@ -80,7 +82,6 @@ const PostLayout = ({ children, rawBlog, relates }) => {
         <ContentLayout blog={blogParams} headParams={headParams} >
             <LazyImg class="w-full blog-cover rounded object-cover mb-6" src={blog.cover} alt={blog.cover} />
             <PostMeta blog={blog} />
-            <ExpiredNotify date={blog.updated} />
             {wrapper}
             <Copyright {...blog} />
             <Neighbours {...blog} />

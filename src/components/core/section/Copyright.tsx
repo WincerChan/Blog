@@ -4,8 +4,8 @@ import { formatDate } from "~/utils";
 
 const Copyright = (blog: BlogDetailed) => {
     return (
-        <div class="py-8 border-y border-[var(--head-border)] relative leading-7 mt-10 font-headline <md:px-4">
-            <div class="h-0 w-0 right-0 mr-36 ml-auto text-[var(--cc)]">
+        <div class=":: py-8 border-y border-[var(--head-border)] relative leading-7 mt-10 font-headline <md:px-4 ">
+            <div class=":: h-0 w-0 right-0 mr-36 ml-auto text-[var(--cc)] ">
                 <svg class="w-32" width="1" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <g >
                         <path d="M256.001 512C114.841 512 0.000976562 397.158 0.000976562 256C0.000976562 114.842 114.841 0 256.001 0C298.616 0 340.815 10.687 378.035 30.906C384.933 34.653 387.487 43.283 383.74 50.181C379.992 57.08 371.363 59.632 364.465 55.886C331.397 37.921 293.892 28.427 256.001 28.427C130.517 28.427 28.428 130.517 28.428 256C28.428 381.483 130.517 483.573 256.001 483.573C381.485 483.573 483.573 381.483 483.573 256C483.573 207.928 468.77 161.977 440.764 123.111C436.174 116.742 437.619 107.86 443.986 103.27C450.353 98.68 459.237 100.123 463.827 106.492C495.341 150.227 511.998 201.925 511.998 255.999C512.001 397.158 397.159 512 256.001 512Z" />
@@ -19,16 +19,16 @@ const Copyright = (blog: BlogDetailed) => {
                     <p>{blog.title}</p>
                     <p>{`${siteConfig.baseURL}${blog.slug}/`}</p>
                 </div>
-                <div class="flex flex-wrap">
-                    <div class="flex-none mr-12 mt-4">
+                <div class=":: flex flex-wrap ">
+                    <div class=":: flex-none mr-12 mt-4 ">
                         <p>作者</p>
                         <p>Wincer</p>
                     </div>
-                    <div class="flex-none mr-12 mt-4">
+                    <div class=":: flex-none mr-12 mt-4 ">
                         <p>更新于</p>
                         <p>{formatDate(blog.date)}</p>
                     </div>
-                    <div class="flex-none mt-4">
+                    <div class=":: flex-none mt-4 ">
                         <p>许可协议</p>
                         <p>
                             <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="text-menuHover" target="_blank" rel="noopener">

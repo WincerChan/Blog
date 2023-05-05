@@ -1,9 +1,9 @@
 {
   "name": "solid-blog",
   "scripts": {
-    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 5001",
+    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 5000",
     "dev:hugo": "hugo --noBuildLock",
-    "dev:copy": "mv src/routes/about/index.json src/routes/about/index.jsonx; mv _output/*.xml public/;",
+    "dev:copy": "cp src/routes/about/index.json src/routes/about/index.jsonx; cp _output/*.xml public/;",
     "build": "pnpm dev:copy;solid-start build",
     "start": "solid-start start --port 5000"
   },
@@ -15,6 +15,7 @@
     "@types/node": "^18.11.18",
     "@types/nprogress": "^0.2.0",
     "@unocss/reset": "^0.51.8",
+    "@unocss/transformer-compile-class": "^0.51.12",
     "@unocss/transformer-directives": "^0.51.8",
     "crypto-js": "^4.1.1",
     "highlight.js": "^11.8.0",

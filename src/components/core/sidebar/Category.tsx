@@ -11,7 +11,7 @@ const Category = () => {
             <div class="my-3 mb-6 leading-10">
                 <For each={categories}>
                     {(cate) => (
-                        <A class="flex justify-between text-menuHover" href={`/category/${cate.title}/`}>
+                        <A class=":: flex justify-between text-menuHover " inactiveClass="" activeClass="" href={`/category/${cate.title}/`}>
                             <span>{cate.title}</span>
                             <span>{cate.count}</span>
                         </A>

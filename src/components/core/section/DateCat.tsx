@@ -8,9 +8,9 @@ type DateCatProps = {
 
 const DateCat = ({ date, category }: DateCatProps) => {
     return (
-        <div class={`flex items-center`}>
+        <div class=":: flex items-center ">
             <span>{formatDate(date)}</span>
-            <div class="h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)]"></div>
+            <div class=":: h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)] "></div>
             <A class="text-menuHover" href={`/category/${category}/`}>{category}</A>
         </div>
     )

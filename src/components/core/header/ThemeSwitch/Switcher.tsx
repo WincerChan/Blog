@@ -1,5 +1,5 @@
 import { Accessor, For, createSignal, onMount } from "solid-js";
-import { setTheme, theme } from "./Provider";
+import { set, val } from "./Provider";
 
 const ThemeMapping = [
     ["light", "浅色模式"],
@@ -20,27 +20,36 @@ type ThemeMenuProps = {
 
 
 const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
+    const [selected, setSelected] = createSignal(val.theme)
     const handleClick = (e: MouseEvent, key: string) => {
         toggleShow(e)
-        setTheme({ theme: key })
+        setSelected(key)
+        // 如果跟随系统，就需要先获取系统属于哪种模式
+        // 要把系统的真实模式放在 theme 保存
+        let systemMode = key;
+        if (key === "")
+            systemMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "";
+        set({ theme: systemMode })
         localStorage.setItem("customer-theme", key)
     };
 
 
     onMount(() => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            console.log("systemd, changed")
             if (!!localStorage.getItem("customer-theme")) return
             const newColorScheme = e.matches ? 'dark' : '';
-            setTheme({ theme: newColorScheme })
+            set({ theme: newColorScheme })
         })
     })
 
+
     return (
-        <div class={`absolute shadow-round text-sm right-0 bg-ers z-1 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-33" : "max-h-0"}`}>
+        <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-1 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-33" : "max-h-0"}`}>
             <For each={ThemeMapping}>
                 {
                     themeItem => (
-                        <div onClick={(e) => handleClick(e, themeItem[0])} class={`cursor-pointer bg-menuHover pr-3 py-2.5 whitespace-nowrap flex items-center ${theme.theme == themeItem[0] ? 'text-menuActive' : ''}`}>
+                        <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer bg-menuHover pr-3 py-2.5 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
                             <div class={`${IconMapping[themeItem[0]]} mx-2 w-5 h-5`}></div>
                             <span>{themeItem[1]}</span>
                         </div>
@@ -69,8 +78,8 @@ const ToggleButton = () => {
         }
     };
     return (
-        <li ref={self!} class="bg-menuHover trans-linear relative">
-            <button onClick={(e) => toggleShow(e)} title="Switch Theme" class={`h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
+        <li ref={self!} class=":: bg-menuHover trans-linear relative">
+            <button onClick={(e) => toggleShow(e)} title="Switch Theme" class={`:: h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
                 <i class="i-carbon-window-black-saturation w-6 h-6" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
