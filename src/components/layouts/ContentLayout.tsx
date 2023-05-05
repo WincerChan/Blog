@@ -1,6 +1,6 @@
 import nProgress from "nprogress";
 import { JSX, createEffect, onMount } from "solid-js";
-import { useIsRouting } from "solid-start";
+import { useLocation } from "solid-start";
 import { HeadParamsTyoe } from "~/schema/Head";
 import Footer from "../core/footer";
 import BackTop from "../core/footer/backTop";
@@ -17,9 +17,10 @@ type ContentLayoutProps = {
 }
 
 const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
-    const isRouting = useIsRouting()
+    // const isRouting = useIsRouting()
+    const { pathname } = useLocation()
     createEffect(() => {
-        if (isRouting()) nProgress.start()
+        if (!!pathname) nProgress.start()
     })
     onMount(() => {
         nProgress.done()
