@@ -1,14 +1,4 @@
-import { Suspense, lazy } from "solid-js";
+import Search from "~/components/page/Search";
 
-const Search = lazy(() => import("~/components/page/Search"))
-
-const LazySearch = () => {
-    return (
-        <Suspense>
-            <Search />
-        </Suspense>
-    )
-}
-
-export default LazySearch;
+export default Search
 

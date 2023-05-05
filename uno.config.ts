@@ -1,10 +1,13 @@
-import { defineConfig, presetIcons, presetWind, transformerDirectives } from 'unocss'
+import { defineConfig, presetIcons, presetWind, transformerCompileClass, transformerDirectives } from 'unocss'
 
 export default defineConfig({
     include: [/(src).*\.(css|[jt]sx?)$/],
     exclude: [],
     transformers: [
-        transformerDirectives({ enforce: 'pre' }),
+        transformerCompileClass({
+            trigger: "$uno$",
+        }),
+        transformerDirectives({ enforce: 'pre' })
     ],
     theme: {
         extends: {
@@ -38,6 +41,7 @@ export default defineConfig({
         'blog-cover': '2xl:h-100 lg:h-80 h-64',
         'w-coverMain': '2xl:w-[22rem] xl:w-80 lg:w-64 w-full',
         "text-link": "shadow-[0_-.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.2rem_0_var(--menu-hover-text)_inset]",
+        "header-justify": "justify-between <sm:justify-center"
     },
     presets: [
         presetWind(),

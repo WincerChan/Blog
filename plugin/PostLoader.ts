@@ -100,22 +100,20 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     }
     const transformedCode = `
         import { A } from "solid-start"
-        import { lazy, Suspense } from "solid-js";
+        import { lazy } from "solid-js";
         import EmptyLayout from "~/components/layouts/EmptyLayout"
+        import PostLayout from "~/components/layouts/PostLayout"
+        import Img from "~/components/lazy/Img"
         ${langRegister ? langRegister : ""}
 
         const MathRender = lazy(() => import("~/components/lazy/MathRender"))
-        const Img = lazy(() => import("~/components/lazy/Img"))
         const Pre = lazy(() => import("~/components/lazy/Pre"))
-        const PostLayout = lazy(() => import("~/components/layouts/PostLayout"))
         
         const Post = () => {
             return (
-                <Suspense>
                     <PostLayout rawBlog={${JSON.stringify(rest)}} relates={${JSON.stringify(relates)}}>
                         ${content}
                     </PostLayout>
-                </Suspense>
             )
         }
         export default Post;

@@ -1,14 +1,6 @@
-import { Suspense, lazy } from "solid-js";
+import Friends from "~/components/page/Friends";
 
-const Friends = lazy(() => import("~/components/page/Friends"))
 
-const LazyFriends = () => {
-    return (
-        <Suspense>
-            <Friends />
-        </Suspense >
-    )
-}
 
-export default LazyFriends;
+export default Friends;
 

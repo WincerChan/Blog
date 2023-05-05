@@ -8,19 +8,15 @@ const PageLoader = (parsedContent) => {
                 import { PageSchema } from "~/schema/Page";
                 import Img from "~/components/lazy/Img"
                 import { A } from "solid-start"
-                import {Suspense, lazy} from "solid-js";
-                import EmptyLayout from "~/components/layouts/EmptyLayout"
+                import PageLayout from "~/components/layouts/PageLayout"
                 
-                const PageLayout = lazy(() => import("~/components/layouts/PageLayout"))
                 const About = () => {
                     return (
-                <Suspense>
                         <PageLayout page={${JSON.stringify(rest)}} showComment={true}>
                             <section>
                                 ${content}
                             </section>
                         </PageLayout>
-                </Suspense>
                     )
                 }
                 
@@ -34,16 +30,10 @@ const PageLoader = (parsedContent) => {
 
 const TaxoLoader = (content, type) => {
     const transformedCode = `
-                import {Suspense} from "solid-js";
-                import { lazy } from "solid-js";
-                import EmptyLayout from "~/components/layouts/EmptyLayout"
-
-                const TaxoLayout = lazy(() => import("~/components/layouts/TaxoLayout"))
+                import TaxoLayout from "~/components/layouts/TaxoLayout"
                 const Taxo = () => {
                     return (
-                <Suspense>
                         <TaxoLayout rawTaxo={${content}} type="${type}" />
-                </Suspense>
                     )
                 }
                 export default Taxo;
