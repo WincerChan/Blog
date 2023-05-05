@@ -1,7 +1,6 @@
 import posts from '@/_output/index.json';
 import { Suspense, lazy } from 'solid-js';
 import { A } from "solid-start";
-import EmptyLayout from '~/components/layouts/EmptyLayout';
 import { BlogMinimalSchema } from "~/schema/Post";
 
 const MainLayout = lazy(() => import("~/components/layouts/MainLayout"));
@@ -20,7 +19,7 @@ const Home = () => {
 }
 
 const LazyHome = () => {
-  return <Suspense fallback={<EmptyLayout />}><Home /></Suspense>
+  return <Suspense><Home /></Suspense>
 }
 
 export default LazyHome

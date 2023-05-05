@@ -111,7 +111,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
         
         const Post = () => {
             return (
-                <Suspense fallback={<EmptyLayout />}>
+                <Suspense>
                     <PostLayout rawBlog={${JSON.stringify(rest)}} relates={${JSON.stringify(relates)}}>
                         ${content}
                     </PostLayout>

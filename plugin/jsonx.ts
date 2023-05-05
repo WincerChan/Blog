@@ -14,7 +14,7 @@ const PageLoader = (parsedContent) => {
                 const PageLayout = lazy(() => import("~/components/layouts/PageLayout"))
                 const About = () => {
                     return (
-                <Suspense fallback={<EmptyLayout />}>
+                <Suspense>
                         <PageLayout page={${JSON.stringify(rest)}} showComment={true}>
                             <section>
                                 ${content}
@@ -41,7 +41,7 @@ const TaxoLoader = (content, type) => {
                 const TaxoLayout = lazy(() => import("~/components/layouts/TaxoLayout"))
                 const Taxo = () => {
                     return (
-                <Suspense fallback={<EmptyLayout />}>
+                <Suspense>
                         <TaxoLayout rawTaxo={${content}} type="${type}" />
                 </Suspense>
                     )

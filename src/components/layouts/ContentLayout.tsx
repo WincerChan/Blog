@@ -1,6 +1,7 @@
-import { JSX } from "solid-js";
+import nProgress from "nprogress";
+import { JSX, createEffect, onMount } from "solid-js";
+import { useIsRouting } from "solid-start";
 import { HeadParamsTyoe } from "~/schema/Head";
-import { isBrowser } from "~/utils";
 import Footer from "../core/footer";
 import BackTop from "../core/footer/backTop";
 import Header from "../core/header";
@@ -14,8 +15,14 @@ type ContentLayoutProps = {
     headParams: HeadParamsTyoe
 }
 
-isBrowser && document.querySelector("#xxx")?.remove();
 const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
+    const isRouting = useIsRouting()
+    createEffect(() => {
+        if (isRouting()) nProgress.start()
+    })
+    onMount(() => {
+        nProgress.done()
+    })
     return (
         <>
             <HeadTag headParams={headParams} />
