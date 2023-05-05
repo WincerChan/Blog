@@ -18,7 +18,6 @@ import { theme } from './components/core/header/ThemeSwitch/Provider';
 export default function Root() {
   return (
     <Html lang="zh-CN" class={theme.theme}>
-
       <Head />
       <Body class='bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
         <Suspense>

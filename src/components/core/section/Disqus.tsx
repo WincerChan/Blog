@@ -1,5 +1,6 @@
 import siteConf from "@/hugo.json";
-import { Accessor, createEffect, createSignal } from "solid-js";
+import { Accessor, createEffect, createSignal, onMount } from "solid-js";
+import { isBrowser } from "~/utils";
 
 const disqusShort = "wincer"
 
@@ -8,6 +9,8 @@ const DisqusButton = ({ nowLoad }: { nowLoad: Accessor<Boolean> }) => {
     const [visibility, setVisibility] = createSignal(true)
     const [errorMsg, setErrorMsg] = createSignal('')
     const load = () => {
+        if (!isBrowser) return
+        if (typeof DISQUS !== "undefined") return
         const d = document, s = d.createElement('script');
         s.src = `https://${disqusShort}.disqus.com/embed.js`;
         s.onerror = () => {
@@ -50,28 +53,31 @@ const DisqusComment = ({ slug }: { slug: string }) => {
             if (entries[0].isIntersecting) {
                 const img = new Image();
                 img.src = 'https://disqus.com/favicon.ico?' + new Date().getTime(); // 添加时间戳防止缓存
-                // const timer = setTimeout(() => { if (!img.complete) { setVisible(false) } }, 300)
                 img.onload = function () {
-                    console.log("succ")
-                    // clearTimeout(timer)
                     setVisible(true)
                 };
-                // img.onerror = function () {
-                //     clearTimeout(timer)
-                //     setVisible(false)
-                // };
                 observer.unobserve(entries[0].target)
             }
         })
         observer.observe(self as HTMLDivElement)
     })
+    onMount(() => {
+        if (typeof DISQUS !== "undefined") DISQUS.reset({
+            reload: true, config: function () {
+                this.page.url = pageCanonical;
+                this.page.identifier = pageCanonical;
+            }
+        });
+    })
     const pageCanonical = new URL(slug, siteConf.baseURL)
     return (
         <div class="<md:mx-4 <md:mb-8" ref={self!}>
-            <script id="disqus_config" innerHTML={`var disqus_config = function () {
+            <script id="disqus_config" innerHTML={`
+                var disqus_config = function () {
                     this.page.url = "${pageCanonical}" ;
                     this.page.identifier = "${pageCanonical}";
-                }`
+                };
+            `
             } />
             <DisqusButton nowLoad={visible} />
         </div>
