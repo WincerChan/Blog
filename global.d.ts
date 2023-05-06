@@ -5,3 +5,11 @@ declare const __IS_PROD: boolean
 declare const DISQUS: {
     reset: (arg0: any) => void
 }
+declare global {
+    interface Window {
+        lt: () => string
+        mt: () => string
+    }
+}
+export { }
+

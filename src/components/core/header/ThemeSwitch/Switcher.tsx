@@ -1,5 +1,6 @@
 import { Accessor, For, createSignal, onMount } from "solid-js";
-import { set, val } from "./Provider";
+import { isBrowser } from "~/utils";
+import { set } from "./Provider";
 
 const ThemeMapping = [
     ["light", "浅色模式"],
@@ -20,7 +21,7 @@ type ThemeMenuProps = {
 
 
 const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
-    const [selected, setSelected] = createSignal(val.theme)
+    const [selected, setSelected] = createSignal(isBrowser ? window.lt() : "")
     const handleClick = (e: MouseEvent, key: string) => {
         toggleShow(e)
         setSelected(key)
@@ -28,7 +29,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
         // 要把系统的真实模式放在 theme 保存
         let systemMode = key;
         if (key === "")
-            systemMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "";
+            systemMode = window.mt();
         set({ theme: systemMode })
         localStorage.setItem("customer-theme", key)
     };
@@ -37,7 +38,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
     onMount(() => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             console.log("systemd, changed")
-            if (!!localStorage.getItem("customer-theme")) return
+            if (!!window.lt()) return
             const newColorScheme = e.matches ? 'dark' : '';
             set({ theme: newColorScheme })
         })

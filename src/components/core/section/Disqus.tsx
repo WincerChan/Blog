@@ -72,7 +72,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
     })
     const pageCanonical = new URL(slug, siteConf.baseURL)
     return (
-        <div class=":: <md:mx-4 <md:mb-8 " ref={self!}>
+        <div class=":: mt-8 <md:mx-4 <md:mb-8 " ref={self!}>
             <script id="disqus_config" innerHTML={`
                 var disqus_config = function () {
                     this.page.url = "${pageCanonical}" ;
@@ -80,7 +80,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 };
             `
             } />
-            <DisqusButton nowLoad={visible} />
+            <DisqusButton nowLoad={() => false} />
         </div>
     )
 
