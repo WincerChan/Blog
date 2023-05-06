@@ -45,8 +45,8 @@ const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
         <>
             <HeadTag headParams={headParams} />
             <Header />
-            <main class="w-view md:grid grid-cols-50 md:mx-4 lg:mx-auto">
-                <article class="mb-4 2xl:col-span-37 leading-7 col-span-36 md:mr-4 lg:mr-8 text-justify">
+            <main class=":: w-view main-responsive grid-cols-50 ">
+                <article class=":: mb-4 article-responsive leading-7 text-justify ">
                     {children}
                 </article>
                 {blog ? <BlogSideBar blog={blog} /> : <SideBar />}

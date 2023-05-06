@@ -38,9 +38,6 @@ devDependencies:
   '@unocss/reset':
     specifier: ^0.51.8
     version: 0.51.8
-  '@unocss/transformer-compile-class':
-    specifier: ^0.51.12
-    version: 0.51.12
   '@unocss/transformer-directives':
     specifier: ^0.51.8
     version: 0.51.8
@@ -2116,10 +2113,6 @@ packages:
       unconfig: 0.3.7
     dev: true
 
-  /@unocss/core@0.51.12:
-    resolution: {integrity: sha512-H8mLy6ZKu9nGZe5jlHhLPIVwh2G3cCDSBGl5aIZJFI1qpmDC+Zb3iueBGigNpX75IzkjaGKZiK1WUWq8TShjtA==}
-    dev: true
-
   /@unocss/core@0.51.8:
     resolution: {integrity: sha512-myHRKBphEN3h0OnsUhg2JaFKjFGfqF/jmmzZCCMNU5UmxbheZomXANNLYXVgEP6LHvd4xAF0DEzrOBcDPLf0HQ==}
     dev: true
@@ -2227,12 +2220,6 @@ packages:
     resolution: {integrity: sha512-iq4WRj+IHVIRPSH7qaB8PqqlSNSHXkXjPki1n14Bcv1D1ILgDBnH6gRammB/Z7KqAP/k/TCK7bSMeHrQ6iTQoQ==}
     dependencies:
       '@unocss/core': 0.51.8
-    dev: true
-
-  /@unocss/transformer-compile-class@0.51.12:
-    resolution: {integrity: sha512-hM+SBfGJ6TMIv39f8smk+JVjPt8FJ1gxtOT6yRFr7nv3bhlVclidWEksc1dIKY11504lIcJcQZ0Xfi9bMMm7Kg==}
-    dependencies:
-      '@unocss/core': 0.51.12
     dev: true
 
   /@unocss/transformer-compile-class@0.51.8:
@@ -2567,7 +2554,7 @@ packages:
       - supports-color
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
   /connect@3.7.0:

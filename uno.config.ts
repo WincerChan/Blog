@@ -1,5 +1,4 @@
-import transformerCompileClass from '@unocss/transformer-compile-class'
-import { defineConfig, presetIcons, presetWind, transformerDirectives } from 'unocss'
+import { defineConfig, presetIcons, presetWind, transformerCompileClass, transformerDirectives } from 'unocss'
 
 export default defineConfig({
     include: [/(src).*\.(css|[jt]sx?)$/],
@@ -43,7 +42,12 @@ export default defineConfig({
         'blog-cover': '2xl:h-100 lg:h-80 h-64',
         'w-coverMain': '2xl:w-[22rem] xl:w-80 lg:w-64 w-full',
         "text-link": "shadow-[0_-.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.2rem_0_var(--menu-hover-text)_inset]",
-        "header-justify": "justify-between <sm:justify-center flex flex-grow"
+        "header-justify": "justify-between <sm:justify-center flex flex-grow",
+        "main-responsive": "md:grid md:mx-4 lg:mx-auto",
+        "article-responsive": "2xl:col-span-37 col-span-36 md:mr-4 lg:mr-8",
+        "title-responsive": "<md:text-2xl <md:mx-4 <md:leading-10 <md:my-2",
+        "subtitle-responsive": "<md:mx-4 <md:leading-relaxed <md:text-[1.4rem]",
+        "toc-responsive": "<md:fixed <md:bottom-5 <md:w-full <md:bg-[var(--ers-bg)] <md:z-20 <md:px-4"
     },
     presets: [
         presetWind(),

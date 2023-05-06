@@ -30,13 +30,13 @@ const parseParams = (query: string) => {
 const FakeResult = ({ limit }: { limit: number }) => {
     return (
         <>
-            <div class="h-7 animate-pulse bg-[var(--cc)] mb-8 w-1/2" />
+            <div class=":: h-7 animate-pulse bg-[var(--cc)] mb-8 w-1/2 " />
             <For each={range(limit)}>
                 {
                     x => (
-                        <div class="my-6 w-full">
-                            <div class="h-7 my-3 animate-pulse bg-[var(--cc)] w-1/2 md:w-1/3"></div>
-                            <div class="h-14 animate-pulse bg-[var(--cc)]"></div>
+                        <div class=":: my-6 w-full ">
+                            <div class=":: h-7 my-3 animate-pulse bg-[var(--cc)] w-1/2 md:w-1/3 "></div>
+                            <div class=":: h-14 animate-pulse bg-[var(--cc)] "></div>
                         </div>
                     )
                 }
@@ -53,21 +53,21 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <For each={data().data}>
                 {ret => (
                     <div class="my-6">
-                        <h3 class="text-xl font-headline text-title leading-loose">
+                        <h3 class=":: text-xl font-headline text-title leading-loose ">
                             <A href={ret.url} innerHTML={ret.title}></A>
                         </h3>
                         <p class="text-justify">
-                            <span class="text-subtitle mr-4 inline-block">{ret.date.split(" ")[0]}</span>
+                            <span class=":: text-subtitle mr-4 inline-block ">{ret.date.split(" ")[0]}</span>
                             <span innerHTML={ret.snippet + '...'} />
                         </p>
                     </div>
                 )}
             </For>
-            <div class="flex mt-8 justify-between text-xl font-headline">
+            <div class=":: flex mt-8 justify-between text-xl font-headline ">
                 {
                     currentPage() != 1 && (
-                        <button title="Prev" class="flex items-center text-menuHover" onClick={() => { updatePage(-1) }}>
-                            <span class="i-carbon-arrow-left mr-2" />
+                        <button title="Prev" class=":: flex items-center text-menuHover " onClick={() => { updatePage(-1) }}>
+                            <span class=":: i-carbon-arrow-left mr-2 " />
                             <span>Prev</span>
                         </button>
                     )
@@ -75,9 +75,9 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 <div />
                 {
                     data().count > resultPerPage * currentPage() &&
-                    <button title="Next" class="flex items-center text-menuHover" onClick={() => { updatePage(1) }}>
+                    <button title="Next" class=":: flex items-center text-menuHover " onClick={() => { updatePage(1) }}>
                         <span>Next</span>
-                        <span class="i-carbon-arrow-right ml-2"></span>
+                        <span class=":: i-carbon-arrow-right ml-2 "></span>
                     </button>
                 }
             </div>
@@ -133,9 +133,9 @@ const Search = () => {
     }
     return (
         <PageLayout page={page} showComment={false}>
-            <form onSubmit={handleSubmit} method="get" class="flex space-x-4 my-6 <md:mx-4">
+            <form onSubmit={handleSubmit} method="get" class=":: flex space-x-4 my-6 <md:mx-4 ">
                 <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class="card-outline bg-[var(--cc)] px-4 py-1.5 rounded flex-grow" placeholder="你想要找什么？我也想要" />
-                <button title="搜索" class="font-headline px-4 card-outline rounded">搜索</button>
+                <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
             </form>
             <div class="<md:mx-4">
                 {!query() && <section innerHTML={page.content} />}

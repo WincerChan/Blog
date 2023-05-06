@@ -18,19 +18,19 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
     const isRecently = (new Date().getTime() - blog.date.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
         <>
-            <LazyBg dataSrc={blog.cover} class="bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)]" >
-                <div class="flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose">
+            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] " >
+                <div class=":: flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
                     <span>{formatDate(blog.date)}</span>
-                    <div class="h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)]"></div>
+                    <div class=":: h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)] "></div>
                     <TagCollection tags={blog.tags} />
                 </div>
                 <ArticleTitle title={blog.title} words={blog.words} />
                 <Show when={!!blog.subtitle}>
-                    <h2 class="text-2xl <md:mx-4 font-headline leading-relaxed <md:leading-relaxed <md:text-[1.4rem]">{blog.subtitle}</h2>
+                    <h2 class="text-2xl font-headline leading-relaxed subtitle-responsive">{blog.subtitle}</h2>
                 </Show>
             </LazyBg>
             <Show when={!isRecently}>
-                <div class="pl-3 my-4 border-l-4 border-[#f9c116] pr-4">
+                <div class=":: pl-3 my-4 border-l-4 border-[#f9c116] pr-4 ">
                     <p>本文最近一次更新于{calculateDateDifference(blog.date, new Date())}前，其中的内容很可能已经有所发展或是发生改变。</p>
                 </div>
             </Show>
@@ -43,11 +43,11 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
 const Neighbours = ({ neighbours }: BlogDetailed) => {
     const { prev, next } = neighbours;
     return (
-        <div class="leading-loose my-6 flex justify-between flex-wrap text-xl <md:mx-4">
-            {next && <A href={next.slug} class="mr-auto text-menuHover my-2 flex inline-flex items-center">
-                <i title="prev" class="i-carbon-arrow-left w-6 h-6 mr-2" />{next.title}</A>}
-            {prev && <A href={prev.slug} class="ml-auto text-menuHover my-2 flex inline-flex items-center">
-                {prev.title}<i class="i-carbon-arrow-right w-6 h-6 ml-2" /></A>}
+        <div class=":: leading-loose my-6 flex justify-between flex-wrap text-xl <md:mx-4 ">
+            {next && <A href={next.slug} inactiveClass="" class=":: mr-auto text-menuHover my-2 flex inline-flex items-center ">
+                <i title="prev" class=":: i-carbon-arrow-left w-6 h-6 mr-2 " />{next.title}</A>}
+            {prev && <A href={prev.slug} inactiveClass="" class=":: ml-auto text-menuHover my-2 flex inline-flex items-center ">
+                {prev.title}<i title="next" class=":: i-carbon-arrow-right w-6 h-6 ml-2 " /></A>}
         </div>
     )
 }
@@ -80,7 +80,7 @@ const PostLayout = ({ children, rawBlog, relates }) => {
 
     return (
         <ContentLayout blog={blogParams} headParams={headParams} >
-            <LazyImg class="w-full blog-cover rounded object-cover mb-6" src={blog.cover} alt={blog.cover} />
+            <LazyImg class=":: w-full blog-cover rounded object-cover mb-6 " src={blog.cover} alt={blog.cover} />
             <PostMeta blog={blog} />
             {wrapper}
             <Copyright {...blog} />

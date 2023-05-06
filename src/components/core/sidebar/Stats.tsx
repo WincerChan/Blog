@@ -5,7 +5,7 @@ const Stats = () => {
     return (
         <div class="<sm:hidden">
             <Seprator title="统计" />
-            <div class="flex justify-between w-full my-3 leading-8 mb-6">
+            <div class=":: flex justify-between w-full my-3 leading-8 mb-6 ">
                 <div class="text-center">
                     <p>{__TOTAL_POSTS}</p>
                     <span>文章</span>

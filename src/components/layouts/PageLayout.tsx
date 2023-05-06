@@ -23,7 +23,7 @@ const PageLayout = ({ children, page, showComment }) => {
     const headParams = constructHeadParams(page);
     return (
         <ContentLayout headParams={headParams}>
-            {page?.cover && <LazyImg class="w-full blog-cover rounded object-cover mb-6" src={page.cover} alt="cover" />}
+            {page?.cover && <LazyImg class=":: w-full blog-cover rounded object-cover mb-6 " src={page.cover} alt="cover" />}
             {page && <ArticleTitle title={page.title} />}
             {children}
             <Show when={showComment}>

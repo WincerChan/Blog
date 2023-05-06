@@ -11,7 +11,7 @@ const Friend = () => {
     return (
         <PageLayout page={page} showComment={true}>
             <section innerHTML={friendPage.content} />
-            <div class='grid sm:grid-cols-2 grid-cols-1 gap-6 mt-6'>
+            <div class=':: grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 '>
                 <For each={friendLinks}>
                     {
                         link => <FriendLink {...link} />

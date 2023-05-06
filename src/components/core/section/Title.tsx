@@ -7,7 +7,7 @@ type TitleProps = {
 
 const ArticleTitle = ({ title, words }: TitleProps) => {
     return (
-        <h1 class=":: text-3xl font-headline leading-loose <md:text-2xl <md:mx-4 <md:leading-10 <md:my-2">{title}
+        <h1 class=":: text-3xl font-headline leading-loose title-responsive ">{title}
             <Show when={words}>
                 <sup class="text-sm"> {words} words</sup>
             </Show>
