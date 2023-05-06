@@ -25,4 +25,4 @@ Thumbs.db
 _output/
 resources
 _blogs
-public/
+public/*.xml
