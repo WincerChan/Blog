@@ -13,11 +13,6 @@ for dir in "${directories[@]}"; do
     mkdir -p "public/${dir}"
     cp "_output/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
 done
-mkdir -p public/{posts, category, tags, base}
-cp _output/posts/sitemap.xml public/posts/sitemap.xml
-cp _output/category/sitemap.xml public/category/sitemap.xml
-cp _output/tags/sitemap.xml public/tags/sitemap.xml
-cp _output/base/sitemap.xml public/base/sitemap.xml
 echo "Next build"
 pnpm build
 cd dist/public/category
