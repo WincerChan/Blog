@@ -1,7 +1,6 @@
 import { useBeforeLeave } from "@solidjs/router";
 import nProgress from "nprogress";
-import { JSX, createMemo, onMount } from "solid-js";
-import { useIsRouting, useLocation } from "solid-start";
+import { JSX, onMount } from "solid-js";
 import { HeadParamsTyoe } from "~/schema/Head";
 import Footer from "../core/footer";
 import BackTop from "../core/footer/backTop";
@@ -18,29 +17,12 @@ type ContentLayoutProps = {
 }
 
 const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
-    const location = useLocation()
-    const hash = createMemo(() => location.hash);
-    const pathname = createMemo(() => location.pathname);
-    const isRouting = useIsRouting()
     useBeforeLeave(e => {
-        nProgress.start()
+        if (!(e.to.toString().startsWith(e.from.pathname) && e.from.pathname !== "/")) nProgress.start()
     })
     onMount(() => {
         nProgress.done()
     })
-    // createEffect(() => {
-    //     if (isRouting()) nProgress.start()
-    // })
-    // createEffect(() => {
-    //     console.log("hash changed", hash())
-    // })
-    // createEffect(() => {
-    //     console.log("path changed", pathname())
-    // })
-    // createEffect(() => {
-    //     if (pathname === val.location) nProgress.done()
-    //     console.log("path", pathname, val.location)
-    // })
     return (
         <>
             <HeadTag headParams={headParams} />
