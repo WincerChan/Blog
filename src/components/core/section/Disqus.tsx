@@ -61,7 +61,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 img.onload = function () {
                     visible() ?? setVisible(true)
                 };
-                umami && umami.track(`Completion ${slug} reading`)
+                typeof umami !== "undefined" && umami.track(`Completion ${slug} reading`)
                 setTimeout(() => { setVisible(false); console.log("100ms 内无法连接到 disqus。") }, 100)
                 observer.unobserve(entries[0].target)
             }
