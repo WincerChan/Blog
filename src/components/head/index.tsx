@@ -62,7 +62,7 @@ const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
             <ApplicationMeta />
             <OpenGraph params={headParams} />
             <script type="application/ld+json" innerHTML={isPost ? postLDJSON(headParams) : blogLDJSON()} />
-            <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : '';!function(){let e=window.lt(); if(e===''){e = window.mt();};document.documentElement.setAttribute("class", e);}()`} />
+            <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`} />
         </>
     )
 }

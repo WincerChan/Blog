@@ -5,13 +5,13 @@ import { set } from "./Provider";
 const ThemeMapping = [
     ["light", "浅色模式"],
     ["dark", "深色模式"],
-    ["", "跟随系统"]
+    ["auto", "跟随系统"]
 ]
 
 const IconMapping: { [key: string]: string } = {
     "light": "i-carbon-haze",
     "dark": "i-carbon-haze-night",
-    "": "i-carbon-settings"
+    "auto": "i-carbon-settings"
 }
 
 type ThemeMenuProps = {
@@ -21,7 +21,7 @@ type ThemeMenuProps = {
 
 
 const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
-    const [selected, setSelected] = createSignal(isBrowser ? window.lt() : "")
+    const [selected, setSelected] = createSignal(isBrowser ? window.lt() : "auto")
     const handleClick = (e: MouseEvent, key: string) => {
         toggleShow(e)
         setSelected(key)
@@ -37,9 +37,8 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
     onMount(() => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            console.log("systemd, changed")
-            if (!!window.lt()) return
-            const newColorScheme = e.matches ? 'dark' : '';
+            if (selected() !== 'auto') return
+            const newColorScheme = e.matches ? 'dark' : 'light';
             set({ theme: newColorScheme })
         })
     })

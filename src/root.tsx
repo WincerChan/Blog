@@ -12,6 +12,9 @@ import {
 } from "solid-start";
 import 'uno.css';
 import '~/styles/root.css';
+import Footer from './components/core/footer';
+import BackTop from './components/core/footer/backTop';
+import Header from './components/core/header';
 import { val } from './components/core/header/ThemeSwitch/Provider';
 
 
@@ -20,12 +23,19 @@ export default function Root() {
     <Html lang="zh-CN" class={val.theme}>
       <Head />
       <Body class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
-        <Suspense>
-          <Routes>
-            <FileRoutes />
-          </Routes>
-        </Suspense>
+        <Header />
+        <main class=":: w-view main-responsive grid-cols-50 ">
+          <Suspense>
+            <Routes>
+              <FileRoutes />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+        <BackTop />
         <Scripts />
+        {false ? <script async defer data-website-id="635fdaf6-88da-46c2-bbbd-277a77276d7f"
+          src="https://api.itswincer.com/react/route.js" /> : <></>}
         {__IS_PROD ?
           <script innerHTML={`if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}`} />
           : ""}

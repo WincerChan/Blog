@@ -54,7 +54,7 @@ export default defineConfig({
         "main-responsive": "md:grid md:mx-4 lg:mx-auto",
         "article-responsive": "2xl:col-span-37 col-span-36 md:mr-4 lg:mr-8",
         "title-responsive": "text-3xl <md:text-2xl <md:mx-4 <md:leading-10 <md:my-2",
-        "subtitle-responsive": "<md:mx-4 <md:leading-relaxed <md:text-[1.4rem]",
+        "subtitle-responsive": "text-2xl <md:mx-4 <md:leading-relaxed <md:text-[1.4rem]",
         "toc-responsive": "<md:fixed <md:bottom-5 <md:w-full <md:bg-[var(--ers-bg)] <md:z-20 <md:px-4",
         "hr-section": "<lg:mx-4 w-24 my-8 border-none",
         "p-section": "<md:mx-4",
