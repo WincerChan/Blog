@@ -19,14 +19,14 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
     return (
         <>
             <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] " >
-                <div class=":: flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
+                <div id="post-meta" class=":: flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
                     <span>{formatDate(blog.date)}</span>
-                    <div class=":: h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)] "></div>
+                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)]"></div>
                     <TagCollection tags={blog.tags} />
                 </div>
                 <ArticleTitle title={blog.title} words={blog.words} />
                 <Show when={!!blog.subtitle}>
-                    <h2 class="text-2xl font-headline leading-relaxed subtitle-responsive">{blog.subtitle}</h2>
+                    <h2 class="font-headline leading-relaxed subtitle-responsive">{blog.subtitle}</h2>
                 </Show>
             </LazyBg>
             <Show when={!isRecently}>

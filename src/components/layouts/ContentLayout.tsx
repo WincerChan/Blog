@@ -35,6 +35,8 @@ const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
             </main>
             <Footer />
             <BackTop />
+            {true ? <script async defer data-website-id="635fdaf6-88da-46c2-bbbd-277a77276d7f"
+                src="https://api.itswincer.com/react/route.js" /> : <></>}
         </>
     );
 };

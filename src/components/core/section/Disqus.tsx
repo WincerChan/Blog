@@ -4,13 +4,14 @@ import { isBrowser } from "~/utils";
 
 const disqusShort = "wincer"
 
-
-const DisqusButton = ({ nowLoad }: { nowLoad: Accessor<Boolean> }) => {
+const DisqusButton = ({ nowLoad, setLoad }: { nowLoad: Accessor<unknown>, setLoad: (arg0: boolean) => void }) => {
     const [visibility, setVisibility] = createSignal(true)
     const [errorMsg, setErrorMsg] = createSignal('')
+    const [loading, setLoading] = createSignal(false)
     const load = () => {
         if (!isBrowser) return
-        if (typeof DISQUS !== "undefined") return
+        if (typeof DISQUS !== "undefined") { setLoad(true); return }
+        setLoading(true)
         const d = document, s = d.createElement('script');
         s.src = `https://${disqusShort}.disqus.com/embed.js`;
         s.onerror = () => {
@@ -19,6 +20,7 @@ const DisqusButton = ({ nowLoad }: { nowLoad: Accessor<Boolean> }) => {
         }
         s.onload = () => {
             setErrorMsg("")
+            setLoading(false)
             setVisibility(false)
         }
         s.setAttribute('data-timestamp', `${+new Date()}`);
@@ -35,8 +37,11 @@ const DisqusButton = ({ nowLoad }: { nowLoad: Accessor<Boolean> }) => {
             <Show when={errorMsg()}>
                 <p class="mb-4"><b>{errorMsg()}</b></p>
             </Show>
-            <Show when={visibility() && !nowLoad()}>
-                <button onClick={load} title="点击加载评论" class="p-3 font-headline w-full leading-8 rounded card-outline">点击以加载 Disqus 评论</button>
+            <Show when={loading()}>
+                <p>正在尝试加载 Disqus，请稍等</p>
+            </Show>
+            <Show when={!loading() && visibility()}>
+                <button onClick={load} title="点击加载评论" class=":: p-3 font-headline w-full leading-8 rounded card-outline ">点击以加载 Disqus 评论</button>
             </Show>
         </>
     )
@@ -46,7 +51,7 @@ const DisqusButton = ({ nowLoad }: { nowLoad: Accessor<Boolean> }) => {
 
 
 const DisqusComment = ({ slug }: { slug: string }) => {
-    const [visible, setVisible] = createSignal(false)
+    const [visible, setVisible] = createSignal()
     let self: HTMLDivElement, favicon: HTMLImageElement
     createEffect(() => {
         const observer = new IntersectionObserver(entries => {
@@ -54,8 +59,9 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 const img = new Image();
                 img.src = 'https://disqus.com/favicon.ico?' + new Date().getTime(); // 添加时间戳防止缓存
                 img.onload = function () {
-                    setVisible(true)
+                    visible() ?? setVisible(true)
                 };
+                setTimeout(() => { setVisible(false); console.log("100ms 内无法连接到 disqus。") }, 100)
                 observer.unobserve(entries[0].target)
             }
         })
@@ -80,7 +86,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 };
             `
             } />
-            <DisqusButton nowLoad={() => false} />
+            <DisqusButton nowLoad={visible} setLoad={setVisible} />
         </div>
     )
 
