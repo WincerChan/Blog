@@ -7,6 +7,6 @@ const wordsCount = blogs.pages.reduce((acc, post) => {
 }, 0)
 const totalPosts = blogs.pages.length
 
-const randomTags = shuffle(tags.pages).map((tag) => tag.title).slice(0, 28)
+const randomTags = shuffle(tags.pages).map((tag) => tag.title).slice(0, 22)
 
 export { wordsCount, randomTags, totalPosts };

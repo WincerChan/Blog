@@ -5,7 +5,7 @@ const Tags = () => {
     return (
         <>
             <Seprator title="标签" />
-            <div class=":: flex-wrap leading-loose flex my-4 gap-3 justify-between ">
+            <div class=":: flex-wrap leading-7 flex my-4 gap-3 justify-between ">
                 <TagCollection tags={__TAGS} />
             </div>
         </>

@@ -2,7 +2,7 @@ lockfileVersion: '6.0'
 
 patchedDependencies:
   solid-start-static@0.2.26:
-    hash: ifq5e7euobzml7n5dl4p5yrbvu
+    hash: meofi2e36n6xulr4zqd7e3egja
     path: patches/solid-start-static@0.2.26.patch
   solid-start@0.2.26:
     hash: xdxa727qdbmzwl7k6oxpnxbadm
@@ -61,7 +61,7 @@ devDependencies:
     version: 0.2.0
   solid-start-static:
     specifier: ^0.2.26
-    version: 0.2.26(patch_hash=ifq5e7euobzml7n5dl4p5yrbvu)(solid-start@0.2.26)(undici@5.22.0)(vite@4.1.4)
+    version: 0.2.26(patch_hash=meofi2e36n6xulr4zqd7e3egja)(solid-start@0.2.26)(undici@5.22.0)(vite@4.1.4)
   typescript:
     specifier: ^4.9.4
     version: 4.9.4
@@ -3766,7 +3766,7 @@ packages:
   /solid-ssr@1.7.0:
     resolution: {integrity: sha512-SK0nycd6gTVrsIHeNgOBrZoIVvpYExZMx4HAu/27zClaW3QAi2tf//RTG/uS/6vHPNdEX0+q6+nvErxQeyaswA==}
 
-  /solid-start-static@0.2.26(patch_hash=ifq5e7euobzml7n5dl4p5yrbvu)(solid-start@0.2.26)(undici@5.22.0)(vite@4.1.4):
+  /solid-start-static@0.2.26(patch_hash=meofi2e36n6xulr4zqd7e3egja)(solid-start@0.2.26)(undici@5.22.0)(vite@4.1.4):
     resolution: {integrity: sha512-lQj2sj2HUFxNLzUm8pTGX1D78usVad8RS4r5tGdJzeshgldNGqYN+vZS+cQSMnBrIQBV3ch8J1e3LPQx2IDtxA==}
     peerDependencies:
       solid-start: '*'
@@ -3847,7 +3847,7 @@ packages:
       set-cookie-parser: 2.6.0
       sirv: 2.0.3
       solid-js: 1.7.2
-      solid-start-static: 0.2.26(patch_hash=ifq5e7euobzml7n5dl4p5yrbvu)(solid-start@0.2.26)(undici@5.22.0)(vite@4.1.4)
+      solid-start-static: 0.2.26(patch_hash=meofi2e36n6xulr4zqd7e3egja)(solid-start@0.2.26)(undici@5.22.0)(vite@4.1.4)
       terser: 5.17.1
       undici: 5.22.0
       vite: 4.1.4(@types/node@18.11.18)
