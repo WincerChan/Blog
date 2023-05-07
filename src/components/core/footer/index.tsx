@@ -18,7 +18,7 @@ const Footer = () => {
                         href="https://itswincer.com"
                         target="_blank"
                         rel="noopener">Wincer</a
-                    >, powered by Hugo + Next.js
+                    >, powered by Hugo + SolidStart
                 </p>
             </div>
         </footer>
