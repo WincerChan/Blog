@@ -72,6 +72,7 @@ export default defineConfig({
         name: "Wincer's Blog",
         short_name: "Wincer",
         start_url: "/",
+        id: "/",
         display: "fullscreen",
         orientation: "natural",
         theme_color: "#065279",

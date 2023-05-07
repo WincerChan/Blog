@@ -2,7 +2,8 @@
     "baseURL": "https://blog.itswincer.com",
     "title": "Wincer's Blog",
     "author": {
-        "name": "Wincer"
+        "name": "Wincer",
+        "url": "https://itswincer.com"
     },
     "avatar": "https://ae01.alicdn.com/kf/HTB1DdGHXizxK1RjSspj763S.pXax.png",
     "cdnURL": "https://cdn.blog.itswincer.net",

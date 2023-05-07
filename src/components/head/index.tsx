@@ -21,7 +21,8 @@ const postLDJSON = (params: HeadParamsTyoe) => {
         "editor": siteConf.author.name,
         "author": {
             "@type": "Person",
-            "name": siteConf.author.name
+            "name": siteConf.author.name,
+            "url": siteConf.author.url
         },
         "datePublished": params.date.toISOString(),
         "dateModified": params.updated.toISOString(),
