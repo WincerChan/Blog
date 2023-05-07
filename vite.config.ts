@@ -1,5 +1,4 @@
 import path from "path";
-import cloudflareAdapter from "solid-start-cloudflare-pages";
 import staticAdpater from "solid-start-static";
 import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
@@ -25,7 +24,7 @@ export default defineConfig({
   },
   plugins: [
     { ...jsonxPlugin(), enforce: "pre" },
-    solid({ adapter: isProd ? cloudflareAdapter({}) : staticAdpater(), extensions: [".jsonx"] }),
+    solid({ adapter: staticAdpater(), extensions: [".jsonx"] }),
     UnoCSS(),
     VitePWA({
       workbox: {

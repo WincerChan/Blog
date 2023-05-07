@@ -1,0 +1,22 @@
+diff --git a/index.js b/index.js
+index ff78410879717319e5542377fbd5068b4b2b9226..e5fede4eb57183a03f068122f357ac1b12bca918 100644
+--- a/index.js
++++ b/index.js
+@@ -23,7 +23,7 @@ export default function () {
+       return `http://localhost:${process.env.PORT}`;
+     },
+     async build(config, builder) {
+-      if(!config?.solidOptions?.ssr) throw new Error('solid-start-static needs ssr to be enabled for pre-rendering routes at build time');
++      if (!config?.solidOptions?.ssr) throw new Error('solid-start-static needs ssr to be enabled for pre-rendering routes at build time');
+       const ssrExternal = config?.ssr?.external || [];
+       await builder.client(join(config.root, "dist", "public"));
+       await builder.server(join(config.root, ".solid", "server"));
+@@ -63,7 +63,7 @@ export default function () {
+         ...(config.solidOptions.prerenderRoutes || [])
+       ];
+       renderStatic(
+-        routes.map(url => ({
++        routes.map(url => encodeURI(url)).map(url => ({
+           entry: join(config.root, "dist", "server.js"),
+           output: join(
+             pathToDist,
