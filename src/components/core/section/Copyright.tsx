@@ -17,7 +17,7 @@ const Copyright = (blog: BlogDetailed) => {
             <div>
                 <div>
                     <p>{blog.title}</p>
-                    <p>{`${siteConfig.baseURL}${blog.slug}/`}</p>
+                    <p>{`${siteConfig.baseURL}${blog.slug}`}</p>
                 </div>
                 <div class=":: flex flex-wrap ">
                     <div class=":: flex-none mr-12 mt-4 ">

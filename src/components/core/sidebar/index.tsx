@@ -7,7 +7,7 @@ import { BlogPostParams } from "./types";
 
 const SideBar = () => {
     return (
-        <aside class="text-[15px] 2xl:col-span-13 col-span-14 <md:mx-4 <md:mt-8">
+        <aside class="text-[15px] aside-responsive">
             <div class=":: sticky top-10">
                 <Stats />
                 <Category />

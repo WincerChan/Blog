@@ -58,7 +58,8 @@ export default defineConfig({
         "toc-responsive": "<md:fixed <md:bottom-5 <md:w-full <md:bg-[var(--ers-bg)] <md:z-20 <md:px-4",
         "hr-section": "<lg:mx-4 w-24 my-8 border-none",
         "p-section": "<md:mx-4",
-        "bq-section": "border-l-4 border-[var(--head-border)] my-4 pl-3 <md:mr-4"
+        "bq-section": "border-l-4 border-[var(--head-border)] my-4 pl-3 <md:mr-4",
+        "aside-responsive": "col-span-14 2xl:col-span-13 <md:mx-4 <md:mt-8"
     },
     presets: [
         presetWind(),
