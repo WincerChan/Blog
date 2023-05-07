@@ -1,15 +1,23 @@
-import { defineConfig, presetIcons, presetWind, transformerCompileClass, transformerDirectives } from 'unocss'
+import { defineConfig, presetIcons, presetWind, transformerCompileClass, transformerDirectives } from 'unocss';
+
+const isProd = process.env.NODE_ENV === "production";
+let transformer = [
+    transformerDirectives({ enforce: 'pre' })
+]
+
+if (isProd) {
+    transformer.push(
+        transformerCompileClass({
+            trigger: "::",
+            classPrefix: ""
+        })
+    )
+}
 
 export default defineConfig({
     include: [/(src).*\.(css|[jt]sx?)$/],
     exclude: [],
-    transformers: [
-        transformerCompileClass({
-            trigger: "::",
-            classPrefix: ""
-        }),
-        transformerDirectives({ enforce: 'pre' })
-    ],
+    transformers: transformer,
     theme: {
         extends: {
             transitionProperty: {
