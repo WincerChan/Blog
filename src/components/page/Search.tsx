@@ -127,6 +127,7 @@ const Search = () => {
         // 结果写入到 URL
         if (!input()) return
         setSearchParams({ q: input() })
+        umami && umami.track(`Search ${input()}`)
         setQuery(`${input()} pages:${1}-${resultPerPage}`)
         setCurrentPage(1)
     }
