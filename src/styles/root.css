@@ -32,11 +32,11 @@ html {
 }
 
 pre {
-  @apply py-4 px-2 rounded my-4 overflow-x-auto scrollbar-none relative
+  @apply py-4 px-2 rounded my-4 scrollbar-none overflow-x-auto;
 }
 
 .highlight {
-  @apply rounded
+  @apply rounded max-w-screen relative
 }
 
 code::before {
@@ -170,4 +170,8 @@ b {
 
 .ex-link {
   @apply w-5 h-5 underline-none ml-2px i-carbon-html-reference -top-1px relative;
+}
+
+.katex-display {
+  @apply overflow-x-auto
 }

@@ -5,4 +5,5 @@
 {{- $bracketTempReplaced := replace (replace $highlight `{` $tempOpen) `}` $tempClose -}}
 {{- $blankspaceReplaced := replace $bracketTempReplaced `    ` `{'    '}` -}}
 {{- $dollarTempReplaced := replace (replace $blankspaceReplaced $tempOpen `{'{'}`) $tempClose `{'}'}` -}}
-{{- replace $dollarTempReplaced `$` `$&#8203` -}}
+{{- $final := replace $dollarTempReplaced `$` `$&#8203` -}}
+<Pre content="{{$final | base64Encode }}"><code>{{ .Inner }}</code></Pre>

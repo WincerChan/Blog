@@ -34,7 +34,7 @@
         {{ else }}
         {{ `<![CDATA[` | safeHTML }}
         <img src="{{ .Params.Cover }}" alt="cover" />
-        {{ .Content | safeHTML }}
+        {{ (.Content | replaceRE `content=".*"` `` ) | safeHTML }}
         {{ `]]>` | safeHTML }}
         {{ end }}
       </summary>

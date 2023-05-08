@@ -8,7 +8,7 @@ const Category = () => {
     return (
         <>
             <Seprator title="分类" />
-            <div class=":: my-3 leading-7 mb-6">
+            <div class=":: my-3 leading-7 mb-6 ">
                 <For each={categories}>
                     {(cate) => (
                         <A class=":: flex justify-between text-menuHover my-3 " inactiveClass="" activeClass="" href={`/category/${cate.title}/`}>

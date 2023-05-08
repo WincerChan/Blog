@@ -23,10 +23,10 @@ const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
     return (
         <>
             <HeadTag headParams={headParams} />
-                <article class=":: mb-4 article-responsive leading-7 text-justify ">
-                    {children}
-                </article>
-                {blog ? <BlogSideBar blog={blog} /> : <SideBar />}
+            <article class=":: mb-4 article-responsive leading-7 text-justify ">
+                {children}
+            </article>
+            {blog ? <BlogSideBar blog={blog} /> : <SideBar />}
         </>
     );
 };

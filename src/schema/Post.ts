@@ -13,6 +13,7 @@ export const BlogDetailedSchema = z.object({
     category: z.string(),
     words: z.number(),
     toc: z.string(),
+    mathrender: z.boolean().default(false),
     subtitle: z.string().optional(),
     password: z.string().optional(),
     neighbours: z.object({

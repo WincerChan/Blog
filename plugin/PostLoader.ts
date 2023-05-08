@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import { BlogDetailed, BlogMinimal } from "../src/schema/Post";
 import { padTo32 } from "../src/utils";
+import renderMath from "./mathRender";
 
 type sameTagsArgs = {
     [key: string]: BlogDetailed[]
@@ -90,9 +91,11 @@ const encryptBlog = (pwd, content) => {
 }
 
 const PostLoader = (parsedContent: BlogDetailed) => {
-    const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
     let { content, ...rest } = parsedContent
+    if (parsedContent.mathrender && content)
+        content = renderMath(content)
     const loadHighlightCSS = content?.includes('data-lang=');
+    const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
     parsedContent.content = undefined
 
     if (parsedContent.password) {
@@ -106,7 +109,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
         import Img from "~/components/lazy/Img"
         ${loadHighlightCSS ? 'import "~/styles/chroma.css"' : ""}
 
-        const MathRender = lazy(() => import("~/components/lazy/MathRender"))
+        const MathDecode = lazy(() => import("~/components/lazy/MathDecode"))
         const Pre = lazy(() => import("~/components/lazy/Pre"))
         
         const Post = () => {

@@ -14,7 +14,7 @@ export default function NotFound() {
     <>
       <PageLayout page={page} showComment={false}>
         <section>
-          <p class=":: text-xl mb-8 ">{page.content}</p>
+          <p class=":: text-xl mb-8 leading-relaxed">{page.content}</p>
         </section>
       </PageLayout>
     </>

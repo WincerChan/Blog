@@ -4,7 +4,7 @@ import katex from "katex";
 const MathRender = ({ content }: { content: string }) => {
     const rawCode = decode(content)
 
-    const code = katex.renderToString(rawCode, { output: 'mathml' })
+    const code = katex.renderToString(rawCode, { output: 'mathml', displayMode: true })
     return (
         <span innerHTML={code} />
     )
