@@ -24,7 +24,7 @@ export default function Root() {
       <Head>
         <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`} />
       </Head>
-      <Body class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased'>
+      <Body class=':: bg-[var(--main-bg)] text-[var(--main-text)] min-h-screen grid grid-rows-[auto_1fr_auto] font-base antialiased'>
         <Header />
         <main class=":: w-view main-responsive grid-cols-50 ">
           <Suspense>

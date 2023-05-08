@@ -11,7 +11,7 @@
     {{ with .Summary }}"summary": {{ . | replaceRE `(?m)(?s:<(style|script).*(style|script)>)` `` | plainify | jsonify }},{{ end }}
     {{ with .Params.Subtitle }}"subtitle": "{{ .}}",{{ end }}
     "words": {{ .WordCount }},
-    "content": {{ (replace .Content `<hr>` `<hr/>`) | replaceRE `style=".*"` `` | replaceRE `<code>(.|\n)*?<\/code>` `` | safeHTML | jsonify }},
+    "content": {{ (replace .Content `<hr>` `<hr />` ) | jsonify (dict "noHTMLEscape" true) }},
     {{ with .TableOfContents }}
     "toc": {{ . | jsonify }},
     {{ end }}

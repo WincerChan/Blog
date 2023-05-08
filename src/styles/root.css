@@ -31,19 +31,29 @@ html {
   @apply scroll-smooth
 }
 
-#TableOfContents ul ul {
-  border-left: 2px dotted var(--extra);
+pre {
+  @apply py-4 px-2 rounded my-4 overflow-x-auto scrollbar-none relative
 }
 
-pre::before {
+.highlight {
+  @apply rounded
+}
+
+code::before {
   content: attr(data-lang);
-  color: var(--head-border);
+  color: var(--cc);
   text-transform: uppercase;
   @apply text-lg absolute right-1.5 top-0.1;
 }
 
-#post-meta::-webkit-scrollbar {
+#post-meta::-webkit-scrollbar,
+pre::-webkit-scrollbar {
   display: none;
+}
+
+/* table of content */
+#TableOfContents ul ul {
+  border-left: 2px dotted var(--extra);
 }
 
 #TableOfContents>ul>li {
@@ -66,9 +76,7 @@ pre::before {
   @apply text-left mt-2 leading-7;
 }
 
-.chroma {
-  @apply overflow-x-auto scrollbar-none;
-}
+/* section  */
 
 section>ol,
 section>ul,
@@ -88,7 +96,6 @@ section li {
 li li {
   @apply ml-4
 }
-
 
 section ol {
   @apply list-decimal;
@@ -141,8 +148,6 @@ section p {
   @apply my-4
 }
 
-
-
 section table tr>th {
   @apply px-4 py-2;
 }
@@ -155,9 +160,8 @@ section p>code {
   @apply bg-[var(--cc)] px-1 rounded font-mono mx-1;
 }
 
-
-.h {
-  display: none;
+section img {
+  @apply mx-auto
 }
 
 b {
@@ -166,8 +170,4 @@ b {
 
 .ex-link {
   @apply w-5 h-5 underline-none ml-2px i-carbon-html-reference -top-1px relative;
-}
-
-section img {
-  @apply mx-auto
 }

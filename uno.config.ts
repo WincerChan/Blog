@@ -32,6 +32,7 @@ export default defineConfig({
         ["shadow-round", { "box-shadow": "#39526063 0px 0px 3px" }],
         ["card-outline", { "outline": "solid 1px var(--cc)" }],
         ["scrollbar-none", { "-ms-overflow-style": "none", "scrollbar-width": "none" }],
+        ["player-bg", { "background": " rgba(0, 0, 0, 0) linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.8)) repeat scroll 0% 0%" }]
     ],
     shortcuts: {
         'bg-menuHover': 'hover:bg-[var(--menu-hover-bg)]',
@@ -46,7 +47,7 @@ export default defineConfig({
         "h-menu": "h-11 sm:h-14 px-2.5 sm:px-3",
         "w-view": '2xl:w-308 xl:w-270 lg:w-240 mx-auto max-w-full',
         "w-viewl": '2xl:w-314 xl:w-276 lg:w-246 mx-auto',
-        'h-coverMain': '2xl:h-76 xl:h-74 h-66',
+        'h-coverMain': '2xl:h-76 xl:h-71.5 h-67',
         'blog-cover': '2xl:h-100 lg:h-80 h-64',
         'w-coverMain': '2xl:w-[22rem] xl:w-80 lg:w-64 w-full',
         "text-link": "shadow-[0_-.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.15rem_0_var(--menu-hover-text)_inset] text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)]",

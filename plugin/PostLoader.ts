@@ -1,6 +1,5 @@
 import crypto from "crypto-js";
 import { readFileSync } from "fs";
-import hljs from 'highlight.js';
 
 import path from "path";
 import { BlogDetailed, BlogMinimal } from "../src/schema/Post";
@@ -11,7 +10,7 @@ type sameTagsArgs = {
 }
 
 const loadHighlightLanguage = (content) => {
-    const regex = /lang=\"(.+?)\"/g
+    const regex = /data-lang=\"(.+?)\"/g
 
     let match;
     let languages = [];
@@ -93,8 +92,9 @@ const encryptBlog = (pwd, content) => {
 const PostLoader = (parsedContent: BlogDetailed) => {
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
     let { content, ...rest } = parsedContent
+    const loadHighlightCSS = content?.includes('data-lang=');
     parsedContent.content = undefined
-    const langRegister = loadHighlightLanguage(content)
+
     if (parsedContent.password) {
         content = encryptBlog(parsedContent.password, content)
     }
@@ -104,7 +104,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
         import EmptyLayout from "~/components/layouts/EmptyLayout"
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
-        ${langRegister ? langRegister : ""}
+        ${loadHighlightCSS ? 'import "~/styles/chroma.css"' : ""}
 
         const MathRender = lazy(() => import("~/components/lazy/MathRender"))
         const Pre = lazy(() => import("~/components/lazy/Pre"))
