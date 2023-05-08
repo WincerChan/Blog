@@ -94,7 +94,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     let { content, ...rest } = parsedContent
     if (parsedContent.mathrender && content)
         content = renderMath(content)
-    const loadHighlightCSS = content?.includes('data-lang=');
+    const loadHighlightCSS = content?.includes('Pre content=');
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
     parsedContent.content = undefined
 
