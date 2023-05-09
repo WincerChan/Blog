@@ -115,11 +115,9 @@ const PostLoader = (parsedContent: BlogDetailed) => {
         import EmptyLayout from "~/components/layouts/EmptyLayout"
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
-        ${loadHighlightCSS ? 'import "highlight.js/styles/magula.css";' : ""}
+        ${loadHighlightCSS ? 'import "highlight.js/styles/magula.css";import Pre from "~/components/lazy/Pre";' : ""}
+        ${parsedContent.mathrender ? 'const MathDecode = lazy(() => import("~/components/lazy/MathDecode"))' : ""}
 
-        const MathDecode = lazy(() => import("~/components/lazy/MathDecode"))
-        const Pre = lazy(() => import("~/components/lazy/Pre"))
-        
         const Post = () => {
             return (
                     <PostLayout rawBlog={${JSON.stringify(rest)}} relates={${JSON.stringify(relates)}}>
