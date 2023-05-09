@@ -47,7 +47,7 @@ export default defineConfig({
         "h-menu": "h-11 sm:h-14 px-2.5 sm:px-3",
         "w-view": '2xl:w-308 xl:w-270 lg:w-240 mx-auto max-w-full',
         "w-viewl": '2xl:w-314 xl:w-276 lg:w-246 mx-auto',
-        'h-coverMain': '2xl:h-76 xl:h-71.5 h-68',
+        'h-coverMain': '2xl:h-76  lg:h-71.5 h-68',
         'blog-cover': '2xl:h-100 lg:h-80 h-64',
         'w-coverMain': '2xl:w-[22rem] xl:w-80 lg:w-64 w-full',
         "text-link": "shadow-[0_-.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.15rem_0_var(--menu-hover-text)_inset] text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)]",
