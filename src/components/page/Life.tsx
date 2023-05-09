@@ -1,5 +1,5 @@
 import lifePage from "@/_output/base/life/index.json";
-import { ErrorBoundary, For, Show, Suspense, createResource, createSignal, onMount } from "solid-js";
+import { ErrorBoundary, For, Show, Suspense, createMemo, createResource, createSignal, onMount } from "solid-js";
 import PageLayout from "~/components/layouts/PageLayout";
 import LazyImg from "~/components/lazy/Img";
 import { PageSchema } from "~/schema/Page";
@@ -55,15 +55,18 @@ const RealItem = ({ poster, id, title, type, date }: Item) => {
 const Life = () => {
     const page = PageSchema.parse(lifePage)
     const [url, setUrl] = createSignal()
-    onMount(() => setUrl('https://api.itswincer.com/douban/v1/'))
+    const year = createMemo(() => new Date().getFullYear())
+    onMount(() => {
+        setUrl('https://api.itswincer.com/douban/v1/');
+    })
     const [resource] = createResource(url, fetcher)
     return (
         <PageLayout page={page} showComment={true}>
             <section innerHTML={lifePage.content} />
-            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4">我看过的书和电影（{new Date().getFullYear()}）</h3>
-            <div class="grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4">
+            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 ">我看过的书和电影（{year()}）</h3>
+            <div class="life-responsive">
                 <Suspense fallback={<FakeItems limit={5} />}>
-                    <ErrorBoundary fallback={err => <b class="<md:mx-4 col-span-5">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>}>
+                    <ErrorBoundary fallback={err => <b class=":: col-span-5 <md:mx-4 ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>}>
                         <Show when={resource()}>
                             <For each={resource()}>
                                 {item => <RealItem {...item} />}
