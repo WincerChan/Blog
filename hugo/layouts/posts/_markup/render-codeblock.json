@@ -1,9 +1,2 @@
 {{- $lang := .Attributes.lang | default .Type -}}
-{{- $tempOpen := `TEMP_OPEN_BRACKET` -}}
-{{- $tempClose := `TEMP_CLOSE_BRACKET` -}}
-{{- $highlight := highlight .Inner $lang (dict "lineNos" "inline" "style" "gruvbox" "noClasses" false) -}}
-{{- $bracketTempReplaced := replace (replace $highlight `{` $tempOpen) `}` $tempClose -}}
-{{- $blankspaceReplaced := replace $bracketTempReplaced `    ` `{'    '}` -}}
-{{- $dollarTempReplaced := replace (replace $blankspaceReplaced $tempOpen `{'{'}`) $tempClose `{'}'}` -}}
-{{- $final := replace $dollarTempReplaced `$` `$&#8203` -}}
-<Pre content="{{$highlight | base64Encode }}"><code>{{ .Inner }}</code></Pre>
+<Pre lang="{{ $lang }}"><code>{{ .Inner }}</code></Pre>

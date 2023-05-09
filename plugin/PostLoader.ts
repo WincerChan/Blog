@@ -4,6 +4,8 @@ import { readFileSync } from "fs";
 import path from "path";
 import { BlogDetailed, BlogMinimal } from "../src/schema/Post";
 import { padTo32 } from "../src/utils";
+import renderHighlight from "./codeHighlight";
+import escapeBracket from "./escapeBracket";
 import renderMath from "./mathRender";
 
 type sameTagsArgs = {
@@ -92,22 +94,28 @@ const encryptBlog = (pwd, content) => {
 
 const PostLoader = (parsedContent: BlogDetailed) => {
     let { content, ...rest } = parsedContent
-    if (parsedContent.mathrender && content)
+    // 渲染代码高亮要在前面
+    const loadHighlightCSS = content?.includes('Pre lang');
+    if (loadHighlightCSS)
+        content = renderHighlight(content)
+    // 公式渲染要在后面，公式渲染后会多出很多东西，所以放后面妥当一点
+    if (parsedContent.mathrender)
         content = renderMath(content)
-    const loadHighlightCSS = content?.includes('Pre content=');
-    const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
-    parsedContent.content = undefined
-
-    if (parsedContent.password) {
+    // 如果有密码，加密
+    if (parsedContent.password)
         content = encryptBlog(parsedContent.password, content)
-    }
+    // 转义大括号最后
+    content = escapeBracket(content).html()
+
+    const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
+
     const transformedCode = `
         import { A } from "solid-start"
         import { lazy } from "solid-js";
         import EmptyLayout from "~/components/layouts/EmptyLayout"
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
-        ${loadHighlightCSS ? 'import "~/styles/chroma.css"' : ""}
+        ${loadHighlightCSS ? 'import "highlight.js/styles/magula.css";' : ""}
 
         const MathDecode = lazy(() => import("~/components/lazy/MathDecode"))
         const Pre = lazy(() => import("~/components/lazy/Pre"))

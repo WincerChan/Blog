@@ -1,9 +1,11 @@
 import { decode } from "js-base64"
 
-const Pre = ({ content }) => {
-    const code = decode(content)
+const Pre = ({ children, lang }) => {
+    const code = decode(children)
     return (
-        <div innerHTML={code} />
+        <pre class="relative">
+            <code class="hljs rounded" data-lang={lang} innerHTML={code} />
+        </pre>
     )
 }
 

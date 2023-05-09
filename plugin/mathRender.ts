@@ -7,8 +7,8 @@ import katex from "katex";
 
 
 const renderMath = (content: string) => {
-    const inlineMathPattern = /\$\$([\s\S]+?)\$\$/g;
-    let result = content.replace(inlineMathPattern, (match, formula) => {
+    const mathPattern = /\$\$([\s\S]+?)\$\$/g;
+    let result = content.replace(mathPattern, (match, formula) => {
         try {
             const renderResult = katex.renderToString(he.decode(formula), { output: 'html', displayMode: true });
             let $ = load(renderResult)

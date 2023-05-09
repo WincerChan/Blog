@@ -32,7 +32,7 @@ html {
 }
 
 pre {
-  @apply py-4 px-2 rounded my-4 scrollbar-none overflow-x-auto;
+  @apply rounded scrollbar-none overflow-x-auto;
 }
 
 .highlight {
@@ -41,7 +41,7 @@ pre {
 
 code::before {
   content: attr(data-lang);
-  color: var(--cc);
+  color: var(--head-border);
   text-transform: uppercase;
   @apply text-lg absolute right-1.5 top-0.1;
 }
@@ -157,7 +157,7 @@ section table tr>td {
 }
 
 section p>code {
-  @apply bg-[var(--cc)] px-1 rounded font-mono mx-1;
+  @apply bg-[var(--cc)] px-1 pb-2px rounded font-mono mx-1;
 }
 
 section img {
