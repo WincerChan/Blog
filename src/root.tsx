@@ -36,7 +36,7 @@ export default function Root() {
         <Footer />
         <BackTop />
         <Scripts />
-        {__IS_PROD ? <script async defer data-website-id="635fdaf6-88da-46c2-bbbd-277a77276d7f"
+        {__IS_PROD ? <script async defer data-website-id="d50e9a0c-1726-40f7-b622-7bbf7aa989bc"
           src="https://api.itswincer.com/react/route.js" /> : <></>}
         {__IS_PROD ?
           <script innerHTML={`if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}`} />
