@@ -16,6 +16,13 @@
     "contentDir": "hugo/content",
     "layoutDir": "hugo/layouts",
     "assetDir": "hugo/assets",
+    "params": {
+        "sitemap": {
+            "changeFreq": "weekly",
+            "priority": 0.6,
+            "termPriority": 0.3
+        }
+    },
     "markup": {
         "tableOfContents": {
             "endLevel": 5
