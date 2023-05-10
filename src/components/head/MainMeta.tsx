@@ -16,6 +16,7 @@ const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {
             <Meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
             <Link rel="canonical" href={new URL(params.pageURL, siteConf.baseURL).toString()} />
             <Link rel="preconnect" href={siteConf.cdnURL} />
+            <Link rel="preconnect" href="https://npm.elemecdn.com" />
             <Title>{title}</Title>
             <Meta name="description" content={params.description || siteConf.description} />
             <Meta name="keywords" content={params.keywords.join(", ")} />
