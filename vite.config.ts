@@ -10,7 +10,7 @@ import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
 const isProd = process.env.NODE_ENV === "production";
 
 export default defineConfig({
-  base: "https://npm.elemecdn.com/wir@3.0.3/",
+  base: isProd ? "https://npm.onmicrosoft.cn/wir@3.0.4/" : "/",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),

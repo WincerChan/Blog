@@ -5,7 +5,7 @@ import { HeadParamsTyoe } from "~/schema/Head";
 import { BlogSideBar, SideBar } from "../core/sidebar";
 import { BlogPostParams } from "../core/sidebar/types";
 import HeadTag from "../head";
-nProgress.configure({ showSpinner: false })
+nProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 })
 
 type ContentLayoutProps = {
     blog?: BlogPostParams,

@@ -9,7 +9,7 @@ const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {
     return (
         <>
             <Link rel="preconnect" href={siteConf.cdnURL} />
-            <Link rel="preconnect" href="https://npm.elemecdn.com" crossOrigin='' />
+            <Link rel="preconnect" href="https://npm.onmicrosoft.cn" crossOrigin='' />
             <Meta charset="utf-8" />
             <Meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
             <Title>{title}</Title>
