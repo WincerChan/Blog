@@ -10,6 +10,7 @@ import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
 const isProd = process.env.NODE_ENV === "production";
 
 export default defineConfig({
+  base: "https://npm.elemecdn.com/wir@3.0.1/",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),
@@ -21,6 +22,13 @@ export default defineConfig({
     __TAGS: randomTags,
     __TOTAL_POSTS: totalPosts,
     __IS_PROD: isProd
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        chunkFileNames: "assets/[name].js",
+      }
+    }
   },
   plugins: [
     { ...jsonxPlugin(), enforce: "pre" },
