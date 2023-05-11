@@ -5,7 +5,7 @@
     "dev:hugo": "hugo --noBuildLock",
     "dev:copy": "cp src/routes/about/index.json src/routes/about/index.jsonx; cp _output/*.xml public/;",
     "build": "pnpm dev:copy;solid-start build",
-    "start": "solid-start start --port 5000"
+    "start": "solid-start start --port 5001"
   },
   "type": "module",
   "devDependencies": {
@@ -46,7 +46,8 @@
   "pnpm": {
     "patchedDependencies": {
       "solid-start@0.2.26": "patches/solid-start@0.2.26.patch",
-      "solid-start-static@0.2.26": "patches/solid-start-static@0.2.26.patch"
+      "solid-start-static@0.2.26": "patches/solid-start-static@0.2.26.patch",
+      "@solidjs/router@0.8.2": "patches/@solidjs__router@0.8.2.patch"
     }
   }
 }

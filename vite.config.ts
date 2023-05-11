@@ -78,6 +78,7 @@ const PWAConfig = {
 }
 
 export default defineConfig({
+  base: isProd ? "https://npm.onmicrosoft.cn/wir@3.0.4/" : "/",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),
@@ -89,6 +90,13 @@ export default defineConfig({
     __TAGS: randomTags,
     __TOTAL_POSTS: totalPosts,
     __IS_PROD: isProd
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        chunkFileNames: "assets/[name].js",
+      }
+    }
   },
   plugins: [
     { ...jsonxPlugin(), enforce: "pre" },

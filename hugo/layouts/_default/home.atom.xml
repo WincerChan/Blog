@@ -22,7 +22,7 @@
       <category term="{{ .Params.Category }}" label='type'/>
     {{ range (.GetTerms "tags") }}
         <category term="{{htmlEscape .LinkTitle }}" />{{end}}
-      <link rel='alternate' type='type/html' href='{{ replace $url `.jsonx` `/` }}' />
+      <link rel='alternate' type='type/html' href='{{ replace $url `/index.jsonx` `/` }}' />
       <title type="text">{{ htmlEscape .Title | plainify}}</title> 
       <published>{{ .PublishDate.UTC.Format "2006-01-02T15:04:05+08:00" }}</published>
       <updated>{{ .Lastmod.UTC.Format "2006-01-02T15:04:05+08:00"  }}</updated>

@@ -17,3 +17,16 @@ index 123693dbc83ba5100b00c9d3f6b65f1c55a808e1..2055f2cde0c3ac272c56dd77b0597121
    });
 +  return encodeURI(realPath)
  }
+diff --git a/root/Links.tsx b/root/Links.tsx
+index 04708cc2cf4913ddd83c8067fd51c88bc09c6bb7..a84d996cf91afd4a495574265a7b44dfb378ab99 100644
+--- a/root/Links.tsx
++++ b/root/Links.tsx
+@@ -47,7 +47,7 @@ function getAssetsFromManifest(
+   const links = match.reduce((r, src) => {
+     r[src.href] =
+       src.type === "style" ? (
+-        <link rel="stylesheet" href={src.href} $ServerOnly />
++        <link rel="preload stylesheet" as="style" href={src.href} $ServerOnly />
+       ) : src.type === "script" ? (
+         <link rel="modulepreload" href={src.href} $ServerOnly />
+       ) : undefined;
