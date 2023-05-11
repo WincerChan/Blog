@@ -31,7 +31,8 @@
     "undici": "^5.22.0",
     "unocss": "^0.51.8",
     "vite": "^4.1.4",
-    "vite-plugin-pwa": "^0.14.7",
+    "workbox-core": "^6.5.4",
+    "workbox-routing": "^6.5.4",
     "zod": "^3.21.4"
   },
   "dependencies": {
