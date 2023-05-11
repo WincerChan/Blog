@@ -1,4 +1,5 @@
 import path from "path";
+import { Plugin } from "vite";
 import PostLoader from "./PostLoader";
 
 
@@ -57,8 +58,9 @@ const checkType = (id: string) => {
 }
 
 export default function () {
-    const plugin = {
+    const plugin: Plugin = {
         name: 'jsonx-plugin',
+        enforce: "pre",
         async transform(content: string, id: string) {
             if (path.extname(id) !== '.jsonx') {
                 return null;
