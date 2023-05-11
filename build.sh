@@ -21,6 +21,7 @@ for dir in "${directories[@]}"; do
     cp "_output/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
 done
 cp -r "_output/sass" "public/"
+cp -r "_output/manifest.webmanifest" "public/"
 echo -e "${YELLOW}Building site...${RESET}"
 pnpm build
 

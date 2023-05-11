@@ -11,7 +11,7 @@ import viteSwBuild from "./plugin/swBuild";
 const isProd = process.env.NODE_ENV === "production";
 
 export default defineConfig({
-  base: false ? siteConf.assetsPrefix : "/",
+  base: true ? siteConf.assetsPrefix : "/",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),
@@ -25,9 +25,11 @@ export default defineConfig({
     __IS_PROD: isProd
   },
   build: {
+    minify: false,
     rollupOptions: {
       output: {
         chunkFileNames: "assets/[name].js",
+        entryFileNames: "assets/[name].js"
       }
     }
   },
