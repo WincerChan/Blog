@@ -4,6 +4,7 @@ import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import siteConf from "./hugo.json";
 import jsonxPlugin from "./plugin/jsonx";
 import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
 
@@ -78,7 +79,7 @@ const PWAConfig = {
 }
 
 export default defineConfig({
-  base: isProd ? "https://npm.onmicrosoft.cn/wir@3.0.4/" : "/",
+  base: isProd ? siteConf.assetsPrefix : "/",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),
@@ -103,13 +104,5 @@ export default defineConfig({
     solid({ adapter: staticAdpater(), extensions: [".jsonx"] }),
     UnoCSS(),
     VitePWA(PWAConfig)
-  ],
-  build: {
-    minify: false,
-    rollupOptions: {
-      output: {
-        chunkFileNames: `assets/[name].js`,
-      }
-    }
-  }
+  ]
 });

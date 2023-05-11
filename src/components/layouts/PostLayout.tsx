@@ -18,8 +18,8 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
     const isRecently = (new Date().getTime() - blog.date.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
         <>
-            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] " >
-                <div id="post-meta" class=":: flex items-center overflow-x-scroll <md:mx-4 hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
+            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4" >
+                <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
                     <span>{formatDate(blog.date)}</span>
                     <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)]"></div>
                     <TagCollection tags={blog.tags} />

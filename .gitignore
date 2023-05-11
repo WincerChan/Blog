@@ -26,3 +26,8 @@ _output/
 resources
 _blogs
 public/*.xml
+public/sass
+public/base
+public/posts
+public/category
+public/tags
