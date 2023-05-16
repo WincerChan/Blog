@@ -24,7 +24,7 @@ const PageLayout = ({ children, page, showComment }) => {
     return (
         <ContentLayout headParams={headParams}>
             {page?.cover && <LazyImg class=":: w-full blog-cover rounded object-cover mb-6 " src={page.cover} alt="cover" />}
-            {page && <ArticleTitle title={page.title} />}
+            {page && <div class="<md:mx-4"><ArticleTitle title={page.title} /></div>}
             {children}
             <Show when={showComment}>
                 <DisqusComment slug={page.slug} />

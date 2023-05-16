@@ -40,9 +40,9 @@ if [ "$1" == "--publish" ]; then
         echo -e "${YELLOW}jq not found, please install it first.${RESET}"
         exit
     fi
-    new_version=$(cat hugo.json | jq .assetsPrefix | sed -E 's/.*@([^/]+)\/.*/\1/')
+    . .env
     cd _blogs/wir
-    echo -e "${YELLOW}Publishing new version $new_version...${RESET}"
-    jq --arg nv "$new_version" '.version = $nv' package.json > .package.json && mv .package.json package.json
+    echo -e "${YELLOW}Publishing new version $VITE_ASSET_VERSION...${RESET}"
+    jq --arg nv "$VITE_ASSET_VERSION" '.version = $nv' package.json > .package.json && mv .package.json package.json
     npm publish --otp=$(read -p "Enter OTP: " otp; echo $otp)
 fi

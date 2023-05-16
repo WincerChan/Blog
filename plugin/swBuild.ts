@@ -19,8 +19,7 @@ const viteSwBuild = () => {
                     }
                 }
             })
-            console.log('closeBundle')
-        },
+        }
     }
 }
 

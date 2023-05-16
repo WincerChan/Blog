@@ -5,6 +5,7 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const util = require('util');
+const { exit } = require('process');
 
 const readdirAsync = util.promisify(fs.readdir);
 
@@ -38,7 +39,11 @@ async function fetchFilesInDirectory(directoryPath, urlPrefix) {
 }
 
 const directoryPath = './dist/public/assets/';
-const siteConf = JSON.parse(fs.readFileSync("./hugo.json"))
-const urlPrefix = `${siteConf.assetsPrefix}assets/`;
+const assetVersion = fs.readFileSync(".env").toString()
+const regex = /VITE_ASSET_VERSION=(\d+\.\d+\.\d+)/;
+const match = assetVersion.match(regex);
+if (!match) exit(1)
+
+const urlPrefix = `https://npm.elemecdn.com/wir@${match[1]}/assets/`;
 
 fetchFilesInDirectory(directoryPath, urlPrefix);

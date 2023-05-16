@@ -2,6 +2,8 @@ declare const __WORDS: number
 declare const __TAGS: string[]
 declare const __TOTAL_POSTS: number
 declare const __IS_PROD: boolean
+declare const __ASSET_VERSION: string
+declare const __SW_HASH: string
 declare const DISQUS: {
     reset: (arg0: any) => void
 }

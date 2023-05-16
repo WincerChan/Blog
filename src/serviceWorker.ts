@@ -4,15 +4,16 @@ import { registerRoute } from 'workbox-routing';
 skipWaiting();
 clientsClaim();
 
+const ASSETS_PREFIEXES = [
+    `https://unpkg.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
+    `https://npm.elemecdn.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
+]
 // const ASSETS_PREFIEXES = [
-//     "https://unpkg.com/",
-//     "https://npm.elemecdn.com/",
+//     `http://localhost:8080`,
+//     `http://localhost:5001`,
 // ]
 
-const ASSETS_PREFIEXES = [
-    "http://localhost:8080",
-    ""
-]
+
 
 const fetchAssets = async (pathname: string) => {
     const controller = new AbortController(),
@@ -31,9 +32,8 @@ const fetchAssets = async (pathname: string) => {
 }
 
 // 添加自定义的路由和策略
-registerRoute(({ request }) => request.destination === "script" && request.url.includes(":8080") && request.url.includes("index"),
+registerRoute(({ request }) => request.destination === "script" || request.destination === "style",
     async ({ event }) => {
-        console.log('Custom fetch handler:', event.request);
         const parsedUrl = new URL(event.request.url);
         const { body, ...rest } = await fetchAssets(parsedUrl.pathname)
         return new Response(body, rest)
