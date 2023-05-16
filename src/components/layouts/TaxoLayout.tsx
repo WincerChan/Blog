@@ -26,7 +26,7 @@ const TaxoLayout = ({ rawTaxo, type }: TaxoLayoutProps) => {
     const headParams = constructHeadParams(rawTaxo.term, type, blogsByTerm);
     return (
         <ContentLayout headParams={headParams} >
-            <ArticleTitle title={headParams.title} />
+            <div class="<md:mx-4"><ArticleTitle title={headParams.title} /></div>
             <OtherBlogs posts={() => blogsByTerm} />
         </ContentLayout>
     )

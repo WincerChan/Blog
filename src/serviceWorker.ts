@@ -32,7 +32,7 @@ const fetchAssets = async (pathname: string) => {
 }
 
 // 添加自定义的路由和策略
-registerRoute(({ request }) => request.destination === "script" || request.destination === "style",
+registerRoute(({ request }) => request.url.includes("/assets/"),
     async ({ event }) => {
         const parsedUrl = new URL(event.request.url);
         const { body, ...rest } = await fetchAssets(parsedUrl.pathname)
