@@ -1,5 +1,5 @@
 {{ $all := where .Site.RegularPages "Section" "posts" }}
-{{ $published := (where $all "Params.published" "!=" false) | first 4 }}
+{{ $published := (where $all "Params.private" "!=" true) | first 4 }}
 {
   "type": "{{ .Type }}",
   "term": "{{ .Title }}",
@@ -8,7 +8,7 @@
     {
       "title": "{{ $page.Title }}",
       {{ if eq $index 0 }}
-      "summary": {{ $page.Summary | replaceRE `(?m)(?s:<(style|script).*(style|script)>)` `` | plainify | jsonify }},
+      "summary": {{ $page.Summary | plainify | jsonify | replaceRE " " "" }},
       {{ end }}
       "subtitle": "{{ $page.Params.subtitle }}",
       "slug": "{{ replace $page.RelPermalink `index.jsonx` `` }}",

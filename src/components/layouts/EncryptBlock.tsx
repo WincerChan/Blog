@@ -28,7 +28,7 @@ const ProtectBlog = ({ source }) => {
                     <button title="解密" class=":: font-headline px-4 card-outline rounded ">解密</button>
                 </form>
             </Show>
-            <Show when={error()}><b>密码错误，这个未知的领域离你还很遥远。</b></Show>
+            <Show when={error()}><b class="<md:mx-4">密码错误，这个未知的领域离你还很遥远。</b></Show>
             <Show when={show()}><section innerHTML={content()} /></Show>
         </>
     )

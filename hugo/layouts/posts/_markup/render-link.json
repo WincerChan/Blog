@@ -1,5 +1,9 @@
 {{ if strings.HasPrefix .Destination "http" }}
   <a href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }} target="_blank"><span>{{ .Text }}</span><span class="ex-link" /></a>
 {{ else }}
-  <A {{ if strings.Contains .Destination "#" }} noScroll={false} {{ end }} href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }}>{{ .Text }}</A>
+  {{ if strings.HasPrefix .Destination "#" }}
+    <a href="{{ .Destination }}"  {{ with .Title }}title="{{ . }}"{{ end }} >{{ .Text }}</a>
+  {{ else }}
+    <A {{ if strings.Contains .Destination "#" }} noScroll={false} {{ end }} href="{{ .Destination }}" {{ with .Title }}title="{{ . }}"{{ end }}>{{ .Text }}</A>
+  {{ end }}
 {{ end }}

@@ -1,4 +1,4 @@
-{{ $published := where .Data.Pages "Params.published" "!=" false }}
+{{ $published := where .Data.Pages "Params.private" "!=" true }}
 {{ $terms := slice }}
 
 {{ if eq .Type "category" }}

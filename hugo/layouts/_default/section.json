@@ -1,4 +1,4 @@
-{{ $published := where .CurrentSection.RegularPages "Params.published" "!=" false }}
+{{ $published := where .CurrentSection.RegularPages "Params.private" "!=" true }}
 {{ if eq .Type "base" }}
 {{ $published = sort $published "Params.Weight" "desc"  }}
 {{ end }}
