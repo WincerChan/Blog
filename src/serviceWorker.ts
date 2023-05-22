@@ -8,10 +8,6 @@ const ASSETS_PREFIEXES = [
     `https://unpkg.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
     `https://npm.elemecdn.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
 ]
-// const ASSETS_PREFIEXES = [
-//     `http://localhost:8080`,
-//     `http://localhost:5001`,
-// ]
 
 
 

@@ -62,7 +62,8 @@ export default defineConfig({
         "bq-section": "border-l-4 border-[var(--head-border)] my-4 pl-3 <md:mr-4",
         "aside-responsive": "md:col-span-14 2xl:col-span-13 <md:mx-4 <md:mt-8",
         "body-responsive": " md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ",
-        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4"
+        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4",
+        "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10"
     },
     presets: [
         presetWind(),
