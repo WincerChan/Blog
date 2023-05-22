@@ -1,5 +1,8 @@
 const isBrowser = typeof window !== "undefined";
-const formatDate = (date: Date) => {
+const formatDate = (date: Date | string) => {
+    if (typeof date === 'string') {
+        date = new Date(date);
+    }
     let options: Intl.DateTimeFormatOptions = {
         month: 'short',
         day: 'numeric',
@@ -18,7 +21,8 @@ const padTo32 = (str: string) => {
 }
 
 
-const calculateDateDifference = (startDate: Date, endDate: Date) => {
+const calculateDateDifference = (startDate: Date) => {
+    const endDate = new Date();
 
     let years = endDate.getFullYear() - startDate.getFullYear();
     let months = endDate.getMonth() - startDate.getMonth();

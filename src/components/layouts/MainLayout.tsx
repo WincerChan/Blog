@@ -1,11 +1,10 @@
-import { HeadParamsSchema } from "~/schema/Head"
-import { BlogMinimal } from "~/schema/Post"
-import ContentLayout from "./ContentLayout"
+import { BlogMinimal } from "~/schema/Post";
+import ContentLayout from "./ContentLayout";
 
 const constructHeadParams = (page: BlogMinimal) => {
-    return HeadParamsSchema.parse({
+    return {
         date: page.date,
-    })
+    }
 }
 const MainLayout = ({ children, page }) => {
     const headParmas = constructHeadParams(page)

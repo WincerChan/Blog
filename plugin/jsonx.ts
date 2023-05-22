@@ -6,7 +6,6 @@ import PostLoader from "./PostLoader";
 const PageLoader = (parsedContent) => {
     const { content, ...rest } = parsedContent
     const transformedCode = `
-                import { PageSchema } from "~/schema/Page";
                 import Img from "~/components/lazy/Img"
                 import { A } from "solid-start"
                 import PageLayout from "~/components/layouts/PageLayout"

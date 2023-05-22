@@ -3,11 +3,10 @@ import friendLinks from "@/hugo/content/friends.json";
 import { For } from 'solid-js';
 import FriendLink from '~/components/core/section/FriendLink';
 import PageLayout from '~/components/layouts/PageLayout';
-import { PageSchema } from '~/schema/Page';
 
 
 const Friend = () => {
-    const page = PageSchema.parse(friendPage);
+    const page = friendPage;
     return (
         <PageLayout page={page} showComment={true}>
             <section innerHTML={friendPage.content} />

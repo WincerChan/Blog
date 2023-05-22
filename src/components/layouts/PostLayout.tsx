@@ -1,13 +1,11 @@
-import { JSXElement, Show, lazy } from "solid-js";
-import { A } from "solid-start";
-import { HeadParamsSchema } from "~/schema/Head";
-import { BlogDetailed, BlogDetailedSchema, BlogScoreSchema } from "~/schema/Post";
+import { JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
+import { A, useLocation } from "solid-start";
+import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
 import Copyright from "../core/section/Copyright";
 import DisqusComment from "../core/section/Disqus";
 import TagCollection from "../core/section/Tag";
 import ArticleTitle from "../core/section/Title";
-import { BlogPostParams } from "../core/sidebar/types";
 import LazyBg from "../lazy/BG";
 import LazyImg from "../lazy/Img";
 import ContentLayout from "./ContentLayout";
@@ -15,7 +13,8 @@ import ContentLayout from "./ContentLayout";
 const ProtectBlog = lazy(() => import("./EncryptBlock"))
 
 const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
-    const isRecently = (new Date().getTime() - blog.date.getTime()) < 90 * 24 * 60 * 60 * 1000
+    const publishedDate = new Date(blog.date);
+    const isRecently = (new Date().getTime() - publishedDate.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
         <>
             <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4" >
@@ -31,7 +30,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
             </LazyBg>
             <Show when={!isRecently}>
                 <div class=":: pl-3 my-4 border-l-4 border-[#f9c116] pr-4 ">
-                    <p>本文最近一次更新于{calculateDateDifference(blog.date, new Date())}前，其中的内容很可能已经有所发展或是发生改变。</p>
+                    <p>本文最近一次更新于{calculateDateDifference(new Date(blog.updated))}前，其中的内容很可能已经有所发展或是发生改变。</p>
                 </div>
             </Show>
 
@@ -53,30 +52,44 @@ const Neighbours = ({ neighbours }: BlogDetailed) => {
 }
 
 const constructHeadParams = (blog: BlogDetailed) => {
-    return HeadParamsSchema.parse({
+    return {
         title: blog.title,
         description: blog.summary,
-        date: blog.updated,
+        date: blog.date,
         keywords: blog.tags,
         pageURL: blog.slug,
         words: blog.words,
         subtitle: blog.subtitle,
         cover: blog.cover,
-        updated: blog.updated
-    })
+        updated: blog.updated,
+    }
 }
 
+type PostProps = {
+    children: JSXElement,
+    rawBlog: BlogDetailed,
+    relates: BlogScore[]
+}
 
-const PostLayout = ({ children, rawBlog, relates }) => {
-    const blog = BlogDetailedSchema.parse(rawBlog)
-    const blogParams: BlogPostParams = {
-        toc: blog.toc,
-        relates: relates?.map(r => BlogScoreSchema.parse(r))
-    }
+const PostLayout = ({ children, rawBlog, relates }: PostProps) => {
+    const hash = createMemo(() => useLocation().hash)
+    onMount(() => {
+        if (!hash()) return
+        const id = decodeURIComponent(hash())
+        document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
+    })
+
+    const
+        blog = rawBlog,
+        blogParams = {
+            toc: blog.toc,
+            relates: relates
+        },
+        headParams = constructHeadParams(blog);
+
     let wrapper: JSXElement
     if (!!blog.password) wrapper = <ProtectBlog source={children} />
     else wrapper = <section>{children}</section>
-    const headParams = constructHeadParams(blog);
 
     return (
         <ContentLayout blog={blogParams} headParams={headParams} >

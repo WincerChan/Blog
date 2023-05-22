@@ -3,14 +3,13 @@ import postsPage from "@/_output/posts/index.json";
 import { For, createSignal } from "solid-js";
 import OtherBlogs from "~/components/core/section/OtherCards";
 import PageLayout from "~/components/layouts/PageLayout";
-import { PageSchema } from "~/schema/Page";
-import { BlogMinimal, BlogMinimalSchema } from "~/schema/Post";
+import { BlogMinimal } from "~/schema/Post";
 
 
 const groupByYear = (posts: BlogMinimal[]) => {
     let byYears: { [key: string]: BlogMinimal[] } = {};
     posts.forEach((post) => {
-        const year = post.date.getFullYear()
+        const year = new Date(post.date).getFullYear()
         if (!byYears[year]) byYears[`${year}`] = [];
         post.slug = `/posts/${post.slug}/`
         byYears[year].push(post)
@@ -30,7 +29,7 @@ const YearArchive = ({ posts, year, ...props }: { posts: BlogMinimal[], year: st
 }
 
 const Archives = () => {
-    const posts = groupByYear(postsPage.pages.map((post) => BlogMinimalSchema.parse(post)))
+    const posts = groupByYear(postsPage.pages)
     const allYears = Object.keys(posts).sort((a, b) => (Number(b) - Number(a)))
     const [activeYear, setActiveYear] = createSignal(allYears[0])
     const [activePosts, setActivePosts] = createSignal(posts[allYears[0]] || [])
@@ -41,7 +40,7 @@ const Archives = () => {
     }
     // 规范化之后的页面
     return (
-        <PageLayout page={PageSchema.parse(archPage)} showComment={false}>
+        <PageLayout page={archPage} showComment={false}>
             <div id="post-meta" class=":: font-mono <md:mx-4 text-base flex overflow-x-scroll hyphens-auto whitespace-nowrap  space-x-4 scrollbar-none mt-4 mb-6 ">
                 <For each={allYears}>
                     {(year, index) => (

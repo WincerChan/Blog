@@ -1,5 +1,4 @@
 import { JSX, Show } from "solid-js";
-import { HeadParamsSchema } from "~/schema/Head";
 import { BasePage } from "~/schema/Page";
 import DisqusComment from "../core/section/Disqus";
 import ArticleTitle from "../core/section/Title";
@@ -12,11 +11,11 @@ type PageLayoutProps = {
 }
 
 const constructHeadParams = (page: BasePage) => {
-    return HeadParamsSchema.parse({
+    return {
         title: page.title,
         description: page.summary,
         pageURL: page.slug,
-    })
+    }
 }
 
 const PageLayout = ({ children, page, showComment }) => {
