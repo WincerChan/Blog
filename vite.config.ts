@@ -1,5 +1,3 @@
-import { createHash } from "crypto";
-import { readFileSync } from "fs";
 import path from "path";
 import staticAdpater from "solid-start-static";
 import solid from "solid-start/vite";
@@ -10,17 +8,12 @@ import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
 import viteSwBuild from "./plugin/swBuild";
 
 const isProd = process.env.NODE_ENV === "production";
-const h = createHash("sha256")
-h.update(readFileSync("./src/serviceWorker.ts"))
-const swHash = h.digest("hex").slice(0, 6)
 const definedVars = {
   __WORDS: wordsCount,
   __TAGS: randomTags,
   __TOTAL_POSTS: totalPosts,
   __IS_PROD: isProd,
-  __SW_HASH: `"${swHash}"`
 }
-
 
 export default defineConfig({
   resolve: {

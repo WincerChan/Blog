@@ -7,6 +7,7 @@ clientsClaim();
 const ASSETS_PREFIEXES = [
     `https://unpkg.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
     `https://npm.elemecdn.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
+    ``
 ]
 
 
@@ -16,13 +17,14 @@ const fetchAssets = async (pathname: string) => {
         signal = controller.signal;
     return Promise.any(ASSETS_PREFIEXES.map(prefix => fetch(`${prefix}${pathname}`, { signal })))
         .then(async res => {
+            if (res.status !== 200) Promise.reject(res.status);
             const text = await res.text();
             controller.abort();
             return {
                 headers: res.headers,
                 body: text,
                 status: res.status,
-            };
+            }
         })
         .catch(err => Promise.reject(err))
 }
