@@ -1,6 +1,7 @@
 import archPage from "@/_output/base/archives/index.json";
 import postsPage from "@/_output/posts/index.json";
-import { For, createSignal } from "solid-js";
+import { For, createMemo, createSignal, onMount } from "solid-js";
+import { useSearchParams } from "solid-start";
 import OtherBlogs from "~/components/core/section/OtherCards";
 import PageLayout from "~/components/layouts/PageLayout";
 import { BlogMinimal } from "~/schema/Post";
@@ -11,8 +12,7 @@ const groupByYear = (posts: BlogMinimal[]) => {
     posts.forEach((post) => {
         const year = new Date(post.date).getFullYear()
         if (!byYears[year]) byYears[`${year}`] = [];
-        post.slug = `/posts/${post.slug}/`
-        byYears[year].push(post)
+        byYears[year].push({ ...post, slug: `/posts/${post.slug}/` })
     })
     return byYears
 }
@@ -32,11 +32,18 @@ const Archives = () => {
     const posts = groupByYear(postsPage.pages)
     const allYears = Object.keys(posts).sort((a, b) => (Number(b) - Number(a)))
     const [activeYear, setActiveYear] = createSignal(allYears[0])
-    const [activePosts, setActivePosts] = createSignal(posts[allYears[0]] || [])
+    const [searchParams, setSearchParams] = useSearchParams()
+    const activePosts = createMemo(() => posts[activeYear()] || [])
 
-    const updateActivePosts = (year) => {
+    onMount(() => {
+        const year = searchParams.year
+        if (!year) return
         setActiveYear(year)
-        setActivePosts(posts[year] || [])
+
+    })
+    const updateActivePosts = (year) => {
+        setSearchParams({ year })
+        setActiveYear(year)
     }
     // 规范化之后的页面
     return (

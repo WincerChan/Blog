@@ -29,7 +29,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
                 </Show>
             </LazyBg>
             <Show when={!isRecently}>
-                <div class=":: pl-3 my-4 border-l-4 border-[#f9c116] pr-4 ">
+                <div class=":: pl-3 my-4 border-l-4 border-[#f9c116] bg-[var(--notify)] py-3 pr-4 ">
                     <p>本文最近一次更新于{calculateDateDifference(new Date(blog.updated))}前，其中的内容很可能已经有所发展或是发生改变。</p>
                 </div>
             </Show>
