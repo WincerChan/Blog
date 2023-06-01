@@ -83,13 +83,8 @@ pre::-webkit-scrollbar {
 section>ol,
 section>ul,
 section>ol {
-  @apply pl-8 my-2;
+  @apply list-items;
 }
-
-section ol,
-section ul,
-section ol,
-section ul {}
 
 section li {
   @apply my-2;

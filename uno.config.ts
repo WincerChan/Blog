@@ -59,11 +59,12 @@ export default defineConfig({
         "toc-responsive": "<md:fixed <md:bottom-5 <md:w-full <md:bg-[var(--ers-bg)] <md:z-20 <md:px-4",
         "hr-section": "<lg:mx-4 w-24 my-8 border-none",
         "p-section": "<md:mx-4",
-        "bq-section": "border-l-4 border-[var(--head-border)] bg-[var(--menu-hover-bg)] my-4 pl-3 pr-4 <md:mr-4",
+        "bq-section": "border-l-4 border-[var(--head-border)] bg-[var(--menu-hover-bg)] my-4 pl-3 pr-4",
         "aside-responsive": "md:col-span-14 2xl:col-span-13 <md:mx-4 <md:mt-8",
         "body-responsive": " md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ",
         "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4",
-        "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10"
+        "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10",
+        "list-items": "pl-8 my-2 <md:mx-4"
     },
     presets: [
         presetWind(),
