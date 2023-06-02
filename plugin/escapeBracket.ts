@@ -2,7 +2,7 @@ import { load } from "cheerio"
 
 const escapeBracket = (content: string) => {
     const bracketPattern = /[\{\}]/g
-    const $ = load(content, { xmlMode: true, decodeEntities: false })
+    const $ = load(content.replaceAll("<hr>", "<hr/>"), { xmlMode: true, decodeEntities: false })
     $('p').each((index, element) => {
         const text = $(element).html() || ""
         const escapedText = text.replace(bracketPattern, (match) => {
@@ -15,7 +15,7 @@ const escapeBracket = (content: string) => {
         })
         $(element).html(escapedText)
     })
-    return $
+    return $.html()
 }
 
 export default escapeBracket

@@ -83,7 +83,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     if (parsedContent.password)
         content = encryptBlog(parsedContent.password, content)
     // 转义大括号最后
-    content = escapeBracket(content).html()
+    content = escapeBracket(content)
 
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
 
