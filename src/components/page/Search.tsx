@@ -3,7 +3,6 @@ import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { A, useSearchParams } from "solid-start";
 import PageLayout from "~/components/layouts/PageLayout";
-import { PageSchema } from "~/schema/Page";
 import { isBrowser, range } from "~/utils";
 
 const resultPerPage = 8
@@ -100,7 +99,7 @@ const errorMsg = (err: string) => {
 }
 
 const Search = () => {
-    const page = PageSchema.parse(searchPage)
+    const page = searchPage
 
     const [input, setInput] = createSignal('')
     const [query, setQuery] = createSignal()

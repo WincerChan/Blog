@@ -2,7 +2,6 @@ import lifePage from "@/_output/base/life/index.json";
 import { ErrorBoundary, For, Show, Suspense, createMemo, createResource, createSignal, onMount } from "solid-js";
 import PageLayout from "~/components/layouts/PageLayout";
 import LazyImg from "~/components/lazy/Img";
-import { PageSchema } from "~/schema/Page";
 import { fetcher } from "~/utils";
 import { range } from "~/utils/index";
 
@@ -53,7 +52,7 @@ const RealItem = ({ poster, id, title, type, date }: Item) => {
 
 
 const Life = () => {
-    const page = PageSchema.parse(lifePage)
+    const page = lifePage
     const [url, setUrl] = createSignal()
     const year = createMemo(() => new Date().getFullYear())
     onMount(() => {

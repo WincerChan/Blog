@@ -12,28 +12,6 @@ type sameTagsArgs = {
     [key: string]: BlogDetailed[]
 }
 
-const loadHighlightLanguage = (content) => {
-    const regex = /data-lang=\"(.+?)\"/g
-
-    let match;
-    let languages = [];
-
-    while ((match = regex.exec(content)) !== null) {
-        languages.push(match[1]);
-    }
-    let supportLangs = hljs.listLanguages()
-    let uniqueLangs = [...new Set(languages)].filter(lang => supportLangs.includes(lang));
-
-
-    const langRegisterList = uniqueLangs.filter(lang => !!lang && lang != 'other').map(lang => (
-        `import ${lang} from 'highlight.js/lib/languages/${lang}'\nhljs.registerLanguage('${lang}', ${lang});`
-    ))
-    if (langRegisterList.length !== 0) {
-        langRegisterList.unshift("import hljs from 'highlight.js/lib/core';")
-    }
-    return langRegisterList.join("\n")
-}
-
 
 const findRelatedPosts = (sameTagPosts: sameTagsArgs, sameCatePosts: BlogMinimal[]) => {
     const blogScore: {
@@ -105,7 +83,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     if (parsedContent.password)
         content = encryptBlog(parsedContent.password, content)
     // 转义大括号最后
-    content = escapeBracket(content).html()
+    content = escapeBracket(content)
 
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
 
@@ -116,7 +94,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
         ${loadHighlightCSS ? 'import "highlight.js/styles/magula.css";import Pre from "~/components/lazy/Pre";' : ""}
-        ${parsedContent.mathrender ? 'const MathDecode = lazy(() => import("~/components/lazy/MathDecode"))' : ""}
+        ${parsedContent.mathrender ? 'import MathDecode from "~/components/lazy/MathDecode"' : ""}
 
         const Post = () => {
             return (

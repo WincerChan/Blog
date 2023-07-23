@@ -1,9 +1,11 @@
 import config from "@/hugo.json";
 import { createMemo } from "solid-js";
+import BackTop from "./backTop";
+import UpdateNotify from "./updateAvaliable";
 
 const SINCE = 2017
 
-const Footer = () => {
+const Copyright = () => {
     const year = createMemo(() => new Date().getFullYear())
     return (
         <footer class=":: mt-8 bg-ers shadow-round py-5 ">
@@ -22,7 +24,17 @@ const Footer = () => {
                 </p>
             </div>
         </footer>
-
     )
 }
+
+const Footer = () => {
+    return (
+        <>
+            <BackTop />
+            <UpdateNotify />
+            <Copyright />
+        </>
+    )
+}
+
 export default Footer;

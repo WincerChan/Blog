@@ -3,11 +3,11 @@
 
 {{ if eq .Type "category" }}
     {{ range .Site.Taxonomies.category }}
-        {{ $terms = $terms | append (dict "title" .Page.Title "count" .Count) }}
+        {{ $terms = $terms | append (dict "title" .Page.Title "count" (where .Pages "Params.private" "!=" true | len)) }}
     {{ end }}
 {{ else }}
     {{ range .Site.Taxonomies.tags }}
-        {{ $terms = $terms | append (dict "title" .Page.Title "count" .Count) }}
+        {{ $terms = $terms | append (dict "title" .Page.Title "count" (where .Pages "Params.private" "!=" true | len)) }}
     {{ end }}
 {{ end }}
 

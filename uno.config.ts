@@ -47,7 +47,7 @@ export default defineConfig({
         "h-menu": "h-11 sm:h-14 px-2.5 sm:px-3",
         "w-view": '2xl:w-308 xl:w-270 lg:w-240 mx-auto max-w-full',
         "w-viewl": '2xl:w-314 xl:w-276 lg:w-246 mx-auto',
-        'h-coverMain': '2xl:h-76  lg:h-71.5 h-68',
+        'h-coverMain': '2xl:h-76  lg:h-71.5 h-69',
         'blog-cover': '2xl:h-100 lg:h-80 h-64',
         'w-coverMain': '2xl:w-[22rem] xl:w-80 lg:w-64 w-full',
         "text-link": "shadow-[0_-.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.15rem_0_var(--menu-hover-text)_inset] text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)]",
@@ -59,10 +59,12 @@ export default defineConfig({
         "toc-responsive": "<md:fixed <md:bottom-5 <md:w-full <md:bg-[var(--ers-bg)] <md:z-20 <md:px-4",
         "hr-section": "<lg:mx-4 w-24 my-8 border-none",
         "p-section": "<md:mx-4",
-        "bq-section": "border-l-4 border-[var(--head-border)] my-4 pl-3 <md:mr-4",
+        "bq-section": "border-l-4 border-[var(--head-border)] bg-[var(--menu-hover-bg)] my-4 pl-3 pr-4",
         "aside-responsive": "md:col-span-14 2xl:col-span-13 <md:mx-4 <md:mt-8",
         "body-responsive": " md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ",
-        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4"
+        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4",
+        "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10",
+        "list-items": "pl-8 my-2 <md:mx-4"
     },
     presets: [
         presetWind(),

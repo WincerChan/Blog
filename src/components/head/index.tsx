@@ -24,8 +24,8 @@ const postLDJSON = (params: HeadParamsTyoe) => {
             "name": siteConf.author.name,
             "url": siteConf.author.url
         },
-        "datePublished": params.date.toISOString(),
-        "dateModified": params.updated.toISOString(),
+        "datePublished": params.date,
+        "dateModified": params.updated,
         "image": params.cover,
         "publisher": {
             "@type": "Organization",
@@ -54,7 +54,24 @@ const postLDJSON = (params: HeadParamsTyoe) => {
 }
 
 
+const HeadParamsDefault = {
+    title: "",
+    date: new Date().toDateString(),
+    description: siteConf.description,
+    keywords: siteConf.keywords.split(", "),
+    pageURL: siteConf.baseURL,
+    updated: new Date().toDateString(),
+    cover: "",
+    words: 0,
+    subtitle: "",
+    genre: "Technology",
+}
+
 const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
+    headParams = {
+        ...HeadParamsDefault,
+        ...headParams
+    }
     const isPost = headParams.description !== siteConf.description
     return (
         <>

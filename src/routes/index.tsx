@@ -3,11 +3,10 @@ import { A } from "solid-start";
 import LatestBlog from '~/components/core/section/LatestCard';
 import OtherBlogs from '~/components/core/section/OtherCards';
 import MainLayout from '~/components/layouts/MainLayout';
-import { BlogMinimalSchema } from "~/schema/Post";
 
 
 const Home = () => {
-  const recentPosts = posts.pages.map((post) => BlogMinimalSchema.parse(post));
+  const recentPosts = posts.pages
   return (
     <MainLayout page={recentPosts[0]}>
       <LatestBlog blog={recentPosts[0]} />

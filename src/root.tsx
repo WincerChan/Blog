@@ -1,7 +1,7 @@
 // @refresh reload
 import '@unocss/reset/tailwind.css';
 import "nprogress/nprogress.css";
-import { Suspense } from 'solid-js';
+import { Suspense, onMount } from 'solid-js';
 import {
   Body,
   FileRoutes,
@@ -13,12 +13,30 @@ import {
 import 'uno.css';
 import '~/styles/root.css';
 import Footer from './components/core/footer';
-import BackTop from './components/core/footer/backTop';
 import Header from './components/core/header';
-import { val } from './components/core/header/ThemeSwitch/Provider';
+import { set, val } from './components/core/header/ThemeSwitch/Provider';
 
 
 export default function Root() {
+  onMount(() => {
+    if (__IS_PROD && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            newWorker?.addEventListener('statechange', () => {
+              switch (newWorker.state) {
+                case 'installed':
+                  if (navigator.serviceWorker.controller) set({ 'sw-notify': true })
+                  break;
+                case 'redundant':
+                  break;
+              }
+            });
+          });
+        })
+    }
+  })
   return (
     <Html lang="zh-CN" class={val.theme}>
       <Head>
@@ -34,11 +52,7 @@ export default function Root() {
           </Suspense>
         </main>
         <Footer />
-        <BackTop />
         <Scripts />
-        {__IS_PROD ?
-          <script innerHTML={`if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js?${__SW_HASH}', { scope: '/' })})}`} />
-          : ""}
       </Body>
     </Html>
   );
