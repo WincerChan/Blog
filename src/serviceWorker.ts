@@ -6,7 +6,7 @@ clientsClaim();
 
 const ASSETS_PREFIEXES = [
     `https://unpkg.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
-    `https://npm.elemecdn.com/wir@${import.meta.env.VITE_ASSET_VERSION}`,
+    `https://npm.onmicrosoft.cn/wir@${import.meta.env.VITE_ASSET_VERSION}`,
     ``
 ]
 
