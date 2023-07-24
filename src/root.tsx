@@ -20,7 +20,7 @@ import { set, val } from './components/core/header/ThemeSwitch/Provider';
 export default function Root() {
   onMount(() => {
     if (__IS_PROD && 'serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      navigator.serviceWorker.register(`/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}`, { scope: '/' })
         .then(reg => {
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing;
