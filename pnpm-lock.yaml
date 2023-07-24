@@ -1,15 +1,11 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 patchedDependencies:
   solid-start-static@0.2.27:
     hash: meofi2e36n6xulr4zqd7e3egja
     path: patches/solid-start-static@0.2.27.patch
   solid-start@0.2.27:
-    hash: 3ndmntrygh2uldy4vf7fvwt4wq
+    hash: bpd6pwkpuqyqk23272zzzv3rmu
     path: patches/solid-start@0.2.27.patch
 
 dependencies:
@@ -24,7 +20,7 @@ dependencies:
     version: 1.7.2
   solid-start:
     specifier: ^0.2.27
-    version: 0.2.27(patch_hash=3ndmntrygh2uldy4vf7fvwt4wq)(@solidjs/meta@0.28.2)(@solidjs/router@0.8.2)(solid-js@1.7.2)(solid-start-static@0.2.27)(vite@4.1.4)
+    version: 0.2.27(patch_hash=bpd6pwkpuqyqk23272zzzv3rmu)(@solidjs/meta@0.28.2)(@solidjs/router@0.8.2)(solid-js@1.7.2)(solid-start-static@0.2.27)(vite@4.1.4)
 
 devDependencies:
   '@iconify-json/carbon':
@@ -3402,12 +3398,12 @@ packages:
       rollup: 3.26.3
       sirv-cli: 2.0.2
       solid-ssr: 1.7.2
-      solid-start: 0.2.27(patch_hash=3ndmntrygh2uldy4vf7fvwt4wq)(@solidjs/meta@0.28.2)(@solidjs/router@0.8.2)(solid-js@1.7.2)(solid-start-static@0.2.27)(vite@4.1.4)
+      solid-start: 0.2.27(patch_hash=bpd6pwkpuqyqk23272zzzv3rmu)(@solidjs/meta@0.28.2)(@solidjs/router@0.8.2)(solid-js@1.7.2)(solid-start-static@0.2.27)(vite@4.1.4)
       undici: 5.22.0
       vite: 4.1.4(@types/node@18.11.18)
     patched: true
 
-  /solid-start@0.2.27(patch_hash=3ndmntrygh2uldy4vf7fvwt4wq)(@solidjs/meta@0.28.2)(@solidjs/router@0.8.2)(solid-js@1.7.2)(solid-start-static@0.2.27)(vite@4.1.4):
+  /solid-start@0.2.27(patch_hash=bpd6pwkpuqyqk23272zzzv3rmu)(@solidjs/meta@0.28.2)(@solidjs/router@0.8.2)(solid-js@1.7.2)(solid-start-static@0.2.27)(vite@4.1.4):
     resolution: {integrity: sha512-shniSYTHJAYzZ4DvZKBvy4y+NQy/pvCPO3HBeGzKsac3jSSVr7V5RulmlyIQRwk9SMsLhqQZlEdswixHN714+w==}
     hasBin: true
     peerDependencies:
@@ -3837,3 +3833,7 @@ packages:
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
