@@ -53,6 +53,7 @@ export default function Root() {
         </main>
         <Footer />
         <Scripts />
+        <script defer data-domain="blog.itswincer.com" src="https://track.itswincer.com/js/script.js"></script>
       </Body>
     </Html>
   );
