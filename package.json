@@ -48,6 +48,6 @@
     "patchedDependencies": {
       "solid-start@0.2.27": "patches/solid-start@0.2.27.patch",
       "solid-start-static@0.2.27": "patches/solid-start-static@0.2.27.patch"
-     }
+    }
   }
 }
