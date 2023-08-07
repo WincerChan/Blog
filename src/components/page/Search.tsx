@@ -4,6 +4,7 @@ import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, creat
 import { A, useSearchParams } from "solid-start";
 import PageLayout from "~/components/layouts/PageLayout";
 import { isBrowser, range } from "~/utils";
+import { trackEvent } from "~/utils/track";
 
 const resultPerPage = 8
 
@@ -127,6 +128,7 @@ const Search = () => {
         if (!input()) return
         setSearchParams({ q: input() })
         typeof umami !== "undefined" && umami.track(`Search ${input()}`)
+        trackEvent("Search", { props: { keyword: input() } })
         setQuery(`${input()} pages:${1}-${resultPerPage}`)
         setCurrentPage(1)
     }

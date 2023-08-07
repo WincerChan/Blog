@@ -1,6 +1,7 @@
 import siteConf from "@/hugo.json";
 import { Accessor, Show, createEffect, createSignal } from "solid-js";
 import { isBrowser } from "~/utils";
+import { trackEvent } from "~/utils/track";
 
 const disqusShort = "wincer"
 
@@ -66,7 +67,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 img.onload = function () {
                     visible() ?? setVisible(true)
                 };
-                typeof umami !== "undefined" && umami.track(`Completion ${slug} reading`)
+                trackEvent("Reading Completion", { props: { slug: slug }, callback: () => console.log("okk") })
                 setTimeout(() => { visible() ?? (setVisible(false), console.log("100ms 内无法连接到 disqus。")) }, 100)
                 observer.unobserve(entries[0].target)
             }

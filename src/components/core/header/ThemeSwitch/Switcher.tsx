@@ -1,5 +1,6 @@
 import { Accessor, For, createSignal, onMount } from "solid-js";
 import { isBrowser } from "~/utils";
+import { trackEvent } from "~/utils/track";
 import { set } from "./Provider";
 
 const ThemeMapping = [
@@ -79,7 +80,10 @@ const ToggleButton = () => {
     };
     return (
         <li ref={self!} class=":: bg-menuHover trans-linear relative">
-            <button onClick={(e) => toggleShow(e)} title="Switch Theme" class={`:: h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
+            <button onClick={(e) => {
+                toggleShow(e);
+                trackEvent("Menu CTR", { props: { type: "theme" } })
+            }} title="Switch Theme" class={`:: h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
                 <i class="i-carbon-window-black-saturation w-6 h-6" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />

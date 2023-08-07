@@ -15,27 +15,32 @@ import '~/styles/root.css';
 import Footer from './components/core/footer';
 import Header from './components/core/header';
 import { set, val } from './components/core/header/ThemeSwitch/Provider';
+import { enableAutoPageviews } from './utils/track';
 
+const registerSW = () => {
+  if (__IS_PROD && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register(`/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}`, { scope: '/' })
+      .then(reg => {
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker?.addEventListener('statechange', () => {
+            switch (newWorker.state) {
+              case 'installed':
+                if (navigator.serviceWorker.controller) set({ 'sw-notify': true })
+                break;
+              case 'redundant':
+                break;
+            }
+          });
+        });
+      })
+  }
+}
 
 export default function Root() {
   onMount(() => {
-    if (__IS_PROD && 'serviceWorker' in navigator) {
-      navigator.serviceWorker.register(`/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}`, { scope: '/' })
-        .then(reg => {
-          reg.addEventListener('updatefound', () => {
-            const newWorker = reg.installing;
-            newWorker?.addEventListener('statechange', () => {
-              switch (newWorker.state) {
-                case 'installed':
-                  if (navigator.serviceWorker.controller) set({ 'sw-notify': true })
-                  break;
-                case 'redundant':
-                  break;
-              }
-            });
-          });
-        })
-    }
+    registerSW()
+    enableAutoPageviews()
   })
   return (
     <Html lang="zh-CN" class={val.theme}>
@@ -53,7 +58,6 @@ export default function Root() {
         </main>
         <Footer />
         <Scripts />
-        <script defer data-domain="blog.itswincer.com" src="https://track.itswincer.com/js/script.js"></script>
       </Body>
     </Html>
   );

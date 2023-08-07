@@ -15,6 +15,9 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.2)
+  plausible-tracker:
+    specifier: ^0.3.8
+    version: 0.3.8
   solid-js:
     specifier: ^1.7.2
     version: 1.7.2
@@ -3166,6 +3169,11 @@ packages:
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  /plausible-tracker@0.3.8:
+    resolution: {integrity: sha512-lmOWYQ7s9KOUJ1R+YTOR3HrjdbxIS2Z4de0P/Jx2dQPteznJl2eX3tXxKClpvbfyGP59B5bbhW8ftN59HbbFSg==}
+    engines: {node: '>=10'}
+    dev: false
 
   /postcss@8.4.21:
     resolution: {integrity: sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==}
