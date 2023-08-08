@@ -1,5 +1,4 @@
 import Category from "./Category";
-import Relates from "./Relates";
 import Stats from "./Stats";
 import Tags from "./Tags";
 import ToC from "./ToC";
@@ -19,12 +18,12 @@ const SideBar = () => {
 
 
 
-const BlogSideBar = ({ blog }: { blog: BlogPostParams }) => {
+const BlogSideBar = ({ blog, slug }: { blog: BlogPostParams, slug: string }) => {
     return (
-        <aside class=":: text-[15px] col-span-14 2xl:col-span-13 ">
+        <aside class=":: md:ml-8 max-w-80">
             <div class=":: top-10 md:sticky ">
-                <ToC {...blog} />
-                <Relates relates={blog.relates} />
+                <ToC {...blog} slug={slug} />
+                {/* <Relates relates={blog.relates} /> */}
             </div>
         </aside>
     )

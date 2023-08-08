@@ -1,4 +1,8 @@
 declare const __WORDS: number
+declare const __ALL_TAGS: number
+declare const __POSTS_BY_YEAR: {
+    [key: string]: number
+}
 declare const __TAGS: string[]
 declare const __TOTAL_POSTS: number
 declare const __IS_PROD: boolean

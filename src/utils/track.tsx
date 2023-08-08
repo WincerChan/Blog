@@ -1,9 +1,10 @@
 import Plausible from "plausible-tracker";
-const { enableAutoPageviews, trackEvent } = Plausible({
+const { trackPageview, trackEvent } = Plausible({
     domain: "blog.itswincer.com",
     apiHost: "https://track.itswincer.com",
+    trackLocalhost: true
 })
 
 
-export { enableAutoPageviews, trackEvent };
+export { trackPageview, trackEvent };
 

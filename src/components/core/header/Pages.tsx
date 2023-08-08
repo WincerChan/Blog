@@ -14,7 +14,7 @@ const Pages = ({ pages }: PagesProps) => {
             <For each={pages.filter(x => x.slug !== 'search')}>
                 {pageEntry => (
                     <li >
-                        <A inactiveClass="" href={`/${pageEntry.slug}/`} class=":: h-menu flex inline-block items-center bg-menuHover text-menuHover trans-linear">{pageEntry.title}</A>
+                        <A inactiveClass="" href={`/${pageEntry.slug}/`} class=":: h-menu flex inline-block items-center bg-menuHover md:text-lg text-menuHover trans-linear">{pageEntry.title}</A>
                     </li>
                 )}
             </For>

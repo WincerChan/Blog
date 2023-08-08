@@ -7,7 +7,7 @@ import siteConfig from "@/hugo.json";
 
 const Nav = ({ children }) => {
     return (
-        <header class=':: shadow-round bg-ers mb-10 <md:mb-8 '>
+        <header class=':: shadow-round bg-ers mb-14 <md:mb-8 '>
             <nav class=':: flex w-viewl <sm:flex-col '>
                 {children}
             </nav>

@@ -67,7 +67,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 img.onload = function () {
                     visible() ?? setVisible(true)
                 };
-                trackEvent("Reading Completion", { props: { slug: slug }, callback: () => console.log("okk") })
+                trackEvent("Reading Completion", { props: { slug: slug } })
                 setTimeout(() => { visible() ?? (setVisible(false), console.log("100ms 内无法连接到 disqus。")) }, 100)
                 observer.unobserve(entries[0].target)
             }

@@ -46,12 +46,12 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
 
     return (
-        <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-1 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-33" : "max-h-0"}`}>
+        <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-1 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
             <For each={ThemeMapping}>
                 {
                     themeItem => (
-                        <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer bg-menuHover pr-3 py-2.5 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
-                            <div class={`${IconMapping[themeItem[0]]} mx-2 w-5 h-5`}></div>
+                        <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg bg-menuHover p-4 pl-0 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
+                            <div class={`${IconMapping[themeItem[0]]} mx-3 w-6 h-6`}></div>
                             <span>{themeItem[1]}</span>
                         </div>
                     )
@@ -84,7 +84,7 @@ const ToggleButton = () => {
                 toggleShow(e);
                 trackEvent("Menu CTR", { props: { type: "theme" } })
             }} title="Switch Theme" class={`:: h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
-                <i class="i-carbon-window-black-saturation w-6 h-6" />
+                <i class="i-carbon-window-black-saturation md:w-6 md:h-6 w-5 h-5" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </li>

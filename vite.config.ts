@@ -4,15 +4,17 @@ import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from "vite";
 import jsonxPlugin from "./plugin/jsonx";
-import { randomTags, totalPosts, wordsCount } from "./plugin/statsPreload";
+import { postsByYear, randomTags, totalPosts, totalTags, wordsCount } from "./plugin/statsPreload";
 import viteSwBuild from "./plugin/swBuild";
 
 const isProd = process.env.NODE_ENV === "production";
 const definedVars = {
   __WORDS: wordsCount,
   __TAGS: randomTags,
+  __ALL_TAGS: totalTags,
   __TOTAL_POSTS: totalPosts,
   __IS_PROD: isProd,
+  __POSTS_BY_YEAR: postsByYear,
 }
 
 export default defineConfig({

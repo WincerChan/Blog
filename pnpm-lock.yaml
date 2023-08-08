@@ -9,6 +9,9 @@ patchedDependencies:
     path: patches/solid-start@0.2.27.patch
 
 dependencies:
+  '@iconify-json/bx':
+    specifier: ^1.1.7
+    version: 1.1.7
   '@solidjs/meta':
     specifier: ^0.28.2
     version: 0.28.2(solid-js@1.7.2)
@@ -1600,6 +1603,12 @@ packages:
     dependencies:
       '@hapi/hoek': 9.3.0
 
+  /@iconify-json/bx@1.1.7:
+    resolution: {integrity: sha512-Ugh8uUU9VtK8fI9BBnhLA7VvhPh7erSmJz+eqjvl8HCRRjkz5mbMO5/KYpCOriUVdiiKB9Yv1ObMqS73WLMSwA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
+
   /@iconify-json/carbon@1.1.16:
     resolution: {integrity: sha512-AD8bcnRSGA0WfcGEass2FbA0sagrUzrpFx5WchuDy3uf7yKBWumdypdQK121DH321fQDl5+zZQ26T6gC9knwUQ==}
     dependencies:
@@ -1608,7 +1617,6 @@ packages:
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: true
 
   /@iconify/utils@2.1.5:
     resolution: {integrity: sha512-6MvDI+I6QMvXn5rK9KQGdpEE4mmLTcuQdLZEiX5N+uZB+vc4Yw9K1OtnOgkl8mp4d9X0UrILREyZgF1NUwUt+Q==}

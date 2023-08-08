@@ -15,7 +15,7 @@ import '~/styles/root.css';
 import Footer from './components/core/footer';
 import Header from './components/core/header';
 import { set, val } from './components/core/header/ThemeSwitch/Provider';
-import { enableAutoPageviews } from './utils/track';
+import { trackPageview } from './utils/track';
 
 const registerSW = () => {
   if (__IS_PROD && 'serviceWorker' in navigator) {
@@ -40,7 +40,7 @@ const registerSW = () => {
 export default function Root() {
   onMount(() => {
     registerSW()
-    enableAutoPageviews()
+    trackPageview()
   })
   return (
     <Html lang="zh-CN" class={val.theme}>
@@ -49,13 +49,11 @@ export default function Root() {
       </Head>
       <Body class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased body-responsive '>
         <Header />
-        <main class=":: w-view main-responsive grid-cols-50 ">
-          <Suspense>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </Suspense>
-        </main>
+        <Suspense>
+          <Routes>
+            <FileRoutes />
+          </Routes>
+        </Suspense>
         <Footer />
         <Scripts />
       </Body>

@@ -9,11 +9,11 @@ const Relates = ({ relates }: { relates: BlogScore[] }) => {
     return (
         <div class=":: <md:mx-4 ">
             <Seprator title="相关文章" />
-            <ol class=":: my-3 mb-6 space-y-3 ">
+            <ol class=":: gap-6 text-lg mt-4 grid grid-cols-2 ">
                 <For each={relates}>
                     {(post, idx) => (
                         <li>
-                            <p class="text-[14px]">{formatDate(post.date)}</p>
+                            <p class="text-base">{formatDate(post.date)}</p>
                             <A class=":: leading-relaxed text-menuHover " href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <i title="badge" class="i-carbon-badge mb-1" />}</A>
                         </li>
                     )}
