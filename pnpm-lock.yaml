@@ -18,6 +18,9 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.2)
+  dotenv:
+    specifier: ^16.3.1
+    version: 16.3.1
   plausible-tracker:
     specifier: ^0.3.8
     version: 0.3.8

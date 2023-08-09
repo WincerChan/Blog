@@ -57,7 +57,7 @@ export default defineConfig({
         "article-responsive": "md:mr-4 lg:mr-8",
         "title-responsive": "text-4xl <md:text-3xl <md:leading-10 <md:my-2",
         "subtitle-responsive": "text-3xl <md:leading-relaxed <md:text-2xl",
-        "toc-responsive": "<lg:fixed <lg:bottom-0 <lg:w-full <lg:bg-[var(--ers-bg)] <lg:z-10 <lg:px-4",
+        "toc-responsive": "<lg:fixed <lg:bottom-0 <lg:w-full <lg:bg-[var(--ers-bg)] <lg:px-4",
         "hr-section": "<lg:mx-4 w-24 my-8 border-none",
         "p-section": "<md:mx-4",
         "bq-section": "border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4",

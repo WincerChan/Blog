@@ -14,32 +14,11 @@ import 'uno.css';
 import '~/styles/root.css';
 import Footer from './components/core/footer';
 import Header from './components/core/header';
-import { set, val } from './components/core/header/ThemeSwitch/Provider';
+import { val } from './components/core/header/ThemeSwitch/Provider';
 import { trackPageview } from './utils/track';
-
-const registerSW = () => {
-  if (__IS_PROD && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.register(`/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}`, { scope: '/' })
-      .then(reg => {
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker?.addEventListener('statechange', () => {
-            switch (newWorker.state) {
-              case 'installed':
-                if (navigator.serviceWorker.controller) set({ 'sw-notify': true })
-                break;
-              case 'redundant':
-                break;
-            }
-          });
-        });
-      })
-  }
-}
 
 export default function Root() {
   onMount(() => {
-    registerSW()
     trackPageview()
   })
   return (
@@ -56,6 +35,24 @@ export default function Root() {
         </Suspense>
         <Footer />
         <Scripts />
+        <script innerHTML={`
+        if (__IS_PROD && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.register("/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}",{scope:"/"}).then(reg => {
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              newWorker?.addEventListener('statechange', () => {
+                switch (newWorker.state) {
+                  case 'installed':
+                    if (navigator.serviceWorker.controller) document.getElementById('sw-notify').style.display = 'block'
+                    break;
+                  case 'redundant':
+                    break;
+                }
+              });
+            });
+          })
+        }
+        `} />
       </Body>
     </Html>
   );

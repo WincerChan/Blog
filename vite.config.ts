@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import path from "path";
 import staticAdpater from "solid-start-static";
 import solid from "solid-start/vite";
@@ -6,6 +7,8 @@ import { defineConfig } from "vite";
 import jsonxPlugin from "./plugin/jsonx";
 import { postsByYear, randomTags, totalPosts, totalTags, wordsCount } from "./plugin/statsPreload";
 import viteSwBuild from "./plugin/swBuild";
+
+dotenv.config()
 
 const isProd = process.env.NODE_ENV === "production";
 const definedVars = {

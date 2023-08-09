@@ -29,9 +29,9 @@ const ToC = ({ toc, slug }) => {
                         <i class=":: i-carbon-catalog w-8 h-8 m-2 text-[var(--meta-bg)] "></i>
                     </button>
                     <Show when={visible()}>
-                        <div onClick={() => { setVisible(false) }} class="fixed w-screen top-0 h-screen left-0 bg-[var(--meta-bg)] z-20" />
+                        <div onClick={() => { setVisible(false) }} class=":: fixed w-screen top-0 h-screen left-0 bg-[var(--meta-bg)] z-20 " />
                     </Show>
-                    <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<lg:max-h-104' : '<lg:max-h-0'} `}>
+                    <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'}`}>
                         <div class="h-4"></div>
                         <div class="flex font-headline "><Seprator title={`目录 `} /> <span class="mt-1px">（{readingProgress()}%）</span></div>
                         <div onClick={() => { setVisible(false); trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-40vh " innerHTML={toc} />

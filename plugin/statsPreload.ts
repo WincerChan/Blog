@@ -16,7 +16,7 @@ function range(arr, size) {
     const initSeed = new Date().getDate()
     let idx = initSeed, result = []
     for (var i = 0; i < size; i++) {
-        idx = (idx + initSeed) % arr.length
+        idx = (idx + initSeed ** 2) % arr.length
         result.push(arr[idx])
     }
     return result;
