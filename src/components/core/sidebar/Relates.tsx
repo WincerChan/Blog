@@ -14,7 +14,7 @@ const Relates = ({ relates }: { relates: BlogScore[] }) => {
                     {(post, idx) => (
                         <li>
                             <p class="text-base">{formatDate(post.date)}</p>
-                            <A class=":: leading-relaxed text-menuHover " href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <i title="badge" class="i-carbon-badge mb-1" />}</A>
+                            <A class=":: leading-relaxed text-menuHover break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <i title="badge" class="i-carbon-badge mb-1" />}</A>
                         </li>
                     )}
                 </For>

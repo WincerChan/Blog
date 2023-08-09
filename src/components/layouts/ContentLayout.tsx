@@ -3,7 +3,7 @@ import nProgress from "nprogress";
 import { JSX, onMount } from "solid-js";
 import { HeadParamsTyoe } from "~/schema/Head";
 import { trackPageview } from "~/utils/track";
-import { BlogSideBar } from "../core/sidebar";
+import ToC from "../core/sidebar/ToC";
 import { BlogPostParams } from "../core/sidebar/types";
 import HeadTag from "../head";
 nProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 })
@@ -25,7 +25,7 @@ const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
     return (
         <main class="w-view">
             <HeadTag headParams={headParams} />
-            <article class={`:: mb-4 w-full leading-7 text-justify}`}>
+            <article class={`:: md:w-168 lg:w-220 xl:w-full w-full mx-auto leading-7 text-justify`}>
                 {children}
             </article>
             {/* {blog ? <BlogSideBar blog={blog} /> : <SideBar />} */}
@@ -42,13 +42,13 @@ const ArticleLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
         nProgress.done()
     })
     return (
-        <main class="md:grid md:grid-cols-[1fr_auto_1fr] ">
+        <main class="lg:grid lg:grid-cols-[1fr_auto_1fr] ">
             <HeadTag headParams={headParams} />
             <div />
-            <article class="md:w-192 w-screen">
+            <article class=":: md:w-168 xl:w-192 md:mx-auto">
                 {children}
             </article>
-            <BlogSideBar blog={blog} slug={headParams.pageURL} />
+            <ToC {...blog} slug={headParams.pageURL} />
             {/* {blog ? <BlogSideBar blog={blog} /> : <SideBar />} */}
         </main>
     );

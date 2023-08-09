@@ -22,7 +22,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
             <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4" >
                 <ArticleTitle title={blog.title} words={blog.words} />
                 <Show when={!!blog.subtitle}>
-                    <h2 class="font-headline leading-relaxed subtitle-responsive mb-2">{blog.subtitle}</h2>
+                    <h2 class=":: font-headline leading-relaxed subtitle-responsive mb-2">{blog.subtitle}</h2>
                 </Show>
                 <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
                     <span>
@@ -97,7 +97,7 @@ const PostLayout = ({ children, rawBlog, relates }: PostProps) => {
 
     let wrapper: JSXElement
     if (!!blog.password) wrapper = <ProtectBlog source={children} />
-    else wrapper = <section>{children}</section>
+    else wrapper = <section id="blog-article">{children}</section>
     return (
         <ArticleLayout blog={blogParams} headParams={headParams} >
             <PostMeta blog={blog} />

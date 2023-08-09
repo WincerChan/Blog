@@ -26,10 +26,10 @@ const BackTop = () => {
     return (
         <Show when={visible()}>
             <button
-                class=":: fixed bottom-6 md:bottom-10 right-6 md:right-10 z-10 p-2 rounded shadow-round bg-[var(--ers-bg)]"
+                class=":: fixed bottom-10 right-10 z-10 p-2 rounded shadow-round bg-[var(--ers-bg)]"
                 onClick={scrollToTop}
             >
-                <i class=":: i-carbon-up-to-top md:w-8 md:h-8 h-6 w-6 text-[var(--meta-bg)]" />
+                <i class=":: i-carbon-up-to-top w-8 h-8 text-[var(--meta-bg)]" />
             </button>
         </Show>
     )

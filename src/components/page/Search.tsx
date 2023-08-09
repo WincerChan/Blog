@@ -140,7 +140,7 @@ const Search = () => {
     return (
         <PageLayout page={page} showComment={false}>
             <form onSubmit={handleSubmit} method="get" class=":: flex space-x-4 my-6 <md:mx-4 ">
-                <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class=":: card-outline bg-[var(--cc)] px-4 py-1.5 rounded flex-grow " placeholder="你想要找什么？我也想要" />
+                <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class=":: card-outline bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你想要找什么？我也想要" />
                 <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
             </form>
             <div class="<md:mx-4">

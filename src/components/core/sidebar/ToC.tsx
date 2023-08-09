@@ -1,21 +1,36 @@
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { trackEvent } from "~/utils/track";
 import Seprator from "./Seprator";
 
 const ToC = ({ toc, slug }) => {
     const [visible, setVisible] = createSignal(false);
     if (!toc) return <></>
+    const [readingProgress, setReadingProgress] = createSignal(0);
+    const scrollListerner = (initOffset, sectionTarget) => {
+        const windowScrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0
+        const scrollHeight = windowScrollTop - initOffset
+        const normalizedHeight = Math.min(Math.max(0, scrollHeight), sectionTarget.offsetHeight)
+        setReadingProgress(Math.floor(normalizedHeight / sectionTarget.offsetHeight * 100))
+    }
+    onMount(() => {
+        const sectionTarget = document.getElementById('blog-article')
+        const offset = sectionTarget.offsetTop - Math.floor(window.innerHeight / 1.6)
+        window.addEventListener("scroll", () => scrollListerner(offset, sectionTarget))
+    })
     return (
-        <>
-            <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed md:hidden bottom-20 right-6 z-10 rounded shadow-round bg-[var(--ers-bg)] ">
-                <i class=":: i-carbon-catalog w-6 h-6 m-2 text-[var(--meta-bg)] "></i>
-            </button>
-            <div onClick={() => { setVisible(false) }} class={`:: fixed w-full h-screen top-0 left-0 bg-[var(--meta-bg)] bg-opacity-50 ${visible() ? '' : 'hidden'} `} />
-            <div id="toc" class={`:: <md:pt-4 duration-200 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<md:max-h-104' : '<md:max-h-0'} `}>
-                <Seprator title="目录" />
-                <div onClick={() => { setVisible(false); trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mb-6 flex-wrap flex overflow-y-auto max-h-40vh " innerHTML={toc} />
+        <aside class=":: lg:ml-6 xl:ml-8 max-w-80">
+            <div class=":: top-10 md:sticky ">
+                <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed lg:hidden bottom-28 right-10 z-10 rounded shadow-round bg-[var(--ers-bg)] ">
+                    <i class=":: i-carbon-catalog w-8 h-8 m-2 text-[var(--meta-bg)] "></i>
+                </button>
+                <div onClick={() => { setVisible(false) }} class={`:: fixed w-screen overflow-hidden h-screen top-0 left-0 bg-[var(--meta-bg)] bg-opacity-50 z-10 ${visible() ? '' : 'hidden'} `} />
+                <div id="toc" class={`:: duration-200 z-10 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<lg:max-h-104' : '<lg:max-h-0'} `}>
+                    <div class="h-4"></div>
+                    <div class="flex font-headline "><Seprator title={`目录 `} /> <span class="mt-1px">（{readingProgress()}%）</span></div>
+                    <div onClick={() => { setVisible(false); trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-40vh " innerHTML={toc} />
+                </div>
             </div>
-        </>
+        </aside >
     )
 }
 

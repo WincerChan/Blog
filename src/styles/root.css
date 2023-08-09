@@ -85,7 +85,7 @@ pre::-webkit-scrollbar {
 }
 
 #TableOfContents {
-  @apply text-left mt-2 leading-7;
+  @apply text-left leading-7;
 }
 
 /* section  */

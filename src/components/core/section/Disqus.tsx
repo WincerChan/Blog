@@ -85,7 +85,7 @@ const DisqusComment = ({ slug }: { slug: string }) => {
     })
     const pageCanonical = new URL(slug, siteConf.baseURL)
     return (
-        <div class=":: mt-8 <md:mx-4 <md:mb-8 " ref={self!}>
+        <div class=":: mt-8 <md:mx-4 " ref={self!}>
             <DisqusButton nowLoad={visible} shouldLoad={setVisible} />
         </div>
     )
