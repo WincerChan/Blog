@@ -1,7 +1,6 @@
 import { BlogMinimal } from "~/schema/Post";
 import blogs from "../_output/posts/index.json";
 import tags from "../_output/tags/index.json";
-import { shuffle } from "../src/utils";
 
 const groupByYear = (posts: BlogMinimal[]) => {
     let byYears: { [key: string]: number } = {};
@@ -13,13 +12,22 @@ const groupByYear = (posts: BlogMinimal[]) => {
     return byYears
 }
 
+function range(arr, size) {
+    const initSeed = new Date().getDate()
+    let idx = initSeed, result = []
+    for (var i = 0; i < size; i++) {
+        result.push(arr[(idx + initSeed ** 2) % arr.length])
+    }
+    return result;
+};
+
 
 const wordsCount = blogs.pages.reduce((acc, post) => {
     return acc + post.words
 }, 0)
 const totalPosts = blogs.pages.length
 
-const randomTags = shuffle(tags.pages.map((tag) => tag.title)).slice(0, 16)
+const randomTags = range(tags.pages.map((tag) => tag.title), 16)
 const totalTags = tags.pages.length
 const postsByYear = groupByYear(blogs.pages)
 

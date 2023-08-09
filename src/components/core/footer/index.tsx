@@ -20,7 +20,7 @@ const Copyright = () => {
                 <Archives />
                 <Tags />
             </div>
-            <div class=":: w-view mt-8 justify-between mx-auto text-footer my-4 items-center ">
+            <div class=":: w-view mt-6 justify-between mx-auto text-footer my-4 items-center ">
                 <div class=":: space-x-6 my-4 text-[var(--extra)] z-0 ">
                     <A title="Home" inactiveClass="" activeClass="" href="https://itswincer.com" target="_blank">
                         <i class="i-bx-home-heart w-8 h-8 inline-block" />
