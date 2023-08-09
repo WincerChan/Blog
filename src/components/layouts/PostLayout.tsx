@@ -19,20 +19,20 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
     const isRecently = (new Date().getTime() - publishedDate.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
         <>
-            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4" >
+            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4 " >
                 <ArticleTitle title={blog.title} words={blog.words} />
                 <Show when={!!blog.subtitle}>
-                    <h2 class=":: font-headline leading-relaxed subtitle-responsive mb-2">{blog.subtitle}</h2>
+                    <h2 class=":: font-headline leading-relaxed subtitle-responsive mb-2 ">{blog.subtitle}</h2>
                 </Show>
                 <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
                     <span>
                         {formatDate(blog.date)}
                     </span>
-                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)]"></div>
+                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
                     <Show when={blog.words}>
                         <span class="">{blog.words} 字</span>
                     </Show>
-                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)]"></div>
+                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
                     <TagCollection tags={blog.tags} />
                 </div>
             </LazyBg>

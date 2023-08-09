@@ -45,11 +45,10 @@ const ArticleLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
         <main class="lg:grid lg:grid-cols-[1fr_auto_1fr] ">
             <HeadTag headParams={headParams} />
             <div />
-            <article class=":: md:w-168 xl:w-192 md:mx-auto">
+            <article class=":: md:w-168 xl:w-192 mx-auto ">
                 {children}
             </article>
             <ToC {...blog} slug={headParams.pageURL} />
-            {/* {blog ? <BlogSideBar blog={blog} /> : <SideBar />} */}
         </main>
     );
 }

@@ -20,19 +20,19 @@ const Copyright = () => {
                 <Archives />
                 <Tags />
             </div>
-            <div class=":: w-view mt-8 lg:flex justify-between mx-auto text-footer my-4">
-                <div class="space-x-6 <lg:my-6 text-[var(--extra)]">
+            <div class=":: w-view mt-8 justify-between mx-auto text-footer my-4 items-center ">
+                <div class=":: space-x-6 my-4 text-[var(--extra)] z-0 ">
                     <A title="Home" inactiveClass="" activeClass="" href="https://itswincer.com" target="_blank">
-                        <i class=":: i-bx-home-heart w-8 h-8 inline-block" />
+                        <i class="i-bx-home-heart w-8 h-8 inline-block" />
                     </A>
                     <A title="Github" inactiveClass="" activeClass="" href="https://github.com/WincerChan" target="_blank">
-                        <i class=":: i-bx-bxl-github w-8 h-8 inline-block" />
+                        <i class="i-bx-bxl-github w-8 h-8 inline-block" />
                     </A>
                     <A title="Telegram" inactiveClass="" activeClass="" href="https://t.me/Tivsae" target="_blank">
-                        <i class=":: i-bx-bxl-telegram w-8 h-8 inline-block" />
+                        <i class="i-bx-bxl-telegram w-8 h-8 inline-block" />
                     </A>
                     <A title="BuyMeaCoffee Donate" inactiveClass="" activeClass="" href="https://www.buymeacoffee.com/wincer" target="_blank">
-                        <i class=":: i-bx-coffee-togo w-8 h-8 inline-block" />
+                        <i class="i-bx-coffee-togo w-8 h-8 inline-block" />
                     </A>
                 </div>
                 <p class=":: text-sm leading-loose ">

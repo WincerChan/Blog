@@ -47,7 +47,7 @@ export default function Root() {
       <Head>
         <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`} />
       </Head>
-      <Body class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased body-responsive '>
+      <Body style={{ overflow: val.modal ? 'hidden' : "" }} class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased body-responsive '>
         <Header />
         <Suspense>
           <Routes>
