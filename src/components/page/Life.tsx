@@ -20,8 +20,8 @@ const FakeItems = ({ limit }: { limit: number }) => {
             {x => (
                 <div class=":: rounded pb-6 ">
                     <figure class=":: text-center text-sm rounded ">
-                        <div class=":: mx-auto xl:h-52 h-24 animate-pulse bg-[var(--cc)] "></div>
-                        <div class=":: block mx-auto mt-1 p-1px h-5 w-2/3 bg-[var(--cc)] "></div>
+                        <div class=":: mx-auto xl:h-52 h-24 animate-pulse bg-[var(--blockquote-border)] "></div>
+                        <div class=":: block mx-auto mt-1 p-1px h-5 w-2/3 bg-[var(--blockquote-border)] "></div>
                     </figure>
                 </div>
             )}

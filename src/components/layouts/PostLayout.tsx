@@ -4,11 +4,13 @@ import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
 import Copyright from "../core/section/Copyright";
 import DisqusComment from "../core/section/Disqus";
+import Donate from "../core/section/Donate";
 import TagCollection from "../core/section/Tag";
 import ArticleTitle from "../core/section/Title";
+import Relates from "../core/sidebar/Relates";
 import LazyBg from "../lazy/BG";
 import LazyImg from "../lazy/Img";
-import ContentLayout from "./ContentLayout";
+import { ArticleLayout } from "./ContentLayout";
 
 const ProtectBlog = lazy(() => import("./EncryptBlock"))
 
@@ -17,19 +19,25 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
     const isRecently = (new Date().getTime() - publishedDate.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
         <>
-            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4" >
-                <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
-                    <span>{formatDate(blog.date)}</span>
-                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)]"></div>
-                    <TagCollection tags={blog.tags} />
-                </div>
+            <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4 " >
                 <ArticleTitle title={blog.title} words={blog.words} />
                 <Show when={!!blog.subtitle}>
-                    <h2 class="font-headline leading-relaxed subtitle-responsive">{blog.subtitle}</h2>
+                    <h2 class=":: font-headline leading-relaxed subtitle-responsive mb-2 ">{blog.subtitle}</h2>
                 </Show>
+                <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
+                    <span>
+                        {formatDate(blog.date)}
+                    </span>
+                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
+                    <Show when={blog.words}>
+                        <span class="">{blog.words} 字</span>
+                    </Show>
+                    <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
+                    <TagCollection tags={blog.tags} />
+                </div>
             </LazyBg>
             <Show when={!isRecently}>
-                <div class=":: pl-3 my-4 border-l-4 border-[#f9c116] bg-[var(--notify)] py-3 pr-4 ">
+                <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 ">
                     <p>本文最近一次更新于{calculateDateDifference(new Date(blog.updated))}前，其中的内容很可能已经有所发展或是发生改变。</p>
                 </div>
             </Show>
@@ -89,17 +97,18 @@ const PostLayout = ({ children, rawBlog, relates }: PostProps) => {
 
     let wrapper: JSXElement
     if (!!blog.password) wrapper = <ProtectBlog source={children} />
-    else wrapper = <section>{children}</section>
-
+    else wrapper = <section id="blog-article">{children}</section>
     return (
-        <ContentLayout blog={blogParams} headParams={headParams} >
-            <LazyImg class=":: w-full blog-cover rounded object-cover mb-6 " src={blog.cover} alt={blog.cover} />
+        <ArticleLayout blog={blogParams} headParams={headParams} >
             <PostMeta blog={blog} />
+            <LazyImg class=":: w-full blog-cover rounded object-cover my-6 " src={blog.cover} alt={blog.cover} />
             {wrapper}
+            <Donate />
             <Copyright {...blog} />
+            <Relates relates={relates} />
             <Neighbours {...blog} />
             <DisqusComment slug={headParams.pageURL} />
-        </ContentLayout>
+        </ArticleLayout>
     )
 }
 

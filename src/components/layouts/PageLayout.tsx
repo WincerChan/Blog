@@ -3,7 +3,7 @@ import { BasePage } from "~/schema/Page";
 import DisqusComment from "../core/section/Disqus";
 import ArticleTitle from "../core/section/Title";
 import LazyImg from "../lazy/Img";
-import ContentLayout from "./ContentLayout";
+import ContentLayout, { ArticleLayout } from "./ContentLayout";
 
 type PageLayoutProps = {
     children: JSX.Element,
@@ -21,15 +21,26 @@ const constructHeadParams = (page: BasePage) => {
 const PageLayout = ({ children, page, showComment }) => {
     const headParams = constructHeadParams(page);
     return (
-        <ContentLayout headParams={headParams}>
-            {page?.cover && <LazyImg class=":: w-full blog-cover rounded object-cover mb-6 " src={page.cover} alt="cover" />}
+        <ArticleLayout headParams={headParams}>
             {page && <div class="<md:mx-4"><ArticleTitle title={page.title} /></div>}
+            {page?.cover && <LazyImg class=":: w-full blog-cover rounded object-cover my-6 " src={page.cover} alt="cover" />}
             {children}
             <Show when={showComment}>
                 <DisqusComment slug={page.slug} />
             </Show>
+        </ArticleLayout>
+    )
+}
+
+const ArchiveLayout = ({ children, page }) => {
+    const headParams = constructHeadParams(page);
+    return (
+        <ContentLayout headParams={headParams}>
+            {page && <div class="<md:mx-4"><ArticleTitle title={page.title} /></div>}
+            {children}
         </ContentLayout>
     )
 }
 
 export default PageLayout;
+export { ArchiveLayout };

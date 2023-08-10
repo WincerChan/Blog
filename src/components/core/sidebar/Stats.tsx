@@ -3,20 +3,20 @@ import Seprator from "./Seprator";
 
 const Stats = () => {
     return (
-        <div class="<sm:hidden">
+        <div class="w-full">
             <Seprator title="统计" />
-            <div class=":: flex justify-between w-full my-3 leading-7 mb-6 ">
-                <div class="text-center">
-                    <p>{__TOTAL_POSTS}</p>
-                    <span>文章</span>
+            <div class=":: mb-6 w-24 text-[var(--extra)] ">
+                <div class=":: flex justify-between">
+                    <p>{__TOTAL_POSTS} 文章</p>
                 </div>
-                <div class="text-center">
-                    <p>{Category.pages.length}</p>
-                    <span>分类</span>
+                <div class=":: flex justify-between">
+                    <p>{Category.pages.length} 分类</p>
                 </div>
-                <div class="text-center">
-                    <p>{(__WORDS / 10000).toPrecision(3)}</p>
-                    <span>万字</span>
+                <div class=":: flex justify-between">
+                    <p>{(__WORDS / 10000).toPrecision(3)} 万字</p>
+                </div>
+                <div class=":: flex justify-between">
+                    <p>{__ALL_TAGS} 标签</p>
                 </div>
             </div>
         </div>

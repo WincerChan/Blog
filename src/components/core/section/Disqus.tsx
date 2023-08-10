@@ -1,10 +1,11 @@
 import siteConf from "@/hugo.json";
 import { Accessor, Show, createEffect, createSignal } from "solid-js";
 import { isBrowser } from "~/utils";
+import { trackEvent } from "~/utils/track";
 
 const disqusShort = "wincer"
 
-const DisqusButton = ({ nowLoad, shouldLoad }: { nowLoad: Accessor<unknown>, shouldLoad: (arg0: boolean) => void }) => {
+const DisqusButton = ({ nowLoad, shouldLoad, slug }: { nowLoad: Accessor<unknown>, shouldLoad: (arg0: boolean) => void, slug: string }) => {
     const [showButton, setShowButton] = createSignal(true)
     const [errorMsg, setErrorMsg] = createSignal('')
     const [loadingState, setLoadingState] = createSignal(false)
@@ -23,6 +24,7 @@ const DisqusButton = ({ nowLoad, shouldLoad }: { nowLoad: Accessor<unknown>, sho
             setErrorMsg("")
             setLoadingState(false)
             setShowButton(false)
+            trackEvent("Disqus", { props: { slug: slug } })
         }
         s.setAttribute('data-timestamp', `${+new Date()}`);
         (d.head || d.body).appendChild(s);
@@ -66,7 +68,6 @@ const DisqusComment = ({ slug }: { slug: string }) => {
                 img.onload = function () {
                     visible() ?? setVisible(true)
                 };
-                typeof umami !== "undefined" && umami.track(`Completion ${slug} reading`)
                 setTimeout(() => { visible() ?? (setVisible(false), console.log("100ms 内无法连接到 disqus。")) }, 100)
                 observer.unobserve(entries[0].target)
             }
@@ -84,8 +85,8 @@ const DisqusComment = ({ slug }: { slug: string }) => {
     })
     const pageCanonical = new URL(slug, siteConf.baseURL)
     return (
-        <div class=":: mt-8 <md:mx-4 <md:mb-8 " ref={self!}>
-            <DisqusButton nowLoad={visible} shouldLoad={setVisible} />
+        <div class=":: mt-8 <md:mx-4 " ref={self!}>
+            <DisqusButton nowLoad={visible} shouldLoad={setVisible} slug={slug} />
         </div>
     )
 

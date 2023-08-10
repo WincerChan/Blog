@@ -3,7 +3,7 @@ import postsPage from "@/_output/posts/index.json";
 import { For, createMemo, createSignal, onMount } from "solid-js";
 import { useSearchParams } from "solid-start";
 import OtherBlogs from "~/components/core/section/OtherCards";
-import PageLayout from "~/components/layouts/PageLayout";
+import { ArchiveLayout } from "~/components/layouts/PageLayout";
 import { BlogMinimal } from "~/schema/Post";
 
 
@@ -20,7 +20,7 @@ const groupByYear = (posts: BlogMinimal[]) => {
 const YearArchive = ({ posts, year, ...props }: { posts: BlogMinimal[], year: string }) => {
     return (
         <>
-            <h2 id={year()} class="font-headline text-2xl mt-4 <md:mx-4">
+            <h2 id={year()} class=":: font-headline text-3xl mt-8 <md:mx-4">
                 <a href={`#${year()}`}>{year}</a>
             </h2>
             <OtherBlogs posts={posts} />
@@ -46,17 +46,18 @@ const Archives = () => {
         setActiveYear(year)
     }
     // 规范化之后的页面
+
     return (
-        <PageLayout page={archPage} showComment={false}>
+        <ArchiveLayout page={archPage}>
             <div id="post-meta" class=":: font-mono <md:mx-4 text-base flex overflow-x-scroll hyphens-auto whitespace-nowrap  space-x-4 scrollbar-none mt-4 mb-6 ">
                 <For each={allYears}>
                     {(year, index) => (
-                        <button title={year} onClick={() => updateActivePosts(year)} class="border rounded py-2 px-4">{year}</button>
+                        <button title={year} onClick={() => updateActivePosts(year)} class=":: border rounded py-2 px-4">{year}</button>
                     )}
                 </For>
             </div>
             <YearArchive posts={activePosts} year={activeYear} />
-        </PageLayout >
+        </ArchiveLayout >
     )
 }
 

@@ -11,7 +11,7 @@ const Home = () => {
     <MainLayout page={recentPosts[0]}>
       <LatestBlog blog={recentPosts[0]} />
       <OtherBlogs posts={() => recentPosts.slice(1)} description="近期文章" />
-      <A inactiveClass='' activeClass='' class=":: transition <md:mx-4 duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] px-.5 text-link " href="/archives/">查看更多文章</A>
+      <A inactiveClass='' activeClass='' class=":: transition <lg:mx-4 duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] px-.5 text-link " href="/archives/">查看更多文章</A>
     </MainLayout>
   );
 }
