@@ -46,7 +46,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
 
     return (
-        <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-1 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
+        <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-20 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
             <For each={ThemeMapping}>
                 {
                     themeItem => (
