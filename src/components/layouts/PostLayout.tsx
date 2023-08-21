@@ -2,12 +2,11 @@ import { JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
 import { A, useLocation } from "solid-start";
 import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
+import Relates from "../core/footer/Relates";
 import Copyright from "../core/section/Copyright";
 import DisqusComment from "../core/section/Disqus";
-import Donate from "../core/section/Donate";
 import TagCollection from "../core/section/Tag";
 import ArticleTitle from "../core/section/Title";
-import Relates from "../core/sidebar/Relates";
 import LazyBg from "../lazy/BG";
 import LazyImg from "../lazy/Img";
 import { ArticleLayout } from "./ContentLayout";
@@ -47,7 +46,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
 }
 
 
-const Neighbours = ({ neighbours }: BlogDetailed) => {
+export const Neighbours = ({ neighbours }: BlogDetailed) => {
     const { prev, next } = neighbours;
     return (
         <div class=":: leading-loose my-6 flex justify-between flex-wrap text-xl <md:mx-4 ">
@@ -98,17 +97,25 @@ const PostLayout = ({ children, rawBlog, relates }: PostProps) => {
     let wrapper: JSXElement
     if (!!blog.password) wrapper = <ProtectBlog source={children} />
     else wrapper = <section id="blog-article">{children}</section>
+
+    let extra = <PostExtra rawBlog={blog} relates={relates} headParams={headParams} />
     return (
-        <ArticleLayout blog={blogParams} headParams={headParams} >
+        <ArticleLayout blog={blogParams} headParams={headParams} relates={relates} rawBlog={blog} extra={extra} >
             <PostMeta blog={blog} />
             <LazyImg class=":: w-full blog-cover rounded object-cover my-6 " src={blog.cover} alt={blog.cover} />
             {wrapper}
-            <Donate />
-            <Copyright {...blog} />
-            <Relates relates={relates} />
-            <Neighbours {...blog} />
-            <DisqusComment slug={headParams.pageURL} />
         </ArticleLayout>
+    )
+}
+
+export const PostExtra = ({ rawBlog, relates, headParams }) => {
+    return (
+        <>
+            <Copyright {...rawBlog} />
+            <Relates relates={relates} />
+            <Neighbours {...rawBlog} />
+            <DisqusComment slug={headParams.pageURL} />
+        </>
     )
 }
 

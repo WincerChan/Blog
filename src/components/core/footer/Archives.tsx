@@ -1,5 +1,5 @@
 import { A } from "solid-start";
-import Seprator from "./Seprator";
+import Seprator from "../sidebar/Seprator";
 
 const Archives = () => {
     return (

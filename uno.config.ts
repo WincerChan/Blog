@@ -65,7 +65,8 @@ export default defineConfig({
         "body-responsive": " md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ",
         "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4",
         "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10",
-        "list-items": "pl-8 my-2 <md:mx-4"
+        "list-items": "pl-8 my-2 <md:mx-4",
+        "content-width": "md:w-168 xl:w-192 md:mx-auto "
     },
     presets: [
         presetWind(),

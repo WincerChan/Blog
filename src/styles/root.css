@@ -191,3 +191,21 @@ b {
 .katex-display {
   @apply overflow-x-auto
 }
+
+.like {
+  animation: like 0.5s ease-in-out
+}
+
+@keyframes like {
+  0% {
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}

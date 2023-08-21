@@ -2,7 +2,7 @@ import { For } from "solid-js";
 import { A } from "solid-start";
 import { BlogScore } from "~/schema/Post";
 import { formatDate } from "~/utils";
-import Seprator from "./Seprator";
+import Seprator from "../sidebar/Seprator";
 
 
 const Relates = ({ relates }: { relates: BlogScore[] }) => {

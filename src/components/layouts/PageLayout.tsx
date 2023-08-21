@@ -20,14 +20,16 @@ const constructHeadParams = (page: BasePage) => {
 
 const PageLayout = ({ children, page, showComment }) => {
     const headParams = constructHeadParams(page);
+    const extra = (
+        <Show when={showComment}>
+            <DisqusComment slug={page.slug} />
+        </Show>
+    )
     return (
-        <ArticleLayout headParams={headParams}>
+        <ArticleLayout headParams={headParams} extra={extra}>
             {page && <div class="<md:mx-4"><ArticleTitle title={page.title} /></div>}
             {page?.cover && <LazyImg class=":: w-full blog-cover rounded object-cover my-6 " src={page.cover} alt="cover" />}
             {children}
-            <Show when={showComment}>
-                <DisqusComment slug={page.slug} />
-            </Show>
         </ArticleLayout>
     )
 }

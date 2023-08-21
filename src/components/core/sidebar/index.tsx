@@ -1,15 +1,18 @@
-import Category from "./Category";
-import Stats from "./Stats";
-import Tags from "./Tags";
+import { lazy } from "solid-js";
+import { HeadParamsTyoe } from "~/schema/Head";
+import Like from "./Like";
+import Reward from "./Reward";
 import ToC from "./ToC";
 
-const SideBar = () => {
+
+const SideBar = ({ params }: { params: HeadParamsTyoe }) => {
+    const Share = lazy(() => import("./Share"))
     return (
-        <aside class=":: text-[15px] aside-responsive">
-            <div class=":: sticky top-10">
-                <Stats />
-                <Category />
-                <Tags />
+        <aside class="lg:z-20 <lg:content-width <lg:mx-auto <md:mx-4">
+            <div class=":: top-[66vh] 2xl:top-[70vh] grid gap-4 2xl:gap-7 lg:justify-items-end lg:mr-8 lg:mt-10 lg:sticky <lg:justify-between <lg:grid-cols-3 ">
+                <Like pageURL={params.pageURL} />
+                <Reward />
+                <Share />
             </div>
         </aside>
     )
