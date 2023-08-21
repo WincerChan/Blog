@@ -1,14 +1,11 @@
-import { Show, createEffect, createSignal, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { trackEvent } from "~/utils/track";
-import { set } from "../header/ThemeSwitch/Provider";
+import Modal from "../section/Modal";
 import Seprator from "./Seprator";
 
 const ToC = ({ toc, slug }) => {
     const [visible, setVisible] = createSignal(false);
     if (!toc) return <></>
-    createEffect(() => {
-        set({ modal: visible() })
-    })
     const [readingProgress, setReadingProgress] = createSignal(0);
     const scrollListerner = (initOffset, sectionTarget) => {
         const windowScrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0
@@ -23,14 +20,13 @@ const ToC = ({ toc, slug }) => {
     })
     return (
         <>
-            <aside class=":: lg:max-w-80 lg:ml-6 xl:ml-8 <lg:fixed z-10 ">
+            <aside class=":: lg:max-w-80 lg:ml-8 <lg:fixed <lg:z-10 ">
                 <div class=":: lg:top-10 md:sticky ">
                     <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed lg:hidden bottom-28 right-10 z-10 rounded shadow-round bg-[var(--ers-bg)] ">
                         <i class=":: i-carbon-catalog w-8 h-8 m-2 text-[var(--meta-bg)] "></i>
                     </button>
-                    <Show when={visible()}>
-                        <div onClick={() => { setVisible(false) }} class=":: fixed w-screen top-0 h-screen left-0 bg-[var(--meta-bg)] z-20 " />
-                    </Show>
+                    <Modal toggle={visible} setToggle={setVisible}>
+                    </Modal>
                     <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'}`}>
                         <div class="h-4"></div>
                         <div class="flex font-headline "><Seprator title={`目录 `} /> <span class="mt-1px">（{readingProgress()}%）</span></div>

@@ -1,5 +1,5 @@
 import TagCollection from "../section/Tag";
-import Seprator from "./Seprator";
+import Seprator from "../sidebar/Seprator";
 
 const Tags = () => {
     return (

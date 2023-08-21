@@ -15,8 +15,12 @@ if (isProd) {
 }
 
 export default defineConfig({
-    include: [/(src).*\.(css|[jt]sx?)$/],
-    exclude: [],
+    content: {
+        pipeline: {
+            include: [/(src).*\.(css|[jt]sx?)$/],
+            exclude: []
+        }
+    },
     transformers: transformer,
     theme: {
         extends: {
@@ -59,13 +63,14 @@ export default defineConfig({
         "subtitle-responsive": "text-3xl <md:leading-relaxed <md:text-2xl",
         "toc-responsive": "<lg:fixed <lg:bottom-0 <lg:w-full <lg:bg-[var(--ers-bg)] <lg:px-4",
         "hr-section": "<lg:mx-4 w-24 my-8 border-none",
-        "p-section": "<md:mx-4",
         "bq-section": "border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4",
-        "aside-responsive": "md:col-span-14 2xl:col-span-13 <md:mx-4 <md:mt-8",
+        "aside-responsive": "md:col-span-14 2xl:col-span-13 <md:mt-8",
         "body-responsive": " md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ",
-        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 <md:mx-4",
+        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 ",
         "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10",
-        "list-items": "pl-8 my-2 <md:mx-4"
+        "list-items": "pl-8 px-4 my-2 ",
+        "content-width": "md:w-168 xl:w-192 md:mx-auto mx-4 ",
+        "mobile-width-beyond": " <md:w-100vw <md:max-w-none <md:-ml-4 "
     },
     presets: [
         presetWind(),

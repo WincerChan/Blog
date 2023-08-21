@@ -1,4 +1,4 @@
-import PageLayout from "~/components/layouts/PageLayout";
+import PostLayout from "~/components/layouts/PostLayout";
 import { BasePage } from "~/schema/Page";
 
 const page: BasePage = {
@@ -12,11 +12,11 @@ const page: BasePage = {
 export default function NotFound() {
   return (
     <>
-      <PageLayout page={page} showComment={false}>
+      <PostLayout rawBlog={page} hideComment={true}>
         <section>
           <p class=":: text-xl mb-8 leading-relaxed">{page.content}</p>
         </section>
-      </PageLayout>
+      </PostLayout>
     </>
   );
 }

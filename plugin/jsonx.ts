@@ -8,15 +8,15 @@ const PageLoader = (parsedContent) => {
     const transformedCode = `
                 import Img from "~/components/lazy/Img"
                 import { A } from "solid-start"
-                import PageLayout from "~/components/layouts/PageLayout"
+                import PostLayout from "~/components/layouts/PostLayout"
                 
                 const About = () => {
                     return (
-                        <PageLayout page={${JSON.stringify(rest)}} showComment={true}>
+                        <PostLayout rawBlog={${JSON.stringify(rest)}}>
                             <section>
                                 ${content}
                             </section>
-                        </PageLayout>
+                        </PostLayout>
                     )
                 }
                 
