@@ -6,7 +6,7 @@ import Like from "./social/Like";
 
 const SideBar = ({ params }: { params: HeadParamsTyoe }) => {
     return (
-        <aside class="lg:z-20 <lg:w-full <lg:mx-auto ">
+        <aside class=":: lg:z-20 <md:w-full <lg:content-width <lg:mx-auto ">
             <div class=":: top-[66vh] 2xl:top-[70vh] grid gap-4 2xl:gap-7 lg:justify-items-end lg:mr-8 lg:mt-10 lg:sticky <lg:justify-between <lg:grid-cols-3 ">
                 <Like pageURL={params.pageURL} />
                 <SocialButton iconName="i-carbon-piggy-bank" text="Reward" hoverColor="text-amber-500" />
