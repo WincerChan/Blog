@@ -1,3 +1,4 @@
+import siteConf from "@/hugo.json";
 import { Show, Suspense, createEffect, createSignal, lazy } from "solid-js";
 import { useLocation } from "solid-start";
 
@@ -37,9 +38,9 @@ const DisqusComment = () => {
             }
         })
     })
-    const pageCanonical = new URL(slug, "https://blog.itswincer.com")
+    const pageCanonical = new URL(slug, siteConf.baseURL)
     return (
-        <div class=":: mt-8 <md:mx-4 " ref={self!}>
+        <div class=":: mt-8 " ref={self!}>
             <Show when={visible()}>
                 <Suspense>
                     <Disqus nowLoad={connectible} shouldLoad={setConnectible} slug={slug} />

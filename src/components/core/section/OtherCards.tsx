@@ -31,8 +31,8 @@ type BlogCardsProps = {
 const OtherBlogs = ({ posts, description }: BlogCardsProps) => {
     return (
         <>
-            <p class=":: lg:text-3xl text-[1.6rem] font-headline leading-loose my-6 <md:mx-4 ">{description ? description : `共计 ${posts().length} 篇文章`}</p>
-            <div class="grid-cols-2 gap-8 <md:mx-4 lg:grid">
+            <p class=":: lg:text-3xl text-[1.6rem] font-headline leading-loose my-6 ">{description ? description : `共计 ${posts().length} 篇文章`}</p>
+            <div class="grid-cols-2 gap-8 lg:grid">
                 <For each={posts()}>
                     {
                         post => (

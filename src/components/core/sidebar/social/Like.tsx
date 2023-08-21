@@ -10,7 +10,7 @@ const Like = ({ pageURL }) => {
     const [animate, setAnimate] = createSignal(false)
     onMount(() => {
         const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
-        setUrl(`http://localhost:4000/api/likes/${pathEncoded}`)
+        setUrl(`https://blog-exts.itswincer.com/api/likes/${pathEncoded}`)
     })
     const click = () => {
         fetch(url(), {

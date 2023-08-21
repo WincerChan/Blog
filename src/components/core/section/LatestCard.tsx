@@ -11,7 +11,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
     return (
         <>
             <div class=":: rounded flex flex-row mb-12 lg:space-x-10 <lg:flex-col-reverse ">
-                <div class=":: <md:px-4 <lg:mt-3 flex flex-col lg:basis-1/2 h-coverMain ">
+                <div class=":: <lg:mt-3 flex flex-col lg:basis-1/2 h-coverMain ">
                     <A link={true} inactiveClass="" href={blog.slug}>
                         <h2 title={blog.title} class=":: lg:text-4xl text-3xl text-title font-headline font-medium !leading-loose ">{blog.title}</h2>
                     </A>
@@ -24,7 +24,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         <A class=":: transition duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] px-.5 text-link " inactiveClass="" href={blog.slug}>继续阅读 »</A>
                     </div>
                 </div>
-                <img width={352} height={304} class=":: lg:basis-1/2 block object-cover rounded h-coverMain w-full " src={blog.cover} alt={`${blog.title}-cover`} />
+                <img width={352} height={304} class=":: lg:basis-1/2 block object-cover rounded h-coverMain w-full !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
             </div>
         </>
     )

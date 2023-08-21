@@ -5,7 +5,7 @@
     "dev:hugo": "hugo --noBuildLock --buildFuture ",
     "dev:copy": "cp src/routes/about/index.json src/routes/about/index.jsonx; cp _output/*.xml public/;",
     "build": "pnpm dev:copy;solid-start build",
-    "start": "solid-start start --port 5001"
+    "start": "solid-start start --port 5000"
   },
   "type": "module",
   "devDependencies": {
