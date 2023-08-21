@@ -1,6 +1,5 @@
 import { BlogMinimal } from "~/schema/Post";
 import OtherBlogs from "../core/section/OtherCards";
-import ArticleTitle from "../core/section/Title";
 import ContentLayout from "./ContentLayout";
 
 type TaxoLayoutProps = {
@@ -25,7 +24,9 @@ const TaxoLayout = ({ rawTaxo, type }: TaxoLayoutProps) => {
     const headParams = constructHeadParams(rawTaxo.term, type, blogsByTerm);
     return (
         <ContentLayout headParams={headParams} >
-            <div class="<md:mx-4"><ArticleTitle title={headParams.title} /></div>
+            <div class="<md:mx-4">
+                <h1 class=":: font-headline leading-loose title-responsive ">{headParams.title}</h1>
+            </div>
             <OtherBlogs posts={() => blogsByTerm} />
         </ContentLayout>
     )

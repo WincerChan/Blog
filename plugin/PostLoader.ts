@@ -90,7 +90,6 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     const transformedCode = `
         import { A } from "solid-start"
         import { lazy } from "solid-js";
-        import EmptyLayout from "~/components/layouts/EmptyLayout"
         import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
         ${loadHighlightCSS ? 'import "highlight.js/styles/magula.css";import Pre from "~/components/lazy/Pre";' : ""}

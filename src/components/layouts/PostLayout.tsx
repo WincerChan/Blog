@@ -3,10 +3,9 @@ import { A, useLocation } from "solid-start";
 import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
 import Relates from "../core/footer/Relates";
+import DisqusComment from "../core/section/Comment";
 import Copyright from "../core/section/Copyright";
-import DisqusComment from "../core/section/Disqus";
 import TagCollection from "../core/section/Tag";
-import ArticleTitle from "../core/section/Title";
 import LazyBg from "../lazy/BG";
 import LazyImg from "../lazy/Img";
 import { ArticleLayout } from "./ContentLayout";
@@ -19,7 +18,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
     return (
         <>
             <LazyBg dataSrc={blog.cover} class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] <md:mx-4 " >
-                <ArticleTitle title={blog.title} words={blog.words} />
+                <h1 class=":: font-headline leading-loose title-responsive ">{blog.title}</h1>
                 <Show when={!!blog.subtitle}>
                     <h2 class=":: font-headline leading-relaxed subtitle-responsive mb-2 ">{blog.subtitle}</h2>
                 </Show>
@@ -34,7 +33,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
                     <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
                     <TagCollection tags={blog.tags} />
                 </div>
-            </LazyBg>
+            </LazyBg >
             <Show when={!isRecently}>
                 <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 ">
                     <p>本文最近一次更新于{calculateDateDifference(new Date(blog.updated))}前，其中的内容很可能已经有所发展或是发生改变。</p>
@@ -114,7 +113,7 @@ export const PostExtra = ({ rawBlog, relates, headParams }) => {
             <Copyright {...rawBlog} />
             <Relates relates={relates} />
             <Neighbours {...rawBlog} />
-            <DisqusComment slug={headParams.pageURL} />
+            <DisqusComment />
         </>
     )
 }

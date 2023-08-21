@@ -1,4 +1,3 @@
-import { encodeURI } from "js-base64";
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 
@@ -9,9 +8,9 @@ const Like = ({ pageURL }) => {
     const [url, setUrl] = createSignal()
     const [resource] = createResource(url, fetcher)
     const [animate, setAnimate] = createSignal(false)
-    const path = encodeURI(pageURL)
     onMount(() => {
-        setUrl(`http://localhost:4000/api/likes/${path}`)
+        const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
+        setUrl(`http://localhost:4000/api/likes/${pathEncoded}`)
     })
     const click = () => {
         fetch(url(), {
@@ -35,12 +34,12 @@ const Like = ({ pageURL }) => {
     })
     const fallback = <span class="px-2">-</span>
     return (
-        <button disabled={liked()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`hover:text-rose-500 trans-linear h-15 md:w-12 items-center font-sitetitle ${liked() ? "text-rose-500 cursor-not-allowed" : ""}`}>
+        <button disabled={liked()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`hover:text-rose-500 trans-linear h-15 lg:w-12 font-sitetitle ${liked() ? "text-rose-500 cursor-not-allowed" : ""}`}>
             <i class={`w-9 lg:block mx-auto h-9 ${liked() ? "i-carbon-thumbs-up-filled" : "i-carbon-thumbs-up "} ${animate() ? " animate-heart-beat" : ""}`} />
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
-                        <span class="<md:px-2">{format(likes())}</span>
+                        <span class="<lg:px-2 inline-block align-mid">{format(likes())}</span>
                     </Show>
                 </ErrorBoundary>
             </Suspense>

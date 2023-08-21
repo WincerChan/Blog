@@ -1,13 +1,12 @@
 
 type TitleProps = {
-    title: string,
-    words?: number
+    children: string,
 }
 
-const ArticleTitle = ({ title, words }: TitleProps) => {
+const ArticleTitle = ({ children }: TitleProps) => {
     return (
         <div class="flex">
-            <h1 class=":: font-headline leading-loose title-responsive ">{title}
+            <h1 class=":: font-headline leading-loose title-responsive ">{children}
             </h1>
         </div>
     )

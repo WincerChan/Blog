@@ -2,7 +2,7 @@ import { createEffect, createSignal } from "solid-js";
 
 const LazyImg = ({ src, ...rest }) => {
     const [visible, setVisible] = createSignal(false)
-    const SVGFallback = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9Im5vbmUiIC8+Cjwvc3ZnPgo='
+    const SVGFallback = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
     let self: HTMLImageElement;
     createEffect(() => {
         const observer = new IntersectionObserver(entries => {
