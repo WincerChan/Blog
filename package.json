@@ -1,7 +1,7 @@
 {
   "name": "solid-blog",
   "scripts": {
-    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 5000",
+    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 4999",
     "dev:hugo": "hugo --noBuildLock --buildFuture ",
     "dev:copy": "cp src/routes/about/index.json src/routes/about/index.jsonx; cp _output/*.xml public/;",
     "build": "pnpm dev:copy;solid-start build",

@@ -14,7 +14,7 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
 
     let canvas: HTMLCanvasElement | null = null;
     onMount(() => {
-        const url = window.location.href, title = "Hey, I just found this fascinating article that's worth a read! #GreatRead"
+        const url = window.location.href, title = "Hey, I just found this fascinating article that's worth a read!"
         setTwitterUrl(`https://twitter.com/intent/tweet?text=${encodeURI(title)}&url=${url}`)
         setTelegramUrl(`https://telegram.me/share/url?url=${url}&text=${encodeURI(title)}`)
     })
@@ -64,7 +64,7 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
                             <canvas ref={canvas!} class=":: w-64 h-64 " />
                             <figcaption class=":: text-center text-sm font-headline mt-2 ">手机扫一扫</figcaption>
                         </figure>
-                        <div class=":: flex md:flex-col flex-wrap md:w-40 gap-8 text-lg ">
+                        <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
                                 links.map((value, idx) => (
                                     <>
