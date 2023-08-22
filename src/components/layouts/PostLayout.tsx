@@ -1,8 +1,9 @@
 import { JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
 import { A, useLocation } from "solid-start";
 import { BlogDetailed, BlogScore } from "~/schema/Post";
-import { calculateDateDifference, formatDate } from "~/utils";
+import { calculateDateDifference, formatDate, isBrowser } from "~/utils";
 import Relates from "../core/footer/Relates";
+import { set } from "../core/header/ThemeSwitch/Provider";
 import DisqusComment from "../core/section/Comment";
 import Copyright from "../core/section/Copyright";
 import TagCollection from "../core/section/Tag";
@@ -11,7 +12,7 @@ import { ArticleLayout } from "./ContentLayout";
 
 const ProtectBlog = lazy(() => import("./EncryptBlock"))
 
-const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
+const PostMeta = ({ blog, lang }: { blog: BlogDetailed, lang: string }) => {
     const publishedDate = new Date(blog.date);
     const isRecently = (new Date().getTime() - publishedDate.getTime()) < 90 * 24 * 60 * 60 * 1000
     return (
@@ -28,7 +29,7 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
                         </span>
                         <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
                         <Show when={blog.words}>
-                            <span class="">{blog.words} 字</span>
+                            <span>{blog.words} {lang == 'en' ? 'Words' : "字"}</span>
                         </Show>
                         <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
                         <TagCollection tags={blog.tags} />
@@ -36,8 +37,8 @@ const PostMeta = ({ blog }: { blog: BlogDetailed }) => {
                 </Show>
             </LazyBg >
             <Show when={blog.category && !isRecently}>
-                <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 mobile-width-beyond">
-                    <p>本文最近一次更新于{calculateDateDifference(new Date(blog.updated))}前，其中的内容很可能已经有所发展或是发生改变。</p>
+                <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 mobile-width-beyond ">
+                    <p>{lang.startsWith('zh') ? `本文最近一次更新于${calculateDateDifference(new Date(blog.updated), lang)}前，其中的内容很可能已经有所发展或是发生改变。` : `This article was last updated ${calculateDateDifference(new Date(blog.updated), "en")} ago, and the content may have evolved or changed since then.`}</p>
                 </div>
             </Show>
 
@@ -69,6 +70,8 @@ const constructHeadParams = (blog: BlogDetailed) => {
         subtitle: blog.subtitle,
         cover: blog.cover,
         updated: blog.updated,
+        lang: blog.lang,
+        secondaryLang: blog.secondaryLang
     }
 }
 
@@ -86,6 +89,9 @@ const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
         const id = decodeURIComponent(hash())
         document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
     })
+    if (isBrowser) {
+        set({ "lang": rawBlog.lang || "zh-CN" })
+    }
 
     const
         blog = rawBlog,
@@ -99,10 +105,10 @@ const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
     if (!!blog.password) wrapper = <ProtectBlog source={children} />
     else wrapper = <section id="blog-article">{children}</section>
 
-    let extra = <PostExtra rawBlog={blog} relates={relates} headParams={headParams} hideComment={hideComment} />
+    let extra = <PostExtra rawBlog={blog} relates={relates} headParams={headParams} hideComment={hideComment} lang={rawBlog.lang || "zh-CN"} />
     return (
         <ArticleLayout blog={blogParams} headParams={headParams} rawBlog={blog} extra={extra} >
-            <PostMeta blog={blog} />
+            <PostMeta blog={blog} lang={rawBlog.lang || "zh-CN"} />
             <Show when={blog.cover}>
                 <img class=":: w-full blog-cover rounded object-cover my-6 mobile-width-beyond! " src={blog.cover} alt={blog.cover} />
             </Show>
@@ -111,12 +117,12 @@ const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
     )
 }
 
-export const PostExtra = ({ rawBlog, relates, hideComment }) => {
+export const PostExtra = ({ rawBlog, relates, hideComment, lang }) => {
     return (
         <>
             <Show when={rawBlog.category}>
-                <Copyright {...rawBlog} />
-                <Relates relates={relates} />
+                <Copyright title={rawBlog.title} slug={rawBlog.slug} updated={rawBlog.updated} lang={lang} />
+                <Relates relates={relates} lang={lang} />
                 <Neighbours neighbours={rawBlog.neighbours} />
             </Show>
             <Show when={!hideComment}>

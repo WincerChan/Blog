@@ -21,7 +21,7 @@ const padTo32 = (str: string) => {
 }
 
 
-const calculateDateDifference = (startDate: Date) => {
+const calculateDateDifference = (startDate: Date, lang: string) => {
     const endDate = new Date();
 
     let years = endDate.getFullYear() - startDate.getFullYear();
@@ -36,12 +36,12 @@ const calculateDateDifference = (startDate: Date) => {
 
     if (years >= 1) {
         if (months === 0) {
-            result = ` ${years} 年`;
+            result = ` ${years} ${lang.startsWith('zh') ? '年' : 'year(s)'}`;
         } else {
-            result = ` ${years} 年 ${months} 个月`;
+            result = ` ${years} ${lang.startsWith('zh') ? '年' : 'year(s)'} ${months} ${lang.startsWith('zh') ? '个月' : 'month(s)'}`;
         }
     } else {
-        result = ` ${months} 个月`;
+        result = ` ${months} ${lang.startsWith('zh') ? '个月' : 'months'}`;
     }
 
     return result;
@@ -67,12 +67,20 @@ const shuffle = (array: string[]) => {
 type FetchArgs = Parameters<typeof fetch>;
 
 const fetcher = async (url: string) => {
-    const resp = await fetch(url)
-    return resp.json()
+    let ret;
+    try {
+        const resp = await fetch(url)
+        ret = await resp.json()
+    } catch (error) {
+        console.error(error)
+        ret = null
+    }
+    return ret
 };
 
 const range = (end: number, step = 1) =>
     Array.from({ length: end }, (_, i) => i * step);
 
 
-export { isBrowser, formatDate, calculateDateDifference, fetcher, range, shuffle, padTo32 };
+export { calculateDateDifference, fetcher, formatDate, isBrowser, padTo32, range, shuffle };
+

@@ -16,6 +16,8 @@ export const BlogDetailedSchema = z.object({
     mathrender: z.boolean().default(false),
     subtitle: z.string().optional(),
     password: z.string().optional(),
+    secondaryLang: z.string().transform((v) => v === 'true'),
+    lang: z.string().default('zh-CN'),
     neighbours: z.object({
         prev: z.object({
             title: z.string(),

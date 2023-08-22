@@ -46,11 +46,11 @@ const ArticleLayout = ({ children, blog, headParams, extra }: ContentLayoutProps
         <main class="">
             <HeadTag headParams={headParams} />
             <div class="grid lg:grid-cols-[1fr_auto_1fr] ">
-                <SideBar params={headParams} />
+                <SideBar pageURL={headParams.pageURL} lang={headParams.lang} secondaryLang={headParams.secondaryLang} />
                 <article class=":: md:w-168 xl:w-192 mx-auto <md:w-[calc(100vw-32px)] <lg:order-first ">
                     {children}
                 </article>
-                <ToC {...blog} slug={headParams.pageURL} />
+                <ToC toc={blog?.toc} slug={headParams.pageURL} />
             </div>
             {<div class="content-width">{extra}</div>}
         </main>

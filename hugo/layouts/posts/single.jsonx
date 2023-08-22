@@ -15,20 +15,21 @@
     {{ with .TableOfContents }}
     "toc": {{ . | jsonify }},
     {{ end }}
-    {{ with .Translations }}
-    "translations": [
-        {{ range . }}
-        {
-            "language": "{{ .Lang }}",
-            "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
-        }
-        {{ end }}
-    ],
+    {{ if ne .Params.SecondaryLang nil }}
+    "secondaryLang": {{ .Params.secondaryLang }},
+    {{ end }}
+    {{ with .Params.lang }}
+    "lang": "{{ . }}",
     {{ end }}
     "neighbours": {
         {{ $pre := .PrevInSection }}
+        {{ $curr := . }}
         {{ with .NextInSection}}
-        {{ if .Params.Private }}
+        {{ if or .Params.Private .Params.SecondaryLang }}
+        "next": {
+            "title": "{{ .NextInSection.Title }}",
+            "slug": "{{ replace .NextInSection.RelPermalink `index.jsonx` `` }}"
+        }{{ with $pre }},{{ end }}
         {{ else }}
         "next": {
             "title": "{{ .Title }}",
@@ -36,10 +37,17 @@
         }{{ with $pre }},{{ end }}{{ end }}
         {{ end }}
         {{ with $pre }}
+        {{ if or .Params.Private (or .Params.SecondaryLang $curr.Params.SecondaryLang) }}
+        "prev": {
+            "title": "{{ .PrevInSection.Title }}",
+            "slug": "{{ replace .PrevInSection.RelPermalink `index.jsonx` `` }}"
+        }
+        {{ else }}
         "prev": {
             "title": "{{ .Title }}",
             "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
         }
+        {{ end }}
         {{ end }}
     }
 }

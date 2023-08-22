@@ -72,7 +72,6 @@ const ToggleButton = () => {
     }
     let self: HTMLLIElement;
 
-
     const handleClickOutside = (e: MouseEvent) => {
         if (!self.contains(e.target as Node)) {
             toggleShow(e)
