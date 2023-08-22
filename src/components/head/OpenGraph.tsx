@@ -14,7 +14,7 @@ const OpenGraph = ({ params }: { params: HeadParamsTyoe }) => {
             <Meta property="og:url" content={`${new URL(params.pageURL, siteConf.baseURL)}`} />
             <Meta property="og:image" content="https://ae01.alicdn.com/kf/H3581d2df939f4c3182b1d4b9c2a47bdaO.png" />
             <Meta property="article:published_time" content={params.date} />
-            <Meta property="article:modified_time" content={params.updated} />
+            <Meta property="article:modified_time" content={params.updated || params.date} />
             <Meta property="article:author" content={siteConf.author.name} />
         </>
     );

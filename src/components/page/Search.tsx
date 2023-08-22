@@ -54,7 +54,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <For each={data().data}>
                 {ret => (
                     <div class="my-6">
-                        <h3 class=":: text-xl font-headline text-title leading-loose border-0 pl-0 my-0 ">
+                        <h3 class=":: text-xl font-headline text-title leading-loose border-0 pl-0 my-0 <md:pl-4 ">
                             <A href={ret.url} innerHTML={ret.title}></A>
                         </h3>
                         <p class="text-justify my-0">
@@ -144,7 +144,7 @@ const Search = () => {
                 <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
             </form>
             <>
-                {!query() && <section innerHTML={page.content} />}
+                {!query() && <section class="mb-6" innerHTML={page.content} />}
                 <Suspense fallback={<FakeResult limit={8} />}>
                     <ErrorBoundary fallback={err => errorMsg(err)}>
                         <Show when={resource()}>
