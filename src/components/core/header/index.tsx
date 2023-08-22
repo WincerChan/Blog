@@ -19,8 +19,8 @@ const Header = () => {
     return (
         <Nav>
             <Logo siteConfig={siteConfig} />
-            <div class="header-justify">
-                <Pages pages={basePage.pages} />
+            <div class="header-justify overflow-x-scroll <sm:w-100vw">
+                <Pages rawPages={basePage.pages} />
                 <Tools />
             </div>
         </Nav>

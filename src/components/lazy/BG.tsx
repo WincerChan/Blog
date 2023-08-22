@@ -1,6 +1,7 @@
 import { createEffect, createSignal } from "solid-js";
 
 const LazyBg = ({ dataSrc, ...props }: any) => {
+    if (!dataSrc) return (<div {...props}>{props.children}</div>)
     const [visible, setVisible] = createSignal(false)
     const style = {
         "background-image": `url(${dataSrc})`,

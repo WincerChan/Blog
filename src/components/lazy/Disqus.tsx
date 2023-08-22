@@ -42,7 +42,7 @@ const DisqusButton = ({ nowLoad, shouldLoad, slug }: { nowLoad: Accessor<unknown
             <Show when={loadingState()}>
                 <p>正在尝试加载 Disqus，请稍等</p>
             </Show>
-            <Show when={!loadingState() && showButton()}>
+            <Show when={(!loadingState() && showButton()) && !nowLoad()}>
                 <button onClick={load} title="点击加载评论" class=":: p-3 font-headline w-full leading-8 rounded card-outline ">点击以加载 Disqus 评论</button>
             </Show>
         </>

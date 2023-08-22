@@ -5,7 +5,8 @@
     "dev:hugo": "hugo --noBuildLock --buildFuture ",
     "dev:copy": "cp src/routes/about/index.json src/routes/about/index.jsonx; cp _output/*.xml public/;",
     "build": "pnpm dev:copy;solid-start build",
-    "start": "solid-start start --port 5000"
+    "start": "solid-start start --port 5000",
+    "clean": "rm -rf _output .solid"
   },
   "type": "module",
   "devDependencies": {
@@ -40,6 +41,7 @@
   },
   "dependencies": {
     "@iconify-json/bx": "^1.1.7",
+    "@solid-primitives/i18n": "^1.4.1",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.2",
     "dotenv": "^16.3.1",

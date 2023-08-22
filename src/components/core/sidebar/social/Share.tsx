@@ -6,8 +6,10 @@ import Modal from "../../section/Modal";
 interface ShareProps {
     toggle: () => boolean;
     setToggle: (toggle: boolean) => void;
+    lang?: string
 }
-const Share = ({ toggle, setToggle }: ShareProps) => {
+
+const Share = ({ toggle, setToggle, lang }: ShareProps) => {
     const [twitterUrl, setTwitterUrl] = createSignal("")
     const [telegramUrl, setTelegramUrl] = createSignal("")
     const [showCheck, setShowCheck] = createSignal(false)
@@ -58,11 +60,11 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
                 <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-120">
-                    <p class=":: text-2xl pb-6 font-headline ">分享到...</p>
+                    <p class=":: text-2xl pb-6 font-headline ">{lang == 'zh-CN' ? "分享到" : 'Share to'}...</p>
                     <div class=":: flex w-full gap-4 <md:flex-col ">
                         <figure class="w-64 mx-auto">
                             <canvas ref={canvas!} class=":: w-64 h-64 " />
-                            <figcaption class=":: text-center text-sm font-headline mt-2 ">手机扫一扫</figcaption>
+                            <figcaption class=":: text-center text-sm font-headline mt-2 ">{lang == 'zh-CN' ? '手机扫一扫' : 'Scan with your phone'}</figcaption>
                         </figure>
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
@@ -73,7 +75,7 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
                                             <span innerText={value.text}></span>
                                         </button>
                                         <Show when={showCheck() && value.url == null}>
-                                            <p class=":: flex items-center gap-2 text-emerald-500 mx-auto ">
+                                            <p class=":: flex items-center gap-2 text-emerald-500 mx-auto animate-fade-in ">
                                                 <i class="::  w-6 h-6 i-icon-park-outline-check-one " />
                                                 <span>Copied</span>
                                             </p>

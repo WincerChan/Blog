@@ -1,8 +1,14 @@
 import siteConfig from "@/hugo.json";
-import { BlogDetailed } from "~/schema/Post";
 import { formatDate } from "~/utils";
 
-const Copyright = (blog: BlogDetailed) => {
+interface CopyrightProps {
+    title: string,
+    slug: string,
+    updated: string,
+    lang: string
+}
+
+const Copyright = ({ title, slug, updated, lang }: CopyrightProps) => {
     return (
         <div class=":: overflow-hidden p-4 px-6 bg-[var(--copyright-bg)] relative leading-7 my-8 font-headline <md:px-4 mobile-width-beyond! ">
             <div class=":: absolute -top-11 opacity-10 -right-11 ml-auto text-[var(--cc)] ">
@@ -10,20 +16,20 @@ const Copyright = (blog: BlogDetailed) => {
             </div>
             <div>
                 <div>
-                    <p>{blog.title}</p>
-                    <p>{`${siteConfig.baseURL}${blog.slug}`}</p>
+                    <p>{title}</p>
+                    <p>{`${siteConfig.baseURL}${slug}`}</p>
                 </div>
                 <div class=":: flex flex-wrap ">
                     <div class=":: flex-none mr-12 mt-4 ">
-                        <p>作者</p>
+                        <p>{lang == 'zh-CN' ? '作者' : 'Author'}</p>
                         <p>Wincer</p>
                     </div>
                     <div class=":: flex-none mr-12 mt-4 ">
-                        <p>更新于</p>
-                        <p>{formatDate(blog.date)}</p>
+                        <p>{lang == 'zh-CN' ? '更新于' : 'Updated'}</p>
+                        <p>{formatDate(updated)}</p>
                     </div>
                     <div class=":: flex-none mt-4 ">
-                        <p>许可协议</p>
+                        <p>{lang == 'zh-CN' ? '许可协议' : 'License'}</p>
                         <p>
                             <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="text-menuHover" target="_blank" rel="noopener">
                                 CC BY-NC-ND 4.0

@@ -1,13 +1,13 @@
-{{ $published := where .Data.Pages "Params.private" "!=" true }}
+{{ $published := where (where .Data.Pages "Params.private" "!=" true)  "Params.secondaryLang" "!=" true }}
 {{ $terms := slice }}
 
 {{ if eq .Type "category" }}
     {{ range .Site.Taxonomies.category }}
-        {{ $terms = $terms | append (dict "title" .Page.Title "count" (where .Pages "Params.private" "!=" true | len)) }}
+        {{ $terms = $terms | append (dict "title" .Page.Title "count" (where (where .Pages "Params.private" "!=" true) "Params.secondaryLang" "!=" true | len)) }}
     {{ end }}
 {{ else }}
     {{ range .Site.Taxonomies.tags }}
-        {{ $terms = $terms | append (dict "title" .Page.Title "count" (where .Pages "Params.private" "!=" true | len)) }}
+        {{ $terms = $terms | append (dict "title" .Page.Title "count" (where (where .Pages "Params.private" "!=" true) "Params.secondaryLang" "!=" true | len)) }}
     {{ end }}
 {{ end }}
 

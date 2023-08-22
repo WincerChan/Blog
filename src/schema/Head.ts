@@ -12,6 +12,8 @@ export const HeadParamsSchema = z.object({
     words: z.number().default(0),
     subtitle: z.string().default(""),
     genre: z.string().default("Technology"),
+    lang: z.string().optional(),
+    secondaryLang: z.boolean().optional()
 })
 
 export type HeadParamsTyoe = z.infer<typeof HeadParamsSchema>;

@@ -31,13 +31,13 @@ const parseParams = (query: string) => {
 const FakeResult = ({ limit }: { limit: number }) => {
     return (
         <>
-            <div class=":: h-7 animate-pulse bg-[var(--cc)] mb-8 w-1/2 " />
+            <div class=":: h-7 animate-pulse bg-[var(--blockquote-border)] mb-8 w-1/2 " />
             <For each={range(limit)}>
                 {
                     x => (
                         <div class=":: my-6 w-full ">
-                            <div class=":: h-7 my-3 animate-pulse bg-[var(--cc)] w-1/2 md:w-1/3 "></div>
-                            <div class=":: h-14 animate-pulse bg-[var(--cc)] "></div>
+                            <div class=":: h-7 my-3 animate-pulse bg-[var(--blockquote-border)] w-1/2 md:w-1/3 "></div>
+                            <div class=":: h-14 animate-pulse bg-[var(--blockquote-border)] "></div>
                         </div>
                     )
                 }
@@ -54,10 +54,10 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <For each={data().data}>
                 {ret => (
                     <div class="my-6">
-                        <h3 class=":: text-xl font-headline text-title leading-loose ">
+                        <h3 class=":: text-xl font-headline text-title leading-loose border-0 pl-0 my-0 <md:pl-4 ">
                             <A href={ret.url} innerHTML={ret.title}></A>
                         </h3>
-                        <p class="text-justify">
+                        <p class="text-justify my-0">
                             <span class=":: text-subtitle mr-4 inline-block ">{ret.date.split(" ")[0]}</span>
                             <span innerHTML={ret.snippet + '...'} />
                         </p>
@@ -144,7 +144,7 @@ const Search = () => {
                 <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
             </form>
             <>
-                {!query() && <section innerHTML={page.content} />}
+                {!query() && <section class="mb-6" innerHTML={page.content} />}
                 <Suspense fallback={<FakeResult limit={8} />}>
                     <ErrorBoundary fallback={err => errorMsg(err)}>
                         <Show when={resource()}>

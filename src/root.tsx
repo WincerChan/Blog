@@ -17,12 +17,13 @@ import Header from './components/core/header';
 import { val } from './components/core/header/ThemeSwitch/Provider';
 import { trackPageview } from './utils/track';
 
+
 export default function Root() {
   onMount(() => {
     trackPageview()
   })
   return (
-    <Html lang="zh-CN" class={val.theme}>
+    <Html class={val.theme} lang={val.lang}>
       <Head>
         <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`} />
       </Head>

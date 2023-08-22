@@ -5,10 +5,10 @@ import { formatDate } from "~/utils";
 import Seprator from "../sidebar/Seprator";
 
 
-const Relates = ({ relates }: { relates: BlogScore[] }) => {
+const Relates = ({ relates, lang }: { relates: BlogScore[], lang: string }) => {
     return (
         <div class="">
-            <Seprator title="相关文章" />
+            <Seprator title={lang == 'zh-CN' ? '相关文章' : 'Relates'} />
             <ol class=":: gap-6 text-lg mt-4 grid grid-cols-2 ">
                 <For each={relates}>
                     {(post, idx) => (

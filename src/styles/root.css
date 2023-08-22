@@ -170,7 +170,7 @@ section table tr>td {
   @apply border px-4 py-2;
 }
 
-section p>code {
+section code {
   @apply bg-[var(--copyright-bg)] px-1 pb-2px rounded font-mono mx-1;
 }
 

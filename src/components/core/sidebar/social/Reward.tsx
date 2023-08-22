@@ -3,17 +3,18 @@ import Modal from "../../section/Modal";
 interface RewardProps {
     toggle: () => boolean;
     setToggle: (toggle: boolean) => void;
+    lang?: string;
 }
 
-const Reward = ({ toggle, setToggle }: RewardProps) => {
+const Reward = ({ toggle, setToggle, lang }: RewardProps) => {
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
-                <div class="fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-146">
-                    <p class="text-2xl pb-6 font-headline">喜欢这篇文章？可以考虑赞赏支持一下作者</p>
-                    <div class="flex gap-6 items-center <md:flex-col">
+                <div class="fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-148">
+                    <p class="text-2xl pb-6 font-headline">{lang == 'zh-CN' ? '喜欢这篇文章？可以考虑赞赏支持一下作者' : 'Find this helpful? Please consider supporting me'}</p>
+                    <div class="flex justify-between items-center <md:flex-col gap-6">
                         <figure>
-                            <img class=" w-64 h-64" src="https://ae01.alicdn.com/kf/HTB1o49SQ9zqK1RjSZPx7634tVXaZ.png" alt="赞赏" />
+                            <img class=" w-64 h-64" src="https://ae01.alicdn.com/kf/HTB1o49SQ9zqK1RjSZPx7634tVXaZ.png" alt="wechat" />
                             <figcaption class="text-center text-sm font-headline mt-2">微信赞赏</figcaption>
                         </figure>
                         <a target="_blank" class="shadow-round flex items-center p-4 px-8 font-mono rounded-full block" href="https://www.buymeacoffee.com/wincer">
