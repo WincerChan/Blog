@@ -2,9 +2,9 @@ import searchPage from "@/_output/base/search/index.json";
 import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { A, useSearchParams } from "solid-start";
-import PageLayout from "~/components/layouts/PageLayout";
 import { isBrowser, range } from "~/utils";
 import { trackEvent } from "~/utils/track";
+import PostLayout from "../layouts/PostLayout";
 
 const resultPerPage = 8
 
@@ -138,12 +138,12 @@ const Search = () => {
         setQuery(`${input()} pages:${updatedPage}-${resultPerPage}`)
     }
     return (
-        <PageLayout page={page} showComment={false}>
-            <form onSubmit={handleSubmit} method="get" class=":: flex space-x-4 my-6 <md:mx-4 ">
+        <PostLayout rawBlog={page} hideComment={true}>
+            <form onSubmit={handleSubmit} method="get" class=":: flex space-x-4 my-6 ">
                 <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class=":: card-outline bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你想要找什么？我也想要" />
                 <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
             </form>
-            <div class="<md:mx-4">
+            <>
                 {!query() && <section innerHTML={page.content} />}
                 <Suspense fallback={<FakeResult limit={8} />}>
                     <ErrorBoundary fallback={err => errorMsg(err)}>
@@ -152,8 +152,8 @@ const Search = () => {
                         </Show>
                     </ErrorBoundary>
                 </Suspense>
-            </div>
-        </PageLayout >
+            </>
+        </PostLayout >
     )
 }
 

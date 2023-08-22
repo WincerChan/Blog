@@ -1,5 +1,5 @@
 import Category from "@/_output/category/index.json";
-import Seprator from "./Seprator";
+import Seprator from "../sidebar/Seprator";
 
 const Stats = () => {
     return (

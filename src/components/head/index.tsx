@@ -42,7 +42,7 @@ const postLDJSON = (params: HeadParamsTyoe) => {
             "@id": new URL(params.pageURL, siteConf.baseURL)
 
         },
-        "keywords": params.keywords.join(", "),
+        "keywords": params.keywords && params.keywords.join(", "),
         "description": params.description.slice(0, 200),
         "genre": params.genre,
     }

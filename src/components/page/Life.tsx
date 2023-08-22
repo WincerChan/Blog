@@ -1,9 +1,9 @@
 import lifePage from "@/_output/base/life/index.json";
 import { ErrorBoundary, For, Show, Suspense, createMemo, createResource, createSignal, onMount } from "solid-js";
-import PageLayout from "~/components/layouts/PageLayout";
 import LazyImg from "~/components/lazy/Img";
 import { fetcher } from "~/utils";
 import { range } from "~/utils/index";
+import PostLayout from "../layouts/PostLayout";
 
 
 type WishingItemType = {
@@ -60,12 +60,12 @@ const Life = () => {
     })
     const [resource] = createResource(url, fetcher)
     return (
-        <PageLayout page={page} showComment={true}>
+        <PostLayout rawBlog={page}>
             <section innerHTML={lifePage.content} />
-            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 ">我看过的书和电影（{year()}）</h3>
+            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">我看过的书和电影（{year()}）</h3>
             <div class="life-responsive">
                 <Suspense fallback={<FakeItems limit={5} />}>
-                    <ErrorBoundary fallback={err => <b class=":: col-span-5 <md:mx-4 ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>}>
+                    <ErrorBoundary fallback={err => <b class=":: col-span-5  ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>}>
                         <Show when={resource()}>
                             <For each={resource()}>
                                 {item => <RealItem {...item} />}
@@ -74,7 +74,7 @@ const Life = () => {
                     </ErrorBoundary>
                 </Suspense>
             </div>
-        </PageLayout>
+        </PostLayout>
     )
 }
 

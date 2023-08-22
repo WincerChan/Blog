@@ -2,12 +2,12 @@ import { For } from "solid-js";
 import { A } from "solid-start";
 import { BlogScore } from "~/schema/Post";
 import { formatDate } from "~/utils";
-import Seprator from "./Seprator";
+import Seprator from "../sidebar/Seprator";
 
 
 const Relates = ({ relates }: { relates: BlogScore[] }) => {
     return (
-        <div class=":: <md:mx-4 ">
+        <div class="">
             <Seprator title="相关文章" />
             <ol class=":: gap-6 text-lg mt-4 grid grid-cols-2 ">
                 <For each={relates}>

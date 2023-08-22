@@ -1,4 +1,3 @@
-import siteConf from "@/hugo.json";
 import { Accessor, Show, createEffect, createSignal } from "solid-js";
 import { isBrowser } from "~/utils";
 import { trackEvent } from "~/utils/track";
@@ -53,43 +52,4 @@ const DisqusButton = ({ nowLoad, shouldLoad, slug }: { nowLoad: Accessor<unknown
 
 
 
-const DisqusComment = ({ slug }: { slug: string }) => {
-    const [visible, setVisible] = createSignal()
-    let self: HTMLDivElement, favicon: HTMLImageElement
-    createEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                window.disqus_config = function () {
-                    this.page.url = `${pageCanonical}`;
-                    this.page.identifier = `${pageCanonical}`;
-                }
-                const img = new Image();
-                img.src = 'https://disqus.com/favicon.ico?' + new Date().getTime(); // 添加时间戳防止缓存
-                img.onload = function () {
-                    visible() ?? setVisible(true)
-                };
-                setTimeout(() => { visible() ?? (setVisible(false), console.log("100ms 内无法连接到 disqus。")) }, 100)
-                observer.unobserve(entries[0].target)
-            }
-        })
-        observer.observe(self as HTMLDivElement)
-    })
-    createEffect(() => {
-        if (!visible()) return
-        if (typeof DISQUS !== "undefined") DISQUS.reset({
-            reload: true, config: function () {
-                this.page.url = pageCanonical;
-                this.page.identifier = pageCanonical;
-            }
-        })
-    })
-    const pageCanonical = new URL(slug, siteConf.baseURL)
-    return (
-        <div class=":: mt-8 <md:mx-4 " ref={self!}>
-            <DisqusButton nowLoad={visible} shouldLoad={setVisible} slug={slug} />
-        </div>
-    )
-
-}
-
-export default DisqusComment
+export default DisqusButton

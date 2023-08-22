@@ -116,7 +116,7 @@ section ul {
 section h2,
 section h3,
 section h4 {
-  @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline;
+  @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline !mobile-width-beyond;
 }
 
 section h2 {
@@ -135,19 +135,17 @@ section hr {
   @apply seprator hr-section;
 }
 
-section>p {
-  @apply p-section
-}
 
 section blockquote {
-  @apply bq-section;
+  @apply bq-section !mobile-width-beyond;
 }
 
 blockquote p {
   @apply py-3
 }
 
-section a {
+section p a,
+section li a {
   @apply transition relative duration-200 ease-linear px-.5 text-link
 }
 
@@ -190,4 +188,22 @@ b {
 
 .katex-display {
   @apply overflow-x-auto
+}
+
+.like {
+  animation: like 0.5s ease-in-out
+}
+
+@keyframes like {
+  0% {
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
 }

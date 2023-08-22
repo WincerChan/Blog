@@ -1,10 +1,10 @@
 import config from "@/hugo.json";
 import { createMemo } from "solid-js";
 import { A } from "solid-start";
-import Archives from "../sidebar/Archives";
-import Category from "../sidebar/Category";
-import Stats from "../sidebar/Stats";
-import Tags from "../sidebar/Tags";
+import Archives from "./Archives";
+import Category from "./Category";
+import Stats from "./Stats";
+import Tags from "./Tags";
 import BackTop from "./backTop";
 import UpdateNotify from "./updateAvaliable";
 
@@ -30,9 +30,6 @@ const Copyright = () => {
                     </A>
                     <A title="Telegram" inactiveClass="" activeClass="" href="https://t.me/Tivsae" target="_blank">
                         <i class="i-bx-bxl-telegram w-8 h-8 inline-block" />
-                    </A>
-                    <A title="BuyMeaCoffee Donate" inactiveClass="" activeClass="" href="https://www.buymeacoffee.com/wincer" target="_blank">
-                        <i class="i-bx-coffee-togo w-8 h-8 inline-block" />
                     </A>
                 </div>
                 <p class=":: text-sm leading-loose ">

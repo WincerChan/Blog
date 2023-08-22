@@ -14,7 +14,7 @@ const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {
             <Meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
             <Title>{title}</Title>
             <Meta name="description" content={params.description || siteConf.description} />
-            <Meta name="keywords" content={params.keywords.join(", ")} />
+            {params.keywords && <Meta name="keywords" content={params.keywords.join(", ")} />}
             <Meta name="referrer" content="same-origin" />
             <Meta name="date" content={params.date} />
             <Meta name="author" content={siteConf.author.name} />
