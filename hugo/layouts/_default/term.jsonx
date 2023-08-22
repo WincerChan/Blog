@@ -1,4 +1,4 @@
-{{ $published := where .Data.Pages "Params.private" "!=" true }}
+{{ $published := where (where .Data.Pages "Params.private" "!=" true) "Params.secondaryLang" "!=" true }}
 {
   "term": "{{ .Title }}",
   "pages": [

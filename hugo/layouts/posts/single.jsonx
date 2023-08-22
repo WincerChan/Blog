@@ -8,12 +8,22 @@
     {{ with .Params.encrypt_pwd }}"password": "{{ . }}",{{ end }}
     {{ with .Params.Mathrender }}"mathrender": true,{{ end }}
     "category": "{{ .Params.Category }}",
-    {{ with .Summary }}"summary": {{ . | plainify | jsonify | replaceRE " " "" }},{{ end }}
+    {{ with .Summary }}"summary": {{ . | plainify | jsonify }},{{ end }}
     {{ with .Params.Subtitle }}"subtitle": "{{ .}}",{{ end }}
     "words": {{ .WordCount }},
     "content": {{ .Content | jsonify (dict "noHTMLEscape" true) }},
     {{ with .TableOfContents }}
     "toc": {{ . | jsonify }},
+    {{ end }}
+    {{ with .Translations }}
+    "translations": [
+        {{ range . }}
+        {
+            "language": "{{ .Lang }}",
+            "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
+        }
+        {{ end }}
+    ],
     {{ end }}
     "neighbours": {
         {{ $pre := .PrevInSection }}

@@ -1,5 +1,5 @@
 {{ $all := where .Site.RegularPages "Section" "posts" }}
-{{ $published := (where $all "Params.private" "!=" true) | first 5 }}
+{{ $published := where (where $all "Params.private" "!=" true) "Params.secondaryLang" "!=" true | first 5 }}
 {
   "type": "{{ .Type }}",
   "term": "{{ .Title }}",
