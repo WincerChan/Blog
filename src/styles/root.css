@@ -145,6 +145,7 @@ blockquote p {
 }
 
 section p a,
+.comment a,
 section li a {
   @apply transition relative duration-200 ease-linear px-.5 text-link
 }
@@ -206,4 +207,8 @@ b {
   100% {
     transform: scale(1.1);
   }
+}
+
+#gisdus li li {
+  @apply ml-10;
 }

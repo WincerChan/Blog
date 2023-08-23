@@ -39,7 +39,7 @@ const Like = ({ pageURL }) => {
     })
     const fallback = <span class="px-2">-</span>
     return (
-        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 lg:w-12 font-sitetitle ${liked() ? " text-rose-500" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
+        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle ${liked() ? " text-rose-500" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
             <i class={`:: w-9 lg:block mx-auto h-9 ${liked() ? "i-carbon-thumbs-up-filled" : "i-carbon-thumbs-up "} ${animate() ? " like" : ""}`} />
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>

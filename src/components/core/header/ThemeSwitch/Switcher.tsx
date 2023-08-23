@@ -82,7 +82,7 @@ const ToggleButton = () => {
             <button onClick={(e) => {
                 toggleShow(e);
                 trackEvent("Menu CTR", { props: { type: "theme" } })
-            }} title="Switch Theme" class={`:: h-full text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
+            }} title="Switch Theme" class={`:: text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
                 <i class="i-carbon-window-black-saturation md:w-6 md:h-6 w-5 h-5" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
