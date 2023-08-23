@@ -126,7 +126,7 @@ export const PostExtra = ({ rawBlog, relates, hideComment, lang }) => {
                 <Neighbours neighbours={rawBlog.neighbours} />
             </Show>
             <Show when={!hideComment}>
-                <DisqusComment />
+                <DisqusComment pageURL={rawBlog.slug} />
             </Show>
         </>
     )

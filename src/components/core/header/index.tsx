@@ -19,7 +19,7 @@ const Header = () => {
     return (
         <Nav>
             <Logo siteConfig={siteConfig} />
-            <div class="header-justify overflow-x-scroll <sm:w-100vw">
+            <div class="header-justify <sm:w-100vw">
                 <Pages rawPages={basePage.pages} />
                 <Tools />
             </div>
