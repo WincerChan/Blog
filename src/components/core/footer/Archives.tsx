@@ -3,7 +3,7 @@ import Seprator from "../sidebar/Seprator";
 
 const Archives = () => {
     return (
-        <div class="w-full">
+        <div class="max-w-1/3">
             <Seprator title="归档" />
             <div class=":: mb-6 w-24 text-[var(--extra)] ">
                 {Object.entries(__POSTS_BY_YEAR).reverse().slice(0, 5).map(val => (

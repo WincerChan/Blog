@@ -20,7 +20,7 @@ const SocialButton = ({ iconName, hoverColor, text, lang }: ButtonProps) => {
     }
     return (
         <>
-            <button onClick={click} title={text} class={`:: hover:${hoverColor} focus:${hoverColor} trans-linear h-15 lg:w-12 `}>
+            <button onClick={click} title={text} class={`:: hover:${hoverColor} focus:${hoverColor} trans-linear h-15 w-24 `}>
                 <i class={`:: ${iconName} w-9 h-9 `} />
             </button>
             <Show when={toggle()}>

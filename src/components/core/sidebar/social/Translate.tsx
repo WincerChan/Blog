@@ -31,7 +31,7 @@ const Translate = ({ lang, pageURL }: TranslateProps) => {
     }
 
     return (
-        <button onClick={click} onBlur={onblur} onMouseOver={() => setClicked(true)} title="Translate" class={`:: hover:text-indigo-500 focus:text-indigo-500 relative trans-linear h-15 lg:w-12 animate-shake-y`}>
+        <button onClick={click} onBlur={onblur} onMouseOver={() => setClicked(true)} title="Translate" class={`:: hover:text-indigo-500 focus:text-indigo-500 relative trans-linear h-15 w-24 animate-shake-y`}>
             <i class=":: i-carbon-translate w-9 h-9 " />
             <div class={`:: absolute font-bold text-lg bg-ers shadow-round rounded-lg left-0 lg:-left-6 right-0 mx-auto flex flex-col text-subtitle bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}>
                 {
