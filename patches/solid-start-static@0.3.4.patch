@@ -1,5 +1,5 @@
 diff --git a/index.js b/index.js
-index ff78410879717319e5542377fbd5068b4b2b9226..177f1d2c9accaa41bcd4ab07b16351db30a69320 100644
+index 7a593281c2c7baa54337be9a1ec6d658575745a7..a34b0fd2e8900ddb9018854a91a74fbdcab2a9a0 100644
 --- a/index.js
 +++ b/index.js
 @@ -23,7 +23,7 @@ export default function () {

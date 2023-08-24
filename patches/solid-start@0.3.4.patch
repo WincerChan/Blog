@@ -1,0 +1,32 @@
+diff --git a/fs-router/path-utils.js b/fs-router/path-utils.js
+index 2404f10774b18a4749a4e72d1babbf90855a6e68..c294495234b828fd09e6a1632d0b12acc47d443e 100644
+--- a/fs-router/path-utils.js
++++ b/fs-router/path-utils.js
+@@ -6,7 +6,7 @@
+  */
+ export function toPath(id, removePathlessLayouts = true) {
+   const idWithoutIndex = id.endsWith("/index") ? id.slice(0, -"index".length) : id;
+-  return (
++  const realPath = (
+     removePathlessLayouts ? idWithoutIndex.replace(/\/\([^)/]+\)/g, "") : idWithoutIndex
+   ).replace(/\[([^\/]+)\]/g, (_, m) => {
+     if (m.length > 3 && m.startsWith("...")) {
+@@ -17,4 +17,5 @@ export function toPath(id, removePathlessLayouts = true) {
+     }
+     return `:${m}`;
+   });
++  return encodeURI(realPath)
+ }
+diff --git a/root/Links.tsx b/root/Links.tsx
+index 0ddb92de986e05584cda9252f8a0b2a6c453b20f..8d343696bd55ee266dcb777d91a9405a3ce82a57 100644
+--- a/root/Links.tsx
++++ b/root/Links.tsx
+@@ -17,7 +17,7 @@ export default function Links() {
+       const links = match.reduce((r, src) => {
+         let el =
+           src.type === "style" ? (
+-            <link rel="stylesheet" href={src.href} $ServerOnly />
++            <link rel="stylesheet preload" as="style" href={src.href} $ServerOnly />
+           ) : src.type === "script" ? (
+             <link rel="modulepreload" href={src.href} $ServerOnly />
+           ) : undefined;

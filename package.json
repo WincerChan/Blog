@@ -10,12 +10,13 @@
   },
   "type": "module",
   "devDependencies": {
-    "@iconify-json/carbon": "^1.1.16",
+    "@iconify-json/bx": "^1.1.7",
+    "@iconify-json/carbon": "^1.1.20",
     "@iconify-json/icon-park-outline": "^1.1.12",
     "@types/crypto-js": "^4.1.1",
     "@types/he": "^1.2.0",
-    "@types/katex": "^0.16.0",
-    "@types/node": "^18.11.18",
+    "@types/katex": "^0.16.2",
+    "@types/node": "^20.5.4",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.26.0",
     "@types/qrcode": "^1.5.1",
@@ -23,39 +24,38 @@
     "@unocss/transformer-directives": "^0.55.2",
     "cheerio": "1.0.0-rc.12",
     "crypto-js": "^4.1.1",
+    "dotenv": "^16.3.1",
     "giscus": "^1.3.0",
     "he": "^1.2.0",
     "highlight.js": "^11.8.0",
     "js-base64": "^3.7.5",
-    "katex": "^0.16.7",
+    "katex": "^0.16.8",
     "nprogress": "^0.2.0",
+    "plausible-tracker": "^0.3.8",
     "prismjs": "^1.29.0",
     "qrcode": "^1.5.3",
-    "solid-start-static": "^0.2.27",
-    "typescript": "^4.9.4",
-    "undici": "^5.22.0",
+    "typescript": "^5.1.6",
+    "undici": "^5.23.0",
     "unocss": "^0.55.2",
-    "vite": "^4.1.4",
-    "workbox-core": "^6.5.4",
-    "workbox-routing": "^6.5.4",
-    "zod": "^3.21.4"
+    "vite": "^4.4.9",
+    "workbox-core": "^7.0.0",
+    "workbox-routing": "^7.0.0",
+    "zod": "^3.22.2"
   },
   "dependencies": {
-    "@iconify-json/bx": "^1.1.7",
-    "@solidjs/meta": "^0.28.2",
-    "@solidjs/router": "^0.8.2",
-    "dotenv": "^16.3.1",
-    "plausible-tracker": "^0.3.8",
-    "solid-js": "^1.7.2",
-    "solid-start": "^0.2.27"
+    "@solidjs/meta": "^0.28.6",
+    "@solidjs/router": "^0.8.3",
+    "solid-js": "^1.7.11",
+    "solid-start": "^0.3.4",
+    "solid-start-static": "^0.3.4"
   },
   "engines": {
     "node": ">=16.8"
   },
   "pnpm": {
     "patchedDependencies": {
-      "solid-start@0.2.27": "patches/solid-start@0.2.27.patch",
-      "solid-start-static@0.2.27": "patches/solid-start-static@0.2.27.patch"
+      "solid-start@0.3.4": "patches/solid-start@0.3.4.patch",
+      "solid-start-static@0.3.4": "patches/solid-start-static@0.3.4.patch"
     }
   }
 }
