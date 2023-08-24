@@ -1,0 +1,13 @@
+{
+    "nav": [
+        "About",
+        "Life",
+        "Archive",
+        "Friends"
+    ],
+    "theme": [
+        "Light Mode",
+        "Dark Mode",
+        "System Mode"
+    ]
+}

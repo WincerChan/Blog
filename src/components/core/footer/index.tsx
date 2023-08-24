@@ -14,7 +14,7 @@ const Copyright = () => {
     const year = createMemo(() => new Date().getFullYear())
     return (
         <footer class=":: mt-16 bg-ers shadow-round py-5 <lg:px-4 ">
-            <div class=":: w-view mt-4 flex justify-between text-sm leading-9 ">
+            <div class=":: w-view mt-4 grid auto-cols-fr grid-flow-col text-sm leading-9 ">
                 <Stats />
                 <Category />
                 <Archives />

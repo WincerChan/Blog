@@ -6,7 +6,7 @@ import Seprator from "../sidebar/Seprator";
 const Category = () => {
     const categories = categoryPage.pages
     return (
-        <div class="max-w-1/3">
+        <div class="">
             <Seprator title="分类" />
             <div class=":: mb-6">
                 <For each={categories}>

@@ -13,6 +13,9 @@ patchedDependencies:
     path: patches/solid-start@0.3.4.patch
 
 dependencies:
+  '@solid-primitives/i18n':
+    specifier: ^1.4.1
+    version: 1.4.1(solid-js@1.7.11)
   '@solidjs/meta':
     specifier: ^0.28.6
     version: 0.28.6(solid-js@1.7.11)
@@ -102,6 +105,9 @@ devDependencies:
   qrcode:
     specifier: ^1.5.3
     version: 1.5.3
+  typesafe-i18n:
+    specifier: ^5.26.1
+    version: 5.26.1(typescript@5.1.6)
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -1908,6 +1914,23 @@ packages:
 
   /@sideway/pinpoint@2.0.0:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
+    dev: false
+
+  /@solid-primitives/context@0.2.1(solid-js@1.7.11):
+    resolution: {integrity: sha512-XIIwCOWpRKDersgkR9LNFXaJHIV8QlCFo/tq5bV0cAOZklcwOFcqi2bN+uWgEIQSWGjWXU2kc1H1/TzgYzVDlg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      solid-js: 1.7.11
+    dev: false
+
+  /@solid-primitives/i18n@1.4.1(solid-js@1.7.11):
+    resolution: {integrity: sha512-lUUb/hmI77O9oMH8Jj4pPta/pAV21gRgN52UJ7cCXVdv1QkiyzX586gDDU+Tj8NsK/U6OrmMk2tClPwqHAk/xA==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/context': 0.2.1(solid-js@1.7.11)
+      solid-js: 1.7.11
     dev: false
 
   /@solidjs/meta@0.28.6(solid-js@1.7.11):
@@ -4032,6 +4055,15 @@ packages:
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: false
+
+  /typesafe-i18n@5.26.1(typescript@5.1.6):
+    resolution: {integrity: sha512-1zSdbB48TJG1LNnsNOUZgk6HJD1ne0w6YSMR854CEHoLDG7zaag46G8P9cQ+TblRHz0vDGyy7E5xlzeEVQlY6A==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=3.5.1'
+    dependencies:
+      typescript: 5.1.6
+    dev: true
 
   /typescript@5.1.6:
     resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}

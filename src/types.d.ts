@@ -9,9 +9,5 @@ declare const __TOTAL_POSTS: number
 declare const __IS_PROD: boolean
 declare const __ASSET_VERSION: string
 declare const __SW_HASH: string
-declare const DISQUS: {
-    reset: (arg0: any) => void
-}
-declare const umami: {
-    track: (arg0: string) => void
-}
+declare const __EN_LANGS: () => Record<string, any>
+declare const __ZH_LANGS: () => Record<string, any>

@@ -1,0 +1,22 @@
+{
+    "nav": [
+        {
+            "title": "Stats",
+            "items": [
+                "Articles",
+                "Categories",
+                "Words",
+                "Tags"
+            ]
+        },
+        {
+            "title": "Categories"
+        },
+        {
+            "title": "Years"
+        },
+        {
+            "title": "Tags"
+        }
+    ]
+}

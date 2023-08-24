@@ -32,6 +32,7 @@ export default function Root() {
       if (k.pathname.includes(v)) lang = "en"
     })
   }
+
   set({ lang: lang || "zh-CN" })
   return (
     <Html class={val.theme} lang={lang ?? val.lang}>

@@ -3,7 +3,7 @@ import Seprator from "../sidebar/Seprator";
 
 const Stats = () => {
     return (
-        <div class="max-w-1/3">
+        <div class="">
             <Seprator title="统计" />
             <div class=":: mb-6 text-[var(--extra)] ">
                 <div class=":: flex justify-between">

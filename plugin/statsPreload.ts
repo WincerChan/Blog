@@ -1,6 +1,8 @@
 import { BlogMinimal } from "~/schema/Post";
 import blogs from "../_output/posts/index.json";
 import tags from "../_output/tags/index.json";
+import en_langs from "./lang/en/en";
+import zh_langs from "./lang/zh/zh";
 
 const groupByYear = (posts: BlogMinimal[]) => {
     let byYears: { [key: string]: number } = {};
@@ -34,4 +36,6 @@ const totalTags = tags.pages.length
 const postsByYear = groupByYear(blogs.pages)
 
 export { en_posts, postsByYear, randomTags, totalPosts, totalTags, wordsCount };
+
+export { en_langs, zh_langs };
 
