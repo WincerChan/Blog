@@ -27,10 +27,11 @@ const wordsCount = blogs.pages.reduce((acc, post) => {
     return acc + post.words
 }, 0)
 const totalPosts = blogs.pages.length
+const en_posts = blogs.pages.filter((post) => post.lang === "en").map(x => x.slug)
 
 const randomTags = range(tags.pages.map((tag) => tag.title), 16)
 const totalTags = tags.pages.length
 const postsByYear = groupByYear(blogs.pages)
 
-export { postsByYear, randomTags, totalPosts, totalTags, wordsCount };
+export { en_posts, postsByYear, randomTags, totalPosts, totalTags, wordsCount };
 

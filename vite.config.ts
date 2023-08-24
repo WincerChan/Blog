@@ -5,7 +5,7 @@ import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from "vite";
 import jsonxPlugin from "./plugin/jsonx";
-import { postsByYear, randomTags, totalPosts, totalTags, wordsCount } from "./plugin/statsPreload";
+import { en_posts, postsByYear, randomTags, totalPosts, totalTags, wordsCount } from "./plugin/statsPreload";
 import viteSwBuild from "./plugin/swBuild";
 
 dotenv.config()
@@ -18,6 +18,7 @@ const definedVars = {
   __TOTAL_POSTS: totalPosts,
   __IS_PROD: isProd,
   __POSTS_BY_YEAR: postsByYear,
+  __EN_POSTS: en_posts
 }
 
 export default defineConfig({

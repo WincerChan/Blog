@@ -1,7 +1,7 @@
 import { JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
 import { A, useLocation } from "solid-start";
 import { BlogDetailed, BlogScore } from "~/schema/Post";
-import { calculateDateDifference, formatDate, isBrowser } from "~/utils";
+import { calculateDateDifference, formatDate } from "~/utils";
 import Relates from "../core/footer/Relates";
 import { set } from "../core/header/ThemeSwitch/Provider";
 import DisqusComment from "../core/section/Comment";
@@ -89,9 +89,7 @@ const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
         const id = decodeURIComponent(hash())
         document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
     })
-    if (isBrowser) {
-        set({ "lang": rawBlog.lang || "zh-CN" })
-    }
+    if (rawBlog.lang) set({ "lang": rawBlog.lang })
 
     const
         blog = rawBlog,

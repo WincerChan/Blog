@@ -2,19 +2,21 @@
 import '@unocss/reset/tailwind.css';
 import "nprogress/nprogress.css";
 import { Suspense, onMount } from 'solid-js';
+import { isServer } from 'solid-js/web';
 import {
   Body,
   FileRoutes,
   Head,
   Html,
   Routes,
-  Scripts
+  Scripts,
+  useLocation
 } from "solid-start";
 import 'uno.css';
 import '~/styles/root.css';
 import Footer from './components/core/footer';
 import Header from './components/core/header';
-import { val } from './components/core/header/ThemeSwitch/Provider';
+import { set, val } from './components/core/header/ThemeSwitch/Provider';
 import { trackPageview } from './utils/track';
 
 
@@ -22,8 +24,17 @@ export default function Root() {
   onMount(() => {
     trackPageview()
   })
+  let lang;
+  if (isServer) {
+    const k = useLocation()
+    lang = "zh-CN"
+    __EN_POSTS.forEach(v => {
+      if (k.pathname.includes(v)) lang = "en"
+    })
+  }
+  set({ lang: lang || "zh-CN" })
   return (
-    <Html class={val.theme} lang={val.lang}>
+    <Html class={val.theme} lang={lang ?? val.lang}>
       <Head>
         <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`} />
       </Head>

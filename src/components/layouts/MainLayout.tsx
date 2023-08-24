@@ -1,17 +1,31 @@
-import { BlogMinimal } from "~/schema/Post";
-import ContentLayout from "./ContentLayout";
+import { useBeforeLeave } from "@solidjs/router"
+import nProgress from "nprogress"
+import { JSXElement, onMount } from "solid-js"
+import { trackPageview } from "~/utils/track"
+import { set, val } from "../core/header/ThemeSwitch/Provider"
 
-const constructHeadParams = (page: BlogMinimal) => {
-    return {
-        date: page.date,
-    }
+interface MainProps {
+    children: JSXElement,
+    className?: string,
+    lang?: string
 }
-const MainLayout = ({ children, page }) => {
-    const headParmas = constructHeadParams(page)
+
+nProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 })
+
+const MainLayout = ({ children, className, lang }: MainProps) => {
+    useBeforeLeave(e => {
+        if (!(e.to.toString().startsWith(e.from.pathname) && e.from.pathname !== "/")) nProgress.start()
+        trackPageview({ url: `${window.location.origin}${e.to.toString()}` })
+    })
+    onMount(() => {
+        nProgress.done()
+    })
+    const currLang = lang || 'zh-CN'
+    if (val.lang !== currLang) set({ lang: currLang })
     return (
-        <ContentLayout headParams={headParmas}>
+        <main class={className}>
             {children}
-        </ContentLayout>
+        </main>
     )
 }
 
