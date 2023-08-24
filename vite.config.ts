@@ -37,7 +37,7 @@ export default defineConfig({
   },
   plugins: [
     jsonxPlugin(),
-    solid({ adapter: staticAdpater(), extensions: [".jsonx"] }),
+    solid({ adapter: staticAdpater(), extensions: [".jsonx"], experimental: { islands: true, islandsRouter: true } }),
     UnoCSS(),
     viteSwBuild()
   ],
