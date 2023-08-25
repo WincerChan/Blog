@@ -1,3 +1,4 @@
+import siteConf from "@/hugo.json";
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 
@@ -11,7 +12,7 @@ const Like = ({ pageURL }) => {
     const [animate, setAnimate] = createSignal(false)
     onMount(() => {
         const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
-        setUrl(`https://blog-exts.itswincer.com/api/likes/${pathEncoded}`)
+        setUrl(`${siteConf.extURL}/api/likes/${pathEncoded}`)
     })
     const click = () => {
         fetch(url(), {

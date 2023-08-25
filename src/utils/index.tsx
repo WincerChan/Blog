@@ -21,7 +21,7 @@ const padTo32 = (str: string) => {
 }
 
 
-const calculateDateDifference = (startDate: Date, lang: string) => {
+const calculateDateDifference = (startDate: Date, lang: string): string => {
     const endDate = new Date();
 
     let years = endDate.getFullYear() - startDate.getFullYear();

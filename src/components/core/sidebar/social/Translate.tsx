@@ -1,25 +1,34 @@
 import { A } from "@solidjs/router";
-import { createSignal, onMount } from "solid-js";
+import { Accessor, createSignal, onMount } from "solid-js";
+import { Translations } from "~/i18n/i18n-types";
 import { val } from "../../header/ThemeSwitch/Provider";
 
 interface TranslateProps {
+    LL: Accessor<Translations>,
     lang?: string,
     pageURL: string
 }
 
-const Translate = ({ lang, pageURL }: TranslateProps) => {
+const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
     const [toggle, setToggle] = createSignal(false)
     const [aviableLangs, setAviableLangs] = createSignal({})
     const click = () => {
         setToggle(!toggle())
     }
+    console.log(lang)
 
     onMount(() => {
-        const enURL = pageURL.replace("-zh/", "-en/?lang=en")
-        const zhURL = pageURL.replace("-en/", "-zh/?lang=zh-CN")
+        let translateURL;
+        let langShort = lang?.split("-")[0]
+        let translateLangShort = langShort == "zh" ? "en" : "zh"
+        if (pageURL.endsWith(`-${langShort}/`)) {
+            translateURL = pageURL.replace(`-${langShort}/`, `-${translateLangShort}/`)
+        } else {
+            translateURL = pageURL.slice(0, -1) + `-${translateLangShort}/`
+        }
         setAviableLangs({
-            "en": { name: "English", url: enURL },
-            "zh-CN": { name: "中文", url: zhURL }
+            "en": { name: "English", url: langShort == "zh" ? translateURL : pageURL },
+            "zh-CN": { name: "中文", url: langShort == "zh" ? pageURL : translateURL }
         })
     })
 

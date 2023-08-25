@@ -1,3 +1,4 @@
+import siteConf from "@/hugo.json";
 import { Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
 import CommentList from "~/components/lazy/OldComment/Comment";
 import { fetcher } from "~/utils";
@@ -22,7 +23,7 @@ export default function GiscusComment({ pageURL }) {
 
     createEffect(() => {
         const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
-        if (visible()) { import('giscus'); setUrl(`https://blog-exts.itswincer.com/api/comments/${pathEncoded}`) }
+        if (visible()) { import('giscus'); setUrl(`${siteConf.extURL}/api/comments/${pathEncoded}`) }
     })
 
     return (

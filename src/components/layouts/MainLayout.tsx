@@ -1,6 +1,8 @@
 import { useBeforeLeave } from "@solidjs/router"
 import nProgress from "nprogress"
 import { JSXElement, onMount } from "solid-js"
+import { useI18nContext } from "~/i18n/i18n-solid"
+import { loadLocaleAsync } from "~/i18n/i18n-util.async"
 import { trackPageview } from "~/utils/track"
 import { set, val } from "../core/header/ThemeSwitch/Provider"
 
@@ -21,7 +23,13 @@ const MainLayout = ({ children, className, lang }: MainProps) => {
         nProgress.done()
     })
     const currLang = lang || 'zh-CN'
-    if (val.lang !== currLang) set({ lang: currLang })
+    const { setLocale } = useI18nContext()
+    console.log("currLang", currLang, val.lang)
+    if (val.lang !== currLang) {
+        set({ lang: currLang })
+    }
+    loadLocaleAsync(currLang.startsWith('zh') ? 'zh' : 'en').then(() => setLocale(currLang.startsWith('zh') ? 'zh' : 'en'))
+
     return (
         <main class={className}>
             {children}

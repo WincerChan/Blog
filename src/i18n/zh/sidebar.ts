@@ -1,5 +1,5 @@
-{
-    "tools": {
+export default {
+    TOOLS: {
         "donate": "喜欢这篇文章？可以考虑赞赏支持一下作者",
         "share": {
             "title": "分享到...",
@@ -8,5 +8,5 @@
             "copy_msg": "已复制"
         }
     },
-    "toc": "目录"
+    TOC: "目录"
 }

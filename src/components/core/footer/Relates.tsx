@@ -1,14 +1,14 @@
-import { For } from "solid-js";
+import { Accessor, For } from "solid-js";
 import { A } from "solid-start";
+import { Translations } from "~/i18n/i18n-types";
 import { BlogScore } from "~/schema/Post";
 import { formatDate } from "~/utils";
-import Seprator from "../sidebar/Seprator";
 
 
-const Relates = ({ relates, lang }: { relates: BlogScore[], lang: string }) => {
+const Relates = ({ relates, LL }: { relates: BlogScore[], LL: Accessor<Translations> }) => {
     return (
         <div class="">
-            <Seprator title={lang == 'zh-CN' ? '相关文章' : 'Relates'} />
+            <label class=":: font-headline text-[var(--subtitle)]"> {LL().post.RELATES}</label>
             <ol class=":: gap-6 text-lg mt-4 grid grid-cols-2 ">
                 <For each={relates}>
                     {(post, idx) => (

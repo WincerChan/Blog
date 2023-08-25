@@ -11,7 +11,7 @@
       "title": "{{ $page.Title }}",
       {{ with $page.Params.subtitle }}"subtitle": "{{ $page.Params.subtitle }}",{{ end }}
       "slug": "{{ $page.Slug }}",  
-      {{ with $page.Params.Lang}} "lang": "{{ $page.Params.Lang }}", {{ end }}
+      {{ with $page.Params.Lang}}"lang": "{{ $page.Params.Lang }}", {{ end }}
       {{ if eq $index 0 }}"cover": "{{ $page.Params.cover }}", {{ end }}
       "words": {{ $page.WordCount }},
       "category": "{{ $page.Params.category }}",

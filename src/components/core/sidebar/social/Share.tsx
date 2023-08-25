@@ -1,15 +1,16 @@
 import { toCanvas } from "qrcode";
-import { Show, createEffect, createSignal, onMount } from "solid-js";
+import { Accessor, Show, createEffect, createSignal, onMount } from "solid-js";
+import { Translations } from "~/i18n/i18n-types";
 import Modal from "../../section/Modal";
 
 
 interface ShareProps {
     toggle: () => boolean;
     setToggle: (toggle: boolean) => void;
-    lang?: string
+    LL: Accessor<Translations>;
 }
 
-const Share = ({ toggle, setToggle, lang }: ShareProps) => {
+const Share = ({ toggle, setToggle, LL }: ShareProps) => {
     const [twitterUrl, setTwitterUrl] = createSignal("")
     const [telegramUrl, setTelegramUrl] = createSignal("")
     const [showCheck, setShowCheck] = createSignal(false)
@@ -52,7 +53,7 @@ const Share = ({ toggle, setToggle, lang }: ShareProps) => {
         },
         {
             "icon": "i-icon-park-outline-copy-link",
-            "text": "Copy Link",
+            "text": LL().sidebar.TOOLS.share.copy(),
             "url": null
         }
     ]
@@ -60,11 +61,11 @@ const Share = ({ toggle, setToggle, lang }: ShareProps) => {
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
                 <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-120">
-                    <p class=":: text-2xl pb-6 font-headline ">{lang == 'zh-CN' ? "分享到" : 'Share to'}...</p>
+                    <p class=":: text-2xl pb-6 font-headline ">{LL().sidebar.TOOLS.share.title()}</p>
                     <div class=":: flex w-full gap-4 <md:flex-col ">
                         <figure class="w-64 mx-auto">
                             <canvas ref={canvas!} class=":: w-64 h-64 " />
-                            <figcaption class=":: text-center text-sm font-headline mt-2 ">{lang == 'zh-CN' ? '手机扫一扫' : 'Scan with your phone'}</figcaption>
+                            <figcaption class=":: text-center text-sm font-headline mt-2 ">{LL().sidebar.TOOLS.share.scan()}</figcaption>
                         </figure>
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
@@ -75,9 +76,9 @@ const Share = ({ toggle, setToggle, lang }: ShareProps) => {
                                             <span innerText={value.text}></span>
                                         </button>
                                         <Show when={showCheck() && value.url == null}>
-                                            <p class=":: flex items-center gap-2 text-emerald-500 mx-auto animate-fade-in ">
+                                            <p class=":: flex items-center gap-2 text-emerald-500 mx-auto animate-fade-in animate-duration-200 ">
                                                 <i class="::  w-6 h-6 i-icon-park-outline-check-one " />
-                                                <span>Copied</span>
+                                                <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
                                             </p>
                                         </Show>
                                     </>

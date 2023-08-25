@@ -1,4 +1,5 @@
-import { JSX } from "solid-js";
+import { Accessor, JSX } from "solid-js";
+import { Translations } from "~/i18n/i18n-types";
 import { HeadParamsTyoe } from "~/schema/Head";
 import { SideBar } from "../core/sidebar";
 import ToC from "../core/sidebar/ToC";
@@ -10,7 +11,8 @@ type ContentLayoutProps = {
     blog?: BlogPostParams,
     children: JSX.Element,
     headParams: HeadParamsTyoe,
-    extra?: JSX.Element
+    extra?: JSX.Element,
+    LL?: Accessor<Translations>
 }
 
 const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
@@ -24,16 +26,16 @@ const ContentLayout = ({ children, blog, headParams }: ContentLayoutProps) => {
     );
 };
 
-const ArticleLayout = ({ children, blog, headParams, extra }: ContentLayoutProps) => {
+const ArticleLayout = ({ children, headParams, extra, LL }: ContentLayoutProps) => {
     return (
         <MainLayout lang={headParams.lang}>
             <HeadTag headParams={headParams} />
             <div class="grid lg:grid-cols-[1fr_auto_1fr] ">
-                <SideBar pageURL={headParams.pageURL} lang={headParams.lang || 'zh-CN'} secondaryLang={headParams.secondaryLang} />
+                <SideBar pageURL={headParams.pageURL} LL={LL} secondaryLang={headParams.secondaryLang} lang={headParams.lang} />
                 <article class=":: md:w-168 xl:w-192 mx-auto <md:w-[calc(100vw-32px)] <lg:order-first ">
                     {children}
                 </article>
-                <ToC toc={blog?.toc} slug={headParams.pageURL} />
+                <ToC toc={headParams.toc} slug={headParams.pageURL} LL={LL} />
             </div>
             {<div class="content-width">{extra}</div>}
         </MainLayout>

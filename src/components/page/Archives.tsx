@@ -52,7 +52,7 @@ const Archives = () => {
             <div id="post-meta" class=":: font-mono text-base flex overflow-x-scroll hyphens-auto whitespace-nowrap  space-x-4 scrollbar-none mt-4 mb-6 ">
                 <For each={allYears}>
                     {(year, index) => (
-                        <button title={year} onClick={() => updateActivePosts(year)} class=":: border rounded py-2 px-4">{year}</button>
+                        <button title={year} onClick={() => updateActivePosts(year)} class=":: border rounded py-2 px-4 ">{year}</button>
                     )}
                 </For>
             </div>

@@ -1,23 +1,22 @@
 import Category from "@/_output/category/index.json";
-import Seprator from "../sidebar/Seprator";
+import { Accessor, For } from "solid-js";
+import { Translations } from "~/i18n/i18n-types";
 
-const Stats = () => {
+const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
+    const elems = [
+        __TOTAL_POSTS,
+        Category.pages.length,
+        `${(__WORDS / 1000).toPrecision(3)}`,
+        __ALL_TAGS
+    ]
+
     return (
         <div class="">
-            <Seprator title="统计" />
+            <label class=":: font-headline text-[var(--subtitle)] ">{LL().footer.S}</label>
             <div class=":: mb-6 text-[var(--extra)] ">
-                <div class=":: flex justify-between">
-                    <p>{__TOTAL_POSTS} 文章</p>
-                </div>
-                <div class=":: flex justify-between">
-                    <p>{Category.pages.length} 分类</p>
-                </div>
-                <div class=":: flex justify-between">
-                    <p>{(__WORDS / 10000).toPrecision(3)} 万字</p>
-                </div>
-                <div class=":: flex justify-between">
-                    <p>{__ALL_TAGS} 标签</p>
-                </div>
+                <For each={elems}>
+                    {(item, idx) => <p>{item}{LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}</p>}
+                </For>
             </div>
         </div>
     )

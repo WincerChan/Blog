@@ -1,5 +1,5 @@
-{
-    "tools": {
+export default {
+    TOOLS: {
         "donate": "Find this helpful? Please consider supporting me",
         "share": {
             "title": "Share to...",
@@ -8,5 +8,5 @@
             "copy_msg": "Copied"
         }
     },
-    "toc": "TOC"
+    TOC: "TOC"
 }

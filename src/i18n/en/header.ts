@@ -1,11 +1,11 @@
-{
-    "nav": [
+export default {
+    NAV: [
         "About",
         "Life",
         "Archive",
         "Friends"
     ],
-    "theme": [
+    THEME: [
         "Light Mode",
         "Dark Mode",
         "System Mode"
