@@ -1,4 +1,3 @@
-import searchPage from "@/_output/base/search/index.json";
 import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { A, useSearchParams } from "solid-start";
@@ -99,8 +98,7 @@ const errorMsg = (err: string) => {
     )
 }
 
-const Search = () => {
-    const page = searchPage
+const Search = ({ page, children }) => {
 
     const [input, setInput] = createSignal('')
     const [query, setQuery] = createSignal()
@@ -127,7 +125,6 @@ const Search = () => {
         // 结果写入到 URL
         if (!input()) return
         setSearchParams({ q: input() })
-        typeof umami !== "undefined" && umami.track(`Search ${input()}`)
         trackEvent("Search", { props: { keyword: input() } })
         setQuery(`${input()} pages:${1}-${resultPerPage}`)
         setCurrentPage(1)
@@ -144,7 +141,7 @@ const Search = () => {
                 <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
             </form>
             <>
-                {!query() && <section class="mb-6" innerHTML={page.content} />}
+                {!query() && children}
                 <Suspense fallback={<FakeResult limit={8} />}>
                     <ErrorBoundary fallback={err => errorMsg(err)}>
                         <Show when={resource()}>

@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 4999",
     "dev:hugo": "hugo --noBuildLock --buildFuture ",
-    "dev:copy": "cp src/routes/about/index.json src/routes/about/index.jsonx; cp _output/*.xml public/;",
+    "dev:copy": "cp _output/*.xml public/;",
     "build": "pnpm dev:copy;solid-start build",
     "start": "solid-start start --port 5000",
     "clean": "rm -rf _output .solid"
@@ -34,6 +34,7 @@
     "plausible-tracker": "^0.3.8",
     "prismjs": "^1.29.0",
     "qrcode": "^1.5.3",
+    "typesafe-i18n": "^5.26.1",
     "typescript": "^5.1.6",
     "undici": "^5.23.0",
     "unocss": "^0.55.2",
@@ -43,6 +44,7 @@
     "zod": "^3.22.2"
   },
   "dependencies": {
+    "@solid-primitives/i18n": "^1.4.1",
     "@solidjs/meta": "^0.28.6",
     "@solidjs/router": "^0.8.3",
     "solid-js": "^1.7.11",

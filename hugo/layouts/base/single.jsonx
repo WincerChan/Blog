@@ -6,10 +6,16 @@
     {{ with .Params.Updated }}
     "updated": "{{ (.Params.Updated | time).Format `2006-01-02T15:04:05+0800` }}",
     {{ end }}
-    "slug": "{{ .Params.Slug }}",
-    "summary": "{{ .Summary }}",
+    "slug": "/{{ .Params.Slug }}/",
+    "summary": {{ .Summary | jsonify }},
     {{ with .Params.Cover }}
     "cover" : "{{ . }}",
+    {{ end }}
+    {{ if ne .Params.isTranslation nil }}
+    "isTranslation": {{ .Params.isTranslation }},
+    {{ end }}
+    {{ with .Params.lang }}
+    "lang": "{{ . }}",
     {{ end }}
     {{ if eq .Title "Pages" }}
     "pages": [

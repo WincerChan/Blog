@@ -21,7 +21,7 @@ const padTo32 = (str: string) => {
 }
 
 
-const calculateDateDifference = (startDate: Date, lang: string) => {
+const calculateDateDifference = (startDate: Date, lang: string): string => {
     const endDate = new Date();
 
     let years = endDate.getFullYear() - startDate.getFullYear();
@@ -73,6 +73,7 @@ const fetcher = async (url: string) => {
         ret = await resp.json()
     } catch (error) {
         console.error(error)
+        throw error
         ret = null
     }
     return ret

@@ -1,5 +1,6 @@
 import { For, Show } from "solid-js";
 import { A } from "solid-start";
+import { useI18nContext } from "~/i18n/i18n-solid";
 import { BlogMinimal } from "~/schema/Post";
 import DateCat from "./DateCat";
 
@@ -27,11 +28,13 @@ const CompactBlog = ({ blog }: BlogProps) => {
 type BlogCardsProps = {
     posts: () => BlogMinimal[],
     description?: string
+    length?: number
 }
-const OtherBlogs = ({ posts, description }: BlogCardsProps) => {
+const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
+    const { LL } = useI18nContext()
     return (
         <>
-            <p class=":: lg:text-3xl text-[1.6rem] font-headline leading-loose my-6 ">{description ? description : `共计 ${posts().length} 篇文章`}</p>
+            <p class=":: lg:text-3xl text-[1.6rem] font-headline leading-loose my-6 ">{description ?? LL().archive.SUBTITLE({ total: posts().length })}</p>
             <div class="grid-cols-2 gap-8 lg:grid">
                 <For each={posts()}>
                     {

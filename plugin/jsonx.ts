@@ -1,32 +1,8 @@
 import path from "path";
 import { Plugin } from "vite";
 import PostLoader from "./PostLoader";
+import BaseLoader from "./base/loader";
 
-
-const PageLoader = (parsedContent) => {
-    const { content, ...rest } = parsedContent
-    const transformedCode = `
-                import Img from "~/components/lazy/Img"
-                import { A } from "solid-start"
-                import PostLayout from "~/components/layouts/PostLayout"
-                
-                const About = () => {
-                    return (
-                        <PostLayout rawBlog={${JSON.stringify(rest)}}>
-                            <section>
-                                ${content}
-                            </section>
-                        </PostLayout>
-                    )
-                }
-                
-                export default About;
-    `
-    return {
-        code: transformedCode,
-        map: null
-    }
-}
 
 const TaxoLoader = (content, type) => {
     const transformedCode = `
@@ -45,14 +21,14 @@ const TaxoLoader = (content, type) => {
 }
 
 const checkType = (id: string) => {
-    if (id.includes('/about/')) {
-        return 'base';
-    } else if (id.includes('/posts/')) {
+    if (id.includes('/posts/')) {
         return 'post';
     } else if (id.includes('/tags/')) {
         return 'tags'
     } else if (id.includes('/category/')) {
         return 'category'
+    } else {
+        return 'base'
     }
 }
 
@@ -67,7 +43,7 @@ export default function () {
             const parsedContent = JSON.parse(content);
             const _type = checkType(id)
             if (_type === 'base') {
-                return PageLoader(parsedContent)
+                return BaseLoader(parsedContent)
             } else if (_type === 'post') {
                 return PostLoader(parsedContent)
             } else if (_type === 'tags') {
@@ -75,11 +51,17 @@ export default function () {
             } else if (_type === 'category') {
                 return TaxoLoader(content, '分类')
             }
-            return {
-                code: '<></>',
-                map: null
-            };
-        }
+            return '<></>'
+        },
+        generateBundle(options, bundle) {
+            for (const fileName in bundle) {
+                if (fileName.endsWith('.jsonx')) {
+                    const file = bundle[fileName];
+                    console.log(fileName)
+                    delete bundle[fileName]; // Remove the original file from the bundle
+                }
+            }
+        },
     };
     return plugin
 }

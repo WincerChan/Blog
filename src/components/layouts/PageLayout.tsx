@@ -15,12 +15,11 @@ const constructHeadParams = (page: BasePage) => {
     }
 }
 
-const ArchiveLayout = ({ children, page }) => {
+const ArchiveLayout = ({ children, page, lang }) => {
     const headParams = constructHeadParams(page);
     return (
-        <ContentLayout headParams={headParams}>
+        <ContentLayout headParams={headParams} lang={lang}>
             {page && <h1 class=":: font-headline leading-loose title-responsive ">{page.title}</h1>}
-
             {children}
         </ContentLayout>
     )

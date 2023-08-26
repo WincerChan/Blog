@@ -1,3 +1,4 @@
+import { Meta } from "solid-start";
 import PostLayout from "~/components/layouts/PostLayout";
 import { BasePage } from "~/schema/Page";
 
@@ -12,6 +13,7 @@ const page: BasePage = {
 export default function NotFound() {
   return (
     <>
+      <Meta charset="utf-8" />
       <PostLayout rawBlog={page} hideComment={true}>
         <section>
           <p class=":: text-xl mb-8 leading-relaxed">{page.content}</p>

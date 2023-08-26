@@ -1,4 +1,4 @@
-import { default as siteConf } from "@/hugo.json";
+import siteConf from "@/siteConf";
 import { Meta } from "solid-start";
 import { HeadParamsTyoe } from "~/schema/Head";
 

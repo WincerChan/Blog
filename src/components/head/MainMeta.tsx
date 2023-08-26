@@ -1,4 +1,4 @@
-import siteConf from '@/hugo.json';
+import siteConf from '@/siteConf';
 import { Meta } from "@solidjs/meta";
 import { Show } from 'solid-js';
 import { Link, Title } from 'solid-start';

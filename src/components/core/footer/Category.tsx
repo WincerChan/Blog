@@ -1,13 +1,14 @@
 import categoryPage from "@/_output/category/index.json";
 import { For } from "solid-js";
 import { A } from "solid-start";
-import Seprator from "../sidebar/Seprator";
+import { useI18nContext } from "~/i18n/i18n-solid";
 
 const Category = () => {
+    const { LL } = useI18nContext()
     const categories = categoryPage.pages
     return (
-        <div class="max-w-1/3">
-            <Seprator title="分类" />
+        <div class="">
+            <label class=":: font-headline text-[var(--subtitle)] ">{LL().footer.C()}</label>
             <div class=":: mb-6">
                 <For each={categories}>
                     {(cate) => (

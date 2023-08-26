@@ -1,4 +1,5 @@
 import { Accessor, For, createSignal, onMount } from "solid-js";
+import { useI18nContext } from "~/i18n/i18n-solid";
 import { isBrowser } from "~/utils";
 import { trackEvent } from "~/utils/track";
 import { set } from "./Provider";
@@ -22,6 +23,7 @@ type ThemeMenuProps = {
 
 
 const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
+    const { LL } = useI18nContext()
     const [selected, setSelected] = createSignal(isBrowser ? window.lt() : "auto")
     const handleClick = (e: MouseEvent, key: string) => {
         toggleShow(e)
@@ -49,10 +51,10 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
         <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-20 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
             <For each={ThemeMapping}>
                 {
-                    themeItem => (
+                    (themeItem, idx) => (
                         <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg bg-menuHover p-4 pl-0 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
                             <div class={`${IconMapping[themeItem[0]]} mx-3 w-6 h-6`}></div>
-                            <span>{themeItem[1]}</span>
+                            <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
                         </div>
                     )
                 }

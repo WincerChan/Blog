@@ -1,7 +1,9 @@
-const Seprator = ({ title }: { title: string }) => {
+import { JSXElement } from "solid-js";
+
+const Seprator = ({ children }: { children: JSXElement }) => {
     return (
         <>
-            <h3 class=":: font-headline text-[var(--subtitle)] ">{title}</h3>
+            <h3 class=":: font-headline text-[var(--subtitle)] ">{children}</h3>
         </>
     )
 }

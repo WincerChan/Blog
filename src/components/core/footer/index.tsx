@@ -1,6 +1,7 @@
-import config from "@/hugo.json";
-import { createMemo } from "solid-js";
+import siteConf from "@/siteConf";
+import { For, createMemo } from "solid-js";
 import { A } from "solid-start";
+import { useI18nContext } from "~/i18n/i18n-solid";
 import Archives from "./Archives";
 import Category from "./Category";
 import Stats from "./Stats";
@@ -10,15 +11,21 @@ import UpdateNotify from "./updateAvaliable";
 
 const SINCE = 2017
 
-const Copyright = () => {
+const FooterNav = () => {
+    const { LL } = useI18nContext()
+    const elems = [
+        Stats,
+        Category,
+        Archives,
+        Tags
+    ]
     const year = createMemo(() => new Date().getFullYear())
     return (
         <footer class=":: mt-16 bg-ers shadow-round py-5 <lg:px-4 ">
-            <div class=":: w-view mt-4 flex justify-between text-sm leading-9 ">
-                <Stats />
-                <Category />
-                <Archives />
-                <Tags />
+            <div class=":: w-view mt-4 grid auto-cols-fr grid-flow-col text-sm leading-9 ">
+                <For each={elems}>
+                    {(Elem, idx) => (<Elem LL={LL} />)}
+                </For>
             </div>
             <div class=":: w-view mt-6 justify-between mx-auto text-footer my-4 items-center ">
                 <div class=":: space-x-6 my-4 text-[var(--extra)] z-0 ">
@@ -34,7 +41,7 @@ const Copyright = () => {
                 </div>
                 <p class=":: text-sm leading-loose ">
                     © {SINCE} - {year()} {' '}
-                    {config.title}<span class="mx-2 inline-block">|</span>
+                    {siteConf.title}<span class="mx-2 inline-block">|</span>
                     Designed and developed by <a
                         class="text-menuHover"
                         href="https://itswincer.com"
@@ -52,7 +59,7 @@ const Footer = () => {
         <>
             <BackTop />
             <UpdateNotify />
-            <Copyright />
+            <FooterNav />
         </>
     )
 }
