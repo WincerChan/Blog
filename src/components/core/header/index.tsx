@@ -2,7 +2,7 @@ import Logo from "./Logo";
 import Pages from "./Pages";
 import Tools from "./Tools";
 
-import siteConfig from "@/hugo.json";
+import siteConf from "@/siteConf";
 
 const Nav = ({ children }) => {
     return (
@@ -17,7 +17,7 @@ const Nav = ({ children }) => {
 const Header = () => {
     return (
         <Nav>
-            <Logo siteConfig={siteConfig} />
+            <Logo siteConf={siteConf} />
             <div class="header-justify <sm:w-100vw">
                 <Pages />
                 <Tools />

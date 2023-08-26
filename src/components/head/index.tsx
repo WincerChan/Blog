@@ -1,4 +1,4 @@
-import siteConf from "@/hugo.json";
+import siteConf from "@/siteConf";
 import { HeadParamsTyoe } from "~/schema/Head";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";

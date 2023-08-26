@@ -1,4 +1,4 @@
-import siteConf from "@/hugo.json";
+import siteConf from "@/siteConf";
 import { z } from "zod";
 
 export const HeadParamsSchema = z.object({

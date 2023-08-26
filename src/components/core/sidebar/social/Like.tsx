@@ -1,4 +1,4 @@
-import siteConf from "@/hugo.json";
+import siteConf from "@/siteConf";
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 

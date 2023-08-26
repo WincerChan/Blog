@@ -1,4 +1,4 @@
-import config from "@/hugo.json";
+import siteConf from "@/siteConf";
 import { For, createMemo } from "solid-js";
 import { A } from "solid-start";
 import { useI18nContext } from "~/i18n/i18n-solid";
@@ -41,7 +41,7 @@ const FooterNav = () => {
                 </div>
                 <p class=":: text-sm leading-loose ">
                     © {SINCE} - {year()} {' '}
-                    {config.title}<span class="mx-2 inline-block">|</span>
+                    {siteConf.title}<span class="mx-2 inline-block">|</span>
                     Designed and developed by <a
                         class="text-menuHover"
                         href="https://itswincer.com"

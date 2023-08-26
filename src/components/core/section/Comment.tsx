@@ -1,4 +1,4 @@
-import siteConf from "@/hugo.json";
+import siteConf from "@/siteConf";
 import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
 import CommentList from "~/components/lazy/OldComment/Comment";
 import { Translations } from "~/i18n/i18n-types";
@@ -50,7 +50,7 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                     loading="lazy"
                 />
                 <Suspense fallback={<span class=":: text-lg font-headline ">{LL().post.DIS()}</span>}>
-                    <ErrorBoundary fallback={<span>Loading Old Comments Failed.</span>}>
+                    <ErrorBoundary fallback={<span></span>}>
                         <Show when={resource()}>
                             {Object.keys(resource()).length && <p class=":: my-6 text-lg font-headline ">
                                 以下是旧时在 Disqus 上的评论，仅作展示用。
