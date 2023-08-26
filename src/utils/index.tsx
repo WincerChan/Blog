@@ -73,6 +73,7 @@ const fetcher = async (url: string) => {
         ret = await resp.json()
     } catch (error) {
         console.error(error)
+        throw error
         ret = null
     }
     return ret

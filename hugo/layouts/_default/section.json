@@ -1,4 +1,4 @@
-{{ $published := where (where .CurrentSection.RegularPages "Params.private" "!=" true) "Params.secondaryLang" "!=" true }}
+{{ $published := where (where .CurrentSection.RegularPages "Params.private" "!=" true) "Params.isTranslation" "!=" true }}
 {{ if eq .Type "base" }}
 {{ $published = sort $published "Params.Weight" "desc"  }}
 {{ end }}

@@ -15,14 +15,13 @@ const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
     const click = () => {
         setToggle(!toggle())
     }
-    console.log(lang)
 
     onMount(() => {
         let translateURL;
         let langShort = lang?.split("-")[0]
         let translateLangShort = langShort == "zh" ? "en" : "zh"
         if (pageURL.endsWith(`-${langShort}/`)) {
-            translateURL = pageURL.replace(`-${langShort}/`, `-${translateLangShort}/`)
+            translateURL = pageURL.replace(`-${langShort}`, ``)
         } else {
             translateURL = pageURL.slice(0, -1) + `-${translateLangShort}/`
         }

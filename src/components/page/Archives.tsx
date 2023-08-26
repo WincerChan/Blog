@@ -1,5 +1,3 @@
-import archPage from "@/_output/base/archives/index.json";
-import postsPage from "@/_output/posts/index.json";
 import { For, createMemo, createSignal, onMount } from "solid-js";
 import { useSearchParams } from "solid-start";
 import OtherBlogs from "~/components/core/section/OtherCards";
@@ -28,12 +26,12 @@ const YearArchive = ({ posts, year, ...props }: { posts: BlogMinimal[], year: st
     )
 }
 
-const Archives = () => {
-    const posts = groupByYear(postsPage.pages)
-    const allYears = Object.keys(posts).sort((a, b) => (Number(b) - Number(a)))
+const Archives = ({ page }) => {
+    let posts = __POSTS_BY_YEAR_DETAIL
+    const allYears = Object.keys(posts).filter(x => x != "undefined").sort((a, b) => (Number(b) - Number(a)))
     const [activeYear, setActiveYear] = createSignal(allYears[0])
     const [searchParams, setSearchParams] = useSearchParams()
-    const activePosts = createMemo(() => posts[activeYear()] || [])
+    const activePosts = createMemo(() => posts[activeYear()])
 
     onMount(() => {
         const year = searchParams.year
@@ -48,7 +46,7 @@ const Archives = () => {
     // 规范化之后的页面
 
     return (
-        <ArchiveLayout page={archPage}>
+        <ArchiveLayout page={page} lang={page.lang}>
             <div id="post-meta" class=":: font-mono text-base flex overflow-x-scroll hyphens-auto whitespace-nowrap  space-x-4 scrollbar-none mt-4 mb-6 ">
                 <For each={allYears}>
                     {(year, index) => (

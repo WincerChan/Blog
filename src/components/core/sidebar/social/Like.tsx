@@ -11,7 +11,10 @@ const Like = ({ pageURL }) => {
     const [resource] = createResource(url, fetcher)
     const [animate, setAnimate] = createSignal(false)
     onMount(() => {
-        const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
+        let slug = pageURL;
+        if (pageURL.endsWith("-zh/")) slug = pageURL.replace("-zh/", "/")
+        if (pageURL.endsWith("-en/")) slug = pageURL.replace("-en/", "/")
+        const pathEncoded = btoa(slug).replace("+", "-").replace("/", "_")
         setUrl(`${siteConf.extURL}/api/likes/${pathEncoded}`)
     })
     const click = () => {

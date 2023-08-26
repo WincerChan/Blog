@@ -8,6 +8,7 @@ import {
   FileRoutes,
   Head,
   Html,
+  Meta,
   Routes,
   Scripts,
   useLocation
@@ -34,19 +35,20 @@ export default function Root() {
       if (k.pathname.includes(v)) lang = "en"
     })
   }
-  const realLang = lang || "zh-CN"
+  const realLang = lang ?? "zh-CN"
   if (isServer)
-    loadLocale(realLang.startsWith("zh") ? "zh" : "en")
+    loadLocale(realLang)
 
 
   set({ lang: realLang })
   return (
     <Html class={val.theme} lang={lang ?? val.lang}>
       <Head>
+        <Meta charset='utf-8' />
         <script innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`} />
       </Head>
       <Body style={{ overflow: val.modal ? 'hidden' : "" }} class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased body-responsive '>
-        <TypesafeI18n locale={realLang.startsWith("zh") ? "zh" : "en"} >
+        <TypesafeI18n locale={realLang} >
           <Header />
           <Suspense>
             <Routes>

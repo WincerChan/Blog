@@ -1,12 +1,16 @@
 import siteConf from "@/hugo.json";
-import { Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
+import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
 import CommentList from "~/components/lazy/OldComment/Comment";
+import { Translations } from "~/i18n/i18n-types";
 import { fetcher } from "~/utils";
 import { val } from "../header/ThemeSwitch/Provider";
 
+interface GiscusCommentProps {
+    pageURL: string
+    LL: Accessor<Translations>
+}
 
-
-export default function GiscusComment({ pageURL }) {
+export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     const [visible, setVisible] = createSignal(false)
     const [url, setUrl] = createSignal()
     const [resource] = createResource(url, fetcher)
@@ -42,16 +46,18 @@ export default function GiscusComment({ pageURL }) {
                     reactionsEnabled="0"
                     inputPosition="top"
                     theme={`noborder_${val.theme}`}
-                    lang="zh-CN"
+                    lang={LL().post.S()}
                     loading="lazy"
                 />
-                <Suspense fallback={<span>正在加载 Disqus 评论</span>}>
-                    <Show when={resource()} fallback={<span class=":: text-lg font-headline ">正在加载 Disqus 评论</span>}>
-                        {Object.keys(resource()).length && <p class=":: my-6 text-lg ">
-                            以下是旧时在 Disqus 上的评论，仅作展示用。
-                        </p>}
-                        <CommentList comments={resource()} />
-                    </Show>
+                <Suspense fallback={<span class=":: text-lg font-headline ">{LL().post.DIS()}</span>}>
+                    <ErrorBoundary fallback={<span>Loading Old Comments Failed.</span>}>
+                        <Show when={resource()}>
+                            {Object.keys(resource()).length && <p class=":: my-6 text-lg font-headline ">
+                                以下是旧时在 Disqus 上的评论，仅作展示用。
+                            </p>}
+                            <CommentList comments={resource()} />
+                        </Show>
+                    </ErrorBoundary>
                 </Suspense>
             </Show>
         </div>

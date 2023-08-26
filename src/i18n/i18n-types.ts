@@ -3,11 +3,11 @@
 import type { BaseTranslation as BaseTranslationType, LocalizedString, RequiredParams } from 'typesafe-i18n'
 
 export type BaseTranslation = BaseTranslationType
-export type BaseLocale = 'zh'
+export type BaseLocale = 'zh-CN'
 
 export type Locales =
 	| 'en'
-	| 'zh'
+	| 'zh-CN'
 
 export type Translation = RootTranslation
 
@@ -112,6 +112,19 @@ type RootTranslation = {
 		 * @param {string} date
 		 */
 		EXPIRED_NOTIFY: RequiredParams<'date'>
+		/**
+		 * 共​计​ ​{​t​o​t​a​l​}​ ​篇​文​章
+		 * @param {number} total
+		 */
+		ARCHIVES_SUBTITLE: RequiredParams<'total'>
+		/**
+		 * z​h​-​C​N
+		 */
+		S: string
+		/**
+		 * 正​在​加​载​ ​D​i​s​q​u​s​ ​评​论
+		 */
+		DIS: string
 	}
 	sidebar: {
 		TOOLS: {
@@ -142,6 +155,17 @@ type RootTranslation = {
 		 * 目​录
 		 */
 		TOC: string
+	}
+	archive: {
+		/**
+		 * 共​计​ ​{​t​o​t​a​l​}​ ​篇​文​章
+		 * @param {number} total
+		 */
+		SUBTITLE: RequiredParams<'total'>
+		/**
+		 * 分​类​：
+		 */
+		CATE: string
 	}
 }
 
@@ -243,6 +267,18 @@ export type TranslationFunctions = {
 		 * 本文最近一次更新于 {date}前，其中的内容很可能已经有所发展或是发生改变。
 		 */
 		EXPIRED_NOTIFY: (arg: { date: string }) => LocalizedString
+		/**
+		 * 共计 {total} 篇文章
+		 */
+		ARCHIVES_SUBTITLE: (arg: { total: number }) => LocalizedString
+		/**
+		 * zh-CN
+		 */
+		S: () => LocalizedString
+		/**
+		 * 正在加载 Disqus 评论
+		 */
+		DIS: () => LocalizedString
 	}
 	sidebar: {
 		TOOLS: {
@@ -273,6 +309,16 @@ export type TranslationFunctions = {
 		 * 目录
 		 */
 		TOC: () => LocalizedString
+	}
+	archive: {
+		/**
+		 * 共计 {total} 篇文章
+		 */
+		SUBTITLE: (arg: { total: number }) => LocalizedString
+		/**
+		 * 分类：
+		 */
+		CATE: () => LocalizedString
 	}
 }
 

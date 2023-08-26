@@ -1,16 +1,25 @@
 {{ print "<?xml version=\"1.0\" encoding=\"UTF-8\"?><?xml-stylesheet type=\"text/xsl\" href=\"/sitemap.xsl\"?>"  | safeHTML }}
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>{{ site.BaseURL }}</loc>
     <changefreq>daily</changefreq>
     <priority>1</priority>
   </url>
-{{ range (where .CurrentSection.RegularPages "Params.secondaryLang" "!=" true) }}
+{{ range .CurrentSection.RegularPages }}
   <url>
     <loc>{{ replace .Permalink `/index.jsonx` `/` }}</loc>
-    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05Z" ) }}</lastmod>
-	{{ with .Site.Params.Sitemap.changeFreq }}<changefreq>{{ . }}</changefreq>{{end}}
-	{{ with .Site.Params.Sitemap.priority   }}<priority>{{.}}</priority>{{end}}
+    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05Z" ) }}</lastmod>{{ $shortLang := "zh" }}{{ if eq .Params.Lang `en` }}  {{ $shortLang = `en` }} {{ end }}
+    {{ if .Params.Lang }}<xhtml:link 
+      rel="alternate"
+      hreflang="{{ .Params.Lang }}"
+      href="{{ replace .Permalink `/index.jsonx` `/` }}" />
+      <xhtml:link
+      rel="alternate"{{ $reverseLang := "en" }}{{ if eq .Params.Lang `en` }}  {{ $reverseLang = `zh` }} {{ end }}
+      hreflang="{{ if eq $shortLang `zh` }}{{ `en` }}{{ else }}{{ `zh-CN` }}{{ end }}"
+      {{ if .Params.IsTranslation }}href="{{ replace .Permalink (printf `-%s/index.jsonx` $shortLang ) `/` }}" />
+      {{ else }}href="{{ replace .Permalink `/index.jsonx` (printf `-%s/` $reverseLang) }}" />{{ end }}{{ end }}
+	  {{ with .Site.Params.Sitemap.changeFreq }}<changefreq>{{ . }}</changefreq>{{end}}
+	  {{ with .Site.Params.Sitemap.priority   }}<priority>{{.}}</priority>{{end}}
   </url>
 {{ end }}
 </urlset>

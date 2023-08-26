@@ -73,7 +73,7 @@ const constructHeadParams = (blog: BlogDetailed) => {
         cover: blog.cover,
         updated: blog.updated,
         lang: blog.lang,
-        secondaryLang: blog.secondaryLang,
+        isTranslation: blog.isTranslation,
         toc: blog.toc,
         genre: "Technology"
     }
@@ -137,7 +137,7 @@ export const PostExtra = ({ rawBlog, relates, hideComment, LL }: PostExtraProps)
                 <Neighbours neighbours={rawBlog.neighbours} />
             </Show>
             <Show when={!hideComment}>
-                <Comment pageURL={rawBlog.slug} />
+                <Comment pageURL={rawBlog.slug} LL={LL} />
             </Show>
         </>
     )

@@ -31,7 +31,7 @@
     },
     "permalinks": {
         "posts": "posts/:slug",
-        "base": "/base/:slug"
+        "base": "base/:slug"
     },
     "taxonomies": {
         "category": "category",

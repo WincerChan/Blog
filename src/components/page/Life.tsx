@@ -1,4 +1,3 @@
-import lifePage from "@/_output/base/life/index.json";
 import { ErrorBoundary, For, Show, Suspense, createMemo, createResource, createSignal, onMount } from "solid-js";
 import LazyImg from "~/components/lazy/Img";
 import { fetcher } from "~/utils";
@@ -51,17 +50,17 @@ const RealItem = ({ poster, id, title, type, date }: Item) => {
 }
 
 
-const Life = () => {
-    const page = lifePage
+const Life = ({ page, children }) => {
     const [url, setUrl] = createSignal()
     const year = createMemo(() => new Date().getFullYear())
     onMount(() => {
         setUrl('https://api.itswincer.com/douban/v1/');
     })
     const [resource] = createResource(url, fetcher)
+    const { content, ...rest } = page
     return (
-        <PostLayout rawBlog={page}>
-            <section innerHTML={lifePage.content} />
+        <PostLayout rawBlog={rest}>
+            {children}
             <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">我看过的书和电影（{year()}）</h3>
             <div class="life-responsive">
                 <Suspense fallback={<FakeItems limit={5} />}>

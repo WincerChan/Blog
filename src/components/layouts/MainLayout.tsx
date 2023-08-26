@@ -22,13 +22,12 @@ const MainLayout = ({ children, className, lang }: MainProps) => {
     onMount(() => {
         nProgress.done()
     })
-    const currLang = lang || 'zh-CN'
+    const currLang = lang ?? 'zh-CN'
     const { setLocale } = useI18nContext()
-    console.log("currLang", currLang, val.lang)
-    if (val.lang !== currLang) {
+    if (val.lang != currLang) {
         set({ lang: currLang })
     }
-    loadLocaleAsync(currLang.startsWith('zh') ? 'zh' : 'en').then(() => setLocale(currLang.startsWith('zh') ? 'zh' : 'en'))
+    loadLocaleAsync(currLang as "zh-CN" | "en").then(() => setLocale(currLang as "zh-CN" | "en"))
 
     return (
         <main class={className}>

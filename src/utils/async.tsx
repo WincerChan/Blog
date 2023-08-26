@@ -1,4 +1,4 @@
-import { Component, JSXElement, Show, Suspense, createEffect, createResource } from "solid-js";
+import { Component, JSXElement, Show, Suspense, createResource } from "solid-js";
 
 type AsyncProps<T> = {
     promise: Promise<T>,
@@ -11,9 +11,6 @@ export const Async: <T>(props: AsyncProps<T>) => JSXElement = <T,>(props: AsyncP
     const [data] = createResource(
         props.promise
     )
-    createEffect(() => {
-        console.log(data())
-    })
     return (
         <Suspense fallback={props.await}>
             <Show when={data()}>{props.children}</Show>

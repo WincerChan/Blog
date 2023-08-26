@@ -15,8 +15,8 @@
     {{ with .TableOfContents }}
     "toc": {{ . | jsonify }},
     {{ end }}
-    {{ if ne .Params.SecondaryLang nil }}
-    "secondaryLang": {{ .Params.secondaryLang }},
+    {{ if ne .Params.isTranslation nil }}
+    "isTranslation": {{ .Params.isTranslation }},
     {{ end }}
     {{ with .Params.lang }}
     "lang": "{{ . }}",
@@ -25,7 +25,7 @@
         {{ $pre := .PrevInSection }}
         {{ $curr := . }}
         {{ with .NextInSection}}
-        {{ if or .Params.Private .Params.SecondaryLang }}
+        {{ if or .Params.Private .Params.isTranslation }}
         "next": {
             "title": "{{ .NextInSection.Title }}",
             "slug": "{{ replace .NextInSection.RelPermalink `index.jsonx` `` }}"
@@ -37,7 +37,7 @@
         }{{ with $pre }},{{ end }}{{ end }}
         {{ end }}
         {{ with $pre }}
-        {{ if or .Params.Private (or .Params.SecondaryLang $curr.Params.SecondaryLang) }}
+        {{ if or .Params.Private (or .Params.isTranslation $curr.Params.isTranslation) }}
         "prev": {
             "title": "{{ .PrevInSection.Title }}",
             "slug": "{{ replace .PrevInSection.RelPermalink `index.jsonx` `` }}"
