@@ -6,7 +6,8 @@ import BaseLoader from "./base/loader";
 
 const TaxoLoader = (content, type) => {
     const transformedCode = `
-                import TaxoLayout from "~/components/layouts/TaxoLayout"
+                import { lazy } from "solid-js";
+                const TaxoLayout = lazy(() => import("~/components/layouts/TaxoLayout"))
                 const Taxo = () => {
                     return (
                         <TaxoLayout rawTaxo={${content}} type="${type}" />

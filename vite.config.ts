@@ -5,7 +5,7 @@ import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from "vite";
 import jsonxPlugin from "./plugin/jsonx";
-import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, randomTags, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./plugin/statsPreload";
+import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, randomTags, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./plugin/statsPreload";
 import viteSwBuild from "./plugin/swBuild";
 
 dotenv.config()
@@ -21,7 +21,8 @@ const definedVars = {
   __POSTS_BY_YEAR_DETAIL: postsByYearDetail,
   __EN_POSTS: en_posts,
   __EN_NAV: en_nav_pages,
-  __ZH_NAV: zh_nav_pages
+  __ZH_NAV: zh_nav_pages,
+  __TOTAL_CATEGORIES: totalCategories
 }
 
 export default defineConfig({
@@ -37,7 +38,8 @@ export default defineConfig({
       output: {
         chunkFileNames: "assets/[name].js",
       }
-    }
+    },
+    minify: false
   },
   plugins: [
     jsonxPlugin(),

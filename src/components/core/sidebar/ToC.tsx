@@ -1,6 +1,6 @@
 import { Accessor, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
-import { trackEvent } from "~/utils/track";
+import { val } from "../header/ThemeSwitch/Provider";
 import Modal from "../section/Modal";
 
 interface ToCInterface {
@@ -35,7 +35,7 @@ const ToC = ({ toc, slug, LL }: ToCInterface) => {
                     <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'}`}>
                         <div class="h-4"></div>
                         <div class="flex font-headline "><label>{LL().sidebar.TOC()}</label> <span class="mt-1px">（{readingProgress()}%）</span></div>
-                        <div onClick={() => { setVisible(false); trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-40vh " innerHTML={toc} />
+                        <div onClick={() => { setVisible(false); val.trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-40vh " innerHTML={toc} />
                     </div>
                 </div>
             </aside >

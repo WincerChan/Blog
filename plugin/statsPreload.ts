@@ -1,5 +1,6 @@
 import { BlogMinimal } from "~/schema/Post";
 import bases from "../_output/base/index.json";
+import categories from "../_output/category/index.json";
 import blogs from "../_output/posts/index.json";
 import tags from "../_output/tags/index.json";
 
@@ -48,11 +49,12 @@ const en_posts = blogs.pages.filter((post) => post.lang === "en").map(x => x.slu
 
 const randomTags = range(tags.pages.map((tag) => tag.title), 16)
 const totalTags = tags.pages.length
+const totalCategories = categories.pages
 const postsByYear = groupByYear(blogs.pages)
 const postsByYearDetail = groupByYearDetail(blogs.pages)
 const zh_nav_pages = bases.pages.map(x => x.slug).filter(x => !x.includes("search"))
 const en_nav_pages = zh_nav_pages.map(x => `${x}-en`)
 
-export { en_nav_pages, en_posts, postsByYear, postsByYearDetail, randomTags, totalPosts, totalTags, wordsCount, zh_nav_pages };
+export { en_nav_pages, en_posts, postsByYear, postsByYearDetail, randomTags, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages };
 
 

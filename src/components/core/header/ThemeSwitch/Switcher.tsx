@@ -1,8 +1,7 @@
 import { Accessor, For, createSignal, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { isBrowser } from "~/utils";
-import { trackEvent } from "~/utils/track";
-import { set } from "./Provider";
+import { set, val } from "./Provider";
 
 const ThemeMapping = [
     ["light", "浅色模式"],
@@ -83,7 +82,7 @@ const ToggleButton = () => {
         <li ref={self!} class=":: bg-menuHover trans-linear relative">
             <button onClick={(e) => {
                 toggleShow(e);
-                trackEvent("Menu CTR", { props: { type: "theme" } })
+                val.trackEvent("Menu CTR", { props: { type: "theme" } })
             }} title="Switch Theme" class={`:: text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
                 <i class="i-carbon-window-black-saturation md:w-6 md:h-6 w-5 h-5" />
             </button>

@@ -2,7 +2,7 @@ import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { A, useSearchParams } from "solid-start";
 import { isBrowser, range } from "~/utils";
-import { trackEvent } from "~/utils/track";
+import { val } from "../core/header/ThemeSwitch/Provider";
 import PostLayout from "../layouts/PostLayout";
 
 const resultPerPage = 8
@@ -125,7 +125,7 @@ const Search = ({ page, children }) => {
         // 结果写入到 URL
         if (!input()) return
         setSearchParams({ q: input() })
-        trackEvent("Search", { props: { keyword: input() } })
+        val.trackEvent("Search", { props: { keyword: input() } })
         setQuery(`${input()} pages:${1}-${resultPerPage}`)
         setCurrentPage(1)
     }

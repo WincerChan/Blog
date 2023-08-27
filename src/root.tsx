@@ -1,7 +1,7 @@
 // @refresh reload
 import '@unocss/reset/tailwind.css';
 import "nprogress/nprogress.css";
-import { Suspense, onMount } from 'solid-js';
+import { Suspense } from 'solid-js';
 import { isServer } from 'solid-js/web';
 import {
   Body,
@@ -20,13 +20,9 @@ import Header from './components/core/header';
 import { set, val } from './components/core/header/ThemeSwitch/Provider';
 import TypesafeI18n from './i18n/i18n-solid';
 import { loadLocale } from './i18n/i18n-util.sync';
-import { trackPageview } from './utils/track';
 
 
 export default function Root() {
-  onMount(() => {
-    trackPageview()
-  })
   let lang;
   if (isServer) {
     const k = useLocation()
