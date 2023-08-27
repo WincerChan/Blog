@@ -1,4 +1,3 @@
-import siteConf from "@/siteConf";
 import { Accessor, For, JSXElement } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import { formatDate } from "~/utils";
@@ -25,7 +24,7 @@ const Copyright = ({ title, slug, updated, LL }: CopyrightProps) => {
             </div>
             <div>
                 <p>{title}</p>
-                <p>{`${siteConf.baseURL}${slug}`}</p>
+                <p>{`${__SITE_CONF.baseURL}${slug}`}</p>
             </div>
             <div class=":: flex mt-4 flex-wrap gap-x-8 ">
                 <For each={elems}>

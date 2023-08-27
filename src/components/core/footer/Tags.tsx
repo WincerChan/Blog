@@ -1,5 +1,6 @@
+import { A } from "@solidjs/router";
+import { For } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import TagCollection from "../section/Tag";
 
 const Tags = () => {
     const { LL, locale } = useI18nContext()
@@ -7,7 +8,15 @@ const Tags = () => {
         <div class="<md:hidden">
             <label class=":: font-headline text-[var(--subtitle)]">{LL().footer.T()}</label>
             <div class=":: flex-wrap gap-x-3 flex justify-between ">
-                <TagCollection tags={__TAGS} />
+                <For each={__TAGS}>
+                    {
+                        tag => (
+                            <A href={`/tags/${tag}/`} inactiveClass="" class="text-menuHover">
+                                <span class="text-menuActive">#</span>{tag}
+                            </A>
+                        )
+                    }
+                </For>
             </div>
         </div>
     )

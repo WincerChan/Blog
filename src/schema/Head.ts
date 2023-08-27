@@ -1,12 +1,11 @@
-import siteConf from "@/siteConf";
 import { z } from "zod";
 
 export const HeadParamsSchema = z.object({
     title: z.string().default(""),
     date: z.date().default(new Date()),
-    description: z.string().default(siteConf.description),
-    keywords: z.array(z.string()).default(siteConf.keywords.split(", ")),
-    pageURL: z.string().default(siteConf.baseURL),
+    description: z.string().default(__SITE_CONF.description),
+    keywords: z.array(z.string()).default(__SITE_CONF.keywords.split(", ")),
+    pageURL: z.string().default(__SITE_CONF.baseURL),
     updated: z.date().default(new Date()),
     cover: z.string().default(""),
     words: z.number().default(0),

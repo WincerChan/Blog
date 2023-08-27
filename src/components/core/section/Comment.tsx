@@ -1,4 +1,3 @@
-import siteConf from "@/siteConf";
 import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
 import CommentList from "~/components/lazy/OldComment/Comment";
 import { Translations } from "~/i18n/i18n-types";
@@ -27,11 +26,11 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
 
     createEffect(() => {
         const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
-        if (visible()) { import('giscus'); setUrl(`${siteConf.extURL}/api/comments/${pathEncoded}`) }
+        if (visible()) { import('giscus'); setUrl(`${__SITE_CONF.extURL}/api/comments/${pathEncoded}`) }
     })
 
     return (
-        <div ref={self!} id="gisdus" class="w-full mt-6">
+        <div ref={self!} id="gisdus" class=":: w-full mt-6 ">
             <Show when={visible()}>
                 <giscus-widget
                     id="comments"

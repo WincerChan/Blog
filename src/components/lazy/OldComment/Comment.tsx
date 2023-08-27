@@ -22,7 +22,7 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
     return (
         <>
             <div ref={self!} class=":: w-full flex gap-4 my-6 comment ">
-                <img title="avatar" class="rounded-lg w-10 h-10" src="https://gravatar.loli.net/avatar/00000000000000000000000000000000?d=mp&f=y" />
+                <img title="avatar" class=":: rounded-lg w-10 h-10 " src="https://gravatar.loli.net/avatar/00000000000000000000000000000000?d=mp&f=y" />
                 <div class=":: space-y-2 leading-relaxed font-sans text-justify ">
                     <label class="space-x-2">
                         <span class=":: font-medium text-lg ">{author}</span>

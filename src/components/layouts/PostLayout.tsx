@@ -1,4 +1,4 @@
-import { Accessor, JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
+import { Accessor, For, JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
 import { A, useLocation } from "solid-start";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
@@ -8,7 +8,6 @@ import Relates from "../core/footer/Relates";
 import { set } from "../core/header/ThemeSwitch/Provider";
 import Comment from "../core/section/Comment";
 import Copyright from "../core/section/Copyright";
-import TagCollection from "../core/section/Tag";
 import LazyBg from "../lazy/BG";
 import { ArticleLayout } from "./ContentLayout";
 
@@ -34,7 +33,15 @@ const PostMeta = ({ blog, lang, LL }: { blog: BlogDetailed, lang: Accessor<Local
                             <span>{blog.words} {LL().post.W}</span>
                         </Show>
                         <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
-                        <TagCollection tags={blog.tags} />
+                        <For each={blog.tags}>
+                            {
+                                tag => (
+                                    <A href={`/tags/${tag}/`} inactiveClass="" class="text-menuHover">
+                                        <span class="text-menuActive">#</span>{tag}
+                                    </A>
+                                )
+                            }
+                        </For>
                     </div>
                 </Show>
             </LazyBg >

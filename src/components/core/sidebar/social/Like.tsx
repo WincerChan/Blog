@@ -1,4 +1,3 @@
-import siteConf from "@/siteConf";
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 
@@ -15,7 +14,7 @@ const Like = ({ pageURL }) => {
         if (pageURL.endsWith("-zh/")) slug = pageURL.replace("-zh/", "/")
         if (pageURL.endsWith("-en/")) slug = pageURL.replace("-en/", "/")
         const pathEncoded = btoa(slug).replace("+", "-").replace("/", "_")
-        setUrl(`${siteConf.extURL}/api/likes/${pathEncoded}`)
+        setUrl(`${__SITE_CONF.extURL}/api/likes/${pathEncoded}`)
     })
     const click = () => {
         fetch(url(), {

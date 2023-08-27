@@ -1,7 +1,7 @@
 // @refresh reload
 import '@unocss/reset/tailwind.css';
 import "nprogress/nprogress.css";
-import { Suspense } from 'solid-js';
+import { Suspense, lazy } from 'solid-js';
 import { isServer } from 'solid-js/web';
 import {
   Body,
@@ -15,11 +15,14 @@ import {
 } from "solid-start";
 import 'uno.css';
 import '~/styles/root.css';
-import Footer from './components/core/footer';
-import Header from './components/core/header';
+// import Header from './components/core/header';
+// import Footer from './components/core/footer';
 import { set, val } from './components/core/header/ThemeSwitch/Provider';
 import TypesafeI18n from './i18n/i18n-solid';
 import { loadLocale } from './i18n/i18n-util.sync';
+
+const Footer = lazy(() => import('./components/core/footer'))
+const Header = lazy(() => import('./components/core/header'))
 
 
 export default function Root() {
@@ -45,13 +48,13 @@ export default function Root() {
       </Head>
       <Body style={{ overflow: val.modal ? 'hidden' : "" }} class=':: bg-[var(--main-bg)] text-[var(--main-text)] font-base antialiased body-responsive '>
         <TypesafeI18n locale={realLang} >
-          <Header />
           <Suspense>
+            <Header />
             <Routes>
               <FileRoutes />
             </Routes>
+            <Footer />
           </Suspense>
-          <Footer />
         </TypesafeI18n>
         <Scripts />
         <script innerHTML={`

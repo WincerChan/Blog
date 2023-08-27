@@ -6,8 +6,8 @@ const TagCollection = ({ tags }: { tags: string[] }) => {
         <For each={tags}>
             {
                 tag => (
-                    <A href={`/tags/${tag}/`} inactiveClass="" class="text-menuHover">
-                        <span class="text-menuActive">#</span>{tag}
+                    <A href={`/tags/${tag}/`} inactiveClass="" class=":: text-menuHover ">
+                        <span class=":: text-menuActive ">#</span>{tag}
                     </A>
                 )
             }
