@@ -56,7 +56,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                         <h3 class=":: text-xl font-headline text-title leading-loose border-0 pl-0 my-0 <md:pl-4 ">
                             <A href={ret.url} innerHTML={ret.title}></A>
                         </h3>
-                        <p class="text-justify my-0">
+                        <p class=":: text-justify my-0 ">
                             <span class=":: text-subtitle mr-4 inline-block ">{ret.date.split(" ")[0]}</span>
                             <span innerHTML={ret.snippet + '...'} />
                         </p>

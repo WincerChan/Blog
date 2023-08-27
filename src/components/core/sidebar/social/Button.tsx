@@ -1,15 +1,16 @@
+import { IconTypes } from "solid-icons";
 import { Accessor, Show, Suspense, createEffect, createSignal, lazy } from "solid-js";
-import { set } from "../../header/ThemeSwitch/Provider";
 import { Translations } from "~/i18n/i18n-types";
+import { set } from "../../header/ThemeSwitch/Provider";
 
 interface ButtonProps {
-    iconName: string;
+    IconName: IconTypes;
     hoverColor: string;
     text: string;
     LL?: Accessor<Translations>;
 }
 
-const SocialButton = ({ iconName, hoverColor, text, LL }: ButtonProps) => {
+const SocialButton = ({ IconName, hoverColor, text, LL }: ButtonProps) => {
     const [toggle, setToggle] = createSignal(false);
     const Mod = text == "Reward" ? lazy(() => import("./Reward")) : lazy(() => import("./Share"))
 
@@ -22,7 +23,7 @@ const SocialButton = ({ iconName, hoverColor, text, LL }: ButtonProps) => {
     return (
         <>
             <button onClick={click} title={text} class={`:: ${hoverColor} trans-linear h-15 w-24 `}>
-                <i class={`:: ${iconName} w-9 h-9 `} />
+                <IconName class=":: w-9 h-9 mx-auto " stroke-width={1.5} />
             </button>
             <Show when={toggle()}>
                 <Suspense>

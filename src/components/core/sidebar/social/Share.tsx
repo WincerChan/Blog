@@ -1,5 +1,6 @@
 import { toCanvas } from "qrcode";
-import { Accessor, Show, createEffect, createSignal, onMount } from "solid-js";
+import { TbBrandTelegram, TbBrandTwitter, TbClipboardCheck, TbClipboardCopy } from "solid-icons/tb";
+import { Accessor, Match, Show, Switch, createEffect, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import Modal from "../../section/Modal";
 
@@ -36,23 +37,23 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
             setShowCheck(true)
             setTimeout(() => {
                 setShowCheck(false)
-            }, 3000)
+            }, 2000)
         } else
             window.open(links[idx].url())
     }
     const links = [
         {
-            "icon": "i-icon-park-outline-twitter",
+            Icon: TbBrandTwitter,
             "url": twitterUrl,
             "text": "Twitter"
         },
         {
-            "icon": "i-icon-park-outline-telegram",
+            Icon: TbBrandTelegram,
             "url": telegramUrl,
             "text": "Telegram"
         },
         {
-            "icon": "i-icon-park-outline-copy-link",
+            Icon: TbClipboardCopy,
             "text": LL().sidebar.TOOLS.share.copy(),
             "url": null
         }
@@ -69,21 +70,35 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
                         </figure>
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
-                                links.map((value, idx) => (
+                                links.slice(0, 2).map((value, idx) => (
                                     <>
                                         <button onClick={() => clickJump(idx)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
-                                            <i class={`:: w-8 h-8 px-4 ${value.icon} `} />
+                                            <value.Icon class=":: w-8 h-8 " stroke-width={1.5} />
                                             <span innerText={value.text}></span>
                                         </button>
                                         <Show when={showCheck() && value.url == null}>
                                             <p class=":: flex items-center gap-2 text-emerald-500 mx-auto animate-fade-in animate-duration-200 ">
-                                                <i class="::  w-6 h-6 i-icon-park-outline-check-one " />
+                                                <TbClipboardCheck class=":: w-6 h-6 " stroke-width={1.5} />
                                                 <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
                                             </p>
                                         </Show>
                                     </>
                                 ))
                             }
+                            <button onClick={() => clickJump(2)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
+                                <Switch>
+                                    <Match when={showCheck()}>
+                                        <p class=":: flex items-center gap-4 text-emerald-500 animate-fade-in animate-duration-200">
+                                            <TbClipboardCheck class=":: w-8 h-8 " stroke-width={1.5} />
+                                            <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
+                                        </p>
+                                    </Match>
+                                    <Match when={!showCheck()}>
+                                        <TbClipboardCopy class=":: w-8 h-8 " stroke-width={1.5} />
+                                        <span innerText={links[2].text}></span>
+                                    </Match>
+                                </Switch>
+                            </button>
                         </div>
                     </div>
                 </div>

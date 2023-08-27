@@ -1,3 +1,4 @@
+import { TbMoonStars, TbSettingsHeart, TbSunHigh, TbSunMoon } from 'solid-icons/tb';
 import { Accessor, For, createSignal, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { isBrowser } from "~/utils";
@@ -9,11 +10,11 @@ const ThemeMapping = [
     ["auto", "跟随系统"]
 ]
 
-const IconMapping: { [key: string]: string } = {
-    "light": "i-carbon-haze",
-    "dark": "i-carbon-haze-night",
-    "auto": "i-carbon-settings"
-}
+const Icons = [
+    TbSunHigh,
+    TbMoonStars,
+    TbSettingsHeart
+]
 
 type ThemeMenuProps = {
     show: Accessor<boolean>,
@@ -50,12 +51,15 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
         <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-20 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
             <For each={ThemeMapping}>
                 {
-                    (themeItem, idx) => (
-                        <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg bg-menuHover p-4 pl-0 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
-                            <div class={`${IconMapping[themeItem[0]]} mx-3 w-6 h-6`}></div>
-                            <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
-                        </div>
-                    )
+                    (themeItem, idx) => {
+                        const IconMod = Icons[idx()]
+                        return (
+                            <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg bg-menuHover p-4 gap-3 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
+                                <IconMod class='w-6 h-6' stroke-width={1.5} />
+                                <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
+                            </div>
+                        )
+                    }
                 }
             </For>
         </div>
@@ -84,7 +88,7 @@ const ToggleButton = () => {
                 toggleShow(e);
                 val.trackEvent("Menu CTR", { props: { type: "theme" } })
             }} title="Switch Theme" class={`:: text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
-                <i class="i-carbon-window-black-saturation md:w-6 md:h-6 w-5 h-5" />
+                <TbSunMoon class="md:w-6 md:h-6 w-5 h-5" stroke-width={1.5} />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </li>

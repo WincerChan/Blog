@@ -1,4 +1,4 @@
-import siteConf from "@/siteConf";
+import { TbThumbUp, TbThumbUpFilled } from "solid-icons/tb";
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 
@@ -15,7 +15,7 @@ const Like = ({ pageURL }) => {
         if (pageURL.endsWith("-zh/")) slug = pageURL.replace("-zh/", "/")
         if (pageURL.endsWith("-en/")) slug = pageURL.replace("-en/", "/")
         const pathEncoded = btoa(slug).replace("+", "-").replace("/", "_")
-        setUrl(`${siteConf.extURL}/api/likes/${pathEncoded}`)
+        setUrl(`${__SITE_CONF.extURL}/api/likes/${pathEncoded}`)
     })
     const click = () => {
         fetch(url(), {
@@ -44,7 +44,11 @@ const Like = ({ pageURL }) => {
     const fallback = <span class="px-2">-</span>
     return (
         <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle ${liked() ? " text-rose-500" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
-            <i class={`:: w-9 lg:block mx-auto h-9 ${liked() ? "i-carbon-thumbs-up-filled" : "i-carbon-thumbs-up "} ${animate() ? " like" : ""}`} />
+            {liked() ?
+                <TbThumbUpFilled class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
+                :
+                <TbThumbUp class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
+            }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
@@ -52,7 +56,7 @@ const Like = ({ pageURL }) => {
                     </Show>
                 </ErrorBoundary>
             </Suspense>
-        </button>
+        </button >
     )
 }
 

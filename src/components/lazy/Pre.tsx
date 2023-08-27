@@ -1,3 +1,4 @@
+import "highlight.js/styles/magula.css"
 import { decode } from "js-base64"
 
 const Pre = ({ children, lang }) => {

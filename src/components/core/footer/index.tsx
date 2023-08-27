@@ -1,4 +1,4 @@
-import siteConf from "@/siteConf";
+import { BiLogosGithub, BiLogosTelegram, BiRegularHomeHeart } from 'solid-icons/bi';
 import { For, createMemo } from "solid-js";
 import { A } from "solid-start";
 import { useI18nContext } from "~/i18n/i18n-solid";
@@ -28,20 +28,20 @@ const FooterNav = () => {
                 </For>
             </div>
             <div class=":: w-view mt-6 justify-between mx-auto text-footer my-4 items-center ">
-                <div class=":: space-x-6 my-4 text-[var(--extra)] z-0 ">
+                <div class=":: space-x-6 my-4 text-[var(--extra)] z-0">
                     <A title="Home" inactiveClass="" activeClass="" href="https://itswincer.com" target="_blank">
-                        <i class="i-bx-home-heart w-8 h-8 inline-block" />
+                        <BiRegularHomeHeart fill='currentColor' class=":: w-8 h-8 inline-block" />
                     </A>
                     <A title="Github" inactiveClass="" activeClass="" href="https://github.com/WincerChan" target="_blank">
-                        <i class="i-bx-bxl-github w-8 h-8 inline-block" />
+                        <BiLogosGithub fill='currentColor' class=":: w-8 h-8 inline-block" />
                     </A>
                     <A title="Telegram" inactiveClass="" activeClass="" href="https://t.me/Tivsae" target="_blank">
-                        <i class="i-bx-bxl-telegram w-8 h-8 inline-block" />
+                        <BiLogosTelegram fill='currentColor' class=":: w-8 h-8 inline-block" />
                     </A>
                 </div>
                 <p class=":: text-sm leading-loose ">
                     © {SINCE} - {year()} {' '}
-                    {siteConf.title}<span class="mx-2 inline-block">|</span>
+                    Wincer's Blog<span class="mx-2 inline-block">|</span>
                     Designed and developed by <a
                         class="text-menuHover"
                         href="https://itswincer.com"
