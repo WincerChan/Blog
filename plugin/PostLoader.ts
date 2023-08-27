@@ -90,10 +90,10 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     const transformedCode = `
         import { A } from "solid-start"
         import { lazy } from "solid-js";
-        import PostLayout from "~/components/layouts/PostLayout"
         import Img from "~/components/lazy/Img"
-        ${loadHighlightCSS ? 'import "highlight.js/styles/magula.css";import Pre from "~/components/lazy/Pre";' : ""}
+        ${loadHighlightCSS ? 'const Pre = lazy(() => import("~/components/lazy/Pre"));' : ""}
         ${parsedContent.mathrender ? 'import MathDecode from "~/components/lazy/MathDecode"' : ""}
+        const PostLayout = lazy(() => import("~/components/layouts/PostLayout"))
 
         const Post = () => {
             return (

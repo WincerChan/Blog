@@ -1,4 +1,3 @@
-import siteConf from "@/siteConf";
 import { HeadParamsTyoe } from "~/schema/Head";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
@@ -8,8 +7,8 @@ const blogLDJSON = () => {
     return JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Blog",
-        "name": siteConf.title,
-        "url": siteConf.baseURL
+        "name": __SITE_CONF.title,
+        "url": __SITE_CONF.baseURL
     })
 }
 
@@ -18,18 +17,18 @@ const postLDJSON = (params: HeadParamsTyoe) => {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "name": params.title,
-        "editor": siteConf.author.name,
+        "editor": __SITE_CONF.author.name,
         "author": {
             "@type": "Person",
-            "name": siteConf.author.name,
-            "url": siteConf.author.url
+            "name": __SITE_CONF.author.name,
+            "url": __SITE_CONF.author.url
         },
         "datePublished": params.date,
         "dateModified": params.updated,
         "image": params.cover,
         "publisher": {
             "@type": "Organization",
-            "name": siteConf.title,
+            "name": __SITE_CONF.title,
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://ae01.alicdn.com/kf/H3581d2df939f4c3182b1d4b9c2a47bdaO.png"
@@ -39,7 +38,7 @@ const postLDJSON = (params: HeadParamsTyoe) => {
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": new URL(params.pageURL, siteConf.baseURL)
+            "@id": new URL(params.pageURL, __SITE_CONF.baseURL)
 
         },
         "keywords": params.keywords && params.keywords.join(", "),
@@ -57,9 +56,9 @@ const postLDJSON = (params: HeadParamsTyoe) => {
 const HeadParamsDefault = {
     title: "",
     date: new Date().toDateString(),
-    description: siteConf.description,
-    keywords: siteConf.keywords.split(", "),
-    pageURL: siteConf.baseURL,
+    description: __SITE_CONF.description,
+    keywords: __SITE_CONF.keywords.split(", "),
+    pageURL: __SITE_CONF.baseURL,
     updated: new Date().toDateString(),
     cover: "",
     words: 0,
@@ -72,7 +71,7 @@ const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
         ...HeadParamsDefault,
         ...headParams
     }
-    const isPost = headParams.description !== siteConf.description
+    const isPost = headParams.description !== __SITE_CONF.description
     return (
         <>
             <MainMeta params={headParams} />

@@ -14,3 +14,16 @@ declare const __ASSET_VERSION: string
 declare const __SW_HASH: string
 declare const __EN_NAV: string[]
 declare const __ZH_NAV: string[]
+declare const __SITE_CONF: {
+    title: string,
+    avatar: string,
+    extURL: string,
+    baseURL: string,
+    cdnURL: string,
+    description: string,
+    keywords: string,
+    author: {
+        name: string,
+        url: string
+    },
+}
