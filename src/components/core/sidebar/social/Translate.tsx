@@ -40,7 +40,7 @@ const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
 
     return (
         <button onClick={click} onBlur={onblur} title="Translate" class={`:: hover:text-indigo-500 focus:text-indigo-500 relative trans-linear h-15 w-24 animate-shake-y`}>
-            <IconTranslate class="w-9 h-9 inline" />
+            <IconTranslate height={36} width={36} />
             <div class={`:: absolute font-bold text-lg bg-ers shadow-round rounded-lg left-0 right-0 mx-auto flex flex-col text-subtitle bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}>
                 {
                     Object.entries(aviableLangs()).map(([key, name]) => (

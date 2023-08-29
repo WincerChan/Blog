@@ -46,9 +46,9 @@ const Like = ({ pageURL }) => {
     return (
         <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle ${liked() ? " text-rose-500" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
             {liked() ?
-                <IconThumbUpFilled class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
+                <IconThumbUpFilled width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
                 :
-                <IconThumbUp class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
+                <IconThumbUp width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
             }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>

@@ -1,6 +1,5 @@
 import { toCanvas } from "qrcode";
-import { TbClipboardCheck } from "solid-icons/tb";
-import { Accessor, Match, Show, Switch, createEffect, createSignal, onMount } from "solid-js";
+import { Accessor, Match, Switch, createEffect, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import IconTelegram from "~icons/tabler/brand-telegram";
 import IconTwitter from "~icons/tabler/brand-twitter";
@@ -75,30 +74,22 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
                                 links.slice(0, 2).map((value, idx) => (
-                                    <>
-                                        <button onClick={() => clickJump(idx)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
-                                            <value.Icon class=":: w-8 h-8 " stroke-width={1.5} />
-                                            <span innerText={value.text}></span>
-                                        </button>
-                                        <Show when={showCheck() && value.url == null}>
-                                            <p class=":: flex items-center gap-2 text-emerald-500 mx-auto animate-fade-in animate-duration-200 ">
-                                                <TbClipboardCheck class=":: w-6 h-6 " stroke-width={1.5} />
-                                                <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
-                                            </p>
-                                        </Show>
-                                    </>
+                                    <button onClick={() => clickJump(idx)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
+                                        <value.Icon width={32} height={32} stroke-width={1.5} />
+                                        <span innerText={value.text}></span>
+                                    </button>
                                 ))
                             }
                             <button onClick={() => clickJump(2)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
                                 <Switch>
                                     <Match when={showCheck()}>
                                         <p class=":: flex items-center gap-4 text-emerald-500 animate-fade-in animate-duration-200">
-                                            <IconClipboardCheck class=":: w-8 h-8 " />
+                                            <IconClipboardCheck width={32} height={32} />
                                             <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
                                         </p>
                                     </Match>
                                     <Match when={!showCheck()}>
-                                        <IconClipboard class=":: w-8 h-8 " />
+                                        <IconClipboard width={32} height={32} />
                                         <span innerText={links[2].text}></span>
                                     </Match>
                                 </Switch>

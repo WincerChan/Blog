@@ -59,7 +59,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
                         const IconMod = Icons[idx()]
                         return (
                             <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg bg-menuHover p-4 gap-3 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
-                                <IconMod class='w-6 h-6' stroke-width={1.5} />
+                                <IconMod width={24} height={24} />
                                 <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
                             </div>
                         )

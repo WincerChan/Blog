@@ -23,7 +23,7 @@ const SocialButton = ({ IconName, hoverColor, text, LL }: ButtonProps) => {
     return (
         <>
             <button onClick={click} title={text} class={`:: ${hoverColor} trans-linear h-15 w-24 `}>
-                <IconName class=":: w-9 h-9 mx-auto " stroke-width={1.5} />
+                <IconName width={36} height={36} class=":: mx-auto " stroke-width={1.5} />
             </button>
             <Show when={toggle()}>
                 <Suspense>
