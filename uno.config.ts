@@ -1,4 +1,4 @@
-import { defineConfig, presetIcons, presetWind, transformerCompileClass, transformerDirectives } from 'unocss';
+import { defineConfig, presetWind, transformerCompileClass, transformerDirectives } from 'unocss';
 
 const isProd = process.env.NODE_ENV === "production";
 let transformer = [
@@ -74,11 +74,5 @@ export default defineConfig({
     },
     presets: [
         presetWind(),
-        presetIcons({
-            extraProperties: {
-                'display': 'inline-block',
-                'vertical-align': 'middle',
-            }
-        }),
     ],
 })

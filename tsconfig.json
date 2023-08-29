@@ -10,7 +10,8 @@
     "jsx": "preserve",
     "strict": true,
     "types": [
-      "solid-start/env"
+      "solid-start/env",
+      "unplugin-icons/types/solid"
     ],
     "baseUrl": "./",
     "paths": {

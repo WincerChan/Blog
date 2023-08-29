@@ -1,5 +1,7 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
+import IconThumbUp from "~icons/carbon/thumbs-up";
+import IconThumbUpFilled from "~icons/carbon/thumbs-up-filled";
 
 
 const Like = ({ pageURL }) => {
@@ -43,7 +45,11 @@ const Like = ({ pageURL }) => {
     const fallback = <span class="px-2">-</span>
     return (
         <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle ${liked() ? " text-rose-500" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
-            <i class={`:: w-9 lg:block mx-auto h-9 ${liked() ? "i-carbon-thumbs-up-filled" : "i-carbon-thumbs-up "} ${animate() ? " like" : ""}`} />
+            {liked() ?
+                <IconThumbUpFilled width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
+                :
+                <IconThumbUp width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
+            }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
@@ -51,7 +57,7 @@ const Like = ({ pageURL }) => {
                     </Show>
                 </ErrorBoundary>
             </Suspense>
-        </button>
+        </button >
     )
 }
 

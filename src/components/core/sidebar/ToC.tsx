@@ -1,5 +1,6 @@
 import { Accessor, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
+import IconCatalog from "~icons/carbon/catalog";
 import { val } from "../header/ThemeSwitch/Provider";
 import Modal from "../section/Modal";
 
@@ -27,8 +28,8 @@ const ToC = ({ toc, slug, LL }: ToCInterface) => {
         <>
             <aside class=":: lg:max-w-80 lg:ml-8 <lg:fixed <lg:z-10 ">
                 <div class=":: lg:top-10 md:sticky ">
-                    <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed lg:hidden bottom-28 right-10 z-10 rounded shadow-round bg-[var(--ers-bg)] ">
-                        <i class=":: i-carbon-catalog w-8 h-8 m-2 text-[var(--meta-bg)] "></i>
+                    <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed lg:hidden bottom-28 right-10 z-10 rounded shadow-round text-[var(--meta-bg)] bg-[var(--ers-bg)] ">
+                        <IconCatalog width={32} height={32} class="m-2" />
                     </button>
                     <Modal toggle={visible} setToggle={setVisible}>
                     </Modal>

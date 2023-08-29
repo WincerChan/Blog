@@ -3,6 +3,7 @@ import path from "path";
 import staticAdpater from "solid-start-static";
 import solid from "solid-start/vite";
 import UnoCSS from 'unocss/vite';
+import Icons from 'unplugin-icons/vite';
 import { defineConfig } from "vite";
 import jsonxPlugin from "./plugin/jsonx";
 import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, randomTags, site_conf, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./plugin/statsPreload";
@@ -42,6 +43,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    Icons({ autoInstall: true, compiler: 'solid' }),
     jsonxPlugin(),
     solid({ adapter: staticAdpater(), extensions: [".jsonx"] }),
     UnoCSS(),

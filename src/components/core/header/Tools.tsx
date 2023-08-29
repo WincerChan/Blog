@@ -1,5 +1,7 @@
 import { A } from "solid-start"
 import { useI18nContext } from "~/i18n/i18n-solid"
+import IconRSS from "~icons/carbon/rss"
+import IconSearch from "~icons/carbon/search-advanced"
 import { val } from "./ThemeSwitch/Provider"
 import ToggleButton from "./ThemeSwitch/Switcher"
 
@@ -9,12 +11,12 @@ const Tools = () => {
         <ul class="flex">
             <li class=":: bg-menuHover trans-linear text-menuHover text-menu ">
                 <A onClick={() => val.trackEvent("Menu CTR", { props: { type: "search" } })} href={`/search${locale() == "zh-CN" ? "" : "-en"}/`} title="Search" class=":: h-menu flex items-center ">
-                    <div class=":: i-carbon-search-advanced inline-block md:w-6 md:h-6 w-5 h-5  "></div>
+                    <IconSearch width={20} height={20} class=":: md:w-6 md:h-6 " />
                 </A>
             </li>
             <li class=":: bg-menuHover trans-linear text-menuHover text-menu ">
                 <a onClick={() => val.trackEvent("Menu CTR", { props: { type: "rss" } })} href="/atom.xml" target="_blank" title="RSS" class=":: h-menu flex items-center ">
-                    <div class=":: i-carbon-rss inline-block md:w-6 md:h-6 w-5 h-5 "></div>
+                    <IconRSS width={20} height={20} class=":: md:w-6 md:h-6 " />
                 </a>
             </li>
             <ToggleButton />
