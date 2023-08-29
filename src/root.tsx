@@ -57,7 +57,7 @@ export default function Root() {
           </Suspense>
         </TypesafeI18n>
         <Scripts />
-        <script innerHTML={`
+        {isServer && <script innerHTML={`
         if (__IS_PROD && 'serviceWorker' in navigator) {
           navigator.serviceWorker.register("/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}",{scope:"/"}).then(reg => {
             reg.addEventListener('updatefound', () => {
@@ -74,7 +74,7 @@ export default function Root() {
             });
           })
         }
-        `} />
+        `} />}
       </Body>
     </Html>
   );

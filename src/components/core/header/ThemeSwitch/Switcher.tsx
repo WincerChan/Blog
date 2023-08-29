@@ -1,7 +1,11 @@
-import { TbMoonStars, TbSettingsHeart, TbSunHigh, TbSunMoon } from 'solid-icons/tb';
 import { Accessor, For, createSignal, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { isBrowser } from "~/utils";
+import IconHaze from "~icons/carbon/haze";
+import IconHazeNight from "~icons/carbon/haze-night";
+import IconWindowSwitcher from "~icons/carbon/window-black-saturation";
+import IconWorkflowAuto from "~icons/carbon/workflow-automation";
+
 import { set, val } from "./Provider";
 
 const ThemeMapping = [
@@ -11,9 +15,9 @@ const ThemeMapping = [
 ]
 
 const Icons = [
-    TbSunHigh,
-    TbMoonStars,
-    TbSettingsHeart
+    IconHaze,
+    IconHazeNight,
+    IconWorkflowAuto
 ]
 
 type ThemeMenuProps = {
@@ -88,7 +92,7 @@ const ToggleButton = () => {
                 toggleShow(e);
                 val.trackEvent("Menu CTR", { props: { type: "theme" } })
             }} title="Switch Theme" class={`:: text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
-                <TbSunMoon class="md:w-6 md:h-6 w-5 h-5" stroke-width={1.5} />
+                <IconWindowSwitcher width={20} height={20} class=":: md:w-6 md:h-6 " />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </li>

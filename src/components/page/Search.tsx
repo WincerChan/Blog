@@ -2,6 +2,8 @@ import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { A, useSearchParams } from "solid-start";
 import { isBrowser, range } from "~/utils";
+import IconArrowLeft from "~icons/carbon/arrow-left";
+import IconArrowRight from "~icons/carbon/arrow-right";
 import { val } from "../core/header/ThemeSwitch/Provider";
 import PostLayout from "../layouts/PostLayout";
 
@@ -66,8 +68,8 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <div class=":: flex mt-8 justify-between text-xl font-headline ">
                 {
                     currentPage() != 1 && (
-                        <button title="Prev" class=":: flex items-center text-menuHover " onClick={() => { updatePage(-1) }}>
-                            <span class=":: i-carbon-arrow-left mr-2 " />
+                        <button title="Prev" class=":: flex gap-2 items-center text-menuHover " onClick={() => { updatePage(-1) }}>
+                            <IconArrowLeft />
                             <span>Prev</span>
                         </button>
                     )
@@ -75,9 +77,9 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 <div />
                 {
                     data().count > resultPerPage * currentPage() &&
-                    <button title="Next" class=":: flex items-center text-menuHover " onClick={() => { updatePage(1) }}>
+                    <button title="Next" class=":: flex gap-2 items-center text-menuHover " onClick={() => { updatePage(1) }}>
                         <span>Next</span>
-                        <span class=":: i-carbon-arrow-right ml-2 "></span>
+                        <IconArrowRight />
                     </button>
                 }
             </div>

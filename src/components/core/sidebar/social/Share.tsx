@@ -1,7 +1,11 @@
 import { toCanvas } from "qrcode";
-import { TbBrandTelegram, TbBrandTwitter, TbClipboardCheck, TbClipboardCopy } from "solid-icons/tb";
+import { TbClipboardCheck } from "solid-icons/tb";
 import { Accessor, Match, Show, Switch, createEffect, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
+import IconTelegram from "~icons/tabler/brand-telegram";
+import IconTwitter from "~icons/tabler/brand-twitter";
+import IconClipboardCheck from "~icons/tabler/clipboard-check";
+import IconClipboard from "~icons/tabler/clipboard-copy";
 import Modal from "../../section/Modal";
 
 
@@ -43,17 +47,17 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
     }
     const links = [
         {
-            Icon: TbBrandTwitter,
+            Icon: IconTwitter,
             "url": twitterUrl,
             "text": "Twitter"
         },
         {
-            Icon: TbBrandTelegram,
+            Icon: IconTelegram,
             "url": telegramUrl,
             "text": "Telegram"
         },
         {
-            Icon: TbClipboardCopy,
+            Icon: IconClipboard,
             "text": LL().sidebar.TOOLS.share.copy(),
             "url": null
         }
@@ -89,12 +93,12 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
                                 <Switch>
                                     <Match when={showCheck()}>
                                         <p class=":: flex items-center gap-4 text-emerald-500 animate-fade-in animate-duration-200">
-                                            <TbClipboardCheck class=":: w-8 h-8 " stroke-width={1.5} />
+                                            <IconClipboardCheck class=":: w-8 h-8 " />
                                             <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
                                         </p>
                                     </Match>
                                     <Match when={!showCheck()}>
-                                        <TbClipboardCopy class=":: w-8 h-8 " stroke-width={1.5} />
+                                        <IconClipboard class=":: w-8 h-8 " />
                                         <span innerText={links[2].text}></span>
                                     </Match>
                                 </Switch>

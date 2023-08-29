@@ -146,8 +146,9 @@ blockquote p {
 
 section p a,
 .comment a,
+section td a,
 section li a {
-  @apply transition relative duration-200 ease-linear px-.5 text-link
+  @apply transition relative duration-200 ease-linear text-link
 }
 
 section table {
@@ -184,7 +185,7 @@ b {
 }
 
 .ex-link {
-  @apply w-5 h-5 underline-none ml-2px i-carbon-html-reference -top-1px relative;
+  @apply underline-none inline m-2px mt-0;
 }
 
 .katex-display {

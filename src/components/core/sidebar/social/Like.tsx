@@ -1,6 +1,7 @@
-import { TbThumbUp, TbThumbUpFilled } from "solid-icons/tb";
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
+import IconThumbUp from "~icons/carbon/thumbs-up";
+import IconThumbUpFilled from "~icons/carbon/thumbs-up-filled";
 
 
 const Like = ({ pageURL }) => {
@@ -45,9 +46,9 @@ const Like = ({ pageURL }) => {
     return (
         <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle ${liked() ? " text-rose-500" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
             {liked() ?
-                <TbThumbUpFilled class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
+                <IconThumbUpFilled class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
                 :
-                <TbThumbUp class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
+                <IconThumbUp class=":: w-9 inline lg:block mx-auto h-9" stroke-width={1.5} />
             }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>

@@ -3,6 +3,7 @@ import { A } from "solid-start";
 import { Translations } from "~/i18n/i18n-types";
 import { BlogScore } from "~/schema/Post";
 import { formatDate } from "~/utils";
+import IconBadge from "~icons/carbon/badge";
 
 
 const Relates = ({ relates, LL }: { relates: BlogScore[], LL: Accessor<Translations> }) => {
@@ -14,7 +15,7 @@ const Relates = ({ relates, LL }: { relates: BlogScore[], LL: Accessor<Translati
                     {(post, idx) => (
                         <li>
                             <p class="text-base">{formatDate(post.date)}</p>
-                            <A class=":: leading-relaxed text-menuHover break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <i title="badge" class="i-carbon-badge mb-1" />}</A>
+                            <A class=":: leading-relaxed text-menuHover break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <IconBadge width={20} height={20} class="inline" />}</A>
                         </li>
                     )}
                 </For>

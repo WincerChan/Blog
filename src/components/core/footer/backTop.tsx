@@ -1,4 +1,5 @@
 import { Show, createSignal, onMount } from "solid-js"
+import IconUptoTop from "~icons/carbon/up-to-top"
 
 const BackTop = () => {
     const [visible, setVisible] = createSignal(false)
@@ -26,10 +27,10 @@ const BackTop = () => {
     return (
         <Show when={visible()}>
             <button
-                class=":: fixed bottom-10 right-10 p-2 rounded shadow-round bg-[var(--ers-bg)]"
+                class=":: fixed bottom-10 right-10 p-2 rounded shadow-round text-[var(--meta-bg)] bg-[var(--ers-bg)] "
                 onClick={scrollToTop}
             >
-                <i class=":: i-carbon-up-to-top w-8 h-8 text-[var(--meta-bg)]" />
+                <IconUptoTop width={32} height={32} />
             </button>
         </Show>
     )

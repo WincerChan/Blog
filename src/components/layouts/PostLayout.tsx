@@ -4,6 +4,8 @@ import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
 import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
+import IconArrowLeft from "~icons/carbon/arrow-left";
+import IconArrowRight from "~icons/carbon/arrow-right";
 import Relates from "../core/footer/Relates";
 import { set } from "../core/header/ThemeSwitch/Provider";
 import Comment from "../core/section/Comment";
@@ -60,10 +62,13 @@ export const Neighbours = ({ neighbours }: { neighbours: any }) => {
     const { prev, next } = neighbours;
     return (
         <div class=":: leading-loose my-6 flex justify-between flex-wrap text-xl ">
-            {next && <A href={next.slug} inactiveClass="" class=":: mr-auto text-menuHover my-2 flex inline-flex items-center ">
-                <i title="prev" class=":: i-carbon-arrow-left w-6 h-6 mr-2 " />{next.title}</A>}
-            {prev && <A href={prev.slug} inactiveClass="" class=":: ml-auto text-menuHover my-2 flex inline-flex items-center ">
-                {prev.title}<i title="next" class=":: i-carbon-arrow-right w-6 h-6 ml-2 " /></A>}
+            {next && <A href={next.slug} inactiveClass="" class=":: mr-auto text-menuHover my-2 flex inline-flex gap-2 items-center ">
+                <IconArrowLeft />
+                {next.title}</A>}
+            {prev && <A href={prev.slug} inactiveClass="" class=":: ml-auto text-menuHover my-2 flex inline-flex gap-2 items-center ">
+                {prev.title}
+                <IconArrowRight />
+            </A>}
         </div>
     )
 }
