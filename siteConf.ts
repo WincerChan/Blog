@@ -1,6 +1,6 @@
 export default {
     title: "Wincer's Blog",
-    avatar: "https://ae01.alicdn.com/kf/HTB1DdGHXizxK1RjSspj763S.pXax.png",
+    avatar: "https://ae02.alicdn.com/kf/Aeadf9a8f9b1246a580924fc003e514c8E.jpg",
     extURL: "https://blog-exts.itswincer.com",
     baseURL: "https://blog.itswincer.com",
     cdnURL: "https://cdn.blog.itswincer.net",

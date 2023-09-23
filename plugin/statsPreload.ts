@@ -45,8 +45,9 @@ const wordsCount = blogs.pages.reduce((acc, post) => {
     return acc + post.words
 }, 0)
 const totalPosts = blogs.pages.length
-const en_posts = blogs.pages.filter((post) => post.lang === "en").map(x => x.slug).concat(bases.pages.map(x => `${x.slug}-en`)).concat(["archives-en"])
-
+const en_posts = blogs.pages.filter((post) => post.lang !== undefined).filter(x => x.lang?.startsWith("zh")).map(x =>
+    x.slug.endsWith("-zh") ? x.slug.replace("-zh", "-en") : x.slug + "-en"
+).concat(bases.pages.map(x => `${x.slug}-en`)).concat(["archives-en"]).concat(blogs.pages.filter((post) => post.lang === "en").map(x => x.slug))
 
 const randomTags = range(tags.pages.map((tag) => tag.title), 16)
 const totalTags = tags.pages.length
