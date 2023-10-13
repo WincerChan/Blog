@@ -1,8 +1,14 @@
-import { load } from "cheerio"
+import { CheerioAPI, load } from "cheerio";
+
+const wrapTable = ($: CheerioAPI) => {
+    $('table').wrap('<div class="table-wrapper"></div>');
+    return $
+}
 
 const escapeBracket = (content: string) => {
     const bracketPattern = /[\{\}]/g
-    const $ = load(content.replaceAll("<hr>", "<hr/>"), { xmlMode: true, decodeEntities: false })
+    let $ = load(content.replaceAll("<hr>", "<hr/>"), { xmlMode: true, decodeEntities: false })
+    $ = wrapTable($);
     $('p').each((index, element) => {
         const text = $(element).html() || ""
         const escapedText = text.replace(bracketPattern, (match) => {

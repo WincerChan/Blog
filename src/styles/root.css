@@ -213,3 +213,8 @@ b {
 #gisdus li li {
   @apply ml-10;
 }
+
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
