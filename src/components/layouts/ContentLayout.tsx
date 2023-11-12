@@ -38,7 +38,7 @@ const ArticleLayout = ({ children, headParams, extra, LL }: ContentLayoutProps) 
                 </article>
                 <ToC toc={headParams.toc} slug={headParams.pageURL} LL={LL} />
             </div>
-            {<div class="content-width">{extra}</div>}
+            <div class=" content-width ">{extra}</div>
         </MainLayout>
     );
 }
