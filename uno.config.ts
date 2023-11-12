@@ -69,7 +69,7 @@ export default defineConfig({
         "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 ",
         "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10",
         "list-items": "pl-8 px-4 my-2 ",
-        "content-width": "md:w-168 xl:w-192 md:mx-auto mx-4 ",
+        "content-width": " xl:w-192 md:w-168 md:mx-auto mx-4 ",
         "mobile-width-beyond": " <md:w-100vw <md:max-w-none <md:-ml-4 "
     },
     presets: [
