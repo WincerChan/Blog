@@ -128,10 +128,24 @@ type RootTranslation = {
 	}
 	sidebar: {
 		TOOLS: {
-			/**
-			 * 喜​欢​这​篇​文​章​？​可​以​考​虑​赞​赏​支​持​一​下​作​者
-			 */
-			donate: string
+			donate: {
+				/**
+				 * 喜​欢​这​篇​文​章​？​可​以​考​虑​赞​赏​支​持​一​下
+				 */
+				title: string
+				/**
+				 * 微​信​赞​赏
+				 */
+				wechat: string
+				/**
+				 * E​T​H​ ​地​址
+				 */
+				eth: string
+				/**
+				 * S​O​L​ ​地​址
+				 */
+				sol: string
+			}
 			share: {
 				/**
 				 * 分​享​到​.​.​.
@@ -282,10 +296,24 @@ export type TranslationFunctions = {
 	}
 	sidebar: {
 		TOOLS: {
-			/**
-			 * 喜欢这篇文章？可以考虑赞赏支持一下作者
-			 */
-			donate: () => LocalizedString
+			donate: {
+				/**
+				 * 喜欢这篇文章？可以考虑赞赏支持一下
+				 */
+				title: () => LocalizedString
+				/**
+				 * 微信赞赏
+				 */
+				wechat: () => LocalizedString
+				/**
+				 * ETH 地址
+				 */
+				eth: () => LocalizedString
+				/**
+				 * SOL 地址
+				 */
+				sol: () => LocalizedString
+			}
 			share: {
 				/**
 				 * 分享到...

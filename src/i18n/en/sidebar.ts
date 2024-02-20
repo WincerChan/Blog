@@ -1,6 +1,11 @@
 export default {
     TOOLS: {
-        "donate": "Find this helpful? Please consider supporting me",
+        "donate": {
+            "title": "Enjoyed this? Support me to keep it going!",
+            "wechat": "WeChat",
+            "eth": "ETH Addr",
+            "sol": "SOL Addr"
+        },
         "share": {
             "title": "Share to...",
             "copy": "Copy Link",

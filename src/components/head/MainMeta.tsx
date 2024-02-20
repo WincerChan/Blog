@@ -7,7 +7,6 @@ const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {
     const title = params.title ? `${params.title} · ${__SITE_CONF.title}` : __SITE_CONF.title
     return (
         <>
-            <Link rel="preconnect" href={__SITE_CONF.cdnURL} />
             <Link rel="preconnect" href="https://npm.onmicrosoft.cn" crossOrigin='' />
             <Meta charset="utf-8" />
             <Meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
