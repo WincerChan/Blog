@@ -1,28 +1,73 @@
-import { Accessor } from "solid-js";
+import { toCanvas } from "qrcode";
+import { Accessor, For, Match, Switch, createEffect, createSignal } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import Modal from "../../section/Modal";
+
+import IconWeChat from "~icons/tabler/brand-wechat";
+
+import IconEth from "~icons/tabler/currency-ethereum";
+import IconSol from "~icons/tabler/currency-solana";
 
 interface RewardProps {
     toggle: () => boolean;
     setToggle: (toggle: boolean) => void;
-    LL?: Accessor<Translations>;
+    LL: Accessor<Translations>;
 }
 
 const Reward = ({ toggle, setToggle, LL }: RewardProps) => {
+    const addr = [
+        {
+            "key": "wechat",
+            "val": "",
+            "fig": LL().sidebar.TOOLS.donate.wechat(),
+            Icon: IconWeChat
+        },
+        {
+            "key": "eth",
+            "val": "0x888890e7f70c2d31f3e1fec0d94b47d8fd888888",
+            "fig": LL().sidebar.TOOLS.donate.eth(),
+            Icon: IconEth
+        },
+        {
+            "key": "sol",
+            "val": "6bzqRtP28WwRmcQJf5xWcDD2TPr6Q3gdKuMsncWincer",
+            "fig": LL().sidebar.TOOLS.donate.sol(),
+            Icon: IconSol
+        }
+    ]
+    const [addrIndex, setAddrIndex] = createSignal(0);
+    let canvas: HTMLCanvasElement | null = null;
+    createEffect(() => {
+        if (addrIndex()) {
+            toCanvas(canvas, addr[addrIndex()].val, { width: 256, margin: 0 }, (err) => {
+                if (err) console.error(err)
+            })
+        }
+    }, [addrIndex])
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
-                <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-148 ">
-                    <p class=":: text-2xl pb-6 font-headline ">{LL().sidebar.TOOLS.donate()}</p>
-                    <div class=":: flex justify-between items-center gap-6 <md:flex-col ">
-                        <figure>
-                            <img class=":: w-64 h-64 " src="https://ae01.alicdn.com/kf/HTB1o49SQ9zqK1RjSZPx7634tVXaZ.png" alt="wechat" />
-                            <figcaption class=":: text-center text-sm font-headline mt-2 ">微信赞赏</figcaption>
+                <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-120 ">
+                    <p class=":: text-2xl pb-6 font-headline ">{LL().sidebar.TOOLS.donate.title()}</p>
+                    <div class=":: flex w-full gap-4 <md:flex-col ">
+                        <figure class="mx-auto w-64">
+                            <Switch>
+                                <Match when={addrIndex()}>
+                                    <canvas ref={canvas!} class=":: w-64 h-64 " />
+                                </Match>
+                                <Match when={!addrIndex()}>
+                                    <img src="https://ae01.alicdn.com/kf/HTB1o49SQ9zqK1RjSZPx7634tVXaZ.png" class=":: w-64 h-64 " />
+                                </Match>
+                            </Switch>
+                            <p class=":: w-64 mx-auto text-center text-sm font-headline mt-2 "><span>{addr[addrIndex()].val}</span></p>
                         </figure>
-                        <a target="_blank" class=":: shadow-round flex items-center p-4 px-8 font-mono rounded-full block " href="https://www.buymeacoffee.com/wincer">
-                            <svg fill="none" class=":: w-8 h-8 inline-block mr-4 " viewBox="0 0 884 1279"><path d="M791.1 297.5l-.9-.5-2-.6c.8.7 1.8 1 3 1.1zM803.9 388.9l-1 .3 1-.3z" fill="#0D0C22"></path><path d="M791.5 297.4l-.4-.1v.2l.4-.1zM791.1 297.5h.1zM803.1 388.7l1.5-.8.5-.3.5-.6c-.9.4-1.8 1-2.5 1.7zM793.7 299.5l-1.5-1.4-1-.5a4 4 0 002.5 2zM430 1186.2a7.5 7.5 0 00-3 2.3l1-.6 2-1.7zM641.2 1144.6c0-1.3-.6-1-.5 3.6l.2-1.1.3-2.5zM619.3 1186.2a7.5 7.5 0 00-3 2.3l1-.6 2-1.7zM281.3 1196a62.8 62.8 0 01-.6-.2l.6.3zM247.8 1164a31.8 31.8 0 010 0z" fill="#0D0C22"></path><path d="M472.6 590.8c-46 19.7-98 42-165.6 42-28.3 0-56.4-4-83.6-11.5L270 1101a80.2 80.2 0 0079.9 73.6s66.3 3.4 88.4 3.4c23.8 0 95.1-3.4 95.1-3.4a80.2 80.2 0 0080-73.6l50-530.2a213 213 0 00-70.4-12.7c-44 0-79.5 15.1-120.5 32.6z" fill="#FD0"></path><path d="M78.7 386.1l.8.8.5.3a8 8 0 00-1.3-1z" fill="#0D0C22"></path><path class="fill" d="M879.6 341.8l-7-35.4c-6.4-31.9-20.7-62-53.4-73.5-10.5-3.7-22.4-5.3-30.4-12.9-8-7.6-10.4-19.4-12.3-30.4L766.3 129c-3-17.3-5.4-36.7-13.4-52.5-10.3-21.3-31.7-33.8-53-42-11-4.1-22-7.6-33.4-10.4-53.2-14-109.2-19.2-164-22.1C437-1.5 371-.4 305.6 5.4 256.5 9.8 205.1 15.2 158.8 32c-17 6.2-34.5 13.6-47.3 26.7-15.9 16.1-21 41-9.5 61a79 79 0 0036.9 31 299 299 0 0059.8 19.5A977.5 977.5 0 00374 190a1334 1334 0 00194.4-6.4c16-1.7 32-3.8 47.9-6.3 18.7-2.9 30.7-27.4 25.2-44.4-6.6-20.4-24.4-28.4-44.4-25.3-3 .5-6 1-9 1.3l-2 .4a1233.7 1233.7 0 01-62.7 6 1401.5 1401.5 0 01-250-5.3l-6.2-.8-1.3-.2-6.3-.9c-12.9-2-25.8-4.1-38.6-6.8a5.8 5.8 0 010-11.4h.3a626.1 626.1 0 0144.6-7.8c7-.5 14.1-1.7 21-2.6 60.7-6.3 121.7-8.4 182.6-6.4A1228.6 1228.6 0 01577 80.8l7.3 1 4.9.6a678 678 0 0142.5 7.8c20.9 4.5 47.7 6 57 28.9 3 7.2 4.3 15.3 6 23l2 9.7.2.5 14.7 68.8a12.6 12.6 0 01-10.6 15.1h-.1l-3 .4-3 .4a1670 1670 0 01-84.3 9 1957.2 1957.2 0 01-168.4 6.8 1975.7 1975.7 0 01-250.4-16.2c6.3.8-4.6-.6-6.8-1l-15.5-2.2c-17.3-2.6-34.5-5.8-51.8-8.6a90.1 90.1 0 00-59.8 8.6 87 87 0 00-36 37.3c-8.2 16.9-10.6 35.3-14.3 53.4C4 342-1.7 361.7.5 380.3a89.8 89.8 0 0073 80 2114.8 2114.8 0 00604.4 20 25.8 25.8 0 0128.6 28.4l-3.9 37.1a15200479.3 15200479.3 0 01-54.2 528c-2.2 21.8-2.5 44.3-6.6 65.9-6.6 34-29.6 54.8-63 62.4-30.8 7-62.1 10.6-93.6 11-35 .1-69.8-1.4-104.8-1.3-37.2.3-82.9-3.2-111.6-31-25.3-24.3-28.8-62.4-32.3-95.4l-13.6-131-25.3-242.8-16.4-157-.8-7.8c-2-18.8-15.2-37.1-36.1-36.2-17.9.8-38.2 16-36.1 36.2l12.1 116.4 25 240.9 21.5 205.3 4 39.4c8 71.6 62.7 110.2 130.4 121.1 39.6 6.4 80.1 7.7 120.3 8.3 51.5.9 103.5 2.8 154.1-6.5 75-13.8 131.4-63.9 139.4-141.6a758975.3 758975.3 0 0029.7-290l24.9-242.6L781 486.3a25.8 25.8 0 0120.8-22.7c21.5-4.2 42-11.4 57.2-27.7 24.3-26 29.2-59.9 20.6-94zm-807.2 24c.4-.1-.2 2.7-.5 4 0-2 0-3.7.5-4zm2.1 16.1c.2 0 .7.6 1.2 1.4-.8-.7-1.3-1.3-1.2-1.4zm2 2.7c.8 1.3 1.2 2 0 0zm4.2 3.4l.3.3-.3-.3zm720.1-5a56.7 56.7 0 01-30.8 12.4A2172.1 2172.1 0 01380.6 420a2621.3 2621.3 0 01-277.5-26.5c-9-1.3-18.8-3-25-9.6-11.7-12.6-6-37.9-2.9-53 2.8-14 8.1-32.5 24.7-34.4 25.8-3 55.7 7.8 81.3 11.7a1787.4 1787.4 0 00490.7 3.8c24-3.2 47.9-7 71.7-11.2 21.2-3.8 44.8-11 57.6 11 8.8 15 10 35 8.6 52a29 29 0 01-9 19.3z" fill="#0D0C22"></path></svg>
-                            <span>Buy me a coffee </span>
-                        </a>
+                        <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
+                            <For each={addr}>
+                                {
+                                    (x, idx) => <button onClick={() => setAddrIndex(idx())} class={":: block trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover " + (addrIndex() == idx() ? ' text-menuActive' : '')}><x.Icon width={32} height={32} stroke-width={1.5} /> <span>{x.fig}</span></button>
+                                }
+                            </For>
+                        </div>
                     </div>
                 </div>
             </Modal>

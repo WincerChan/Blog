@@ -6,9 +6,9 @@ clientsClaim();
 
 const ASSETS_PREFIEXES = [
     `https://unpkg.com/wir@`,
-    // `https://npm.onmicrosoft.cn/wir@`,
-    `https://s.cky.qystu.cc/npm/wir@`,
+    `https://npm.onmicrosoft.cn/wir@`,
     `https://jsd.cdn.zzko.cn/npm/wir@`,
+    `https://jsdelivr.b-cdn.net/npm/wir@`,
     ``
 ]
 
