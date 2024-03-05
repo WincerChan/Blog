@@ -23,6 +23,7 @@
     "@types/qrcode": "^1.5.5",
     "@unocss/reset": "^0.55.7",
     "@unocss/transformer-directives": "^0.55.7",
+    "animated-unocss": "^0.0.6",
     "cheerio": "1.0.0-rc.12",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",

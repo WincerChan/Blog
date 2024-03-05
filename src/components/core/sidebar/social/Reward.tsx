@@ -24,13 +24,13 @@ const Reward = ({ toggle, setToggle, LL }: RewardProps) => {
         },
         {
             "key": "eth",
-            "val": "0x888890e7f70c2d31f3e1fec0d94b47d8fd888888",
+            "val": "0x8108003004784434355758338583453734488488",
             "fig": LL().sidebar.TOOLS.donate.eth(),
             Icon: IconEth
         },
         {
             "key": "sol",
-            "val": "6bzqRtP28WwRmcQJf5xWcDD2TPr6Q3gdKuMsncWincer",
+            "val": "PRM3ZUA5N2PRLKVBCL3SR3JS934M9TZKUZ7XTLUS223",
             "fig": LL().sidebar.TOOLS.donate.sol(),
             Icon: IconSol
         }
