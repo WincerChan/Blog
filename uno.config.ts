@@ -1,4 +1,3 @@
-import { animatedUno } from 'animated-unocss';
 import { defineConfig, presetWind, transformerCompileClass, transformerDirectives } from 'unocss';
 
 const isProd = process.env.NODE_ENV === "production";
@@ -75,6 +74,5 @@ export default defineConfig({
     },
     presets: [
         presetWind(),
-        animatedUno(),
     ],
 })
