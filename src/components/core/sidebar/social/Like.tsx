@@ -19,9 +19,9 @@ const Like = ({ pageURL }) => {
         setUrl(`${__SITE_CONF.extURL}/api/likes/${pathEncoded}`)
     })
     const click = () => {
-        // fetch(url(), {
-        //     "method": "PUT",
-        // })
+        fetch(url(), {
+            "method": "PUT",
+        })
         setAnimate(true)
         setLikes(likes() + 1)
         setDisabled(true)
@@ -44,7 +44,7 @@ const Like = ({ pageURL }) => {
     })
     const fallback = <span class="px-2">-</span>
     return (
-        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle animated  ${liked() ? " text-rose-500" : ""} ${animate() && " animate-tada animate-duration-700"} ${disabled() ? " cursor-not-allowed" : ""}`}>
+        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 trans-linear h-15 w-24 font-sitetitle animated  ${liked() ? " text-rose-500" : ""} ${animate() ? "animate-tada animate-duration-700" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
             {liked() ?
                 <IconThumbUpFilled width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
                 :
