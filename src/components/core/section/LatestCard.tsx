@@ -13,12 +13,12 @@ const LatestBlog = ({ blog }: BlogProps) => {
             <div class=":: rounded flex flex-row mb-12 lg:space-x-10 <lg:flex-col-reverse ">
                 <div class=":: <lg:mt-3 flex flex-col lg:basis-1/2 h-coverMain ">
                     <A link={true} inactiveClass="" href={blog.slug}>
-                        <h2 title={blog.title} class=":: lg:text-4xl text-3xl text-title font-headline font-medium !leading-loose ">{blog.title}</h2>
+                        <h2 title={blog.title} class=":: xl:text-4xl sm:text-3xl text-[1.6rem] text-title font-headline font-medium !leading-loose ">{blog.title}</h2>
                     </A>
                     <Show when={blog.subtitle}>
-                        <h3 title={blog.subtitle} class=":: lg:text-3xl mt-1 flex-none truncate text-subtitle text-2xl font-headline font-medium !leading-relaxed ">{blog.subtitle}</h3>
+                        <h3 title={blog.subtitle} class=":: xl:text-3xl mt-1 flex-none truncate text-subtitle sm:text-[1.75rem] text-[1.5rem] font-headline font-medium !leading-relaxed ">{blog.subtitle}</h3>
                     </Show>
-                    <p class=":: text-lg leading-loose relative my-2 text-justify overflow-hidden " innerText={blog.summary} />
+                    <p class=":: text-lg leading-loose relative sm:my-2 my-1 text-justify overflow-hidden " innerText={blog.summary} />
                     <div class=":: mt-auto leading-[1.4] py-2 justify-between text-[var(--extra)] flex text-base ">
                         <DateCat date={blog.date} category={blog.category} />
                         <A class=":: transition duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] px-.5 text-link " inactiveClass="" href={blog.slug}>继续阅读 »</A>
