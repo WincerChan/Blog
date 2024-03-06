@@ -18,7 +18,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                     <Show when={blog.subtitle}>
                         <h3 title={blog.subtitle} class=":: xl:text-3xl mt-1 flex-none truncate text-subtitle sm:text-[1.75rem] text-[1.5rem] font-headline font-medium !leading-relaxed ">{blog.subtitle}</h3>
                     </Show>
-                    <p class=":: text-lg leading-loose relative my-2 text-justify overflow-hidden " innerText={blog.summary} />
+                    <p class=":: text-lg leading-loose relative sm:my-2 my-1 text-justify overflow-hidden " innerText={blog.summary} />
                     <div class=":: mt-auto leading-[1.4] py-2 justify-between text-[var(--extra)] flex text-base ">
                         <DateCat date={blog.date} category={blog.category} />
                         <A class=":: transition duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] px-.5 text-link " inactiveClass="" href={blog.slug}>继续阅读 »</A>

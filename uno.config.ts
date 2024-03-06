@@ -52,7 +52,7 @@ export default defineConfig({
         "h-menu": "sm:h-16 h-12 px-[12px] sm:px-[14px] lg:px-6",
         "w-view": 'xl:w-284 lg:w-220 mx-auto max-w-full',
         "w-viewl": 'xl:w-292 lg:w-228 mx-auto',
-        'h-coverMain': 'xl:h-80 md:h-76 h-72',
+        'h-coverMain': 'xl:h-80 md:h-76 h-70',
         'blog-cover': 'xl:h-86 md:h-82 h-72',
         'w-coverMain': '2xl:w-[22rem] xl:w-80 lg:w-64 w-full',
         "text-link": "shadow-[0_-.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.15rem_0_var(--menu-hover-text)_inset] text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)]",
