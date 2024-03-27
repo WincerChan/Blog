@@ -54,7 +54,7 @@ const Life = ({ page, children }) => {
     const [url, setUrl] = createSignal()
     const year = createMemo(() => new Date().getFullYear())
     onMount(() => {
-        setUrl('https://api.itswincer.com/douban/v1/');
+        setUrl('https://blog-exts.itswincer.com/api/doubans');
     })
     const [resource] = createResource(url, fetcher)
     const { content, ...rest } = page
@@ -62,11 +62,11 @@ const Life = ({ page, children }) => {
         <PostLayout rawBlog={rest}>
             {children}
             <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">我看过的书和电影（{year()}）</h3>
-            <div class="life-responsive">
+            <div class=" md:grid-cols-5 grid grid-cols-4 gap-4 ">
                 <Suspense fallback={<FakeItems limit={5} />}>
                     <ErrorBoundary fallback={err => <b class=":: col-span-5  ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>}>
                         <Show when={resource()}>
-                            <For each={resource()}>
+                            <For each={resource().data}>
                                 {item => <RealItem {...item} />}
                             </For>
                         </Show>
