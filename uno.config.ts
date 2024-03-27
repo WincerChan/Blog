@@ -66,7 +66,6 @@ export default defineConfig({
         "bq-section": "border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4",
         "aside-responsive": "md:col-span-14 2xl:col-span-13 <md:mt-8",
         "body-responsive": " md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ",
-        "life-responsive": "grid grid-cols-4 md:grid-cols-5 gap-4 ",
         "notify-responsive": "md:py-4 md:bottom-10 <md:w-full md:left-10",
         "list-items": "pl-8 px-4 my-2 ",
         "content-width": " xl:w-192 md:w-168 md:mx-auto mx-4 ",

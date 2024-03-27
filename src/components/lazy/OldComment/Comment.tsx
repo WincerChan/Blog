@@ -26,7 +26,7 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
                 <div class=":: space-y-2 leading-relaxed font-sans text-justify ">
                     <label class="space-x-2">
                         <span class=":: font-medium text-lg ">{author}</span>
-                        <span class=":: text-[var(--blockquote-text)] ">{new Date(date).toLocaleString()}</span>
+                        <span class=":: text-[var(--blockquote-text)] pl-2">{new Date(date).toLocaleString()}</span>
                     </label>
                     <div innerHTML={message} />
                 </div>
