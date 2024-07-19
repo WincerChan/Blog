@@ -38,6 +38,7 @@ if [ "$1" == "--hitcache" ]; then
     ./hit-cache.cjs
     exit
 fi
+mkdir dist
 cp -r .output/public dist/
 
 if [ "$1" == "--publish" ]; then
