@@ -21,6 +21,7 @@ else
 fi
 echo -e "${YELLOW}Building hugo content...${RESET}"
 pnpm dev:hugo
+pnpm dev:copy
 echo -e "${YELLOW}Creating sitemap index...${RESET}"
 directories=("posts" "category" "tags" "base" "")
 for dir in "${directories[@]}"; do
@@ -37,6 +38,7 @@ if [ "$1" == "--hitcache" ]; then
     ./hit-cache.cjs
     exit
 fi
+cp -r .output/public dist/
 
 if [ "$1" == "--publish" ]; then
     echo -e "${YELLOW}Cleaning old assets...${RESET}"
