@@ -2,7 +2,7 @@ import { A } from "@solidjs/router";
 import { Accessor, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import IconTranslate from "~icons/carbon/translate";
-import { val } from "../../header/ThemeSwitch/Provider";
+import { globalStore } from "../../header/ThemeSwitch/Provider";
 
 interface TranslateProps {
     LL: Accessor<Translations>,
@@ -38,13 +38,14 @@ const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
         }, 100)
     }
 
+
     return (
-        <button onClick={click} onBlur={onblur} title="Translate" class={`:: hover:text-indigo-500 focus:text-indigo-500 relative trans-linear h-15 w-24 animate-shake-y`}>
+        <button onClick={click} onBlur={onblur} title="Translate" class={`:: hover:text-indigo-500 focus:text-indigo-500 relative transition-linear h-15 w-24 animate-shake-y`}>
             <IconTranslate class=":: mx-auto " height={36} width={36} />
-            <div class={`:: absolute font-bold text-lg bg-ers shadow-round rounded-lg left-0 right-0 mx-auto flex flex-col text-subtitle bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}>
+            <div class={`:: absolute font-bold text-lg bg-ers shadow-round rounded-lg left-0 right-0 mx-auto flex flex-col text-[var(--subtitle)] bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}>
                 {
                     Object.entries(aviableLangs()).map(([key, name]) => (
-                        <A href={name.url} activeClass="" inactiveClass="" class={` my-2 ${val.lang == key ? 'text-menuActive' : ''}`} title={val.lang == key ? `Current: ${name.name}` : name.name}>{name.name}</A>
+                        <A lang={key} href={name.url} class={` my-2 ${globalStore.locale == key ? 'text-menu-active' : ''}`} title={globalStore.locale == key ? `Current: ${name.name}` : name.name}>{name.name}</A>
                     ))
                 }
             </div>

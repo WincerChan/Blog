@@ -13,7 +13,7 @@
     "hasCJKLanguage": true,
     "DisablePathToLower": true,
     "uglyURLs": false,
-    "publishDir": "_output",
+    "publishDir": "(hugo)",
     "contentDir": "hugo/content",
     "layoutDir": "hugo/layouts",
     "assetDir": "hugo/assets",
@@ -31,7 +31,7 @@
     },
     "permalinks": {
         "posts": "posts/:slug",
-        "base": "base/:slug"
+        "base": ":slug"
     },
     "taxonomies": {
         "category": "category",
@@ -43,14 +43,14 @@
             "SITEMAP"
         ],
         "page": [
-            "JSONX"
+            "JSX"
         ],
         "section": [
             "JSON",
             "SITEMAP"
         ],
         "term": [
-            "JSONX"
+            "JSX"
         ],
         "home": [
             "JSON",
@@ -60,8 +60,8 @@
         ]
     },
     "outputFormats": {
-        "JSONX": {
-            "mediatype": "application/jsonx",
+        "JSX": {
+            "mediatype": "application/jsx",
             "ishtml": false,
             "isplaintext": true,
             "nougly": false,
@@ -86,8 +86,8 @@
         }
     },
     "mediaTypes": {
-        "application/jsonx": {
-            "suffixes": "jsonx"
+        "application/jsx": {
+            "suffixes": "jsx"
         },
         "application/atom+xml": {
             "suffixes": "xml"

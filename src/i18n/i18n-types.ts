@@ -3,7 +3,7 @@
 import type { BaseTranslation as BaseTranslationType, LocalizedString, RequiredParams } from 'typesafe-i18n'
 
 export type BaseTranslation = BaseTranslationType
-export type BaseLocale = 'zh-CN'
+export type BaseLocale = 'en'
 
 export type Locales =
 	| 'en'
@@ -16,36 +16,36 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	footer: {
 		/**
-		 * 统​计
+		 * S​t​a​t​s
 		 */
 		S: string
 		/**
-		 * 分​类
+		 * C​a​t​e​g​o​r​i​e​s
 		 */
 		C: string
 		/**
-		 * 归​档
+		 * Y​e​a​r​s
 		 */
 		A: string
 		/**
-		 * 标​签
+		 * T​a​g​s
 		 */
 		T: string
 		STATS: {
 			/**
-			 *  ​文​章
+			 *  ​A​r​t​i​c​l​e​s
 			 */
 			'0': string
 			/**
-			 *  ​分​类
+			 *  ​C​a​t​e​g​o​r​i​e​s
 			 */
 			'1': string
 			/**
-			 *  ​千​字
+			 * k​ ​W​o​r​d​s
 			 */
 			'2': string
 			/**
-			 *  ​标​签
+			 *  ​T​a​g​s
 			 */
 			'3': string
 		}
@@ -53,76 +53,71 @@ type RootTranslation = {
 	header: {
 		NAV: {
 			/**
-			 * 关​于
+			 * A​b​o​u​t
 			 */
 			'0': string
 			/**
-			 * 生​活
+			 * L​i​f​e
 			 */
 			'1': string
 			/**
-			 * 归​档
+			 * A​r​c​h​i​v​e
 			 */
 			'2': string
 			/**
-			 * 友​链
+			 * F​r​i​e​n​d​s
 			 */
 			'3': string
 		}
 		THEME: {
 			/**
-			 * 浅​色​模​式
+			 * L​i​g​h​t​ ​M​o​d​e
 			 */
 			'0': string
 			/**
-			 * 深​色​模​式
+			 * D​a​r​k​ ​M​o​d​e
 			 */
 			'1': string
 			/**
-			 * 跟​随​系​统
+			 * S​y​s​t​e​m​ ​M​o​d​e
 			 */
 			'2': string
 		}
 	}
 	post: {
 		/**
-		 * 字
+		 * W​o​r​d​s
 		 */
 		W: string
 		COPYRIGHT: {
 			/**
-			 * 作​者
+			 * A​u​t​h​o​r
 			 */
 			'0': string
 			/**
-			 * 更​新​于
+			 * U​p​d​a​t​e​d
 			 */
 			'1': string
 			/**
-			 * 许​可​协​议
+			 * L​i​c​e​n​s​e
 			 */
 			'2': string
 		}
 		/**
-		 * 相​关​文​章
+		 * R​e​l​a​t​e​s
 		 */
 		RELATES: string
 		/**
-		 * 本​文​最​近​一​次​更​新​于​ ​{​d​a​t​e​}​前​，​其​中​的​内​容​很​可​能​已​经​有​所​发​展​或​是​发​生​改​变​。
+		 * T​h​i​s​ ​a​r​t​i​c​l​e​ ​w​a​s​ ​l​a​s​t​ ​u​p​d​a​t​e​d​ ​{​d​a​t​e​}​ ​a​g​o​,​ ​a​n​d​ ​t​h​e​ ​c​o​n​t​e​n​t​ ​m​a​y​ ​h​a​v​e​ ​e​v​o​l​v​e​d​ ​o​r​ ​c​h​a​n​g​e​d​ ​s​i​n​c​e​ ​t​h​e​n​.
 		 * @param {string} date
 		 */
 		EXPIRED_NOTIFY: RequiredParams<'date'>
 		/**
-		 * 共​计​ ​{​t​o​t​a​l​}​ ​篇​文​章
-		 * @param {number} total
-		 */
-		ARCHIVES_SUBTITLE: RequiredParams<'total'>
-		/**
-		 * z​h​-​C​N
+		 * e​n
 		 */
 		S: string
 		/**
-		 * 正​在​加​载​ ​D​i​s​q​u​s​ ​评​论
+		 * L​o​a​d​i​n​g​ ​D​i​s​q​u​s​ ​C​o​m​m​e​n​t​s
 		 */
 		DIS: string
 	}
@@ -130,54 +125,54 @@ type RootTranslation = {
 		TOOLS: {
 			donate: {
 				/**
-				 * 喜​欢​这​篇​文​章​？​可​以​考​虑​赞​赏​支​持​一​下
+				 * E​n​j​o​y​e​d​ ​t​h​i​s​?​ ​S​u​p​p​o​r​t​ ​m​e​ ​t​o​ ​k​e​e​p​ ​i​t​ ​g​o​i​n​g​!
 				 */
 				title: string
 				/**
-				 * 微​信​赞​赏
+				 * W​e​C​h​a​t
 				 */
 				wechat: string
 				/**
-				 * E​T​H​ ​地​址
+				 * E​T​H​ ​A​d​d​r
 				 */
 				eth: string
 				/**
-				 * S​O​L​ ​地​址
+				 * S​O​L​ ​A​d​d​r
 				 */
 				sol: string
 			}
 			share: {
 				/**
-				 * 分​享​到​.​.​.
+				 * S​h​a​r​e​ ​t​o​.​.​.
 				 */
 				title: string
 				/**
-				 * 复​制​链​接
+				 * C​o​p​y​ ​L​i​n​k
 				 */
 				copy: string
 				/**
-				 * 手​机​扫​一​扫
+				 * S​c​a​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e
 				 */
 				scan: string
 				/**
-				 * 已​复​制
+				 * C​o​p​i​e​d
 				 */
 				copy_msg: string
 			}
 		}
 		/**
-		 * 目​录
+		 * T​O​C
 		 */
 		TOC: string
 	}
 	archive: {
 		/**
-		 * 共​计​ ​{​t​o​t​a​l​}​ ​篇​文​章
+		 * T​o​t​a​l​ ​{​t​o​t​a​l​}​ ​a​r​t​i​c​l​e​(​s​)
 		 * @param {number} total
 		 */
-		SUBTITLE: RequiredParams<'total'>
+		ARCHIVES_SUBTITLE: RequiredParams<'total'>
 		/**
-		 * 分​类​：
+		 * C​a​t​e​g​o​r​y​:​ 
 		 */
 		CATE: string
 	}
@@ -186,36 +181,36 @@ type RootTranslation = {
 export type TranslationFunctions = {
 	footer: {
 		/**
-		 * 统计
+		 * Stats
 		 */
 		S: () => LocalizedString
 		/**
-		 * 分类
+		 * Categories
 		 */
 		C: () => LocalizedString
 		/**
-		 * 归档
+		 * Years
 		 */
 		A: () => LocalizedString
 		/**
-		 * 标签
+		 * Tags
 		 */
 		T: () => LocalizedString
 		STATS: {
 			/**
-			 *  文章
+			 *  Articles
 			 */
 			'0': () => LocalizedString
 			/**
-			 *  分类
+			 *  Categories
 			 */
 			'1': () => LocalizedString
 			/**
-			 *  千字
+			 * k Words
 			 */
 			'2': () => LocalizedString
 			/**
-			 *  标签
+			 *  Tags
 			 */
 			'3': () => LocalizedString
 		}
@@ -223,74 +218,70 @@ export type TranslationFunctions = {
 	header: {
 		NAV: {
 			/**
-			 * 关于
+			 * About
 			 */
 			'0': () => LocalizedString
 			/**
-			 * 生活
+			 * Life
 			 */
 			'1': () => LocalizedString
 			/**
-			 * 归档
+			 * Archive
 			 */
 			'2': () => LocalizedString
 			/**
-			 * 友链
+			 * Friends
 			 */
 			'3': () => LocalizedString
 		}
 		THEME: {
 			/**
-			 * 浅色模式
+			 * Light Mode
 			 */
 			'0': () => LocalizedString
 			/**
-			 * 深色模式
+			 * Dark Mode
 			 */
 			'1': () => LocalizedString
 			/**
-			 * 跟随系统
+			 * System Mode
 			 */
 			'2': () => LocalizedString
 		}
 	}
 	post: {
 		/**
-		 * 字
+		 * Words
 		 */
 		W: () => LocalizedString
 		COPYRIGHT: {
 			/**
-			 * 作者
+			 * Author
 			 */
 			'0': () => LocalizedString
 			/**
-			 * 更新于
+			 * Updated
 			 */
 			'1': () => LocalizedString
 			/**
-			 * 许可协议
+			 * License
 			 */
 			'2': () => LocalizedString
 		}
 		/**
-		 * 相关文章
+		 * Relates
 		 */
 		RELATES: () => LocalizedString
 		/**
-		 * 本文最近一次更新于 {date}前，其中的内容很可能已经有所发展或是发生改变。
+		 * This article was last updated {date} ago, and the content may have evolved or changed since then.
 		 */
 		EXPIRED_NOTIFY: (arg: { date: string }) => LocalizedString
 		/**
-		 * 共计 {total} 篇文章
-		 */
-		ARCHIVES_SUBTITLE: (arg: { total: number }) => LocalizedString
-		/**
-		 * zh-CN
+		 * en
 		 */
 		S: () => LocalizedString
 		/**
-		 * 正在加载 Disqus 评论
+		 * Loading Disqus Comments
 		 */
 		DIS: () => LocalizedString
 	}
@@ -298,53 +289,53 @@ export type TranslationFunctions = {
 		TOOLS: {
 			donate: {
 				/**
-				 * 喜欢这篇文章？可以考虑赞赏支持一下
+				 * Enjoyed this? Support me to keep it going!
 				 */
 				title: () => LocalizedString
 				/**
-				 * 微信赞赏
+				 * WeChat
 				 */
 				wechat: () => LocalizedString
 				/**
-				 * ETH 地址
+				 * ETH Addr
 				 */
 				eth: () => LocalizedString
 				/**
-				 * SOL 地址
+				 * SOL Addr
 				 */
 				sol: () => LocalizedString
 			}
 			share: {
 				/**
-				 * 分享到...
+				 * Share to...
 				 */
 				title: () => LocalizedString
 				/**
-				 * 复制链接
+				 * Copy Link
 				 */
 				copy: () => LocalizedString
 				/**
-				 * 手机扫一扫
+				 * Scan with your phone
 				 */
 				scan: () => LocalizedString
 				/**
-				 * 已复制
+				 * Copied
 				 */
 				copy_msg: () => LocalizedString
 			}
 		}
 		/**
-		 * 目录
+		 * TOC
 		 */
 		TOC: () => LocalizedString
 	}
 	archive: {
 		/**
-		 * 共计 {total} 篇文章
+		 * Total {total} article(s)
 		 */
-		SUBTITLE: (arg: { total: number }) => LocalizedString
+		ARCHIVES_SUBTITLE: (arg: { total: number }) => LocalizedString
 		/**
-		 * 分类：
+		 * Category: 
 		 */
 		CATE: () => LocalizedString
 	}

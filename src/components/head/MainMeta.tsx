@@ -1,6 +1,5 @@
-import { Meta } from "@solidjs/meta";
+import { Link, Meta, Title } from "@solidjs/meta";
 import { Show } from 'solid-js';
-import { Link, Title } from 'solid-start';
 import { HeadParamsTyoe } from '~/schema/Head';
 
 const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {

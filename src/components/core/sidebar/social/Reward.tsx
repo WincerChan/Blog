@@ -44,6 +44,7 @@ const Reward = ({ toggle, setToggle, LL }: RewardProps) => {
             })
         }
     }, [addrIndex])
+    console.log("setToggle", setToggle)
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
@@ -64,7 +65,7 @@ const Reward = ({ toggle, setToggle, LL }: RewardProps) => {
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             <For each={addr}>
                                 {
-                                    (x, idx) => <button onClick={() => setAddrIndex(idx())} class={":: block trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover " + (addrIndex() == idx() ? ' text-menuActive' : '')}><x.Icon width={32} height={32} stroke-width={1.5} /> <span>{x.fig}</span></button>
+                                    (x, idx) => <button onClick={() => setAddrIndex(idx())} class={":: block transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu " + (addrIndex() == idx() ? ' text-menu-active' : '')}><x.Icon width={32} height={32} stroke-width={1.5} /> <span>{x.fig}</span></button>
                                 }
                             </For>
                         </div>

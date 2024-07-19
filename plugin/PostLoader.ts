@@ -58,9 +58,9 @@ const findRelatedPosts = (sameTagPosts: sameTagsArgs, sameCatePosts: BlogMinimal
 
 const getSameTaxoBlogs = (tags: string[], category: string, slug: string) => {
     let sameCateBlogs = [], sameTagBlogs: sameTagsArgs = {};
-    const sameCate = readFileSync(path.join(process.cwd(), '_output/category', `${category}/index.jsonx`), 'utf-8');
+    const sameCate = readFileSync(path.join(process.cwd(), '(hugo)/category', `${category}/index.jsx`), 'utf-8').slice(15, -1);
     sameCateBlogs.push(...JSON.parse(sameCate).pages.filter((blog: BlogMinimal) => blog.slug != slug))
-    const sameTags = tags.map(tag => JSON.parse(readFileSync(path.join(process.cwd(), '_output/tags', `${tag}/index.jsonx`), 'utf-8')))
+    const sameTags = tags.map(tag => JSON.parse(readFileSync(path.join(process.cwd(), '(hugo)/tags', `${tag}/index.jsx`), 'utf-8').slice(15, -1)))
     sameTags.forEach(tag => sameTagBlogs[tag.term] = tag.pages.filter((blog: BlogMinimal) => blog.slug !== slug))
     return findRelatedPosts(sameTagBlogs, sameCateBlogs)
 }
@@ -88,7 +88,7 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
 
     const transformedCode = `
-        import { A } from "solid-start"
+        import { A } from "@solidjs/router";
         import { lazy } from "solid-js";
         import Img from "~/components/lazy/Img"
         ${loadHighlightCSS ? 'const Pre = lazy(() => import("~/components/lazy/Pre"));' : ""}

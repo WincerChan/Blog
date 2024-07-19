@@ -25,10 +25,10 @@ echo -e "${YELLOW}Creating sitemap index...${RESET}"
 directories=("posts" "category" "tags" "base" "")
 for dir in "${directories[@]}"; do
     mkdir -p "public/${dir}"
-    cp "_output/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
+    cp "(hugo)/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
 done
-cp -r "_output/sass" "public/"
-cp -r "_output/manifest.webmanifest" "public/"
+cp -r "(hugo)/sass" "public/"
+cp -r "(hugo)/manifest.webmanifest" "public/"
 echo -e "${YELLOW}Building site...${RESET}"
 pnpm build
 

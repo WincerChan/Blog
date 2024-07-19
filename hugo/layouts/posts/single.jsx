@@ -1,9 +1,9 @@
-{
+export default {
     "title": "{{ .Title }}",
     "date": "{{ .Date.Format `2006-01-02T15:04:05+0800` }}",
     "updated": "{{ (.Params.Updated | time).Format `2006-01-02T15:04:05+0800` }}",
     "cover": "{{ .Params.Cover }}",
-    "slug": "{{ replace .RelPermalink `index.jsonx` `` }}",
+    "slug": "{{ replace .RelPermalink `index.jsx` `` }}",
     "tags": {{ .Params.Tags | jsonify }},
     {{ with .Params.encrypt_pwd }}"password": "{{ . }}",{{ end }}
     {{ with .Params.Mathrender }}"mathrender": true,{{ end }}
@@ -30,26 +30,26 @@
             {{ if .NextInSection }}
         "next": {
             "title": "{{ .NextInSection.Title }}",
-            "slug": "{{ replace .NextInSection.RelPermalink `index.jsonx` `` }}"
+            "slug": "{{ replace .NextInSection.RelPermalink `index.jsx` `` }}"
         
         }{{ with $pre }},{{ end }}
         {{ end }}
         {{ else }}
         "next": {
             "title": "{{ .Title }}",
-            "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
+            "slug": "{{ replace .RelPermalink `index.jsx` `` }}"
         }{{ with $pre }},{{ end }}{{ end }}
         {{ end }}
         {{ with $pre }}
         {{ if or .Params.Private (or .Params.isTranslation $curr.Params.isTranslation) }}
         "prev": {
             "title": "{{ .PrevInSection.Title }}",
-            "slug": "{{ replace .PrevInSection.RelPermalink `index.jsonx` `` }}"
+            "slug": "{{ replace .PrevInSection.RelPermalink `index.jsx` `` }}"
         }
         {{ else }}
         "prev": {
             "title": "{{ .Title }}",
-            "slug": "{{ replace .RelPermalink `index.jsonx` `` }}"
+            "slug": "{{ replace .RelPermalink `index.jsx` `` }}"
         }
         {{ end }}
         {{ end }}

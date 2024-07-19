@@ -2,7 +2,7 @@ import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createResource, 
 import CommentList from "~/components/lazy/OldComment/Comment";
 import { Translations } from "~/i18n/i18n-types";
 import { fetcher } from "~/utils";
-import { val } from "../header/ThemeSwitch/Provider";
+import { globalStore } from "../header/ThemeSwitch/Provider";
 
 interface GiscusCommentProps {
     pageURL: string
@@ -44,11 +44,11 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                     emitMetadata="0"
                     reactionsEnabled="0"
                     inputPosition="top"
-                    theme={`noborder_${val.theme}`}
-                    lang={LL().post.S()}
+                    theme={`noborder_${globalStore.theme}`}
+                    lang={LL && LL().post.S()}
                     loading="lazy"
                 />
-                <Suspense fallback={<span class=":: text-lg font-headline ">{LL().post.DIS()}</span>}>
+                <Suspense fallback={<span class=":: text-lg font-headline ">{LL && LL().post.DIS()}</span>}>
                     <ErrorBoundary fallback={<span></span>}>
                         <Show when={resource()}>
                             {Object.keys(resource()).length && <p class=":: my-6 text-lg font-headline ">

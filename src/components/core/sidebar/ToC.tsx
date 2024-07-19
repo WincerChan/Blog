@@ -1,7 +1,7 @@
 import { Accessor, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import IconCatalog from "~icons/carbon/catalog";
-import { val } from "../header/ThemeSwitch/Provider";
+import { globalStore } from "../header/ThemeSwitch/Provider";
 import Modal from "../section/Modal";
 
 interface ToCInterface {
@@ -11,6 +11,7 @@ interface ToCInterface {
 }
 const ToC = ({ toc, slug, LL }: ToCInterface) => {
     const [visible, setVisible] = createSignal(false);
+    if (toc === '<nav id="TableOfContents"></nav>') return <></>
     if (!toc) return <></>
     const [readingProgress, setReadingProgress] = createSignal(0);
     const scrollListerner = (initOffset, sectionTarget) => {
@@ -21,6 +22,7 @@ const ToC = ({ toc, slug, LL }: ToCInterface) => {
     }
     onMount(() => {
         const sectionTarget = document.getElementById('blog-article')
+        if (!sectionTarget) return
         const offset = sectionTarget.offsetTop - Math.floor(window.innerHeight / 1.6)
         window.addEventListener("scroll", () => scrollListerner(offset, sectionTarget))
     })
@@ -33,10 +35,10 @@ const ToC = ({ toc, slug, LL }: ToCInterface) => {
                     </button>
                     <Modal toggle={visible} setToggle={setVisible}>
                     </Modal>
-                    <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-responsive ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'} `}>
+                    <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-modal ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'} `}>
                         <div class=":: h-4 "></div>
-                        <div class=":: flex font-headline "><label>{LL().sidebar.TOC()}</label> <span class=":: mt-1px ">（{readingProgress()}%）</span></div>
-                        <div onClick={() => { setVisible(false); val.trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-40vh " innerHTML={toc} />
+                        <div class=":: flex font-headline "><label>{LL && LL().sidebar.TOC()}</label> <span class=":: mt-1px ">（{readingProgress()}%）</span></div>
+                        <div onClick={() => { setVisible(false); globalStore.trackEvent("Click TableofContents", { props: { slug: slug } }) }} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-41vh " innerHTML={toc} />
                     </div>
                 </div>
             </aside >

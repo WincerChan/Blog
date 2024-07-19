@@ -1,5 +1,4 @@
 import { JSXElement, Show, createEffect } from "solid-js"
-import { set } from "../header/ThemeSwitch/Provider"
 
 interface ModalProps {
     children: JSXElement
@@ -9,7 +8,10 @@ interface ModalProps {
 
 const Modal = ({ children, toggle, setToggle }: ModalProps) => {
     createEffect(() => {
-        set({ "modal": toggle() })
+        if (toggle())
+            document.body.style.overflow = 'hidden'
+        else
+            document.body.style.overflow = ''
     })
     return (
         <Show when={toggle()}>

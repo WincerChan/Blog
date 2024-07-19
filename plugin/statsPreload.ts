@@ -1,9 +1,8 @@
 import { BlogMinimal } from "~/schema/Post";
-import bases from "../_output/base/index.json";
-import categories from "../_output/category/index.json";
-import blogs from "../_output/posts/index.json";
-import tags from "../_output/tags/index.json";
-import siteConf from "../siteConf";
+import bases from "../(hugo)/base/index.json";
+import categories from "../(hugo)/category/index.json";
+import blogs from "../(hugo)/posts/index.json";
+import tags from "../(hugo)/tags/index.json";
 
 const groupByYear = (posts: BlogMinimal[]) => {
     let byYears: { [key: string]: number } = {};
@@ -49,7 +48,6 @@ const en_posts = blogs.pages.filter((post) => post.lang !== undefined).filter(x 
     x.slug.endsWith("-zh") ? x.slug.replace("-zh", "-en") : x.slug + "-en"
 ).concat(bases.pages.map(x => `${x.slug}-en`)).concat(["archives-en"]).concat(blogs.pages.filter((post) => post.lang === "en").map(x => x.slug))
 
-const randomTags = range(tags.pages.map((tag) => tag.title), 16)
 const totalTags = tags.pages.length
 const totalCategories = categories.pages
 const postsByYear = groupByYear(blogs.pages)
@@ -57,8 +55,7 @@ const postsByYearDetail = groupByYearDetail(blogs.pages)
 const zh_nav_pages = bases.pages.map(x => x.slug).filter(x => !x.includes("search"))
 const en_nav_pages = zh_nav_pages.map(x => `${x}-en`)
 
-const site_conf = siteConf
 
-export { en_nav_pages, en_posts, postsByYear, postsByYearDetail, randomTags, site_conf, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages };
+export { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages };
 
 

@@ -74,13 +74,13 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
                                 links.slice(0, 2).map((value, idx) => (
-                                    <button onClick={() => clickJump(idx)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
+                                    <button onClick={() => clickJump(idx)} class=":: transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu ">
                                         <value.Icon width={32} height={32} stroke-width={1.5} />
                                         <span innerText={value.text}></span>
                                     </button>
                                 ))
                             }
-                            <button onClick={() => clickJump(2)} class=":: trans-linear duration-150 flex p-2 items-center rounded-lg gap-4 bg-menuHover ">
+                            <button onClick={() => clickJump(2)} class=":: transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu ">
                                 <Switch>
                                     <Match when={showCheck()}>
                                         <p class=":: flex items-center gap-4 text-emerald-500 animate-fade-in animate-duration-200">

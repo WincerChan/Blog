@@ -1,3 +1,10 @@
-import { mount, StartClient } from "solid-start/entry-client";
+// @refresh reload
+import { mount, StartClient } from "@solidjs/start/client";
 
-mount(() => <StartClient />, document);
+import '@unocss/reset/tailwind.css';
+import "nprogress/nprogress.css";
+import "virtual:uno.css";
+import "~/styles/color.css";
+import "~/styles/photograph.css";
+
+mount(() => <StartClient />, document.body);

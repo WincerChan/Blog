@@ -1,6 +1,5 @@
 {{ $pages := where .CurrentSection.RegularPages "Params.layout" "==" "base" }}
-
-{
+export default {
     "title": "{{ .Title }}",
     "date": "{{ .Date.Format `2006-01-02T15:04:05+0800` }}",
     {{ with .Params.Updated }}

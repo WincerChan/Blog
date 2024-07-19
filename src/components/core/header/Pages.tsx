@@ -1,6 +1,4 @@
 import { For, createMemo } from "solid-js"
-import { isServer } from "solid-js/web"
-import { A } from "solid-start"
 import { useI18nContext } from "~/i18n/i18n-solid"
 
 type PagesProps = {
@@ -12,22 +10,15 @@ type PagesProps = {
 
 const Pages = () => {
     const { LL, locale } = useI18nContext()
-    let pages;
-    if (isServer) {
-        if (locale() === 'zh-CN') pages = () => (__ZH_NAV)
-        if (locale() === "en") pages = () => (__EN_NAV)
-    } else {
-        pages = createMemo(() => {
-            if (locale() === 'zh-CN') return __ZH_NAV
-            if (locale() === "en") return __EN_NAV
-        })
-    }
+    let pages = createMemo(() =>
+        locale() === 'zh-CN' ? __ZH_NAV : __EN_NAV
+    )
     return (
         <ul class="flex overflow-x-scroll">
             <For each={pages()}>
                 {(pageEntry, idx) => (
                     <li>
-                        <A inactiveClass="" href={`/${pageEntry}/`} class=":: h-menu flex inline-block items-center bg-menuHover md:text-lg text-menuHover trans-linear capitalize min-w-14">{LL().header.NAV[idx()]()}</A>
+                        <a href={`/${pageEntry}/`} class=":: h-12 sm:h-16 px[12px] sm:px[14px] lg:px-6 flex inline-block items-center hover:bg-menu md:text-lg hover:text-menu-transition transition-linear capitalize min-w-14">{LL().header.NAV[idx()]()}</a>
                     </li>
                 )}
             </For>

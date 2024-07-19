@@ -1,6 +1,4 @@
 import { For, createMemo } from "solid-js";
-import { isServer } from "solid-js/web";
-import { A } from "solid-start";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconGithub from "~icons/tabler/brand-github";
 import IconTelegram from "~icons/tabler/brand-telegram";
@@ -8,7 +6,6 @@ import IconHome from "~icons/tabler/home-heart";
 import Archives from "./Archives";
 import Category from "./Category";
 import Stats from "./Stats";
-import Tags from "./Tags";
 import BackTop from "./backTop";
 import UpdateNotify from "./updateAvaliable";
 
@@ -20,42 +17,40 @@ const FooterNav = () => {
         Stats,
         Category,
         Archives,
-        Tags
     ]
     const year = createMemo(() => new Date().getFullYear())
     return (
         <footer class=":: mt-16 bg-ers shadow-round py-5 <lg:px-4 ">
-            <div class=":: w-view mt-4 grid auto-cols-fr grid-flow-col text-sm leading-9 ">
-                <For each={elems}>
-                    {(Elem, idx) => (<Elem LL={LL} />)}
-                </For>
-            </div>
-            {
-                isServer &&
-                <div class=":: w-view mt-6 justify-between mx-auto text-footer my-4 items-center ">
+            <div class=":: xl:w-284 lg:w-220 mx-auto max-w-full ">
+                <div class="::  mt-4 grid auto-cols-fr grid-flow-col text-sm leading-9 ">
+                    <For each={elems}>
+                        {(Elem, idx) => (<Elem LL={LL} />)}
+                    </For>
+                </div>
+                <div class="::  mt-6 justify-between mx-auto text-footer my-4 items-center ">
                     <div class=":: space-x-6 my-4 text-[var(--extra)] z-0 ">
-                        <A title="Home" inactiveClass="" activeClass="" href="https://itswincer.com" target="_blank">
+                        <a title="Home" href="https://itswincer.com" target="_blank">
                             <IconHome fill='currentColor' width={32} height={32} class=":: inline-block " />
-                        </A>
-                        <A title="Github" inactiveClass="" activeClass="" href="https://github.com/WincerChan" target="_blank">
+                        </a>
+                        <a title="Github" href="https://github.com/WincerChan" target="_blank">
                             <IconGithub fill='currentColor' width={32} height={32} class=":: w-8 h-8 inline-block " />
-                        </A>
-                        <A title="Telegram" inactiveClass="" activeClass="" href="https://t.me/Tivsae" target="_blank">
+                        </a>
+                        <a title="Telegram" href="https://t.me/Tivsae" target="_blank">
                             <IconTelegram fill='currentColor' width={32} height={32} class=":: w-8 h-8 inline-block " />
-                        </A>
+                        </a>
                     </div>
                     <p class=":: text-sm leading-loose ">
                         © {SINCE} - {year()} {' '}
                         Wincer's Blog<span class="mx-2 inline-block">|</span>
                         Designed and developed by <a
-                            class="text-menuHover"
+                            class="hover:text-menu-transition"
                             href="https://itswincer.com"
                             target="_blank"
                             rel="noopener">Wincer</a
                         >, powered by Hugo + SolidStart
                     </p>
                 </div>
-            }
+            </div>
         </footer>
     )
 }
