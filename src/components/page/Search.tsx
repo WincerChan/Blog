@@ -1,4 +1,4 @@
-import { A, useSearchParams } from "@solidjs/router";
+import { useSearchParams } from "@solidjs/router";
 import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { isBrowser, range } from "~/utils";
@@ -56,7 +56,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 {ret => (
                     <div class="my-6">
                         <h3 class=":: text-2xl font-headline font-medium leading-loose border-0 pl-0 my-0 <md:pl-4 ">
-                            <A href={ret.url} innerHTML={ret.title}></A>
+                            <a href={ret.url} innerHTML={ret.title}></a>
                         </h3>
                         <p class=":: text-justify my-0 ">
                             <span class=":: text-subtitle mr-4 inline-block ">{ret.date.split(" ")[0]}</span>

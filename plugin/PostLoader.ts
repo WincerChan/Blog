@@ -88,7 +88,6 @@ const PostLoader = (parsedContent: BlogDetailed) => {
     const relates = getSameTaxoBlogs(parsedContent.tags, parsedContent.category, parsedContent.slug)
 
     const transformedCode = `
-        import { A } from "@solidjs/router";
         import { lazy } from "solid-js";
         import Img from "~/components/lazy/Img"
         ${loadHighlightCSS ? 'const Pre = lazy(() => import("~/components/lazy/Pre"));' : ""}

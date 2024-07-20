@@ -1,7 +1,6 @@
 const AboutLoader = (parsedContent) => {
     const { content, ...rest } = parsedContent
     const transformedCode = `
-                import { A } from "@solidjs/router"
                 import PostLayout from "~/components/layouts/PostLayout"
                 
                 const About = () => {
@@ -20,7 +19,6 @@ const AboutLoader = (parsedContent) => {
 const OtherPageLoader = (parsedContent, name) => {
     const { content, ...rest } = parsedContent
     const transformCode = `
-        import { A } from "@solidjs/router";
         import ${name} from "~/components/page/${name}"
 
         const OtherPage = () => {
@@ -38,9 +36,6 @@ const OtherPageLoader = (parsedContent, name) => {
 const ArchLoader = (parsedContent) => {
     const { _, ...rest } = parsedContent
     const transformCode = `
-        import { A } from "@solidjs/router"
-        import { Suspense } from "solid-js";
-
         import Arch from "~/components/page/Archives"
         const ArchPage = () => {
             return (

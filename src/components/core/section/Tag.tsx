@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router"
 import { For } from "solid-js"
 
 const TagCollection = ({ tags }: { tags: string[] }) => {
@@ -6,9 +5,9 @@ const TagCollection = ({ tags }: { tags: string[] }) => {
         <For each={tags}>
             {
                 tag => (
-                    <A href={`/tags/${tag}/`} class=":: hover:text-menu-transition ">
+                    <a href={`/tags/${tag}/`} class=":: hover:text-menu-transition ">
                         <span class=":: text-menu-active ">#</span>{tag}
-                    </A>
+                    </a>
                 )
             }
         </For>

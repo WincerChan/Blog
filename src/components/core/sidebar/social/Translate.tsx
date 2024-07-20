@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import { Accessor, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import IconTranslate from "~icons/carbon/translate";
@@ -45,7 +44,7 @@ const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
             <div class={`:: absolute font-bold text-lg bg-ers shadow-round rounded-lg left-0 right-0 mx-auto flex flex-col text-[var(--subtitle)] bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}>
                 {
                     Object.entries(aviableLangs()).map(([key, name]) => (
-                        <A lang={key} href={name.url} class={` my-2 ${globalStore.locale == key ? 'text-menu-active' : ''}`} title={globalStore.locale == key ? `Current: ${name.name}` : name.name}>{name.name}</A>
+                        <a lang={key} href={name.url} class={` my-2 ${globalStore.locale == key ? 'text-menu-active' : ''}`} title={globalStore.locale == key ? `Current: ${name.name}` : name.name}>{name.name}</a>
                     ))
                 }
             </div>

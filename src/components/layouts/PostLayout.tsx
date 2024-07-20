@@ -1,4 +1,4 @@
-import { A, useLocation } from "@solidjs/router";
+import { useLocation } from "@solidjs/router";
 import { Accessor, For, JSXElement, Show, createMemo, lazy, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
@@ -38,9 +38,9 @@ const PostMeta = ({ blog, lang, LL }: { blog: BlogDetailed, lang: Accessor<Local
                         <For each={blog.tags}>
                             {
                                 tag => (
-                                    <A href={`/search/?q=tags:${tag}`} class="hover:text-menu-transition">
+                                    <a href={`/search/?q=tags:${tag}`} class="hover:text-menu-transition">
                                         <span class="text-menu-active">#</span>{tag}
-                                    </A>
+                                    </a>
                                 )
                             }
                         </For>
@@ -62,13 +62,13 @@ export const Neighbours = ({ neighbours }: { neighbours: any }) => {
     const { prev, next } = neighbours;
     return (
         <div class=":: leading-loose my-6 flex justify-between flex-wrap text-xl ">
-            {next && <A href={next.slug} class=":: mr-auto hover:text-menu-transition my-2 flex inline-flex gap-2 items-center ">
+            {next && <a href={next.slug} class=":: mr-auto hover:text-menu-transition my-2 flex inline-flex gap-2 items-center ">
                 <IconArrowLeft />
-                {next.title}</A>}
-            {prev && <A href={prev.slug} class=":: ml-auto hover:text-menu-transition my-2 flex inline-flex gap-2 items-center ">
+                {next.title}</a>}
+            {prev && <a href={prev.slug} class=":: ml-auto hover:text-menu-transition my-2 flex inline-flex gap-2 items-center ">
                 {prev.title}
                 <IconArrowRight />
-            </A>}
+            </a>}
         </div>
     )
 }

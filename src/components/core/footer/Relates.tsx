@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import { Accessor, For, Show } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import { BlogScore } from "~/schema/Post";
@@ -16,7 +15,7 @@ const Relates = ({ relates, LL }: { relates: BlogScore[], LL: Accessor<Translati
                         {(post, idx) => (
                             <li>
                                 <p class="text-base">{formatDate(post.date)}</p>
-                                <A class=":: leading-relaxed hover:text-menu-transition break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <IconBadge width={20} height={20} class="inline" />}</A>
+                                <a class=":: leading-relaxed hover:text-menu-transition break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <IconBadge width={20} height={20} class="inline" />}</a>
                             </li>
                         )}
                     </For>

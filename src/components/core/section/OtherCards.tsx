@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import { For, Show } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { BlogMinimal } from "~/schema/Post";
@@ -13,9 +12,9 @@ const CompactBlog = ({ blog }: BlogProps) => {
         <div class=":: text-base mb-8 lg:space-y-5 ">
             <div class=":: md:space-y-2 mb-2 ">
                 <div class=":: flex-grow flex flex-col leading-relaxed ">
-                    <A href={blog.slug} class="mb-1">
+                    <a href={blog.slug} class="mb-1">
                         <h2 class=":: text-headline ">{blog.title}</h2>
-                    </A>
+                    </a>
                     <Show when={blog.subtitle}>
                         <h3 class=":: text-2xl font-semibold font-headline mb-2 ">{blog.subtitle}</h3>
                     </Show>
