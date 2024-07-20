@@ -1,7 +1,6 @@
 import { toCanvas } from "qrcode";
 import { Accessor, Match, Switch, createEffect, createSignal, onMount } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
-import IconTelegram from "~icons/tabler/brand-telegram";
 import IconTwitter from "~icons/tabler/brand-twitter";
 import IconClipboardCheck from "~icons/tabler/clipboard-check";
 import IconClipboard from "~icons/tabler/clipboard-copy";
@@ -16,14 +15,12 @@ interface ShareProps {
 
 const Share = ({ toggle, setToggle, LL }: ShareProps) => {
     const [twitterUrl, setTwitterUrl] = createSignal("")
-    const [telegramUrl, setTelegramUrl] = createSignal("")
     const [showCheck, setShowCheck] = createSignal(false)
 
     let canvas: HTMLCanvasElement | null = null;
     onMount(() => {
         const url = window.location.href, title = "Hey, I just found this fascinating article that's worth a read!"
         setTwitterUrl(`https://twitter.com/intent/tweet?text=${encodeURI(title)}&url=${url}`)
-        setTelegramUrl(`https://telegram.me/share/url?url=${url}&text=${encodeURI(title)}`)
     })
     createEffect(() => {
         if (toggle()) {
@@ -34,7 +31,7 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
     })
 
     const clickJump = (idx) => {
-        if (idx == 2) {
+        if (idx == 1) {
             const url = window.location.href
             navigator.clipboard.writeText(url)
             setShowCheck(true)
@@ -49,11 +46,6 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
             Icon: IconTwitter,
             "url": twitterUrl,
             "text": "Twitter"
-        },
-        {
-            Icon: IconTelegram,
-            "url": telegramUrl,
-            "text": "Telegram"
         },
         {
             Icon: IconClipboard,
@@ -73,7 +65,7 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
                         </figure>
                         <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
                             {
-                                links.slice(0, 2).map((value, idx) => (
+                                links.slice(0, 1).map((value, idx) => (
                                     <button onClick={() => clickJump(idx)} class=":: transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu ">
                                         <value.Icon width={32} height={32} stroke-width={1.5} />
                                         <span innerText={value.text}></span>
@@ -90,7 +82,7 @@ const Share = ({ toggle, setToggle, LL }: ShareProps) => {
                                     </Match>
                                     <Match when={!showCheck()}>
                                         <IconClipboard width={32} height={32} />
-                                        <span innerText={links[2].text}></span>
+                                        <span innerText={links[1].text}></span>
                                     </Match>
                                 </Switch>
                             </button>

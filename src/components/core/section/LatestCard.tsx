@@ -24,7 +24,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         <A class=":: transition duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] text-link leading-tight " href={blog.slug}>继续阅读 »</A>
                     </div>
                 </div>
-                <img width={352} height={304} class=":: lg:basis-1/2 xl:h-80 h-82 block object-cover rounded w-full !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
+                <img width={352} height={304} class=":: lg:basis-1/2 lg:max-w-1/2 xl:h-80 lg:h-78 h-82 block object-cover rounded w-full !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
             </div>
         </>
     )

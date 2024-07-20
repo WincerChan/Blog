@@ -32,11 +32,11 @@ const FooterNav = () => {
                         <a title="Home" href="https://itswincer.com" target="_blank">
                             <IconHome fill='currentColor' width={32} height={32} class=":: inline-block " />
                         </a>
-                        <a title="Github" href="https://github.com/WincerChan" target="_blank">
-                            <IconGithub fill='currentColor' width={32} height={32} class=":: w-8 h-8 inline-block " />
-                        </a>
                         <a title="Telegram" href="https://t.me/Tivsae" target="_blank">
                             <IconTelegram fill='currentColor' width={32} height={32} class=":: w-8 h-8 inline-block " />
+                        </a>
+                        <a title="Github" href="https://github.com/WincerChan" target="_blank">
+                            <IconGithub fill='currentColor' width={32} height={32} class=":: w-8 h-8 inline-block " />
                         </a>
                     </div>
                     <p class=":: text-sm leading-loose ">
