@@ -26,18 +26,15 @@ const definedVars = {
     __WORDS: wordsCount,
     __ALL_TAGS: totalTags,
     __TOTAL_POSTS: totalPosts,
-    __IS_PROD: isProd,
-    __POSTS_BY_YEAR: postsByYear,
+    __POSTS_BY_YEAR: JSON.stringify(postsByYear),
     __POSTS_BY_YEAR_DETAIL: JSON.stringify(postsByYearDetail),
-    __EN_POSTS: en_posts,
+    __EN_POSTS: JSON.stringify(en_posts),
     __EN_NAV: JSON.stringify(en_nav_pages),
     __ZH_NAV: JSON.stringify(zh_nav_pages),
     __TOTAL_CATEGORIES: totalCategories,
     __SITE_CONF: BlogConf
 }
 
-const postsEnPage = en_posts.filter(x => !en_nav_pages.includes(x)).map(x => `/posts/${x}/`)
-console.log(postsEnPage)
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename);
@@ -46,7 +43,7 @@ export default defineConfig({
     server: {
         prerender: {
             crawlLinks: true,
-            routes: ["/404/", ...postsEnPage]
+            routes: [...en_posts, "/404/"]
         },
     },
     vite: {

@@ -21,7 +21,9 @@ nProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 })
 
 const trackHook = () => {
     useBeforeLeave(e => {
-        if (!(e.to.toString().startsWith(e.from.pathname) && e.from.pathname !== "/")) nProgress.start()
+        const to_path = e.to.toString(),
+            from_path = e.from.pathname;
+        if (!(to_path == from_path || to_path.startsWith(from_path) && from_path !== "/")) nProgress.start()
     })
 
     onMount(() => {
