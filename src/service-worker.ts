@@ -22,7 +22,7 @@ const fetchAsset = (url: string, signal: AbortSignal) => {
 const catchAssets = async (pathname: string, version: string) => {
     const controller = new AbortController(),
         signal = controller.signal;
-    return Promise.any(ASSETS_PREFIXES.map(prefix => fetchAsset(!prefix ? pathname : `${prefix}${version}${pathname}`, signal)))
+    return Promise.any(ASSETS_PREFIXES.map(prefix => fetchAsset(!prefix ? pathname : `${prefix}${version}${pathname.slice(7)}`, signal)))
         .then(async res => {
             const body = await res.text();
             controller.abort();

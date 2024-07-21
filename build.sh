@@ -23,7 +23,7 @@ echo -e "${YELLOW}Building hugo content...${RESET}"
 pnpm dev:hugo
 pnpm dev:copy
 echo -e "${YELLOW}Creating sitemap index...${RESET}"
-directories=("posts" "category" "tags" "base" "")
+directories=("posts" "category" "base" "")
 for dir in "${directories[@]}"; do
     mkdir -p "public/${dir}"
     cp "(hugo)/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
@@ -45,7 +45,7 @@ if [ "$1" == "--publish" ]; then
     echo -e "${YELLOW}Cleaning old assets...${RESET}"
     rm -rf _blogs/wir/assets/
     echo -e "${YELLOW}Copy new assets...${RESET}"
-    cp -r dist/public/assets _blogs/wir/
+    cp -r .output/public/_build/assets _blogs/wir/
     if ! command -v jq >/dev/null 2>&1; then
         echo -e "${YELLOW}jq not found, please install it first.${RESET}"
         exit
