@@ -4,7 +4,11 @@ dist
 .output
 .vercel
 .netlify
-netlify
+.vinxi
+
+# Environment
+.env
+.env*.local
 
 # dependencies
 /node_modules
@@ -22,9 +26,10 @@ gitignore
 # System Files
 .DS_Store
 Thumbs.db
-_output/
+(hugo)/
 resources
 _blogs
+*.lock
 public/*.xml
 public/sass
 public/base

@@ -1,12 +1,12 @@
 {{ $published := where (where .Data.Pages "Params.private" "!=" true) "Params.isTranslation" "!=" true }}
-{
+export default {
   "term": "{{ .Title }}",
   "pages": [
     {{ range $index, $page := $published }}
     {
       "title": "{{ $page.Title }}",
       {{ with $page.Params.Subtitle }}"subtitle": "{{ . }}",{{ end }}
-      "slug": "{{ replace $page.RelPermalink `index.jsonx` `` }}",
+      "slug": "{{ replace $page.RelPermalink `index.jsx` `` }}",
       "cover": "{{ $page.Params.cover }}",
       "words": {{ $page.WordCount }},
       "category": "{{ $page.Params.category }}",

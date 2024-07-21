@@ -1,10 +1,21 @@
-import path from "path";
+import { extname } from "path";
 import { Plugin } from "vite";
 import PostLoader from "./PostLoader";
 import BaseLoader from "./base/loader";
 
 
-const TaxoLoader = (content, type) => {
+const getFileBaseName = (filepath: string): string => {
+    const cleanFilePath = filepath.split('?')[0];
+    const fileName = extname(cleanFilePath);
+    return fileName
+}
+const isValidJsonXPath = (filepath: string): boolean => {
+    if (getFileBaseName(filepath) == ".jsx" && filepath.includes("(hugo)"))
+        return true
+    return false
+}
+
+const TaxoLoader = (content: string, type: string) => {
     const transformedCode = `
                 import { lazy } from "solid-js";
                 const TaxoLayout = lazy(() => import("~/components/layouts/TaxoLayout"))
@@ -34,35 +45,45 @@ const checkType = (id: string) => {
 }
 
 export default function () {
+    const processedFiles = new Set();
+
     const plugin: Plugin = {
-        name: 'jsonx-plugin',
+        name: 'jsx-plugin',
         enforce: "pre",
         async transform(content: string, id: string) {
-            if (path.extname(id) !== '.jsonx') {
-                return null;
-            }
-            const parsedContent = JSON.parse(content);
+            // console.log(id)
+            // console.log(isValidJsonXPath(id))
+            if (!isValidJsonXPath(id)) return null;
+            // const realPath = await fs.realpath(filepath);
+            // if (processedFiles.has(realPath)) {
+            //     return;
+            // }
+            // processedFiles.add(realPath);
+            const parsedContent = JSON.parse(content.slice(15, -1));
             const _type = checkType(id)
             if (_type === 'base') {
                 return BaseLoader(parsedContent)
             } else if (_type === 'post') {
                 return PostLoader(parsedContent)
             } else if (_type === 'tags') {
-                return TaxoLoader(content, '标签')
+                return TaxoLoader(content.slice(15, -1), '标签')
             } else if (_type === 'category') {
-                return TaxoLoader(content, '分类')
+                return TaxoLoader(content.slice(15, -1), '分类')
             }
             return '<></>'
-        },
-        generateBundle(options, bundle) {
-            for (const fileName in bundle) {
-                if (fileName.endsWith('.jsonx')) {
-                    const file = bundle[fileName];
-                    console.log(fileName)
-                    delete bundle[fileName]; // Remove the original file from the bundle
-                }
-            }
-        },
+        }
     };
     return plugin
 }
+
+
+
+
+
+
+
+
+
+
+
+

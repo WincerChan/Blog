@@ -1,66 +1,51 @@
 {
-  "name": "solid-blog",
-  "scripts": {
-    "dev": "pnpm dev:hugo;pnpm dev:copy;solid-start dev --port 4999",
-    "dev:hugo": "hugo --noBuildLock --buildFuture ",
-    "dev:copy": "cp _output/*.xml public/;",
-    "build": "pnpm dev:copy;solid-start build",
-    "start": "solid-start start --port 5000",
-    "clean": "rm -rf _output .solid"
-  },
+  "name": "example-basic",
   "type": "module",
-  "devDependencies": {
-    "@iconify-json/bx": "^1.1.7",
-    "@iconify-json/carbon": "^1.1.21",
-    "@iconify-json/icon-park-outline": "^1.1.12",
-    "@iconify-json/tabler": "^1.1.96",
-    "@types/crypto-js": "^4.2.1",
-    "@types/he": "^1.2.3",
-    "@types/katex": "^0.16.6",
-    "@types/node": "^20.9.0",
-    "@types/nprogress": "^0.2.3",
-    "@types/prismjs": "^1.26.3",
-    "@types/qrcode": "^1.5.5",
-    "@unocss/reset": "^0.55.7",
-    "@unocss/transformer-directives": "^0.55.7",
-    "cheerio": "1.0.0-rc.12",
-    "crypto-js": "^4.2.0",
-    "dotenv": "^16.3.1",
-    "giscus": "^1.3.0",
-    "he": "^1.2.0",
-    "highlight.js": "^11.9.0",
-    "js-base64": "^3.7.5",
-    "katex": "^0.16.9",
-    "nprogress": "^0.2.0",
-    "plausible-tracker": "^0.3.8",
-    "prismjs": "^1.29.0",
-    "qrcode": "^1.5.3",
-    "solid-icons": "^1.1.0",
-    "typesafe-i18n": "^5.26.2",
-    "typescript": "^5.2.2",
-    "undici": "^5.27.2",
-    "unocss": "^0.55.7",
-    "unplugin-icons": "^0.16.6",
-    "vite": "^4.5.0",
-    "workbox-core": "^7.0.0",
-    "workbox-routing": "^7.0.0",
-    "zod": "^3.22.4"
+  "scripts": {
+    "dev:hugo": "hugo --noBuildLock --buildFuture",
+    "dev:copy": "cp \\(hugo\\)/*.xml public/; cp -r \\(hugo\\) src/routes; rm -r src/routes/\\(hugo\\)/tags",
+    "dev": "pnpm dev:hugo;pnpm dev:copy;vinxi dev",
+    "build": "vinxi build --preset static",
+    "start": "vinxi start",
+    "version": "vinxi version",
+    "clean": "rm -rf \\(hugo\\) node_modules/.vinxi src/routes/\\(hugo\\) .output",
+    "i18n": "typesafe-i18n"
   },
   "dependencies": {
-    "@solid-primitives/i18n": "^1.4.1",
-    "@solidjs/meta": "^0.29.1",
-    "@solidjs/router": "^0.8.4",
-    "solid-js": "^1.8.5",
-    "solid-start": "^0.3.10",
-    "solid-start-static": "^0.3.10"
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.14.1",
+    "@solidjs/start": "^1.0.6",
+    "@types/nprogress": "^0.2.3",
+    "plausible-tracker": "^0.3.9",
+    "solid-js": "^1.8.17",
+    "typesafe-i18n": "^5.26.2",
+    "vinxi": "^0.4.1"
   },
   "engines": {
-    "node": ">=16.8"
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@iconify-json/carbon": "^1.1.21",
+    "@iconify-json/tabler": "^1.1.96",
+    "@unocss/reset": "^0.61.5",
+    "cheerio": "1.0.0-rc.12",
+    "crypto-js": "^4.2.0",
+    "giscus": "^1.5.0",
+    "he": "^1.2.0",
+    "highlight.js": "^11.9.0",
+    "js-base64": "^3.7.7",
+    "katex": "^0.16.11",
+    "nprogress": "^0.2.0",
+    "qrcode": "^1.5.3",
+    "unocss": "^0.61.5",
+    "unplugin-icons": "^0.19.0",
+    "vite": "^5.3.4",
+    "workbox-core": "^7.1.0",
+    "workbox-routing": "^7.1.0"
   },
   "pnpm": {
     "patchedDependencies": {
-      "solid-start-static@0.3.10": "patches/solid-start-static@0.3.10.patch",
-      "solid-start@0.3.10": "patches/solid-start@0.3.10.patch"
+      "@solidjs/start@1.0.6": "patches/@solidjs__start@1.0.6.patch"
     }
   }
 }

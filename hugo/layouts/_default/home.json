@@ -11,7 +11,7 @@
       "summary": {{ $page.Summary | plainify | jsonify | replaceRE " " "" }},
       {{ end }}
       "subtitle": "{{ $page.Params.subtitle }}",
-      "slug": "{{ replace $page.RelPermalink `index.jsonx` `` }}",
+      "slug": "{{ replace $page.RelPermalink `index.jsx` `` }}",
       "cover": "{{ $page.Params.cover }}",
       "category": "{{ $page.Params.category }}",
       "date": "{{ $page.Date.Format `2006-01-02T15:04:05+0800` }}"

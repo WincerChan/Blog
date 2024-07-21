@@ -1,6 +1,8 @@
-import { AES, enc } from "crypto-js";
+import pkg from 'crypto-js';
 import { Show, createSignal } from "solid-js";
 import { padTo32 } from "~/utils";
+const { enc, AES } = pkg;
+
 
 const ProtectBlog = ({ source }) => {
     const [show, setShow] = createSignal(false)
@@ -24,8 +26,8 @@ const ProtectBlog = ({ source }) => {
         <>
             <Show when={!show()}>
                 <form onSubmit={handleDecrypt} class=":: flex space-x-4 my-6 ">
-                    <input type="text" class=":: card-outline bg-[var(--cc)] px-4 py-1.5 rounded flex-grow " placeholder="你面前的是一个未知的领域，输入密码才能继续前进。" />
-                    <button title="解密" class=":: font-headline px-4 card-outline rounded ">解密</button>
+                    <input type="text" class=":: outline-card bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你面前的是一个未知的领域，输入密码才能继续前进。" />
+                    <button title="解密" class=":: font-headline px-4 outline-card rounded ">解密</button>
                 </form>
             </Show>
             <Show when={error()}><b class="">密码错误，这个未知的领域离你还很遥远。</b></Show>

@@ -1,4 +1,4 @@
-import { Meta } from "solid-start";
+import { Meta } from "@solidjs/meta";
 import { HeadParamsTyoe } from "~/schema/Head";
 
 const OpenGraph = ({ params }: { params: HeadParamsTyoe }) => {

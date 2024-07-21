@@ -18,7 +18,7 @@ type ContentLayoutProps = {
 
 const ContentLayout = ({ children, blog, headParams, lang }: ContentLayoutProps) => {
     return (
-        <MainLayout className="w-view" lang={lang}>
+        <MainLayout className=":: xl:w-284 lg:w-220 mx-auto max-w-full ">
             <HeadTag headParams={headParams} />
             <article class={`:: md:w-168 lg:w-220 xl:w-full w-full mx-auto <md:w-[calc(100vw-32px)] leading-7 text-justify`}>
                 {children}
@@ -38,7 +38,7 @@ const ArticleLayout = ({ children, headParams, extra, LL }: ContentLayoutProps) 
                 </article>
                 <ToC toc={headParams.toc} slug={headParams.pageURL} LL={LL} />
             </div>
-            <div class=" content-width ">{extra}</div>
+            <div class=":: md:w-168 xl:w-192 md:mx-auto mx-4 ">{extra}</div>
         </MainLayout>
     );
 }

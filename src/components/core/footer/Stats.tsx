@@ -1,4 +1,4 @@
-import Category from "@/_output/category/index.json";
+import Category from "@/(hugo)/category/index.json";
 import { Accessor, For } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 
@@ -12,10 +12,10 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
 
     return (
         <div class="">
-            <label class=":: font-headline text-[var(--subtitle)] ">{LL().footer.S}</label>
+            <label class=":: text-[15px]  font-headline text-[var(--subtitle)] ">{LL && LL().footer.S}</label>
             <div class=":: mb-6 text-[var(--extra)] ">
                 <For each={elems}>
-                    {(item, idx) => <p>{item}{LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}</p>}
+                    {(item, idx) => <p>{item}{LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}</p>}
                 </For>
             </div>
         </div>

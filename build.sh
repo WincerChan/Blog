@@ -20,15 +20,17 @@ else
     cd ..
 fi
 echo -e "${YELLOW}Building hugo content...${RESET}"
+pnpm clean
 pnpm dev:hugo
+pnpm dev:copy
 echo -e "${YELLOW}Creating sitemap index...${RESET}"
-directories=("posts" "category" "tags" "base" "")
+directories=("posts" "category" "base" "")
 for dir in "${directories[@]}"; do
     mkdir -p "public/${dir}"
-    cp "_output/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
+    cp "(hugo)/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
 done
-cp -r "_output/sass" "public/"
-cp -r "_output/manifest.webmanifest" "public/"
+cp -r "(hugo)/sass" "public/"
+cp -r "(hugo)/manifest.webmanifest" "public/"
 echo -e "${YELLOW}Building site...${RESET}"
 pnpm build
 
@@ -37,12 +39,15 @@ if [ "$1" == "--hitcache" ]; then
     ./hit-cache.cjs
     exit
 fi
+mkdir -p dist
+cp -r .output/public dist/
+cp dist/public/404/index.html dist/public/404.html
 
 if [ "$1" == "--publish" ]; then
     echo -e "${YELLOW}Cleaning old assets...${RESET}"
     rm -rf _blogs/wir/assets/
     echo -e "${YELLOW}Copy new assets...${RESET}"
-    cp -r dist/public/assets _blogs/wir/
+    cp -r .output/public/_build/assets _blogs/wir/
     if ! command -v jq >/dev/null 2>&1; then
         echo -e "${YELLOW}jq not found, please install it first.${RESET}"
         exit

@@ -1,5 +1,5 @@
 import Plausible from "plausible-tracker";
-const { trackPageview, trackEvent } = Plausible({
+const { trackPageview, trackEvent } = Plausible.default({
     domain: "blog.itswincer.com",
     apiHost: "https://track.itswincer.com",
 })

@@ -1,5 +1,5 @@
 
-import { Link, Meta } from "solid-start";
+import { Link, Meta } from "@solidjs/meta";
 const ApplicationMeta = () => {
     return (
         <>

@@ -1,0 +1,62 @@
+diff --git a/config/fs-router.js b/config/fs-router.js
+index 994c49a1ce3e4399c12c729300ca278adc6e2d36..a201bf418a180699cb965dcfca3c898a90afc321 100644
+--- a/config/fs-router.js
++++ b/config/fs-router.js
+@@ -31,7 +31,6 @@ export class SolidStartClientFileRouter extends BaseFileSystemRouter {
+         },
+         $$route: undefined,
+         path,
+-        filePath: src
+       };
+     }
+ 
+@@ -47,12 +46,11 @@ export class SolidStartClientFileRouter extends BaseFileSystemRouter {
+         },
+         $$route: hasRouteConfig
+           ? {
+-              src: src,
+-              pick: ["route"]
+-            }
++            src: src,
++            pick: ["route"]
++          }
+           : undefined,
+         path,
+-        filePath: src
+       };
+     }
+   }
+@@ -102,7 +100,6 @@ export class SolidStartServerFileRouter extends BaseFileSystemRouter {
+         },
+         $$route: undefined,
+         path,
+-        filePath: src
+       };
+     }
+ 
+@@ -116,19 +113,18 @@ export class SolidStartServerFileRouter extends BaseFileSystemRouter {
+         $component:
+           !this.config.dataOnly && hasDefault
+             ? {
+-                src: src,
+-                pick: ["default", "$css"]
+-              }
++              src: src,
++              pick: ["default", "$css"]
++            }
+             : undefined,
+         $$route: hasRouteConfig
+           ? {
+-              src: src,
+-              pick: ["route"]
+-            }
++            src: src,
++            pick: ["route"]
++          }
+           : undefined,
+         ...createHTTPHandlers(src, exports),
+         path,
+-        filePath: src
+       };
+     }
+   }

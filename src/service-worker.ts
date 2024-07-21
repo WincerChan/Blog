@@ -1,19 +1,17 @@
-import { clientsClaim, skipWaiting } from 'workbox-core';
+import { clientsClaim, skipWaiting } from "workbox-core";
 import { registerRoute } from 'workbox-routing';
 
-skipWaiting();
-clientsClaim();
+skipWaiting()
+clientsClaim()
 
-const ASSETS_PREFIEXES = [
+const ASSETS_PREFIXES = [
     `https://unpkg.com/wir@`,
     `https://npm.onmicrosoft.cn/wir@`,
-    `https://jsd.cdn.zzko.cn/npm/wir@`,
-    `https://jsdelivr.b-cdn.net/npm/wir@`,
+    `https://jsd.nmmsl.top/npm/wir@`,
     ``
 ]
 
-
-const fetchAsset = (url: string, signal) => {
+const fetchAsset = (url: string, signal: AbortSignal) => {
     return new Promise((resolve, reject) => {
         fetch(url, { signal })
             .then(async res => res.ok ? resolve(res) : reject())
@@ -21,11 +19,10 @@ const fetchAsset = (url: string, signal) => {
     })
 }
 
-
-const fetchAssets = async (pathname: string, version: string) => {
+const catchAssets = async (pathname: string, version: string) => {
     const controller = new AbortController(),
         signal = controller.signal;
-    return Promise.any(ASSETS_PREFIEXES.map(prefix => fetchAsset(!prefix ? pathname : `${prefix}${version}${pathname}`, signal)))
+    return Promise.any(ASSETS_PREFIXES.map(prefix => fetchAsset(!prefix ? pathname : `${prefix}${version}${pathname.slice(7)}`, signal)))
         .then(async res => {
             const body = await res.text();
             controller.abort();
@@ -35,12 +32,11 @@ const fetchAssets = async (pathname: string, version: string) => {
 
 }
 
-// 添加自定义的路由和策略
-registerRoute(({ request }) => request.url.includes("assets") && (request.destination === 'script' || request.destination === 'style'),
+registerRoute(({ request }) => request.url.includes("_build/assets") && (request.destination === 'script' || request.destination === 'style'),
     async ({ event }) => {
         const version = event.target.location.search.slice(3)
         const parsedUrl = new URL(event.request.url);
-        const { body, ...rest } = await fetchAssets(parsedUrl.pathname, version)
+        const { body, ...rest } = await catchAssets(parsedUrl.pathname, version)
         return new Response(body, rest)
     }
 );

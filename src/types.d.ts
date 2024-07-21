@@ -6,7 +6,6 @@ declare const __POSTS_BY_YEAR: {
 declare const __POSTS_BY_YEAR_DETAIL: {
     [key: string]: any[]
 }
-declare const __TAGS: string[]
 declare const __EN_POSTS: string[]
 declare const __TOTAL_POSTS: number
 declare const __IS_PROD: boolean

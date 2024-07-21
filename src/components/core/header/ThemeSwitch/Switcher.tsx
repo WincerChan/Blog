@@ -6,7 +6,7 @@ import IconHazeNight from "~icons/carbon/haze-night";
 import IconWindowSwitcher from "~icons/carbon/window-black-saturation";
 import IconWorkflowAuto from "~icons/carbon/workflow-automation";
 
-import { set, val } from "./Provider";
+import { globalStore, setGlobalStore } from "./Provider";
 
 const ThemeMapping = [
     ["light", "浅色模式"],
@@ -37,7 +37,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
         let systemMode = key;
         if (key === "")
             systemMode = window.mt();
-        set({ theme: systemMode })
+        setGlobalStore({ theme: systemMode })
         localStorage.setItem("customer-theme", key)
     };
 
@@ -46,7 +46,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (selected() !== 'auto') return
             const newColorScheme = e.matches ? 'dark' : 'light';
-            set({ theme: newColorScheme })
+            setGlobalStore({ theme: newColorScheme })
         })
     })
 
@@ -58,7 +58,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
                     (themeItem, idx) => {
                         const IconMod = Icons[idx()]
                         return (
-                            <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg bg-menuHover p-4 gap-3 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menuActive' : ''}`}>
+                            <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg hover:bg-menu p-4 gap-3 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menu-active' : ''}`}>
                                 <IconMod width={24} height={24} />
                                 <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
                             </div>
@@ -87,11 +87,11 @@ const ToggleButton = () => {
         }
     };
     return (
-        <li ref={self!} class=":: bg-menuHover trans-linear relative">
+        <li ref={self!} class=":: hover:bg-menu transition-linear relative">
             <button onClick={(e) => {
                 toggleShow(e);
-                val.trackEvent("Menu CTR", { props: { type: "theme" } })
-            }} title="Switch Theme" class={`:: text-menuHover h-menu flex items-center ${show() ? 'toggle-active' : ''}`}>
+                globalStore.trackEvent("Menu CTR", { props: { type: "theme" } })
+            }} title="Switch Theme" class={`:: menu-hover-transition h-full px-3 md:px-6 flex items-center ${show() ? 'bg-menu text-menu-transition' : ''}`}>
                 <IconWindowSwitcher width={20} height={20} class=":: md:w-6 md:h-6 " />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />

@@ -1,0 +1,178 @@
+html {
+    @apply scroll-smooth
+}
+
+pre {
+    @apply rounded scrollbar-none overflow-x-auto;
+}
+
+.highlight {
+    @apply rounded max-w-screen relative
+}
+
+code::before {
+    content: attr(data-lang);
+    color: var(--head-border);
+    text-transform: uppercase;
+    @apply text-lg absolute right-1.5 top-0.1;
+}
+
+#post-meta::-webkit-scrollbar,
+pre::-webkit-scrollbar {
+    display: none;
+}
+
+/* table of content */
+#TableOfContents ul ul {
+    box-shadow: inset 1px 0px 0px 0px #7c7c7c;
+}
+
+#TableOfContents>ul>li {
+    @apply pl-0;
+}
+
+#TableOfContents li {
+    @apply my-2;
+}
+
+#TableOfContents li a {
+    @apply pr-2 py-1 border-none bg-transparent text-menuHover text-[var(--extra)];
+}
+
+#TableOfContents li a:hover {
+    @apply transition duration-300;
+}
+
+#TableOfContents {
+    @apply text-left leading-7;
+}
+
+/* section  */
+
+section>ul,
+section>ol {
+    @apply pl-8 px-4 my-2;
+}
+
+section li {
+    @apply my-2;
+}
+
+li li {
+    @apply ml-lg
+}
+
+section ol {
+    @apply list-decimal;
+}
+
+section ul {
+    @apply list-disc;
+}
+
+
+section h2,
+section h3,
+section h4 {
+    @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline !mobile-width-beyond;
+}
+
+section h2 {
+    @apply text-2xl;
+}
+
+section h3 {
+    @apply text-xl;
+}
+
+section h4 {
+    @apply text-lg;
+}
+
+section hr {
+    @apply seprator hr-section;
+}
+
+
+section blockquote {
+    @apply bq-section !mobile-width-beyond;
+}
+
+blockquote p {
+    @apply py-3
+}
+
+section p a,
+.comment a,
+section td a,
+section li a {
+    @apply transition relative duration-200 ease-linear text-link
+}
+
+section table {
+    @apply text-center mx-auto mb-8 table-auto;
+}
+
+section p,
+section li {
+    @apply text-lg leading-8 text-justify;
+}
+
+section p {
+    @apply my-4
+}
+
+section table tr>th {
+    @apply px-4 py-2;
+}
+
+section table tr>td {
+    @apply border px-4 py-2;
+}
+
+section code {
+    @apply bg-[var(--copyright-bg)] px-1 pb-2px rounded font-mono mx-1;
+}
+
+section img {
+    @apply mx-auto
+}
+
+b {
+    @apply text-#ee3f4d;
+}
+
+.ex-link {
+    @apply underline-none inline m-2px mt-0;
+}
+
+.katex-display {
+    @apply overflow-x-auto
+}
+
+.like {
+    animation: like 0.5s ease-in-out
+}
+
+@keyframes like {
+    0% {
+        transform: scale(1);
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+#gisdus li li {
+    @apply ml-10;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+}

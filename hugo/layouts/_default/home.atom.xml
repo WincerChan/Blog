@@ -23,12 +23,12 @@
       <category term="{{ .Params.Category }}" label='type'/>
     {{ range (.GetTerms "tags") }}
         <category term="{{htmlEscape .LinkTitle }}" />{{end}}
-      <link rel='alternate' type='type/html' href='{{ replace $url `/index.jsonx` `/` }}' />
+      <link rel='alternate' type='type/html' href='{{ replace $url `/index.jsx` `/` }}' />
       <title type="text">{{ htmlEscape .Title | plainify}}</title> 
       <published>{{ .PublishDate.UTC.Format "2006-01-02T15:04:05+08:00" }}</published>
       <updated>{{ .Lastmod.UTC.Format "2006-01-02T15:04:05+08:00"  }}</updated>
       <id>urn:uuid:{{substr $uuid 0 8}}-{{substr $uuid 8 4}}-5{{substr $uuid 13 3}}-{{substr $uuid 16 1}}9{{substr $uuid 17 2}}-{{substr $uuid 21 12}}</id>
-      <summary type="html" src="{{ replace .RelPermalink `/index.jsonx` `/` }}">
+      <summary type="html" src="{{ replace .RelPermalink `/index.jsx` `/` }}">
         {{ with .Params.encrypt_pwd }}
         {{ `<![CDATA[` | safeHTML }}
         抱歉，本文已加密，请至网站输入密码后阅读。{{ `]]>` | safeHTML }}

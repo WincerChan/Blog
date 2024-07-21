@@ -1,10 +1,10 @@
+import { useSearchParams } from "@solidjs/router";
 import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
-import { A, useSearchParams } from "solid-start";
 import { isBrowser, range } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
-import { val } from "../core/header/ThemeSwitch/Provider";
+import { globalStore } from "../core/header/ThemeSwitch/Provider";
 import PostLayout from "../layouts/PostLayout";
 
 const resultPerPage = 8
@@ -55,8 +55,8 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <For each={data().data}>
                 {ret => (
                     <div class="my-6">
-                        <h3 class=":: text-xl font-headline text-title leading-loose border-0 pl-0 my-0 <md:pl-4 ">
-                            <A href={ret.url} innerHTML={ret.title}></A>
+                        <h3 class=":: text-2xl font-headline font-medium leading-loose border-0 pl-0 my-0 <md:pl-4 ">
+                            <a href={ret.url} innerHTML={ret.title}></a>
                         </h3>
                         <p class=":: text-justify my-0 ">
                             <span class=":: text-subtitle mr-4 inline-block ">{ret.date.split(" ")[0]}</span>
@@ -68,7 +68,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <div class=":: flex mt-8 justify-between text-xl font-headline ">
                 {
                     currentPage() != 1 && (
-                        <button title="Prev" class=":: flex gap-2 items-center text-menuHover " onClick={() => { updatePage(-1) }}>
+                        <button title="Prev" class=":: flex gap-2 items-center hover:text-menu-transition " onClick={() => { updatePage(-1) }}>
                             <IconArrowLeft />
                             <span>Prev</span>
                         </button>
@@ -77,7 +77,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 <div />
                 {
                     data().count > resultPerPage * currentPage() &&
-                    <button title="Next" class=":: flex gap-2 items-center text-menuHover " onClick={() => { updatePage(1) }}>
+                    <button title="Next" class=":: flex gap-2 items-center hover:text-menu-transition " onClick={() => { updatePage(1) }}>
                         <span>Next</span>
                         <IconArrowRight />
                     </button>
@@ -127,7 +127,7 @@ const Search = ({ page, children }) => {
         // 结果写入到 URL
         if (!input()) return
         setSearchParams({ q: input() })
-        val.trackEvent("Search", { props: { keyword: input() } })
+        globalStore.trackEvent("Search", { props: { keyword: input() } })
         setQuery(`${input()} pages:${1}-${resultPerPage}`)
         setCurrentPage(1)
     }
@@ -139,8 +139,8 @@ const Search = ({ page, children }) => {
     return (
         <PostLayout rawBlog={page} hideComment={true}>
             <form onSubmit={handleSubmit} method="get" class=":: flex space-x-4 my-6 ">
-                <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class=":: card-outline bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你想要找什么？我也想要" />
-                <button title="搜索" class=":: font-headline px-4 card-outline rounded ">搜索</button>
+                <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class=":: outline-card bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你想要找什么？我也想要" />
+                <button title="搜索" class=":: font-headline px-4 outline-card rounded ">搜索</button>
             </form>
             <>
                 {!query() && children}

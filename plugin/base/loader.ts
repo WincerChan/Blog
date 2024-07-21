@@ -1,7 +1,6 @@
 const AboutLoader = (parsedContent) => {
     const { content, ...rest } = parsedContent
     const transformedCode = `
-                import { A } from "solid-start"
                 import PostLayout from "~/components/layouts/PostLayout"
                 
                 const About = () => {
@@ -20,7 +19,6 @@ const AboutLoader = (parsedContent) => {
 const OtherPageLoader = (parsedContent, name) => {
     const { content, ...rest } = parsedContent
     const transformCode = `
-        import { A, Suspense } from "solid-start"
         import ${name} from "~/components/page/${name}"
 
         const OtherPage = () => {
@@ -38,7 +36,6 @@ const OtherPageLoader = (parsedContent, name) => {
 const ArchLoader = (parsedContent) => {
     const { _, ...rest } = parsedContent
     const transformCode = `
-        import { A, Suspense } from "solid-start"
         import Arch from "~/components/page/Archives"
         const ArchPage = () => {
             return (
