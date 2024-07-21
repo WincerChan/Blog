@@ -8,6 +8,7 @@ const ASSETS_PREFIXES = [
     `https://unpkg.com/wir@`,
     `https://npm.onmicrosoft.cn/wir@`,
     `https://jsd.nmmsl.top/npm/wir@`,
+    `https://cdn.jsdmirror.com/npm/wir@`,
     ``
 ]
 
