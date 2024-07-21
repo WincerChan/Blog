@@ -41,6 +41,7 @@ if [ "$1" == "--hitcache" ]; then
 fi
 mkdir -p dist
 cp -r .output/public dist/
+cp dist/public/index.html dist/public/404.html
 
 if [ "$1" == "--publish" ]; then
     echo -e "${YELLOW}Cleaning old assets...${RESET}"
