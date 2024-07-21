@@ -36,6 +36,8 @@ const definedVars = {
     __SITE_CONF: BlogConf
 }
 
+const postsEnPage = en_posts.filter(x => !en_nav_pages.includes(x)).map(x => `/posts/${x}/`)
+console.log(postsEnPage)
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename);
@@ -43,7 +45,8 @@ export default defineConfig({
     extensions: ["ts", "tsx", "js", "jsx"],
     server: {
         prerender: {
-            crawlLinks: true
+            crawlLinks: true,
+            routes: ["/404/", ...postsEnPage]
         },
     },
     vite: {

@@ -20,6 +20,7 @@ else
     cd ..
 fi
 echo -e "${YELLOW}Building hugo content...${RESET}"
+pnpm clean
 pnpm dev:hugo
 pnpm dev:copy
 echo -e "${YELLOW}Creating sitemap index...${RESET}"
