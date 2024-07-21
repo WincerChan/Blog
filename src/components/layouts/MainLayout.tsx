@@ -23,9 +23,12 @@ const trackHook = () => {
     useBeforeLeave(e => {
         if (!(e.to.toString().startsWith(e.from.pathname) && e.from.pathname !== "/")) nProgress.start()
     })
+
     onMount(() => {
-        globalStore.trackPage()
         nProgress.done()
+        setTimeout(() => {
+            globalStore.trackPage()
+        }, 100)
     })
 }
 

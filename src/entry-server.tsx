@@ -25,7 +25,7 @@ export default createHandler((context) => (
               newWorker?.addEventListener('statechange', () => {
                 switch (newWorker.state) {
                   case 'installed':
-                    if (navigator.serviceWorker.controller) document.getElementById('sw-notify').style.display = 'block'
+                    if (navigator.serviceWorker.controller) {const updateButton = document.getElementById('sw-notify');updateButton.style.display = 'block';setTimeout(()=>updateButton.style.display='', 5000)}
                     break;
                   case 'redundant':
                     break;
