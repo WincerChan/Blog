@@ -51,8 +51,9 @@ export default function () {
         name: 'jsx-plugin',
         enforce: "pre",
         async transform(content: string, id: string) {
+            // console.log(id)
+            // console.log(isValidJsonXPath(id))
             if (!isValidJsonXPath(id)) return null;
-            const filepath = id.split("?")[0]
             // const realPath = await fs.realpath(filepath);
             // if (processedFiles.has(realPath)) {
             //     return;

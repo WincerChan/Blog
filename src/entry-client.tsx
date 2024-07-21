@@ -7,4 +7,5 @@ import "virtual:uno.css";
 import "~/styles/color.css";
 import "~/styles/photograph.css";
 
-mount(() => <StartClient />, document.body);
+
+export default mount(() => <StartClient />, document.body);

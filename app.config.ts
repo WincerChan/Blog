@@ -5,6 +5,7 @@ import Icons from 'unplugin-icons/vite';
 import { fileURLToPath } from 'url';
 import JsonX from "./plugin/jsonx";
 import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./plugin/statsPreload";
+import SwBuild from "./plugin/swBuild";
 const isProd = process.env.NODE_ENV === "production";
 
 const BlogConf = {
@@ -43,7 +44,7 @@ export default defineConfig({
     server: {
         prerender: {
             crawlLinks: true
-        }
+        },
     },
     vite: {
         resolve: {
@@ -56,10 +57,16 @@ export default defineConfig({
         plugins: [
             Icons({ autoInstall: true, compiler: 'solid' }),
             JsonX(),
-            UnoCSS()
+            UnoCSS(),
+            SwBuild(__dirname)
         ],
         build: {
-            sourcemap: false
+            rollupOptions: {
+                output: {
+                    minifyInternalExports: true,
+                    experimentalMinChunkSize: 102400,
+                }
+            },
         }
     }
 });

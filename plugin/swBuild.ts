@@ -1,18 +1,18 @@
-import { resolve } from "path"
-import { Plugin, build } from "vite"
+import { resolve } from "path";
+import { build } from "vite";
 
-const viteSwBuild = () => {
-    return <Plugin>{
+const SwBuild = (dirname) => {
+    return {
         name: 'vite-plugin-sw-build',
-        enforce: "post",
+        apply: 'build',
         closeBundle() {
             build({
                 configFile: false,
                 build: {
-                    outDir: resolve(__dirname, "../dist/public"),
+                    outDir: resolve(dirname, ".output/public"),
                     emptyOutDir: false,
                     rollupOptions: {
-                        input: resolve(__dirname, "../src/serviceWorker.ts"),
+                        input: resolve(dirname, "src/service-worker.ts"),
                         output: {
                             entryFileNames: "sw.js"
                         }
@@ -23,4 +23,4 @@ const viteSwBuild = () => {
     }
 }
 
-export default viteSwBuild
+export default SwBuild
