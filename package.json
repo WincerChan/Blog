@@ -6,7 +6,7 @@
     "dev:copy": "cp \\(hugo\\)/*.xml public/; cp -r \\(hugo\\) src/routes; rm -r src/routes/\\(hugo\\)/tags",
     "dev": "pnpm dev:hugo;pnpm dev:copy;vinxi dev",
     "build": "vinxi build --preset static",
-    "start": "vinxi start",
+    "start": "npx serve .output/public",
     "version": "vinxi version",
     "clean": "rm -rf \\(hugo\\) node_modules/.vinxi src/routes/\\(hugo\\) .output",
     "i18n": "typesafe-i18n"

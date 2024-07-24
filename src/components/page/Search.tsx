@@ -49,23 +49,32 @@ const FakeResult = ({ limit }: { limit: number }) => {
 
 
 const SearchResultComponent = ({ data, currentPage, updatePage }) => {
+    const formatDate = (dateStr: string) => {
+        const cleanDateStr = dateStr.split(" ")[0]
+        return new Date(cleanDateStr).toLocaleString("en-us", { year: "numeric", month: "short", day: "numeric" })
+    }
+    const getPathname = (postURL: string) => {
+        const url = new URL(postURL)
+        return url.pathname
+    }
     return (
         <>
-            <span>共搜索到 {data().count} 篇文章，目前展示第 {currentPage} 页结果</span>
+            <span>共搜索到 {data().count} 篇文章
+                <Show when={data().count > 8}>，目前展示第 {currentPage} 页结果</Show></span>
             <For each={data().data}>
                 {ret => (
-                    <div class="my-6">
+                    <div class="my-4">
                         <h3 class=":: text-2xl font-headline font-medium leading-loose border-0 pl-0 my-0 <md:pl-4 ">
-                            <a href={ret.url} innerHTML={ret.title}></a>
+                            <a href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
                         <p class=":: text-justify my-0 ">
-                            <span class=":: text-subtitle mr-4 inline-block ">{ret.date.split(" ")[0]}</span>
+                            <span class=":: text-base font-medium mr-1 inline-block text-[var(--donate-text)] ">{formatDate(ret.date)} —</span>
                             <span innerHTML={ret.snippet + '...'} />
                         </p>
                     </div>
                 )}
             </For>
-            <div class=":: flex mt-8 justify-between text-xl font-headline ">
+            <div class=":: flex my-8 justify-between text-xl font-headline ">
                 {
                     currentPage() != 1 && (
                         <button title="Prev" class=":: flex gap-2 items-center hover:text-menu-transition " onClick={() => { updatePage(-1) }}>
