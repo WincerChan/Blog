@@ -113,7 +113,7 @@ blockquote p {
 section p a,
 section td a,
 section li a {
-    @apply transition relative duration-200 ease-linear text-link underline underline-1 underline-offset-2.5 hover:underline-[var(--menu-hover-text)]
+    @apply transition relative duration-200 ease-linear text-link underline underline-1 underline-offset-3px hover:underline-[var(--menu-hover-text)]
 }
 
 .comment a {
