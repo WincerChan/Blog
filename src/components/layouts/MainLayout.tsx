@@ -43,13 +43,17 @@ const localeHook = (lang?: Locale) => {
         document.documentElement.lang = lang
     })
     createMemo(() => {
-        if (isRouting())
+        if (isRouting()) {
             loadLocaleAsync(lang).then(() => setLocale(lang))
+            globalThis.loadedLocale = true
+        }
     })
-    // setLocale(lang)
 }
 
+
 const MainLayout = ({ children, className, lang }: MainProps) => {
+    globalThis.loadedLocale = false
+    
     trackHook();
     localeHook(lang)
 

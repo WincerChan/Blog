@@ -5,6 +5,8 @@ import Modal from "../../section/Modal";
 
 import IconWeChat from "~icons/tabler/brand-wechat";
 
+import { useI18nContext } from "~/i18n/i18n-solid";
+import { loadLocale } from "~/i18n/i18n-util.sync";
 import IconEth from "~icons/tabler/currency-ethereum";
 import IconSol from "~icons/tabler/currency-solana";
 
@@ -14,7 +16,14 @@ interface RewardProps {
     LL: Accessor<Translations>;
 }
 
-const Reward = ({ toggle, setToggle, LL }: RewardProps) => {
+const Reward = ({ toggle, setToggle, lang }: RewardProps) => {
+    const { setLocale, LL, locale } = useI18nContext()
+    if (!globalThis.loadedLocale) {
+        globalThis.loadedLocale = true
+        loadLocale(locale())
+        setLocale(locale())
+    }
+
     const addr = [
         {
             "key": "wechat",
@@ -44,7 +53,6 @@ const Reward = ({ toggle, setToggle, LL }: RewardProps) => {
             })
         }
     }, [addrIndex])
-    console.log("setToggle", setToggle)
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>

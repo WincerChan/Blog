@@ -20,5 +20,14 @@
         "./src/*"
       ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".vinxi",
+    ".output",
+    "_blogs",
+    "(hugo)"
+  ],
 }
