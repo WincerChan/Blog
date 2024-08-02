@@ -17,7 +17,9 @@ export default createHandler((context) => (
         <body class=":: font-base antialiased bg-main text-main md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ">
           {children}
           {scripts}
-          <script innerHTML={`
+
+          {import.meta.env.PROD &&
+            <script innerHTML={`
             if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register("/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}",{scope:"/"}).then(reg => {
             reg.addEventListener('updatefound', () => {
@@ -34,8 +36,9 @@ export default createHandler((context) => (
             });
           })
         }
-            `}></script>
+            `} />
 
+          }
         </body>
       </html>
     }}

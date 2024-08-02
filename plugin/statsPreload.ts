@@ -22,7 +22,7 @@ const groupByYearDetail = (posts: BlogMinimal[]) => {
         if (post.subtitle) ret['subtitle'] = post.subtitle
         ret['title'] = post.title
         ret['category'] = post.category
-        ret['data'] = post.date
+        ret['date'] = post.date
 
         byYears[year].push(ret)
     })

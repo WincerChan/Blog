@@ -1,4 +1,5 @@
-import { For, onMount } from "solid-js";
+import { For, onMount, Show } from "solid-js";
+import ReplyIcon from "~icons/tabler/arrow-forward";
 
 interface CommentProps {
     author: string,
@@ -21,17 +22,21 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
     })
     return (
         <>
-            <div ref={self!} class=":: w-full flex gap-4 my-6 comment ">
-                <img title="avatar" class=":: rounded-lg w-10 h-10 " src="https://gravatar.loli.net/avatar/00000000000000000000000000000000?d=mp&f=y" />
-                <div class=":: space-y-2 leading-relaxed font-sans text-justify ">
-                    <label class="space-x-2">
-                        <span class=":: font-medium text-lg ">{author}</span>
-                        <span class=":: text-[var(--blockquote-text)] pl-2">{new Date(date).toLocaleString()}</span>
-                    </label>
-                    <div innerHTML={message} />
+            <div ref={self!} class=":: w-full my-1.5 comment leading-7 ">
+                <label class="w-full space-x-2">
+                    <span class=":: font-medium font-base ">{author}</span>
+                    <Show when={author === "WincerChan"}><code class=":: text-base bg-[var(--copyright-bg)] rounded px-1 ">MOD</code></Show>
+                    <span class=":: text-[var(--blockquote-text)] text-sm  ">{new Date(date).toLocaleString("en-us", { year: "numeric", month: "short", day: "numeric" })}</span>
+                </label>
+                <div class=":: text-justify text-[15px] " innerHTML={message}>
                 </div>
             </div>
-            {children && <CommentList comments={children} />}
+            <Show when={children?.length !== 0}>
+                <div class=":: flex ">
+                    <ReplyIcon stroke-width={1} class=":: mr-2 my-2.5 w-5 h-5 flex-none " color="var(--meta-bg)" />
+                    <CommentList comments={children} />
+                </div>
+            </Show>
         </>
     )
 }
@@ -40,15 +45,13 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
 
 const CommentList = ({ comments }: { comments: CommentProps[] }) => {
     return (
-        <ul>
+        <div>
             <For each={comments}>
                 {comment => (
-                    <li>
-                        <Comment {...comment} />
-                    </li>
+                    <Comment {...comment} />
                 )}
             </For>
-        </ul>
+        </div>
     )
 }
 

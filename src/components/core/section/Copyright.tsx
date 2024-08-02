@@ -35,7 +35,7 @@ const Copyright = ({ title, slug, updated, LL }: CopyrightProps) => {
                     )}
                 </For>
             </div>
-            <a href="https://notbyai.fyi/" target="_blank" class=":: absolute opacity-60 bottom-6 right-6 ml-auto text-[var(--cc)] ">
+            <a href="https://notbyai.fyi/" aria-label="not-by-ai" target="_blank" class=":: absolute opacity-60 bottom-6 right-6 ml-auto text-[var(--cc)] ">
                 <NotByAi />
             </a>
         </div>

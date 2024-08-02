@@ -29,9 +29,8 @@ const preloadHook = (props: RouteSectionProps<unknown>) => {
 export default function App() {
   let locale: Locale = "zh-CN";
   if (isServer) {
-    if (!('count' in globalThis)) globalThis['count'] = 0
-    globalThis['count'] += 1
-    if (globalThis['count'] < __EN_POSTS.length)
+    globalThis.renderCount ??= 0;
+    if (++globalThis.renderCount < __EN_POSTS.length)
       locale = "en"
     setGlobalStore({ locale: locale })
     loadLocale(locale)

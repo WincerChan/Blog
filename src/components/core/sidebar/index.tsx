@@ -20,8 +20,8 @@ const SideBar = ({ pageURL, LL, isTranslation, lang }: SideBarProps) => {
         <aside class=":: lg:z-20 <md:w-full <lg:content-width <lg:mx-auto ">
             <div class={`:: top-[50vh] xl:top-[54vh] 2xl:top-[60vh] md:gap-4 flex lg:flex-col place-items-end place-content-around lg:mt-10 lg:sticky <sm:px-4 max-w-100vw `}>
                 <Like pageURL={pageURL} />
-                <SocialButton LL={LL} IconName={IconPiggyBank} text="Reward" hoverColor="hover:text-amber-500 focus:text-amber-500" />
-                <SocialButton LL={LL} IconName={IconShare} text="Share" hoverColor="hover:text-sky-500 focus:text-sky-500" />
+                <SocialButton LL={LL} IconName={IconPiggyBank} text="Reward" hoverColor="hover:text-amber-500 focus:text-amber-500" lang={lang} />
+                <SocialButton LL={LL} IconName={IconShare} text="Share" hoverColor="hover:text-sky-500 focus:text-sky-500" lang={lang} />
                 <Show when={isTranslation !== undefined}>
                     <Translate LL={LL} pageURL={pageURL} lang={lang} />
                 </Show>

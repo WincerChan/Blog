@@ -9,8 +9,8 @@ type BlogProps = {
 const LatestBlog = ({ blog }: BlogProps) => {
     return (
         <>
-            <div class=":: rounded flex lg:flex-row mb-12 lg:gap-x-10 gap-y-4 flex-col-reverse xl:h-80 lg:h-78 ">
-                <div class=":: lg:basis-1/2 flex flex-col md:h-70 sm:h-76 lg:h-78 xl:h-80 h-85 ">
+            <div class=":: rounded flex lg:flex-row mb-12 lg:gap-x-10 gap-y-4 flex-col-reverse lg:h-80 ">
+                <div class=":: lg:basis-1/2 flex flex-col md:h-70 sm:h-76 lg:h-80 h-85 ">
                     <a link={true} href={blog.slug}>
                         <h2 title={blog.title} class=":: text-headline ">{blog.title}</h2>
                     </a>
@@ -20,10 +20,10 @@ const LatestBlog = ({ blog }: BlogProps) => {
                     <p class=":: text-lg leading-loose relative sm:my-2 my-1 text-justify overflow-hidden " innerText={blog.summary} />
                     <div class=":: mt-auto justify-between text-[var(--extra)] flex ">
                         <DateCat date={blog.date} category={blog.category} />
-                        <a class=":: transition duration-200 ease-linear text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] text-link leading-tight " href={blog.slug}>继续阅读 »</a>
+                        <a class=":: text-base transition duration-200 ease-linear leading-tight text-link " href={blog.slug}>继续阅读 »</a>
                     </div>
                 </div>
-                <img width={352} height={304} class=":: lg:basis-1/2 lg:max-w-1/2 xl:h-80 lg:h-78 h-82 block object-cover rounded w-full !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
+                <img width={352} height={304} class=":: lg:basis-1/2 lg:max-w-1/2 lg:h-80 h-82 block object-cover rounded w-full !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
             </div>
         </>
     )
