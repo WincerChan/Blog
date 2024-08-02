@@ -21,28 +21,66 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
     const [isScrolling, setIsScrolling] = createSignal(false)
     const [activeId, setActiveId] = createSignal('');
-    const [hrefs, setHrefs] = createSignal<NodeListOf<HTMLAnchorElement>>()
-    const handleScroll = (event) => {
-        if (event.target.documentElement.scrollTop < 64) {
+    const [hrefs, setHrefs] = createSignal<NodeListOf<HTMLAnchorElement>>([])
+    let cancelHoverFunc: NodeJS.Timeout, cancelScrollFunc: NodeJS.Timeout;
+    const handleScroll = (event: Event) => {
+        const currScrollTop = (event.target as Document).documentElement.scrollTop
+        if (currScrollTop < 64 && !isScrolling()) {
             setActiveId('')
+        }
+        if (currScrollTop == document.getElementById(activeId())?.offsetTop) {
+            clearTimeout(cancelHoverFunc)
+            clearTimeout(cancelScrollFunc)
+            setIsScrolling(false)
         }
     }
 
     createEffect(() => {
         if (!hash()) return
-        const id = decodeURI(hash().slice(1))
 
-        if (hash()) {
-            setIsScrolling(true)
-            setTimeout(() => setIsScrolling(false), 1000)
-        }
+        const id = decodeURI(hash().slice(1))
         setActiveId(id)
-        document.documentElement.scrollTop = document.getElementById(id)?.offsetTop
+        document.documentElement.scrollTop = document.getElementById(id)?.offsetTop!
+    })
+
+    createEffect(() => {
+        if (isScrolling()) {
+            ref.classList.add("no-click")
+            cancelHoverFunc = setTimeout(() => { ref.classList.remove("disable-hover") }, 1000)
+        } else {
+            ref.classList.remove("no-click")
+        }
+    })
+
+    const handleIntersect = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isScrolling()) {
+                setActiveId(entry.target.id);
+            }
+        });
+    }
+
+
+    // add event listener for toc
+    createEffect(() => {
+        const observer = new IntersectionObserver(handleIntersect, {
+            root: null,
+            rootMargin: '0px 0px -95% 0px',
+            threshold: 0.1,
+        })
+        hrefs().forEach(elem => {
+            const id = decodeURI(elem.href.split('#')[1])
+            elem.addEventListener('click', (event) =>
+                isScrolling() ? event.preventDefault() : handleClick(id)
+            )
+            const heading = document.getElementById(id)
+            heading && observer.observe(heading)
+        })
+
     })
 
     createEffect(() => {
         const anchors = hrefs()
-        if (!anchors) return
         if (activeId() == '') {
             ref.scrollTop = 0
         }
@@ -58,47 +96,24 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
     })
 
-    const handleIntersect = (entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !isScrolling()) {
-                setActiveId(entry.target.id);
-            }
-        });
-    }
-
     onMount(() => {
         window.addEventListener('scroll', handleScroll)
-        const hrefs = ref.querySelectorAll('a')
-        if (hrefs)
-            setHrefs(hrefs)
-
-
-        const observer = new IntersectionObserver(handleIntersect, {
-            root: null,
-            rootMargin: '0px 0px -95% 0px',
-            threshold: 0.1,
-        })
-
-        hrefs.forEach(elem => {
-            const id = decodeURI(elem.href.split('#')[1])
-            elem.addEventListener('click', () => {
-                handleClick(id)
-            })
-            const heading = document.getElementById(id)
-            if (heading)
-                observer.observe(heading)
-        })
-
+        const id = decodeURI(hash().slice(1))
+        id && handleClick(id)
+        setHrefs(ref.querySelectorAll('a'))
     })
 
 
-    const handleClick = (id) => {
+    const handleClick = (id: string) => {
+        if (document.documentElement.scrollTop == document.getElementById(id)?.offsetTop!) return
+        setIsScrolling(true)
+        cancelScrollFunc = setTimeout(() => setIsScrolling(false), 1000)
         setActiveId(id)
-        document.documentElement.scrollTop = document.getElementById(id)?.offsetTop
+        document.documentElement.scrollTop = document.getElementById(id)?.offsetTop!
     }
 
 
-    const ClickToC = (event) => {
+    const ClickToC = () => {
         setVisible(false);
     }
     return (
@@ -113,7 +128,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
                     <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-modal ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'} `}>
                         <div class=":: h-4 "></div>
                         <div class=":: ml-2 flex font-headline "><label>{LL().sidebar.TOC()}</label> </div>
-                        <div ref={ref} onClick={ClickToC} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-43vh " innerHTML={toc} />
+                        <div ref={ref!} onClick={ClickToC} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-44vh " innerHTML={toc} />
                     </div>
                 </div>
             </aside >
