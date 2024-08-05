@@ -118,7 +118,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
     }
     return (
         <>
-            <aside class=":: lg:max-w-80 lg:ml-6 <lg:fixed <lg:z-10 ">
+            <aside class=":: lg:max-w-80 lg:ml-6 <lg:fixed <lg:z-10 lg:order-last ">
                 <div class=":: lg:top-10 md:sticky ">
                     <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed lg:hidden bottom-28 right-10 z-10 rounded shadow-round text-[var(--meta-bg)] bg-[var(--ers-bg)] ">
                         <IconCatalog width={32} height={32} class="m-2" />

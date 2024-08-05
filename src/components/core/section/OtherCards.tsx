@@ -34,7 +34,7 @@ const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
     return (
         <>
             <p class=":: md:text-2xl text-xl font-headline font-semibold leading-loose md:my-4 my-2 ">{description ?? (LL && LL().archive.SUBTITLE({ total: posts().length }))}</p>
-            <div class="grid-cols-2 gap-8 lg:grid">
+            <div class="grid-cols-2 lg:gap-8 lg:grid ">
                 <For each={posts()}>
                     {
                         post => (

@@ -3,7 +3,8 @@ html {
 }
 
 pre {
-    @apply rounded scrollbar-none overflow-x-auto;
+    @apply rounded overflow-x-auto;
+    scrollbar-width: none;
 }
 
 .highlight {
@@ -20,6 +21,11 @@ code::before {
 #post-meta::-webkit-scrollbar,
 pre::-webkit-scrollbar {
     display: none;
+}
+
+header ul,
+#post-meta {
+    scrollbar-width: none;
 }
 
 /* table of content */

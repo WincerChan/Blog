@@ -26,7 +26,7 @@ const PostMeta = ({ blog, lang, LL }: { blog: BlogDetailed, lang: Accessor<Local
                     <h2 class=":: font-headline font-semibold leading-relaxed text-2xl md:mt-2 md:mb-4 mb-2 ">{blog.subtitle}</h2>
                 </Show>
                 <Show when={blog.category}>
-                    <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 scrollbar-none leading-loose ">
+                    <div id="post-meta" class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 leading-loose ">
                         <span>
                             {formatDate(blog.date)}
                         </span>

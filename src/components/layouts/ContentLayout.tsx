@@ -20,7 +20,7 @@ const ContentLayout = ({ children, blog, headParams, lang }: ContentLayoutProps)
     return (
         <MainLayout className=":: xl:w-284 lg:w-220 mx-auto max-w-full ">
             <HeadTag headParams={headParams} />
-            <article class={`:: md:w-168 lg:w-220 xl:w-full w-full mx-auto <md:w-[calc(100vw-32px)] leading-7 text-justify`}>
+            <article class=":: md:w-168 lg:w-220 xl:w-full <md:mx-4 leading-7 text-justify ">
                 {children}
             </article>
         </MainLayout>
@@ -31,12 +31,12 @@ const ArticleLayout = ({ children, headParams, extra, LL }: ContentLayoutProps) 
     return (
         <MainLayout lang={headParams.lang}>
             <HeadTag headParams={headParams} />
-            <div class="grid lg:grid-cols-[1fr_auto_1fr] ">
-                <SideBar pageURL={headParams.pageURL} LL={LL} isTranslation={headParams.isTranslation} lang={headParams.lang} />
-                <article class=":: md:w-168 xl:w-192 mx-auto <md:w-[calc(100vw-32px)] <lg:order-first ">
+            <div class="lg:grid lg:grid-cols-[1fr_auto_1fr] ">
+                <ToC toc={headParams.toc} slug={headParams.pageURL} LL={LL} />
+                <article class=":: md:w-168 xl:w-192 <md:mx-4 mx-auto ">
                     {children}
                 </article>
-                <ToC toc={headParams.toc} slug={headParams.pageURL} LL={LL} />
+                <SideBar pageURL={headParams.pageURL} LL={LL} isTranslation={headParams.isTranslation} lang={headParams.lang} />
             </div>
             <div class=":: md:w-168 xl:w-192 md:mx-auto mx-4 ">{extra}</div>
         </MainLayout>
