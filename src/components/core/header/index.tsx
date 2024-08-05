@@ -17,7 +17,7 @@ const Header = () => {
     return (
         <Nav>
             <Logo />
-            <div class="justify-center sm:justify-between flex flex-grow-1 w-100vw sm:w-auto">
+            <div class="justify-center sm:justify-between flex flex-grow-1 ">
                 <Pages />
                 <Tools />
             </div>

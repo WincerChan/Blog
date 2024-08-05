@@ -39,7 +39,7 @@ export default defineConfig({
     shortcuts: {
         "transition-linear": "transition duration-100 ease-linear",
         'text-menu-transition': 'text-menu-active underline underline-1 underline-offset-4',
-        "mobile-width-beyond": " <md:w-100vw <md:max-w-none <md:-ml-4 ",
+        "mobile-width-beyond": " <md:w-[calc(100%+2rem)] <md:max-w-none <md:-ml-4 ",
         "menu-hover-transition": 'hover:bg-menu transition-linear hover:text-menu-transition ',
         "text-link": "shadow-[0_-0.05rem_0_var(--menu-hover-text)_inset] hover:shadow-[0_-1.3rem_0_var(--menu-hover-text)_inset] text-[var(--menu-hover-text)] hover:text-[var(--menu-hover-bg)] ",
         "toc-modal": "<lg:fixed <lg:bottom-0 <lg:w-full <lg:bg-[var(--ers-bg)] <lg:px-4",
