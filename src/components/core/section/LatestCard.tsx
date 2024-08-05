@@ -23,7 +23,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         <a class=":: text-base transition duration-200 ease-linear leading-tight text-link " href={blog.slug}>继续阅读 »</a>
                     </div>
                 </div>
-                <img width={352} height={304} class=":: lg:basis-1/2 lg:max-w-1/2 lg:h-80 h-82 block object-cover rounded !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
+                <img width={352} height={304} class=":: lg:basis-1/2 lg:max-w-1/2 lg:h-80 h-82 block w-auto object-cover rounded !mobile-width-beyond " src={blog.cover} alt={`${blog.title}-cover`} />
             </div>
         </>
     )
