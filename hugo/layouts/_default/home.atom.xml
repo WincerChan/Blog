@@ -6,11 +6,9 @@
     {{with site.Params.Subtitle}}<subtitle>{{htmlEscape site.Params.Subtitle }}</subtitle>{{end}}
     {{ with  site.Home.OutputFormats.Get "ATOM"}}<link href="{{.RelPermalink}}" rel="self"      type="{{ safeHTML .MediaType.Type }}" />{{end}}
     {{ with  site.Home.OutputFormats.Get "FEED"}}<link href="{{.RelPermalink}}" rel="alternate" type="{{ safeHTML .MediaType.Type }}" />{{end}}
-    <!-- {{ with  site.Home.OutputFormats.Get "JSON"}}<link href="{{.RelPermalink}}" rel="alternate" type="{{ safeHTML .MediaType.Type }}" />{{end}} -->
 
     <author>
-        <name>{{ site.Params.Author.name }}</name>
-        {{ with site.Params.Author.email }}<email>{{.}}</email>{{end}}
+        <name>{{ site.Params.author }}</name>
     </author>
     {{ with site.Params.Copyright }}<rights type="text">© {{ site.Params.CopyrightYear }} {{htmlEscape .}}</rights>{{end}}
     <generator uri="https://gohugo.io" version="{{hugo.Version}}">Hugo</generator>

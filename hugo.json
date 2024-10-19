@@ -1,9 +1,13 @@
 {
   "baseURL": "https://blog.itswincer.com",
   "title": "Wincer's Blog",
-  "author": {
-    "name": "Wincer",
-    "url": "https://itswincer.com"
+  "params": {
+    "author": "Wincer",
+    "sitemap": {
+      "changeFreq": "weekly",
+      "priority": 0.6,
+      "termPriority": 0.3
+    }
   },
   "avatar": "https://ae02.alicdn.com/kf/Aeadf9a8f9b1246a580924fc003e514c8E.jpg",
   "cdnURL": "https://cdn.blog.itswincer.net",
@@ -17,11 +21,6 @@
   "contentDir": "hugo/content",
   "layoutDir": "hugo/layouts",
   "assetDir": "hugo/assets",
-  "sitemap": {
-    "changeFreq": "weekly",
-    "priority": 0.6,
-    "termPriority": 0.3
-  },
   "markup": {
     "tableOfContents": {
       "endLevel": 5
