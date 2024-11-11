@@ -1,2 +1,2 @@
 {{- $lang := .Attributes.lang | default .Type -}}
-<Pre lang="{{ $lang }}"><code>{{ .Inner }}</code></Pre>
+<Pre lang="{{ $lang }}"><code>{{ .Inner | base64Encode }}</code></Pre>
