@@ -1,5 +1,5 @@
 html {
-    @apply scroll-smooth
+    @apply scroll-smooth;
 }
 
 pre {
@@ -8,7 +8,7 @@ pre {
 }
 
 .highlight {
-    @apply rounded max-w-screen relative
+    @apply rounded max-w-screen relative;
 }
 
 code::before {
@@ -34,10 +34,10 @@ header ul,
 }
 
 #TableOfContents ul ul {
-    @apply ml-2
+    @apply ml-2;
 }
 
-#TableOfContents>ul>li {
+#TableOfContents > ul > li {
     @apply pl-0;
 }
 
@@ -50,7 +50,7 @@ header ul,
 }
 
 .no-click li a {
-    @apply disable-hover
+    @apply disable-hover;
 }
 
 #TableOfContents li a.active {
@@ -67,8 +67,8 @@ header ul,
 
 /* section  */
 
-section>ul,
-section>ol {
+section > ul,
+section > ol {
     @apply pl-8 px-4 my-2;
 }
 
@@ -77,7 +77,7 @@ section li {
 }
 
 li li {
-    @apply ml-lg
+    @apply ml-lg;
 }
 
 section ol {
@@ -87,7 +87,6 @@ section ol {
 section ul {
     @apply list-disc;
 }
-
 
 section h2,
 section h3,
@@ -111,23 +110,22 @@ section hr {
     @apply mx-auto w-[50%] my-8 border-none h-2px bg-[--blockquote-border];
 }
 
-
 section blockquote {
     @apply border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4 !mobile-width-beyond;
 }
 
 blockquote p {
-    @apply py-3
+    @apply py-3;
 }
 
 section p a,
 section td a,
 section li a {
-    @apply transition relative duration-200 ease-linear text-link underline underline-1 underline-offset-3px hover:underline-[var(--menu-hover-text)]
+    @apply transition relative duration-200 ease-linear text-link hover:underline-[var(--menu-hover-text)];
 }
 
 .comment a {
-    @apply transition relative duration-200 ease-linear text-link underline-none
+    @apply transition relative duration-200 ease-linear text-link underline-none;
 }
 
 section table {
@@ -140,14 +138,14 @@ section li {
 }
 
 section p {
-    @apply my-4
+    @apply my-4;
 }
 
-section table tr>th {
+section table tr > th {
     @apply px-4 py-2;
 }
 
-section table tr>td {
+section table tr > td {
     @apply border px-4 py-2;
 }
 
@@ -156,7 +154,7 @@ section code {
 }
 
 section img {
-    @apply mx-auto
+    @apply mx-auto;
 }
 
 b {
@@ -168,11 +166,11 @@ b {
 }
 
 .katex-display {
-    @apply overflow-x-auto
+    @apply overflow-x-auto;
 }
 
 .like {
-    animation: like 0.5s ease-in-out
+    animation: like 0.5s ease-in-out;
 }
 
 @keyframes like {
