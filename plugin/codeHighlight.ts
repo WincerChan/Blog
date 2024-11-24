@@ -3,7 +3,7 @@ import hljs from "highlight.js";
 import { utf8ToBase64, base64ToUtf8 } from "../src/utils/base64";
 
 const renderHighlight = (content: string) => {
-    const $ = load(content, { xmlMode: true });
+    const $ = load(content, { xmlMode: true, decodeEntities: false });
     $("Pre").each((index, element) => {
         const lang = $(element).attr("lang");
         if (!lang) throw new Error("lang is not defined");
