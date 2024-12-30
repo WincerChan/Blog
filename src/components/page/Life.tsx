@@ -1,22 +1,30 @@
-import { ErrorBoundary, For, Show, Suspense, createMemo, createResource, createSignal, onMount } from "solid-js";
+import {
+    ErrorBoundary,
+    For,
+    Show,
+    Suspense,
+    createMemo,
+    createResource,
+    createSignal,
+    onMount,
+} from "solid-js";
 import LazyImg from "~/components/lazy/Img";
 import { fetcher } from "~/utils";
 import { range } from "~/utils/index";
 import PostLayout from "../layouts/PostLayout";
 
-
 type WishingItemType = {
-    date: string,
-    id: number,
-    poster: string,
-    title: string,
-    type: string,
-}
+    date: string;
+    id: number;
+    poster: string;
+    title: string;
+    type: string;
+};
 
 const FakeItems = ({ limit }: { limit: number }) => {
     return (
         <For each={range(limit)}>
-            {x => (
+            {(x) => (
                 <div class=":: rounded pb-6 ">
                     <figure class=":: text-center text-sm rounded ">
                         <div class=":: mx-auto xl:h-52 h-24 animate-pulse bg-[var(--blockquote-border)] "></div>
@@ -25,57 +33,77 @@ const FakeItems = ({ limit }: { limit: number }) => {
                 </div>
             )}
         </For>
-    )
-}
+    );
+};
 
 type Item = {
-    date: string,
-    id: number,
-    poster: string,
-    title: string,
-    type: string
-}
+    date: string;
+    id: number;
+    poster: string;
+    title: string;
+    type: string;
+};
+
+const action = (type: string) => {
+    if (type == "movie") return "看过";
+    if (type == "music") return "听过";
+    if (type == "game") return "玩过";
+    if (type == "book") return "读过";
+};
+
+const getURL = (type: string, id: number) => {
+    if (type == "game") return `https://www.douban.com/game/${id}`;
+    return `https://${type}.douban.com/subject/${id}`;
+};
 
 const RealItem = ({ poster, id, title, type, date }: Item) => {
     return (
         <div class=":: rounded pb-6 ">
             <figure class=":: text-center text-sm rounded ">
-                <a href={`https://${type}.douban.com/subject/${id}`} target="_blank">
-                    <LazyImg class=":: mx-auto rounded " src={poster} title={`${date} ${type == 'movie' ? '看过' : '读过'}`} />
+                <a href={getURL(type, id)} target="_blank">
+                    <LazyImg
+                        class=":: mx-auto rounded "
+                        src={poster}
+                        title={`${date} ${action(type)}`}
+                    />
                 </a>
                 <span class=":: block truncate p-1px ">{title}</span>
             </figure>
         </div>
-    )
-}
-
+    );
+};
 
 const Life = ({ page, children }) => {
-    const [url, setUrl] = createSignal()
-    const year = createMemo(() => new Date().getFullYear())
+    const [url, setUrl] = createSignal();
+    const year = createMemo(() => new Date().getFullYear());
     onMount(() => {
-        setUrl('https://blog-exts.itswincer.com/api/doubans');
-    })
-    const [resource] = createResource(url, fetcher)
-    const { content, ...rest } = page
+        setUrl("https://blog-exts.itswincer.com/api/doubans");
+    });
+    const [resource] = createResource(url, fetcher);
+    const { content, ...rest } = page;
     return (
         <PostLayout rawBlog={rest}>
             {children}
-            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">我看过的书和电影（{year()}）</h3>
+            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">
+                文字、光影与沉浸的梦（{year()}）
+            </h3>
             <div class=" md:grid-cols-5 grid grid-cols-4 gap-4 ">
                 <Suspense fallback={<FakeItems limit={5} />}>
-                    <ErrorBoundary fallback={err => <b class=":: col-span-5  ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>}>
+                    <ErrorBoundary
+                        fallback={(err) => (
+                            <b class=":: col-span-5  ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>
+                        )}
+                    >
                         <Show when={resource()}>
                             <For each={resource().data}>
-                                {item => <RealItem {...item} />}
+                                {(item) => <RealItem {...item} />}
                             </For>
                         </Show>
                     </ErrorBoundary>
                 </Suspense>
             </div>
         </PostLayout>
-    )
-}
+    );
+};
 
 export default Life;
-
