@@ -1,19 +1,26 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
 
 const Archives = () => {
-    const { LL } = useI18nContext()
+    const { LL } = useI18nContext();
     return (
         <div class="">
-            <label class=":: text-[15px]  font-headline text-[var(--subtitle)]">{LL && LL().footer.A()}</label>
-            <div class=":: mb-6 md:w-48 text-[var(--extra)] md:grid grid-rows-4 grid-flow-col gap-x-4 ">
-                {Object.entries(__POSTS_BY_YEAR).reverse().map(val => (
-                    <a class=":: hover:text-menu-transition block " href={`/archives/?year=${val[0]}`}>
-                        <p>{val[0]}（{val[1]}）</p>
-                    </a>
-                ))}
+            <label class=":: text-[15px]  font-headline text-[var(--subtitle)]">
+                {LL && LL().footer.A()}
+            </label>
+            <div class=":: mb-6 md:w-48 text-[var(--extra)] md:grid grid-flow-row grid-cols-2 gap-x-4 ">
+                {Object.entries(__POSTS_BY_YEAR)
+                    .reverse()
+                    .map((val) => (
+                        <a
+                            class=":: hover:text-menu-transition block "
+                            href={`/archives/?year=${val[0]}`}
+                        >
+                            {val[0]}（{val[1]}）
+                        </a>
+                    ))}
             </div>
-        </div >
-    )
-}
+        </div>
+    );
+};
 
 export default Archives;
