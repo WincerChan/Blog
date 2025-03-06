@@ -1,51 +1,48 @@
 {
-  "name": "example-basic",
-  "type": "module",
-  "scripts": {
-    "dev:hugo": "hugo --noBuildLock --buildFuture",
-    "dev:copy": "cp \\(hugo\\)/*.xml public/; cp -r \\(hugo\\) src/routes; rm -r src/routes/\\(hugo\\)/tags",
-    "dev": "pnpm dev:hugo;pnpm dev:copy;vinxi dev",
-    "build": "vinxi build --preset static",
-    "start": "npx serve .output/public",
-    "version": "vinxi version",
-    "clean": "rm -rf \\(hugo\\) node_modules/.vinxi src/routes/\\(hugo\\) .output",
-    "i18n": "typesafe-i18n"
-  },
-  "dependencies": {
-    "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.14.1",
-    "@solidjs/start": "^1.0.6",
-    "@types/nprogress": "^0.2.3",
-    "plausible-tracker": "^0.3.9",
-    "solid-js": "^1.8.17",
-    "typesafe-i18n": "^5.26.2",
-    "vinxi": "^0.4.1"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "devDependencies": {
-    "@iconify-json/carbon": "^1.1.21",
-    "@iconify-json/tabler": "^1.1.96",
-    "@unocss/reset": "^0.61.5",
-    "cheerio": "1.0.0",
-    "crypto-js": "^4.2.0",
-    "giscus": "^1.5.0",
-    "he": "^1.2.0",
-    "highlight.js": "^11.9.0",
-    "katex": "^0.16.11",
-    "nprogress": "^0.2.0",
-    "qrcode": "^1.5.3",
-    "unocss": "^0.61.5",
-    "unplugin-icons": "^0.19.0",
-    "vite": "^5.3.4",
-    "workbox-core": "^7.1.0",
-    "workbox-routing": "^7.1.0"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "@solidjs/start@1.0.6": "patches/@solidjs__start@1.0.6.patch",
-      "vinxi@0.4.1": "patches/vinxi@0.4.1.patch"
+    "name": "example-basic",
+    "type": "module",
+    "scripts": {
+        "dev:hugo": "hugo --noBuildLock --buildFuture",
+        "dev:copy": "cp \\(hugo\\)/*.xml public/; cp -r \\(hugo\\) src/routes; rm -r src/routes/\\(hugo\\)/tags",
+        "dev": "pnpm dev:hugo;pnpm dev:copy;vinxi dev",
+        "build": "vinxi build --preset static",
+        "start": "npx serve .output/public",
+        "version": "vinxi version",
+        "clean": "rm -rf \\(hugo\\) node_modules/.vinxi src/routes/\\(hugo\\) .output",
+        "i18n": "typesafe-i18n"
+    },
+    "dependencies": {
+        "@solidjs/meta": "^0.29.4",
+        "@solidjs/router": "^0.15.3",
+        "@solidjs/start": "^1.1.3",
+        "@types/nprogress": "^0.2.3",
+        "plausible-tracker": "^0.3.9",
+        "solid-js": "^1.9.5",
+        "typesafe-i18n": "^5.26.2",
+        "vinxi": "^0.5.3"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "devDependencies": {
+        "@iconify-json/carbon": "^1.2.8",
+        "@iconify-json/tabler": "^1.2.17",
+        "@unocss/reset": "^66.0.0",
+        "cheerio": "1.0.0",
+        "crypto-js": "^4.2.0",
+        "giscus": "^1.6.0",
+        "he": "^1.2.0",
+        "highlight.js": "^11.11.1",
+        "katex": "^0.16.21",
+        "nprogress": "^0.2.0",
+        "qrcode": "^1.5.4",
+        "unocss": "^66.0.0",
+        "unplugin-icons": "^0.19.3",
+        "vite": "^6.2.0",
+        "workbox-core": "^7.3.0",
+        "workbox-routing": "^7.3.0"
+    },
+    "pnpm": {
+        "patchedDependencies": {}
     }
-  }
 }
