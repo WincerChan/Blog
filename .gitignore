@@ -37,3 +37,4 @@ public/posts
 public/category
 public/tags
 public/manifest.*
+public/sw.js
