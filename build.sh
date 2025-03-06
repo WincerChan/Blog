@@ -1,15 +1,15 @@
 #!/bin/bash
 YELLOW='\033[0;33m'
 RESET='\033[0m'
-pnpm clean
 export LANG=en_US.UTF-8
 set -e
 if ! command -v pnpm >/dev/null 2>&1; then
     echo -e "${YELLOW}Installing pnpm...${RESET}"
     npm install -g pnpm
 fi
+pnpm clean
 echo -e "${YELLOW}Installing dependencies...${RESET}"
-pnpm i
+pnpm install --no-frozen-lockfile
 if [ ! -d "_blogs" ]; then
     echo -e "${YELLOW}Cloning Blogs...${RESET}"
     git clone -b new_blog https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
