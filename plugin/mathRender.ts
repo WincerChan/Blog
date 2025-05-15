@@ -6,11 +6,11 @@ import { utf8ToBase64 } from "../src/utils/base64";
 
 const renderMath = (content: string) => {
     const mathPattern = /\$\$([\s\S]+?)\$\$/g;
-    let result = content.replace(mathPattern, (match, formula) => {
+    let result = he.decode(content).replace(mathPattern, (match, formula) => {
         try {
             const renderResult = katex.renderToString(he.decode(formula), {
                 output: "html",
-                displayMode: true,
+                displayMode: formula.trim().startsWith("\\begin"),
             });
             let $ = load(renderResult);
             $("annotation").remove();

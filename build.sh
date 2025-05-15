@@ -5,7 +5,7 @@ export LANG=en_US.UTF-8
 set -e
 if ! command -v pnpm >/dev/null 2>&1; then
     echo -e "${YELLOW}Installing pnpm...${RESET}"
-    npm install -g pnpm
+    npm install -g pnpm@9.12.2
 fi
 pnpm clean
 echo -e "${YELLOW}Installing dependencies...${RESET}"

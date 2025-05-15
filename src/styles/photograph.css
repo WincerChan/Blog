@@ -2,6 +2,10 @@ html {
     @apply scroll-smooth;
 }
 
+body {
+    @apply font-base antialiased bg-main text-main md:grid md:min-h-screen grid-rows-[auto_1fr_auto];
+}
+
 pre {
     @apply rounded overflow-x-auto;
     scrollbar-width: none;
