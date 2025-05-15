@@ -1,0 +1,74 @@
+diff --git a/config/fs-router.js b/config/fs-router.js
+index b4eb0e682fc04ece091b44ab9caae45a522169d0..450a3eab29c2726e755a1042076cd370ff727f97 100644
+--- a/config/fs-router.js
++++ b/config/fs-router.js
+@@ -31,7 +31,6 @@ export class SolidStartClientFileRouter extends BaseFileSystemRouter {
+         },
+         $$route: undefined,
+         path,
+-        filePath: src
+       };
+     }
+ 
+@@ -52,7 +51,6 @@ export class SolidStartClientFileRouter extends BaseFileSystemRouter {
+             }
+           : undefined,
+         path,
+-        filePath: src
+       };
+     }
+   }
+@@ -109,7 +107,6 @@ export class SolidStartServerFileRouter extends BaseFileSystemRouter {
+         },
+         $$route: undefined,
+         path,
+-        filePath: src
+       };
+     }
+ 
+@@ -135,7 +132,6 @@ export class SolidStartServerFileRouter extends BaseFileSystemRouter {
+           : undefined,
+         ...createHTTPHandlers(src, exports),
+         path,
+-        filePath: src
+       };
+     }
+   }
+diff --git a/dist/router/lazyRoute.js b/dist/router/lazyRoute.js
+index 463636a16572208dfbd801e758dc45c0657ddccc..a0a2daa85fb136e1aafb273c350ba2e881678fff 100644
+--- a/dist/router/lazyRoute.js
++++ b/dist/router/lazyRoute.js
+@@ -39,8 +39,9 @@ export default function lazyRoute(component, clientManifest, serverManifest, exp
+         else {
+             const mod = await component.import();
+             const Component = mod[exported];
+-            let assets = await clientManifest.inputs?.[component.src].assets();
+-            const styles = assets.filter((asset) => asset.tag === "style" || asset.attrs.rel === "stylesheet");
++            // let assets = await clientManifest.inputs?.[component.src].assets();
++            // const styles = assets.filter((asset) => asset.tag === "style" || asset.attrs.rel === "stylesheet");
++            const styles = []
+             if (typeof window !== "undefined") {
+                 preloadStyles(styles);
+             }
+diff --git a/dist/server/StartServer.jsx b/dist/server/StartServer.jsx
+index 0c6a9fe3121a88520db252570a8b5997a36e0452..0c171425f90a4bc71315b5cdba18fbb78d0f6eac 100644
+--- a/dist/server/StartServer.jsx
++++ b/dist/server/StartServer.jsx
+@@ -52,7 +52,7 @@ export function StartServer(props) {
+             else if (import.meta.env.DEV)
+                 console.warn("No route matched for preloading js assets");
+         }
+-        assets = await Promise.all(assetPromises).then(a => 
++        assets = await Promise.all(assetPromises).then(a =>
+         // dedupe assets
+         [...new Map(a.flat().map(item => [item.attrs.key, item])).values()].filter(asset => import.meta.env.START_ISLANDS
+             ? false
+@@ -70,7 +70,7 @@ export function StartServer(props) {
+                 <script nonce={nonce} innerHTML={`window.manifest = ${JSON.stringify(context.manifest)}`}/>
+                 <script type="module" nonce={nonce} async src={import.meta.env.MANIFEST["client"].inputs[import.meta.env.MANIFEST["client"].handler].output.path}/>
+               </>) : (<>
+-                <script innerHTML={`window.manifest = ${JSON.stringify(context.manifest)}`}/>
++                <script innerHTML={`window.manifest = {}`}/>
+                 <script type="module" async src={import.meta.env.MANIFEST["client"].inputs[import.meta.env.MANIFEST["client"].handler].output.path}/>
+               </>)}>
+           {!import.meta.env.START_ISLANDS ? (<Hydration>
