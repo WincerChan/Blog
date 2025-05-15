@@ -8,9 +8,9 @@ patchedDependencies:
   '@solidjs/start@1.0.6':
     hash: 4jx6vrsfq3wbiuuawrssa45zai
     path: patches/@solidjs__start@1.0.6.patch
-  vinxi@0.4.1:
-    hash: kaczsksxpfrbsex2yqumxr2fxi
-    path: patches/vinxi@0.4.1.patch
+  vinxi:
+    hash: bbnaxjvrdy7iemcik5y4ksi4gi
+    path: patches/vinxi.patch
 
 importers:
 
@@ -24,7 +24,7 @@ importers:
         version: 0.14.1(solid-js@1.8.17)
       '@solidjs/start':
         specifier: ^1.0.6
-        version: 1.0.6(patch_hash=4jx6vrsfq3wbiuuawrssa45zai)(rollup@4.19.0)(solid-js@1.8.17)(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))(vite@5.3.4(@types/node@20.14.11)(terser@5.31.3))
+        version: 1.0.6(patch_hash=4jx6vrsfq3wbiuuawrssa45zai)(rollup@4.19.0)(solid-js@1.8.17)(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))(vite@5.3.4(@types/node@20.14.11)(terser@5.31.3))
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
@@ -38,8 +38,8 @@ importers:
         specifier: ^5.26.2
         version: 5.26.2(typescript@5.5.3)
       vinxi:
-        specifier: ^0.4.1
-        version: 0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
+        specifier: ^0.4.3
+        version: 0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
     devDependencies:
       '@iconify-json/carbon':
         specifier: ^1.1.21
@@ -2978,8 +2978,8 @@ packages:
   validate-html-nesting@1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
 
-  vinxi@0.4.1:
-    resolution: {integrity: sha512-WGEYqIuJ2/P3sBoSVKsGvp/UKpW4wVSaAFdA18gthyMCEExN6nVteoA+Rv1wQFLKXTVL9JRpeGJjcLzcRRgGCA==}
+  vinxi@0.4.3:
+    resolution: {integrity: sha512-RgJz7RWftML5h/qfPsp3QKVc2FSlvV4+HevpE0yEY2j+PS/I2ULjoSsZDXaR8Ks2WYuFFDzQr8yrox7v8aqkng==}
     hasBin: true
 
   vite-plugin-inspect@0.7.42:
@@ -3976,11 +3976,11 @@ snapshots:
     dependencies:
       solid-js: 1.8.17
 
-  '@solidjs/start@1.0.6(patch_hash=4jx6vrsfq3wbiuuawrssa45zai)(rollup@4.19.0)(solid-js@1.8.17)(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))(vite@5.3.4(@types/node@20.14.11)(terser@5.31.3))':
+  '@solidjs/start@1.0.6(patch_hash=4jx6vrsfq3wbiuuawrssa45zai)(rollup@4.19.0)(solid-js@1.8.17)(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))(vite@5.3.4(@types/node@20.14.11)(terser@5.31.3))':
     dependencies:
-      '@vinxi/plugin-directives': 0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
-      '@vinxi/server-components': 0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
-      '@vinxi/server-functions': 0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
+      '@vinxi/plugin-directives': 0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
+      '@vinxi/server-components': 0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
+      '@vinxi/server-functions': 0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
       defu: 6.1.4
       error-stack-parser: 2.1.4
       glob: 10.4.2
@@ -4238,7 +4238,7 @@ snapshots:
     transitivePeerDependencies:
       - uWebSockets.js
 
-  '@vinxi/plugin-directives@0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))':
+  '@vinxi/plugin-directives@0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))':
     dependencies:
       '@babel/parser': 7.24.8
       acorn: 8.12.1
@@ -4249,29 +4249,29 @@ snapshots:
       magicast: 0.2.11
       recast: 0.23.9
       tslib: 2.6.3
-      vinxi: 0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
+      vinxi: 0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
 
-  '@vinxi/server-components@0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))':
+  '@vinxi/server-components@0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))':
     dependencies:
-      '@vinxi/plugin-directives': 0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
+      '@vinxi/plugin-directives': 0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
       acorn: 8.12.1
       acorn-loose: 8.4.0
       acorn-typescript: 1.4.13(acorn@8.12.1)
       astring: 1.8.6
       magicast: 0.2.11
       recast: 0.23.9
-      vinxi: 0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
+      vinxi: 0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
 
-  '@vinxi/server-functions@0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))':
+  '@vinxi/server-functions@0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))':
     dependencies:
-      '@vinxi/plugin-directives': 0.4.1(vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
+      '@vinxi/plugin-directives': 0.4.1(vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3))
       acorn: 8.12.1
       acorn-loose: 8.4.0
       acorn-typescript: 1.4.13(acorn@8.12.1)
       astring: 1.8.6
       magicast: 0.2.11
       recast: 0.23.9
-      vinxi: 0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
+      vinxi: 0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3)
 
   abbrev@1.1.1: {}
 
@@ -6194,7 +6194,7 @@ snapshots:
 
   validate-html-nesting@1.2.2: {}
 
-  vinxi@0.4.1(patch_hash=kaczsksxpfrbsex2yqumxr2fxi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3):
+  vinxi@0.4.3(patch_hash=bbnaxjvrdy7iemcik5y4ksi4gi)(@types/node@20.14.11)(ioredis@5.4.1)(terser@5.31.3):
     dependencies:
       '@babel/core': 7.24.9
       '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.24.9)

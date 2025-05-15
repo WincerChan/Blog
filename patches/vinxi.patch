@@ -1,0 +1,24 @@
+diff --git a/lib/plugins/routes.js b/lib/plugins/routes.js
+index 2b08cd1da51fd6675a383759641fa33b7aa0fdf5..190f33c126b36a60920fe56375d0b4cfd2aa763c 100644
+--- a/lib/plugins/routes.js
++++ b/lib/plugins/routes.js
+@@ -77,18 +77,7 @@ export function routes() {
+ 							.join("&")}`;
+ 						return {
+ 							src: isBuild ? relative(root, buildId) : buildId,
+-							build: isBuild
+-								? `_$() => import(/* @vite-ignore */ '${buildId}')$_`
+-								: undefined,
+-							import:
+-								router.target === "server"
+-									? `_$() => import(/* @vite-ignore */ '${buildId}')$_`
+-									: `_$(() => { const id = '${relative(
+-											root,
+-											buildId,
+-									  )}'; return import(/* @vite-ignore */ import.meta.env.MANIFEST['${
+-											router.name
+-									  }'].inputs[id].output.path) })$_`,
++							import: `_$() => import(/* @vite-ignore */ '${buildId}')$_`
+ 						};
+ 					}
+ 					return v;

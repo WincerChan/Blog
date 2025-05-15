@@ -19,7 +19,7 @@
     "plausible-tracker": "^0.3.9",
     "solid-js": "^1.8.17",
     "typesafe-i18n": "^5.26.2",
-    "vinxi": "^0.4.1"
+    "vinxi": "^0.4.3"
   },
   "engines": {
     "node": ">=18"
@@ -45,7 +45,7 @@
   "pnpm": {
     "patchedDependencies": {
       "@solidjs/start@1.0.6": "patches/@solidjs__start@1.0.6.patch",
-      "vinxi@0.4.1": "patches/vinxi@0.4.1.patch"
+      "vinxi": "patches/vinxi.patch"
     }
   }
 }
