@@ -1,12 +1,11 @@
 #!/bin/bash
 YELLOW='\033[0;33m'
 RESET='\033[0m'
-pnpm clean
 export LANG=en_US.UTF-8
 set -e
 if ! command -v pnpm >/dev/null 2>&1; then
     echo -e "${YELLOW}Installing pnpm...${RESET}"
-    npm install -g pnpm
+    npm install -g pnpm@9.12.2
 fi
 echo -e "${YELLOW}Installing dependencies...${RESET}"
 pnpm i
