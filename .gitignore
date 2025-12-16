@@ -6,6 +6,9 @@ dist
 .netlify
 .vinxi
 
+# Velite
+.velite
+
 # Environment
 .env
 .env*.local
