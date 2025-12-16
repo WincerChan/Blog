@@ -1,9 +1,9 @@
-import Friends from "~/components/page/Friends";
+import Archives from "~/components/page/Archives";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const FriendsPage = () => {
-    const page = getPageBySlug("friends");
+const ArchivesPage = () => {
+    const page = getPageBySlug("archives-en");
     if (!page) return <NotFound />;
     const pageProps: any = {
         slug: pageUrl(page.slug),
@@ -20,12 +20,7 @@ const FriendsPage = () => {
         lang: page.lang,
         isTranslation: page.isTranslation,
     };
-    return (
-        <Friends page={pageProps}>
-            <section innerHTML={page.html ?? ""} />
-        </Friends>
-    );
+    return <Archives page={pageProps} />;
 };
 
-export default FriendsPage;
-
+export default ArchivesPage;

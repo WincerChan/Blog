@@ -1,11 +1,11 @@
-import PostLayout from "~/components/layouts/PostLayout";
+import Life from "~/components/page/Life";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const About = () => {
-    const page = getPageBySlug("about-en");
+const LifePage = () => {
+    const page = getPageBySlug("life");
     if (!page) return <NotFound />;
-    const rawBlog: any = {
+    const pageProps: any = {
         slug: pageUrl(page.slug),
         title: page.title,
         date: page.date,
@@ -19,13 +19,13 @@ const About = () => {
         neighbours: {},
         lang: page.lang,
         isTranslation: page.isTranslation,
+        content: page.html ?? "",
     };
     return (
-        <PostLayout rawBlog={rawBlog} relates={[]}>
+        <Life page={pageProps}>
             <section innerHTML={page.html ?? ""} />
-        </PostLayout>
+        </Life>
     );
 };
 
-export default About;
-
+export default LifePage;

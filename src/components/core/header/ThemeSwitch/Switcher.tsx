@@ -35,7 +35,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
         // 如果跟随系统，就需要先获取系统属于哪种模式
         // 要把系统的真实模式放在 theme 保存
         let systemMode = key;
-        if (key === "")
+        if (key === "auto")
             systemMode = window.mt();
         setGlobalStore({ theme: systemMode })
         localStorage.setItem("customer-theme", key)
@@ -73,7 +73,6 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 const ToggleButton = () => {
     const [show, setShow] = createSignal(false);
     const toggleShow = (e: MouseEvent) => {
-        e.preventDefault()
         const curr = show()
         setShow(!curr)
         if (!curr) document.addEventListener("click", handleClickOutside)
@@ -89,6 +88,7 @@ const ToggleButton = () => {
     return (
         <li ref={self!} class=":: hover:bg-menu transition-linear relative">
             <button onClick={(e) => {
+                e.preventDefault()
                 toggleShow(e);
                 globalStore.trackEvent("Menu CTR", { props: { type: "theme" } })
             }} title="Switch Theme" class={`:: menu-hover-transition h-full px-3 sm:px[14px] lg:px-6 flex items-center ${show() ? 'bg-menu text-menu-transition' : ''}`}>

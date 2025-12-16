@@ -14,7 +14,7 @@ import {
 import { Locale } from "./utils/locale";
 
 import Plausible from "plausible-tracker";
-import { isServer } from "solid-js/web";
+import { getRequestEvent, isServer } from "solid-js/web";
 import { loadLocale } from "./i18n/i18n-util.sync";
 let PlausibleTracker =
     "default" in Plausible ? Plausible["default"] : Plausible;
@@ -22,6 +22,16 @@ const { trackPageview, trackEvent } = PlausibleTracker({
     domain: "blog.itswincer.com",
     apiHost: "https://track.itswincer.com",
 });
+
+const normalizePath = (pathname: string) =>
+    pathname.endsWith("/") ? pathname : `${pathname}/`;
+
+const detectLocaleFromPath = (pathname: string): Locale => {
+    const p = normalizePath(pathname);
+    if (p.endsWith("-en/")) return "en";
+    if ((__EN_POSTS as unknown as string[]).includes(p)) return "en";
+    return "zh-CN";
+};
 
 const preloadHook = (props: RouteSectionProps<unknown>) => {
     return (
@@ -34,8 +44,10 @@ const preloadHook = (props: RouteSectionProps<unknown>) => {
 export default function App() {
     let locale: Locale = "zh-CN";
     if (isServer) {
-        globalThis.renderCount ??= 0;
-        if (++globalThis.renderCount < __EN_POSTS.length) locale = "en";
+        const evt = getRequestEvent();
+        const url = evt?.request?.url;
+        const pathname = url ? new URL(url).pathname : "/";
+        locale = detectLocaleFromPath(pathname);
         setGlobalStore({ locale: locale });
         loadLocale(locale);
     }

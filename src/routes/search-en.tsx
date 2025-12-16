@@ -1,9 +1,9 @@
-import Archives from "~/components/page/Archives";
+import Search from "~/components/page/Search";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const ArchivesPage = () => {
-    const page = getPageBySlug("archives-en");
+const SearchPage = () => {
+    const page = getPageBySlug("search-en");
     if (!page) return <NotFound />;
     const pageProps: any = {
         slug: pageUrl(page.slug),
@@ -20,8 +20,11 @@ const ArchivesPage = () => {
         lang: page.lang,
         isTranslation: page.isTranslation,
     };
-    return <Archives page={pageProps} />;
+    return (
+        <Search page={pageProps}>
+            <section innerHTML={page.html ?? ""} />
+        </Search>
+    );
 };
 
-export default ArchivesPage;
-
+export default SearchPage;

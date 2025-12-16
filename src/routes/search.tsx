@@ -1,9 +1,9 @@
-import Friends from "~/components/page/Friends";
+import Search from "~/components/page/Search";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const FriendsPage = () => {
-    const page = getPageBySlug("friends-en");
+const SearchPage = () => {
+    const page = getPageBySlug("search");
     if (!page) return <NotFound />;
     const pageProps: any = {
         slug: pageUrl(page.slug),
@@ -21,11 +21,10 @@ const FriendsPage = () => {
         isTranslation: page.isTranslation,
     };
     return (
-        <Friends page={pageProps}>
+        <Search page={pageProps}>
             <section innerHTML={page.html ?? ""} />
-        </Friends>
+        </Search>
     );
 };
 
-export default FriendsPage;
-
+export default SearchPage;

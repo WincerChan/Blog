@@ -1,11 +1,11 @@
-import PostLayout from "~/components/layouts/PostLayout";
+import Archives from "~/components/page/Archives";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const About = () => {
-    const page = getPageBySlug("about");
+const ArchivesPage = () => {
+    const page = getPageBySlug("archives");
     if (!page) return <NotFound />;
-    const rawBlog: any = {
+    const pageProps: any = {
         slug: pageUrl(page.slug),
         title: page.title,
         date: page.date,
@@ -20,12 +20,7 @@ const About = () => {
         lang: page.lang,
         isTranslation: page.isTranslation,
     };
-    return (
-        <PostLayout rawBlog={rawBlog} relates={[]}>
-            <section innerHTML={page.html ?? ""} />
-        </PostLayout>
-    );
+    return <Archives page={pageProps} />;
 };
 
-export default About;
-
+export default ArchivesPage;

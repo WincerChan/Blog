@@ -1,10 +1,10 @@
-import { useBeforeLeave, useIsRouting } from "@solidjs/router"
+import { useBeforeLeave } from "@solidjs/router"
 import nProgress from "nprogress"
-import { createEffect, createMemo, JSXElement, onMount } from "solid-js"
+import { createEffect, JSXElement, onMount } from "solid-js"
 import { useI18nContext } from "~/i18n/i18n-solid"
 import { loadLocaleAsync } from "~/i18n/i18n-util.async"
 import { Locale } from "~/utils/locale"
-import { globalStore } from "../core/header/ThemeSwitch/Provider"
+import { globalStore, setGlobalStore } from "../core/header/ThemeSwitch/Provider"
 
 interface MainProps {
     children: JSXElement,
@@ -36,17 +36,12 @@ const trackHook = () => {
 
 const localeHook = (lang?: Locale) => {
     lang = lang || 'zh-CN'
-    const isRouting = useIsRouting()
     const { setLocale } = useI18nContext()
 
     createEffect(() => {
         document.documentElement.lang = lang
-    })
-    createMemo(() => {
-        if (isRouting()) {
-            loadLocaleAsync(lang).then(() => setLocale(lang))
-            globalThis.loadedLocale = true
-        }
+        if (globalStore.locale !== lang) setGlobalStore({ locale: lang })
+        loadLocaleAsync(lang).then(() => setLocale(lang))
     })
 }
 

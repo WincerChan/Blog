@@ -1,11 +1,11 @@
-import Search from "~/components/page/Search";
+import PostLayout from "~/components/layouts/PostLayout";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const SearchPage = () => {
-    const page = getPageBySlug("search");
+const About = () => {
+    const page = getPageBySlug("about-en");
     if (!page) return <NotFound />;
-    const pageProps: any = {
+    const rawBlog: any = {
         slug: pageUrl(page.slug),
         title: page.title,
         date: page.date,
@@ -21,11 +21,10 @@ const SearchPage = () => {
         isTranslation: page.isTranslation,
     };
     return (
-        <Search page={pageProps}>
+        <PostLayout rawBlog={rawBlog} relates={[]}>
             <section innerHTML={page.html ?? ""} />
-        </Search>
+        </PostLayout>
     );
 };
 
-export default SearchPage;
-
+export default About;

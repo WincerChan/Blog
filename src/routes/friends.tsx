@@ -1,9 +1,9 @@
-import Life from "~/components/page/Life";
+import Friends from "~/components/page/Friends";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
-const LifePage = () => {
-    const page = getPageBySlug("life");
+const FriendsPage = () => {
+    const page = getPageBySlug("friends");
     if (!page) return <NotFound />;
     const pageProps: any = {
         slug: pageUrl(page.slug),
@@ -19,14 +19,12 @@ const LifePage = () => {
         neighbours: {},
         lang: page.lang,
         isTranslation: page.isTranslation,
-        content: page.html ?? "",
     };
     return (
-        <Life page={pageProps}>
+        <Friends page={pageProps}>
             <section innerHTML={page.html ?? ""} />
-        </Life>
+        </Friends>
     );
 };
 
-export default LifePage;
-
+export default FriendsPage;
