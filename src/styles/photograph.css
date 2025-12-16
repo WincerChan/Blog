@@ -7,7 +7,7 @@ body {
 }
 
 pre {
-    @apply rounded overflow-x-auto;
+    @apply rounded overflow-x-auto relative;
     scrollbar-width: none;
 }
 
@@ -153,8 +153,12 @@ section table tr > td {
     @apply border px-4 py-2;
 }
 
-section code {
+section :not(pre) > code {
     @apply bg-[var(--copyright-bg)] px-1 pb-2px rounded font-mono mx-1;
+}
+
+section pre > code {
+    @apply block;
 }
 
 section img {

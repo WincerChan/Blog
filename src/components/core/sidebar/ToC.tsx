@@ -27,8 +27,13 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         const currScrollTop = (event.target as Document).documentElement.scrollTop
         if (currScrollTop < 64 && !isScrolling()) {
             setActiveId('')
+            return
         }
-        if (currScrollTop == document.getElementById(activeId())?.offsetTop) {
+        const id = activeId()
+        if (!id) return
+        const heading = document.getElementById(id)
+        if (!heading) return
+        if (currScrollTop == heading.offsetTop) {
             clearTimeout(cancelHoverFunc)
             clearTimeout(cancelScrollFunc)
             setIsScrolling(false)
@@ -39,8 +44,11 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         if (!hash()) return
 
         const id = decodeURI(hash().slice(1))
+        if (!id) return
         setActiveId(id)
-        document.documentElement.scrollTop = document.getElementById(id)?.offsetTop!
+        const heading = document.getElementById(id)
+        if (!heading) return
+        document.documentElement.scrollTop = heading.offsetTop
     })
 
     createEffect(() => {
@@ -105,11 +113,14 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
 
     const handleClick = (id: string) => {
-        if (document.documentElement.scrollTop == document.getElementById(id)?.offsetTop!) return
+        if (!id) return
+        const heading = document.getElementById(id)
+        if (!heading) return
+        if (document.documentElement.scrollTop == heading.offsetTop) return
         setIsScrolling(true)
         cancelScrollFunc = setTimeout(() => setIsScrolling(false), 1000)
         setActiveId(id)
-        document.documentElement.scrollTop = document.getElementById(id)?.offsetTop!
+        document.documentElement.scrollTop = heading.offsetTop
     }
 
 
