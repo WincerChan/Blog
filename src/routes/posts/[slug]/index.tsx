@@ -10,40 +10,38 @@ export default function PostRoute() {
     const post = createMemo(() => getPostBySlug(params.slug));
 
     return (
-        <Show when={post()} fallback={<NotFound />}>
+        <Show keyed when={post()} fallback={<NotFound />}>
             {(p) => {
-                const html = p().html ?? "";
-                const content = p().encrypt_pwd ? maybeEncryptHtml(p(), html) : html;
-                const neighbours = getPostNeighbours(p().slug);
-                const relates = findRelatedPosts(p());
+                const html = p.html ?? "";
+                const content = p.encrypt_pwd ? maybeEncryptHtml(p, html) : html;
+                const neighbours = getPostNeighbours(p.slug);
+                const relates = findRelatedPosts(p);
 
                 const rawBlog: any = {
-                    slug: postUrl(p().slug),
-                    title: p().title,
-                    subtitle: p().subtitle,
-                    date: p().date,
-                    updated: p().updated ?? p().date,
-                    cover: p().cover ?? "",
-                    tags: p().tags ?? [],
-                    category: p().category ?? "",
-                    summary: p().summary,
-                    words: p().words ?? 0,
-                    toc: p().toc ?? "",
+                    slug: postUrl(p.slug),
+                    title: p.title,
+                    subtitle: p.subtitle,
+                    date: p.date,
+                    updated: p.updated ?? p.date,
+                    cover: p.cover ?? "",
+                    tags: p.tags ?? [],
+                    category: p.category ?? "",
+                    summary: p.summary,
+                    words: p.words ?? 0,
+                    toc: p.toc ?? "",
                     neighbours,
                 };
-                if (p().encrypt_pwd) rawBlog.password = p().encrypt_pwd;
-                if (p().mathrender) rawBlog.mathrender = true;
-                if (p().lang) rawBlog.lang = p().lang;
-                if (p().isTranslation !== undefined)
-                    rawBlog.isTranslation = p().isTranslation;
+                if (p.encrypt_pwd) rawBlog.password = p.encrypt_pwd;
+                if (p.mathrender) rawBlog.mathrender = true;
+                if (p.lang) rawBlog.lang = p.lang;
+                if (p.isTranslation !== undefined) rawBlog.isTranslation = p.isTranslation;
 
                 return (
                     <PostLayout rawBlog={rawBlog} relates={relates}>
-                        {p().encrypt_pwd ? content : <section innerHTML={content} />}
+                        {p.encrypt_pwd ? content : <section innerHTML={content} />}
                     </PostLayout>
                 );
             }}
         </Show>
     );
 }
-
