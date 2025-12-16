@@ -1,11 +1,12 @@
-import Category from "@/(hugo)/category/index.json";
 import { Accessor, For } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
+import { getCategoryIndex } from "~/content/velite";
 
 const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
+    const categories = getCategoryIndex()
     const elems = [
         __TOTAL_POSTS,
-        Category.pages.length,
+        categories.length,
         `${(__WORDS / 1000).toPrecision(3)}`,
         __ALL_TAGS
     ]

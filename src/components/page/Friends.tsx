@@ -1,9 +1,10 @@
-import friendLinks from "@/hugo/content/friends.json";
 import { For } from "solid-js";
 import FriendLink from "~/components/core/section/FriendLink";
 import PostLayout from "../layouts/PostLayout";
+import { getFriendLinks } from "~/content/velite";
 
 const Friend = ({ page, children }) => {
+    const friendLinks = getFriendLinks();
     const activeLinks = friendLinks.filter((link) => !link.inactive);
     const inactiveLinks = friendLinks.filter((link) => link.inactive === true);
     const sortedLinks = activeLinks.concat(inactiveLinks);

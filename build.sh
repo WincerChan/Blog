@@ -19,18 +19,8 @@ else
     git pull
     cd ..
 fi
-echo -e "${YELLOW}Building hugo content...${RESET}"
-pnpm clean
-pnpm dev:hugo
-pnpm dev:copy
-echo -e "${YELLOW}Creating sitemap index...${RESET}"
-directories=("posts" "category" "base" "")
-for dir in "${directories[@]}"; do
-    mkdir -p "public/${dir}"
-    cp "(hugo)/${dir}/sitemap.xml" "public/${dir}/sitemap.xml"
-done
-cp -r "(hugo)/sass" "public/"
-cp -r "(hugo)/manifest.webmanifest" "public/"
+echo -e "${YELLOW}Building content (velite)...${RESET}"
+pnpm dev:content
 echo -e "${YELLOW}Building site...${RESET}"
 pnpm build
 

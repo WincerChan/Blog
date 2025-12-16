@@ -1,10 +1,10 @@
-import categoryPage from "@/(hugo)/category/index.json";
 import { For } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
+import { getCategoryIndex } from "~/content/velite";
 
 const Category = () => {
     const { LL } = useI18nContext()
-    const categories = categoryPage.pages
+    const categories = getCategoryIndex()
     return (
         <div class="">
             <label class=":: text-[15px]  font-headline text-[var(--subtitle)]  ">{LL && LL().footer.C()}</label>

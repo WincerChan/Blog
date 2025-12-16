@@ -77,7 +77,7 @@ const FooterNav = () => {
             >
               Wincer
             </a>
-            , powered by Hugo + SolidStart
+            , powered by Velite + SolidStart
           </p>
         </div>
       </div>

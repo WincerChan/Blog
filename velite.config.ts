@@ -1,164 +1,13 @@
 import { defineCollection, defineConfig, defineLoader, s } from "velite";
 import rehypeSlug from "rehype-slug";
-import { visit } from "unist-util-visit";
 import path from "node:path";
 import fs from "node:fs/promises";
 import crypto from "node:crypto";
-import { load } from "cheerio";
 import YAML from "yaml";
-
-const toBase64 = (input: string) => Buffer.from(input, "utf8").toString("base64");
-
-const pad2 = (n: number) => String(n).padStart(2, "0");
-
-const formatHugoDate = (date: Date) => {
-  const yyyy = date.getFullYear();
-  const mm = pad2(date.getMonth() + 1);
-  const dd = pad2(date.getDate());
-  const hh = pad2(date.getHours());
-  const mi = pad2(date.getMinutes());
-  const ss = pad2(date.getSeconds());
-  return `${yyyy}-${mm}-${dd}T${hh}:${mi}:${ss}+0800`;
-};
-
-const formatUtc = (date: Date) => {
-  const yyyy = date.getUTCFullYear();
-  const mm = pad2(date.getUTCMonth() + 1);
-  const dd = pad2(date.getUTCDate());
-  const hh = pad2(date.getUTCHours());
-  const mi = pad2(date.getUTCMinutes());
-  const ss = pad2(date.getUTCSeconds());
-  return `${yyyy}-${mm}-${dd}T${hh}:${mi}:${ss}Z`;
-};
-
-const parseDateLikeHugo = (input: string | undefined) => {
-  if (!input) return new Date(0);
-  const v = input.trim();
-  let normalized = v.replace(/\s+([+-]\d{2}:?\d{2}|[zZ])$/, "$1");
-  if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) normalized = `${normalized}T00:00:00`;
-  if (normalized.includes(" ") && !normalized.includes("T")) normalized = normalized.replace(" ", "T");
-  normalized = normalized.replace(/T(\d):/, "T0$1:");
-  normalized = normalized.replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
-  if (!/[zZ]$|[+-]\d{2}:\d{2}$/.test(normalized)) normalized = `${normalized}+08:00`;
-  return new Date(normalized);
-};
-
-const ensureTrailingSlash = (p: string) => (p.endsWith("/") ? p : `${p}/`);
-const ensureLeadingSlash = (p: string) => (p.startsWith("/") ? p : `/${p}`);
-
-const jsxifyVoidTags = (html: string) =>
-  html.replace(/<(Img|img|br|hr)\b([^>]*)>/g, (m, tag, attrs) => {
-    const a = String(attrs ?? "");
-    if (a.trim().endsWith("/")) return `<${tag}${a}>`;
-    return `<${tag}${a} />`;
-  });
-
-const rehypeCodeblockToPre = () => {
-  return (tree: any) => {
-    visit(tree, "element", (node: any, index: number | undefined, parent: any) => {
-      if (!parent || typeof index !== "number") return;
-      if (node?.tagName !== "pre") return;
-      const code = node.children?.find((c: any) => c?.type === "element" && c?.tagName === "code");
-      if (!code) return;
-
-      const className = code.properties?.className;
-      let lang: string | undefined;
-      if (Array.isArray(className)) {
-        const cls = className.find((x) => typeof x === "string" && x.startsWith("language-"));
-        if (typeof cls === "string") lang = cls.slice("language-".length);
-      } else if (typeof className === "string" && className.startsWith("language-")) {
-        lang = className.slice("language-".length);
-      }
-      lang ??= "plaintext";
-
-      const codeText =
-        code.children?.map((c: any) => (c?.type === "text" ? c.value : "")).join("") ?? "";
-
-      parent.children[index] = {
-        type: "element",
-        tagName: "Pre",
-        properties: { lang },
-        children: [
-          {
-            type: "element",
-            tagName: "code",
-            properties: {},
-            children: [{ type: "text", value: toBase64(codeText) }],
-          },
-        ],
-      };
-    });
-  };
-};
-
-const rehypeImgToComponent = () => {
-  return (tree: any) => {
-    visit(tree, "element", (node: any) => {
-      if (node?.tagName !== "img") return;
-      node.tagName = "Img";
-    });
-  };
-};
-
-const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>) => {
-  if (!entries || entries.length === 0) return '<nav id="TableOfContents"></nav>';
-  const render = (items: typeof entries) => {
-    const lis = items
-      .map((it) => {
-        const href = it.url.startsWith("#") ? it.url : `#${it.url}`;
-        const nested = it.items?.length ? `<ul>${render(it.items)}</ul>` : "";
-        return `<li><a href="${href}">${it.title}</a>${nested}</li>`;
-      })
-      .join("");
-    return lis;
-  };
-  return `<nav id="TableOfContents"><ul>${render(entries)}</ul></nav>`;
-};
-
-const plainifyHtml = (html: string) => {
-  const $ = load(html);
-  const text = $.text();
-  return text.replace(/\s+/g, " ").trim();
-};
-
-const countWordsLikeExisting = (plain: string) => {
-  const asciiWords = (plain.match(/[A-Za-z0-9_]+/g) || []).length;
-  const cjkChars = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-  const others = plain.length - cjkChars;
-  return asciiWords + cjkChars * 0.6 + Math.max(0, others - asciiWords * 2) * 0;
-};
-
-const readSiteConf = async (repoRoot: string) => {
-  const raw = await fs.readFile(path.join(repoRoot, "hugo.json"), "utf8");
-  const cfg = JSON.parse(raw);
-  return {
-    baseURL: String(cfg.baseURL ?? "").replace(/\/$/, ""),
-    title: String(cfg.title ?? ""),
-    description: String(cfg.description ?? ""),
-    author: String(cfg.params?.author ?? ""),
-    sitemap: {
-      changeFreq: String(cfg.params?.sitemap?.changeFreq ?? "weekly"),
-      priority: Number(cfg.params?.sitemap?.priority ?? 0.6),
-      termPriority: Number(cfg.params?.sitemap?.termPriority ?? 0.3),
-    },
-  };
-};
-
-const uuidFromSha1 = (hex: string) =>
-  `urn:uuid:${hex.slice(0, 8)}-${hex.slice(8, 12)}-5${hex.slice(13, 16)}-${hex.slice(16, 17)}9${hex.slice(17, 19)}-${hex.slice(21, 33)}`;
-
-const writeFile = async (filepath: string, content: string) => {
-  await fs.mkdir(path.dirname(filepath), { recursive: true });
-  await fs.writeFile(filepath, content, "utf8");
-};
-
-const writeJson = async (filepath: string, data: unknown) => {
-  await writeFile(filepath, `${JSON.stringify(data, null, 2)}\n`);
-};
-
-const writeExportDefaultObject = async (filepath: string, data: unknown) => {
-  await writeFile(filepath, `export default ${JSON.stringify(data, null, 2)}\n`);
-};
+import { load } from "cheerio";
+import hljs from "highlight.js";
+import katex from "katex";
+import he from "he";
 
 const MATTER_RE =
   /^---(?:\r?\n|\r)(?:([\s\S]*?)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/;
@@ -170,8 +19,7 @@ const dedupeFrontmatterScalars = (frontmatter: string) => {
     const line = lines[i];
     const match = /^([A-Za-z0-9_-]+):\s*(.+)\s*$/.exec(line);
     if (!match) continue;
-    const key = match[1];
-    lastIndex.set(key, i);
+    lastIndex.set(match[1], i);
   }
   return lines
     .filter((line, i) => {
@@ -195,6 +43,137 @@ const matterLoader = defineLoader({
   },
 });
 
+const pad2 = (n: number) => String(n).padStart(2, "0");
+
+const formatUtc = (date: Date) => {
+  const yyyy = date.getUTCFullYear();
+  const mm = pad2(date.getUTCMonth() + 1);
+  const dd = pad2(date.getUTCDate());
+  const hh = pad2(date.getUTCHours());
+  const mi = pad2(date.getUTCMinutes());
+  const ss = pad2(date.getUTCSeconds());
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}:${ss}Z`;
+};
+
+const parseDateLikeHugo = (input: string | undefined) => {
+  if (!input) return new Date(0);
+  const v = input.trim();
+  let normalized = v.replace(/\s+([+-]\d{2}:?\d{2}|[zZ])$/, "$1");
+  if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) normalized = `${normalized}T00:00:00`;
+  if (normalized.includes(" ") && !normalized.includes("T")) normalized = normalized.replace(" ", "T");
+  normalized = normalized.replace(/T(\d):/, "T0$1:");
+  normalized = normalized.replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
+  if (!/[zZ]$|[+-]\d{2}:\d{2}$/.test(normalized)) normalized = `${normalized}+08:00`;
+  return new Date(normalized);
+};
+
+const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>) => {
+  if (!entries || entries.length === 0) return '<nav id="TableOfContents"></nav>';
+  const render = (items: typeof entries) => {
+    const lis = items
+      .map((it) => {
+        const href = it.url.startsWith("#") ? it.url : `#${it.url}`;
+        const nested = it.items?.length ? `<ul>${render(it.items)}</ul>` : "";
+        return `<li><a href="${href}">${it.title}</a>${nested}</li>`;
+      })
+      .join("");
+    return lis;
+  };
+  return `<nav id="TableOfContents"><ul>${render(entries)}</ul></nav>`;
+};
+
+const plainifyHtml = (html: string) => {
+  const $ = load(html);
+  const text = $.text();
+  return text.replace(/\s+/g, " ").trim();
+};
+
+const countWords = (plain: string) => {
+  const asciiWords = (plain.match(/[A-Za-z0-9_]+/g) || []).length;
+  const cjkChars = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
+  return asciiWords + Math.round(cjkChars * 0.6);
+};
+
+const renderMathToKatexHtml = (html: string) => {
+  const mathPattern = /\$\$([\s\S]+?)\$\$/g;
+  return he.decode(html).replace(mathPattern, (match, formula) => {
+    try {
+      const renderResult = katex.renderToString(he.decode(formula), {
+        output: "html",
+        displayMode: formula.trim().startsWith("\\begin"),
+        strict: "warn",
+      });
+      const $ = load(renderResult);
+      $("annotation").remove();
+      return $("body").html() || renderResult;
+    } catch {
+      return match;
+    }
+  });
+};
+
+const highlightHtmlCodeBlocks = (html: string) => {
+  const $ = load(html, { decodeEntities: false });
+  $("pre > code").each((_, elem) => {
+    const codeElem = $(elem);
+    const classAttr = String(codeElem.attr("class") || "");
+    const match = classAttr.match(/language-([a-zA-Z0-9_+-]+)/);
+    const lang = match?.[1]?.toLowerCase();
+    const text = he.decode(codeElem.text());
+
+    const highlighted = lang && hljs.getLanguage(lang)
+      ? hljs.highlight(text, { language: lang, ignoreIllegals: true }).value
+      : hljs.highlightAuto(text).value;
+
+    codeElem.html(highlighted);
+    const nextClass = new Set(
+      classAttr
+        .split(/\s+/)
+        .filter(Boolean)
+        .concat(["hljs"])
+        .concat(lang ? [`language-${lang}`] : []),
+    );
+    codeElem.attr("class", Array.from(nextClass).join(" "));
+  });
+  return $.html();
+};
+
+const normalizeHtmlForSite = (html: string) => {
+  const $ = load(html, { decodeEntities: false });
+  $("img").each((_, elem) => {
+    const e = $(elem);
+    if (!e.attr("loading")) e.attr("loading", "lazy");
+    if (!e.attr("decoding")) e.attr("decoding", "async");
+    if (!e.attr("referrerpolicy")) e.attr("referrerpolicy", "no-referrer");
+  });
+  $("table").wrap('<div class="table-wrapper"></div>');
+  return $.html();
+};
+
+const readSiteConf = async (repoRoot: string) => {
+  const raw = await fs.readFile(path.join(repoRoot, "site.config.json"), "utf8");
+  const cfg = JSON.parse(raw);
+  return {
+    baseURL: String(cfg.baseURL ?? "").replace(/\/$/, ""),
+    title: String(cfg.title ?? ""),
+    description: String(cfg.description ?? ""),
+    author: String(cfg.author?.name ?? cfg.author ?? ""),
+    sitemap: {
+      changeFreq: String(cfg.sitemap?.changeFreq ?? "weekly"),
+      priority: Number(cfg.sitemap?.priority ?? 0.6),
+      termPriority: Number(cfg.sitemap?.termPriority ?? 0.3),
+    },
+  };
+};
+
+const uuidFromSha1 = (hex: string) =>
+  `urn:uuid:${hex.slice(0, 8)}-${hex.slice(8, 12)}-5${hex.slice(13, 16)}-${hex.slice(16, 17)}9${hex.slice(17, 19)}-${hex.slice(21, 33)}`;
+
+const writeFile = async (filepath: string, content: string) => {
+  await fs.mkdir(path.dirname(filepath), { recursive: true });
+  await fs.writeFile(filepath, content, "utf8");
+};
+
 const Post = defineCollection({
   name: "Post",
   pattern: "posts/**/*.md",
@@ -216,7 +195,7 @@ const Post = defineCollection({
     contentHtml: s.markdown({
       copyLinkedFiles: false,
       removeComments: false,
-      rehypePlugins: [rehypeSlug, rehypeCodeblockToPre, rehypeImgToComponent],
+      rehypePlugins: [rehypeSlug],
     }),
     tocEntries: s.toc({ maxDepth: 5 }),
   }),
@@ -239,18 +218,30 @@ const Page = defineCollection({
     contentHtml: s.markdown({
       copyLinkedFiles: false,
       removeComments: false,
-      rehypePlugins: [rehypeSlug, rehypeCodeblockToPre, rehypeImgToComponent],
+      rehypePlugins: [rehypeSlug],
     }),
     tocEntries: s.toc({ maxDepth: 5 }),
   }),
 });
 
+const Friend = defineCollection({
+  name: "Friend",
+  pattern: "friends.json",
+  schema: s.object({
+    name: s.string(),
+    url: s.string(),
+    avatar: s.string().optional(),
+    inactive: s.boolean().optional(),
+  }),
+});
+
 export default defineConfig({
-  root: "hugo/content",
+  root: "_blogs/content",
   loaders: [matterLoader],
   collections: {
     posts: Post,
     pages: Page,
+    friends: Friend,
   },
   output: {
     data: ".velite",
@@ -259,295 +250,105 @@ export default defineConfig({
   prepare: async (data, context) => {
     const repoRoot = path.dirname(context.config.configPath);
     const site = await readSiteConf(repoRoot);
-    const outDir = path.join(repoRoot, "(hugo)");
+    const publicDir = path.join(repoRoot, "public");
 
-    await fs.rm(outDir, { recursive: true, force: true });
-    await fs.mkdir(outDir, { recursive: true });
+    const markerRe = /<!--\s*more\s*-->/i;
+    const markerReGlobal = /<!--\s*more\s*-->/gi;
 
     const posts = (data.posts as any[]).map((p) => {
-      const date = parseDateLikeHugo(p.date);
-      const updated = parseDateLikeHugo(p.updated ?? p.date);
-      const contentWithMarker = jsxifyVoidTags(String(p.contentHtml ?? ""));
-      const markerRe = /<!--\s*more\s*-->/i;
-      const markerReGlobal = /<!--\s*more\s*-->/gi;
-      const markerIdx = contentWithMarker.search(markerRe);
+      const dateObj = parseDateLikeHugo(p.date);
+      const updatedObj = parseDateLikeHugo(p.updated ?? p.date);
+
+      const originalHtml = String(p.contentHtml ?? "");
+      const markerIdx = originalHtml.search(markerRe);
       const summaryHtml =
-        markerIdx >= 0 ? contentWithMarker.slice(0, markerIdx) : contentWithMarker;
-      const content = markerIdx >= 0 ? contentWithMarker.replace(markerReGlobal, "") : contentWithMarker;
+        markerIdx >= 0 ? originalHtml.slice(0, markerIdx) : originalHtml;
+      const withoutMarker =
+        markerIdx >= 0 ? originalHtml.replace(markerReGlobal, "") : originalHtml;
+
+      let html = normalizeHtmlForSite(withoutMarker);
+      html = highlightHtmlCodeBlocks(html);
+      if (p.mathrender) html = renderMathToKatexHtml(html);
 
       const summary = plainifyHtml(summaryHtml).slice(0, 260);
-      const tags = Array.isArray(p.tags) ? p.tags.map(String) : [];
-      const category = p.category ? String(p.category) : "";
-      const cover = p.cover ? String(p.cover) : "";
-      const words = countWordsLikeExisting(plainifyHtml(content));
+      const words = countWords(plainifyHtml(html));
       const toc = tocToHtml(Array.isArray(p.tocEntries) ? p.tocEntries : []);
 
       return {
         ...p,
-        dateObj: date,
-        updatedObj: updated,
-        content,
-        summary,
-        tags,
-        category,
-        cover,
-        words,
+        tags: Array.isArray(p.tags) ? p.tags.map((x) => String(x)).filter(Boolean) : [],
+        dateObj,
+        updatedObj,
+        url: `/posts/${String(p.slug)}/`,
+        html,
         toc,
+        summary,
+        words,
       };
     });
 
     const pages = (data.pages as any[]).map((p) => {
-      const date = parseDateLikeHugo(p.date);
-      const updated = parseDateLikeHugo(p.updated ?? p.date);
-      const contentWithMarker = jsxifyVoidTags(String(p.contentHtml ?? ""));
-      const markerRe = /<!--\s*more\s*-->/i;
-      const markerReGlobal = /<!--\s*more\s*-->/gi;
-      const markerIdx = contentWithMarker.search(markerRe);
+      const dateObj = parseDateLikeHugo(p.date);
+      const updatedObj = parseDateLikeHugo(p.updated ?? p.date);
+      const originalHtml = String(p.contentHtml ?? "");
+      const markerIdx = originalHtml.search(markerRe);
       const summaryHtml =
-        markerIdx >= 0 ? contentWithMarker.slice(0, markerIdx) : contentWithMarker;
-      const content = markerIdx >= 0 ? contentWithMarker.replace(markerReGlobal, "") : contentWithMarker;
+        markerIdx >= 0 ? originalHtml.slice(0, markerIdx) : originalHtml;
+      const withoutMarker =
+        markerIdx >= 0 ? originalHtml.replace(markerReGlobal, "") : originalHtml;
+
+      let html = normalizeHtmlForSite(withoutMarker);
+      html = highlightHtmlCodeBlocks(html);
 
       const summary = plainifyHtml(summaryHtml).slice(0, 260);
-      const cover = p.cover ? String(p.cover) : "";
       const toc = tocToHtml(Array.isArray(p.tocEntries) ? p.tocEntries : []);
+
       return {
         ...p,
-        dateObj: date,
-        updatedObj: updated,
-        content,
-        summary,
-        cover,
+        dateObj,
+        updatedObj,
+        url: `/${String(p.slug)}/`,
+        html,
         toc,
+        summary,
       };
     });
 
-    const postsByDateDesc = [...posts].sort(
-      (a, b) => b.dateObj.getTime() - a.dateObj.getTime(),
+    data.posts = posts;
+    data.pages = pages;
+
+    const renderablePosts = [...posts]
+      .filter((p) => p.draft !== true)
+      .sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
+    const publishedPosts = renderablePosts.filter(
+      (p) => p.private !== true && p.isTranslation !== true,
     );
-    const renderablePostsByDateDesc = postsByDateDesc.filter((p) => p.draft !== true);
-    const renderablePages = pages.filter((p) => p.draft !== true);
-
-    const publishedPosts = postsByDateDesc.filter(
-      (p) => p.draft !== true && p.private !== true && p.isTranslation !== true,
+    const renderablePages = [...pages].filter((p) => p.draft !== true);
+    const publishedPages = renderablePages.filter(
+      (p) => p.private !== true && p.isTranslation !== true,
     );
-    const publishedPages = [...pages]
-      .filter((p) => p.draft !== true && p.private !== true && p.isTranslation !== true)
-      .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0));
-
-    const neighboursSource = publishedPosts;
-    const neighboursBySlug = new Map<string, any>();
-    neighboursSource.forEach((p, idx) => {
-      const prev = neighboursSource[idx - 1];
-      const next = neighboursSource[idx + 1];
-      const toLink = (x: any) =>
-        x
-          ? {
-              title: String(x.title),
-              slug: `/posts/${String(x.slug)}/`,
-            }
-          : undefined;
-      const n: any = {};
-      if (prev) n.prev = toLink(prev);
-      if (next) n.next = toLink(next);
-      neighboursBySlug.set(String(p.slug), n);
-    });
-
-    const categoryToPosts = new Map<string, any[]>();
-    const tagToPosts = new Map<string, any[]>();
-
-    for (const p of publishedPosts) {
-      if (p.category) {
-        const key = String(p.category);
-        const list = categoryToPosts.get(key) ?? [];
-        list.push(p);
-        categoryToPosts.set(key, list);
-      }
-      for (const t of p.tags ?? []) {
-        const key = String(t);
-        const list = tagToPosts.get(key) ?? [];
-        list.push(p);
-        tagToPosts.set(key, list);
-      }
-    }
 
     const latestUpdated = (items: any[]) =>
       items.reduce((acc, x) => Math.max(acc, x.updatedObj?.getTime?.() ?? 0), 0);
 
-    const postListJson = {
-      type: "posts",
-      term: "Posts",
-      pages: publishedPosts.map((p, idx) => {
-        const base: any = {
-          title: String(p.title),
-          slug: String(p.slug),
-          words: p.words,
-          category: String(p.category ?? ""),
-          date: formatHugoDate(p.dateObj),
-        };
-        if (p.subtitle) base.subtitle = String(p.subtitle);
-        if (p.lang) base.lang = String(p.lang);
-        if (idx === 0 && p.cover) base.cover = String(p.cover);
-        return base;
-      }),
-    };
-
-    const baseListJson = {
-      type: "base",
-      term: "Pages",
-      pages: publishedPages.map((p, idx) => {
-        const base: any = {
-          title: String(p.title),
-          slug: String(p.slug),
-          words: 0,
-          category: "",
-          date: formatHugoDate(p.dateObj),
-        };
-        if (p.lang) base.lang = String(p.lang);
-        if (p.subtitle) base.subtitle = String(p.subtitle);
-        if (idx === 0 && p.cover) base.cover = String(p.cover);
-        return base;
-      }),
-    };
-
-    const homeJson = {
-      type: "home",
-      term: "Home",
-      pages: publishedPosts.slice(0, 5).map((p, idx) => {
-        const base: any = {
-          title: String(p.title),
-          subtitle: p.subtitle ? String(p.subtitle) : "",
-          slug: `/posts/${String(p.slug)}/`,
-          cover: String(p.cover ?? ""),
-          category: String(p.category ?? ""),
-          date: formatHugoDate(p.dateObj),
-        };
-        if (idx === 0) base.summary = p.summary.replaceAll(" ", "");
-        return base;
-      }),
-    };
-
-    const categoryIndexJson = {
-      term: "Category",
-      pages: Array.from(categoryToPosts.entries()).map(([title, pages]) => ({
-        title,
-        count: pages.length,
-      })),
-    };
-    const tagsIndexJson = {
-      term: "Tags",
-      pages: Array.from(tagToPosts.entries()).map(([title, pages]) => ({
-        title,
-        count: pages.length,
-      })),
-    };
-
-    await writeJson(path.join(outDir, "index.json"), homeJson);
-    await writeJson(path.join(outDir, "posts", "index.json"), postListJson);
-    await writeJson(path.join(outDir, "base", "index.json"), baseListJson);
-    await writeJson(path.join(outDir, "category", "index.json"), categoryIndexJson);
-    await writeJson(path.join(outDir, "tags", "index.json"), tagsIndexJson);
-
-    for (const p of renderablePostsByDateDesc) {
-      const slug = String(p.slug);
-      const detailed: any = {
-        title: String(p.title),
-        date: formatHugoDate(p.dateObj),
-        updated: formatHugoDate(p.updatedObj),
-        cover: String(p.cover ?? ""),
-        slug: ensureTrailingSlash(`/posts/${slug}`),
-        tags: p.tags ?? [],
-        category: String(p.category ?? ""),
-        summary: p.summary,
-        words: p.words,
-        content: p.content,
-        toc: p.toc,
-        neighbours: neighboursBySlug.get(slug) ?? {},
-      };
-      if (p.subtitle) detailed.subtitle = String(p.subtitle);
-      if (p.encrypt_pwd) detailed.password = String(p.encrypt_pwd);
-      if (p.mathrender) detailed.mathrender = true;
-      if (p.isTranslation !== undefined) detailed.isTranslation = Boolean(p.isTranslation);
-      if (p.lang) detailed.lang = String(p.lang);
-
-      await writeExportDefaultObject(
-        path.join(outDir, "posts", slug, "index.jsx"),
-        detailed,
-      );
-    }
-
-    for (const p of pages) {
-      if (p.draft === true) continue;
-      const slug = String(p.slug);
-      const detailed: any = {
-        title: String(p.title),
-        date: formatHugoDate(p.dateObj),
-        updated: formatHugoDate(p.updatedObj),
-        slug: ensureTrailingSlash(ensureLeadingSlash(slug)),
-        summary: p.summary,
-        cover: p.cover ? String(p.cover) : undefined,
-        content: p.content,
-      };
-      if (p.isTranslation !== undefined) detailed.isTranslation = Boolean(p.isTranslation);
-      if (p.lang) detailed.lang = String(p.lang);
-
-      await writeExportDefaultObject(path.join(outDir, slug, "index.jsx"), detailed);
-    }
-
-    for (const [category, postsForCate] of categoryToPosts.entries()) {
-      const termJson = {
-        term: category,
-        pages: postsForCate.map((p) => {
-          const base: any = {
-            title: String(p.title),
-            slug: `/posts/${String(p.slug)}/`,
-            cover: String(p.cover ?? ""),
-            words: p.words,
-            category: String(p.category ?? ""),
-            date: formatHugoDate(p.dateObj),
-          };
-          if (p.subtitle) base.subtitle = String(p.subtitle);
-          return base;
-        }),
-      };
-      await writeExportDefaultObject(
-        path.join(outDir, "category", category, "index.jsx"),
-        termJson,
-      );
-    }
-
-    for (const [tag, postsForTag] of tagToPosts.entries()) {
-      const termJson = {
-        term: tag,
-        pages: postsForTag.map((p) => {
-          const base: any = {
-            title: String(p.title),
-            slug: `/posts/${String(p.slug)}/`,
-            cover: String(p.cover ?? ""),
-            words: p.words,
-            category: String(p.category ?? ""),
-            date: formatHugoDate(p.dateObj),
-          };
-          if (p.subtitle) base.subtitle = String(p.subtitle);
-          return base;
-        }),
-      };
-      await writeExportDefaultObject(path.join(outDir, "tags", tag, "index.jsx"), termJson);
-    }
-
     const sitemapHeader =
       '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>';
-    const sitemapIndex = `${sitemapHeader}\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+
+    const sitemapIndex =
+      `${sitemapHeader}\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
       [
-        { section: "posts", lastmod: latestUpdated(renderablePostsByDateDesc) },
+        { section: "posts", lastmod: latestUpdated(renderablePosts) },
         { section: "base", lastmod: latestUpdated(renderablePages) },
+        { section: "category", lastmod: Date.now() },
       ]
         .map(
           (s) =>
             `  <sitemap>\n    <loc>${site.baseURL}/${s.section}/sitemap.xml</loc>\n    <lastmod>${formatUtc(new Date(s.lastmod || Date.now()))}</lastmod>\n  </sitemap>`,
         )
         .join("\n") +
-      `\n  <sitemap>\n    <loc>${site.baseURL}/category/sitemap.xml</loc>\n    <lastmod>${formatUtc(new Date(Date.now()))}</lastmod>\n  </sitemap>\n</sitemapindex>\n`;
-    await writeFile(path.join(outDir, "sitemap.xml"), sitemapIndex);
+      `\n</sitemapindex>\n`;
+
+    await writeFile(path.join(publicDir, "sitemap.xml"), sitemapIndex);
 
     const urlsetStart = (extraNs: string) =>
       `${sitemapHeader}\n<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ${extraNs}xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
@@ -556,7 +357,7 @@ export default defineConfig({
     const postSitemap =
       urlsetStart('xmlns:xhtml="http://www.w3.org/1999/xhtml" ') +
       `  <url>\n    <loc>${site.baseURL}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1</priority>\n  </url>\n` +
-      renderablePostsByDateDesc
+      renderablePosts
         .map((p) => {
           const loc = `${site.baseURL}/posts/${String(p.slug)}/`;
           const lastmod = formatUtc(p.updatedObj);
@@ -583,7 +384,8 @@ export default defineConfig({
         })
         .join("\n") +
       `\n${urlsetEnd}`;
-    await writeFile(path.join(outDir, "posts", "sitemap.xml"), postSitemap);
+
+    await writeFile(path.join(publicDir, "posts", "sitemap.xml"), postSitemap);
 
     const baseSitemap =
       urlsetStart("") +
@@ -596,7 +398,16 @@ export default defineConfig({
         })
         .join("\n") +
       `\n${urlsetEnd}`;
-    await writeFile(path.join(outDir, "base", "sitemap.xml"), baseSitemap);
+    await writeFile(path.join(publicDir, "base", "sitemap.xml"), baseSitemap);
+
+    const categoryToPosts = new Map<string, any[]>();
+    for (const p of publishedPosts) {
+      if (!p.category) continue;
+      const key = String(p.category);
+      const list = categoryToPosts.get(key) ?? [];
+      list.push(p);
+      categoryToPosts.set(key, list);
+    }
 
     const categorySitemap =
       urlsetStart("") +
@@ -607,11 +418,11 @@ export default defineConfig({
         })
         .join("\n") +
       `\n${urlsetEnd}`;
-    await writeFile(path.join(outDir, "category", "sitemap.xml"), categorySitemap);
+    await writeFile(path.join(publicDir, "category", "sitemap.xml"), categorySitemap);
 
     const feedId = uuidFromSha1(crypto.createHash("sha1").update(site.baseURL).digest("hex"));
     const feedUpdated = formatUtc(
-      new Date(Math.max(latestUpdated(renderablePostsByDateDesc), Date.now())),
+      new Date(Math.max(latestUpdated(renderablePosts), Date.now())),
     );
     const atomEntries = publishedPosts
       .map((p) => {
@@ -623,7 +434,7 @@ export default defineConfig({
         const summary =
           p.encrypt_pwd
             ? "抱歉，本文已加密，请至网站输入密码后阅读。"
-            : `<![CDATA[<img src=\"${String(p.cover ?? "")}\" alt=\"cover\" />${p.content}]]>`;
+            : `<![CDATA[<img src=\"${String(p.cover ?? "")}\" alt=\"cover\" />${String(p.html)}]]>`;
         return `  <entry>\n    <title type=\"text\">${title}</title>\n    <link rel=\"alternate\" type=\"type/html\" href=\"${url}\" />\n    <id>${id}</id>\n    <published>${published}</published>\n    <updated>${updated}</updated>\n    <summary type=\"html\" src=\"${url}\">${summary}</summary>\n  </entry>`;
       })
       .join("\n");
@@ -638,7 +449,7 @@ export default defineConfig({
       `  <id>${feedId}</id>\n` +
       atomEntries +
       `\n</feed>\n`;
-    await writeFile(path.join(outDir, "atom.xml"), atom);
+    await writeFile(path.join(publicDir, "atom.xml"), atom);
 
     const manifest = {
       name: site.title,
@@ -665,13 +476,13 @@ export default defineConfig({
         },
       ],
     };
-    await writeFile(path.join(outDir, "manifest.webmanifest"), `${JSON.stringify(manifest, null, 2)}\n`);
-
     await writeFile(
-      path.join(outDir, "sass", "atom.css"),
+      path.join(publicDir, "manifest.webmanifest"),
+      `${JSON.stringify(manifest, null, 2)}\n`,
+    );
+    await writeFile(
+      path.join(publicDir, "sass", "atom.css"),
       `body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;max-width:860px;margin:2rem auto;line-height:1.6;padding:0 1rem;color:#111}a{color:#065279;text-decoration:none}img{max-width:100%}pre{white-space:pre-wrap}\n`,
     );
-
-    return false;
   },
 });

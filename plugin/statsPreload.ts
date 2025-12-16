@@ -1,8 +1,49 @@
+import { readFileSync } from "fs";
+import path from "path";
 import { BlogMinimal } from "~/schema/Post";
-import bases from "../(hugo)/base/index.json";
-import categories from "../(hugo)/category/index.json";
-import blogs from "../(hugo)/posts/index.json";
-import tags from "../(hugo)/tags/index.json";
+
+type VelitePost = BlogMinimal & {
+    draft?: boolean;
+    private?: boolean;
+    isTranslation?: boolean;
+    lang?: string;
+    words?: number;
+};
+
+type VelitePage = {
+    slug: string;
+    draft?: boolean;
+    private?: boolean;
+    isTranslation?: boolean;
+    lang?: string;
+    weight?: number;
+};
+
+const readJson = <T>(filepath: string, fallback: T): T => {
+    try {
+        return JSON.parse(readFileSync(filepath, "utf8")) as T;
+    } catch {
+        return fallback;
+    }
+};
+
+const repoRoot = process.cwd();
+const postsPath = path.join(repoRoot, ".velite", "posts.json");
+const pagesPath = path.join(repoRoot, ".velite", "pages.json");
+
+const allPosts = readJson<VelitePost[]>(postsPath, []);
+const allPages = readJson<VelitePage[]>(pagesPath, []);
+
+const posts = allPosts
+    .filter((p) => p.draft !== true)
+    .filter((p) => p.private !== true)
+    .filter((p) => p.isTranslation !== true);
+
+const pages = allPages
+    .filter((p) => p.draft !== true)
+    .filter((p) => p.private !== true)
+    .filter((p) => p.isTranslation !== true)
+    .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0));
 
 const groupByYear = (posts: BlogMinimal[]) => {
     let byYears: { [key: string]: number } = {};
@@ -40,25 +81,40 @@ function range(arr, size) {
 };
 
 
-const wordsCount = blogs.pages.reduce((acc, post) => {
-    return acc + post.words
-}, 0)
-const totalPosts = blogs.pages.length
-const en_posts = blogs.pages.filter((post) => post.lang !== undefined).filter(x => x.lang?.startsWith("zh"))
-    .map(x =>
-        x.slug.endsWith("-zh") ? x.slug.replace("-zh", "-en") : x.slug + "-en"
-    ).map(x => `/posts/${x}/`)
-    .concat(bases.pages.map(x => `/${x.slug}-en/`)).concat(["/archives-en/"])
-    .concat(blogs.pages.filter((post) => post.lang === "en").map(x => `/posts/${x.slug}/`))
+const wordsCount = posts.reduce((acc, post) => acc + (post.words ?? 0), 0);
+const totalPosts = posts.length;
 
-const totalTags = tags.pages.length
-const totalCategories = categories.pages
-const postsByYear = groupByYear(blogs.pages)
-const postsByYearDetail = groupByYearDetail(blogs.pages)
-const zh_nav_pages = bases.pages.map(x => x.slug).filter(x => !x.includes("search"))
+const tagsCount = new Set(posts.flatMap((p) => (p.tags ?? []) as string[])).size;
+const categoryCounts = Object.entries(
+    posts.reduce((acc: Record<string, number>, p) => {
+        const key = p.category;
+        if (!key) return acc;
+        acc[key] = (acc[key] ?? 0) + 1;
+        return acc;
+    }, {}),
+).map(([title, count]) => ({ title, count }));
+
+const zhWithLang = posts
+    .filter((p) => p.lang !== undefined)
+    .filter((p) => p.lang?.startsWith("zh"));
+
+const en_posts = zhWithLang
+    .map((p) =>
+        p.slug.endsWith("-zh") ? p.slug.replace("-zh", "-en") : `${p.slug}-en`,
+    )
+    .map((slug) => `/posts/${slug}/`)
+    .concat(pages.map((p) => `/${p.slug}-en/`))
+    .concat(["/archives-en/"])
+    .concat(posts.filter((p) => p.lang === "en").map((p) => `/posts/${p.slug}/`));
+
+const totalTags = tagsCount;
+const totalCategories = categoryCounts;
+const postsByYear = groupByYear(posts);
+const postsByYearDetail = groupByYearDetail(posts);
+
+const zh_nav_pages = pages.map((x) => x.slug).filter((x) => !x.includes("search"));
 const en_nav_pages = zh_nav_pages.map(x => `${x}-en`)
 
 
 export { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages };
-
 
