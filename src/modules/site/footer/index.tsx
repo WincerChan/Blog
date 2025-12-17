@@ -70,7 +70,7 @@ const FooterNav = () => {
             <span class="mx-2 inline-block">|</span>
             Designed and developed by{" "}
             <a
-              class="hover:text-menu-accent"
+              class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4"
               href="https://itswincer.com"
               target="_blank"
               rel="noopener"

@@ -15,7 +15,7 @@ const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Transla
                         {(post, idx) => (
                             <li>
                                 <p class="text-base">{formatDate(post.date)}</p>
-                                <a class=":: leading-relaxed hover:text-menu-accent break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <IconBadge width={20} height={20} class="inline" />}</a>
+                                <a class=":: leading-relaxed hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4 break-all text-ellipsis" href={post.slug}>{post.title} {(post.score >= 1 && idx() < 3) && <IconBadge width={20} height={20} class="inline" />}</a>
                             </li>
                         )}
                     </For>

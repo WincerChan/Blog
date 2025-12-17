@@ -88,7 +88,7 @@ const Archives = ({ page }) => {
                                         <span class="archives-year__chevron :: inline-block transition-transform select-none text-[var(--extra)]">
                                             <IconChevronRight width={18} height={18} class="block" />
                                         </span>
-                                        <span class="hover:text-menu-accent">{year}</span>
+                                        <span class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4">{year}</span>
                                         <span class=":: ml-2 text-base font-mono text-[var(--extra)]">
                                             {formatCount(yearCount(year))}
                                         </span>

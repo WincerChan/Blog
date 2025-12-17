@@ -15,7 +15,7 @@ const Copyright = ({ title, slug, updated, LL }: CopyrightProps) => {
     const elems: JSXElement[] = [
         "Wincer",
         formatDate(updated),
-        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hover:text-menu-accent" target="_blank" rel="noopener">
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4" target="_blank" rel="noopener">
             CC BY-NC-ND 4.0
         </a>
     ];

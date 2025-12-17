@@ -64,7 +64,7 @@ const PostMeta = ({
                             {(tag) => (
                                 <a
                                     href={`/search/?q=tags:${tag}`}
-                                    class="hover:text-menu-accent"
+                                    class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4"
                                 >
                                     <span class="text-menu-active">#</span>
                                     {tag}
@@ -98,7 +98,7 @@ export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) =
             {next && (
                 <a
                     href={next.slug}
-                    class=":: mr-auto hover:text-menu-accent my-2 flex inline-flex gap-2 items-center "
+                    class=":: mr-auto hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4 my-2 flex inline-flex gap-2 items-center "
                 >
                     <IconArrowLeft />
                     {next.title}
@@ -107,7 +107,7 @@ export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) =
             {prev && (
                 <a
                     href={prev.slug}
-                    class=":: ml-auto hover:text-menu-accent my-2 flex inline-flex gap-2 items-center "
+                    class=":: ml-auto hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4 my-2 flex inline-flex gap-2 items-center "
                 >
                     {prev.title}
                     <IconArrowRight />
@@ -159,7 +159,7 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
 
     let wrapper: JSXElement;
     if (!!blog.password) wrapper = <ProtectBlog source={children} />;
-    else wrapper = <section id="blog-article">{children}</section>;
+    else wrapper = <div id="blog-article">{children}</div>;
 
     let extra = (
         <PostExtra
