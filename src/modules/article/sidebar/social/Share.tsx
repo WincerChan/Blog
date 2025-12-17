@@ -73,7 +73,7 @@ const Share = ({ toggle, setToggle, lang }: ShareProps) => {
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
-                <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-[var(--ers-bg)] rounded-lg min-w-full md:min-w-120">
+                <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-surface rounded-lg min-w-full md:min-w-120">
                     <p class=":: text-2xl pb-6 font-headline ">{LL().sidebar.TOOLS.share.title()}</p>
                     <div class=":: flex w-full gap-4 <md:flex-col ">
                         <figure class="w-64 mx-auto">

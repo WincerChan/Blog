@@ -18,7 +18,7 @@ const Pages = () => {
                     <li>
                         <a
                             href={`/${pageEntry}/`}
-                            class=":: h-12 sm:h-16 px[12px] sm:px[14px] lg:px-6 flex inline-block items-center hover:bg-menu md:text-lg hover:text-menu-transition transition-linear capitalize min-w-14"
+                            class=":: h-12 sm:h-16 px[12px] sm:px[14px] lg:px-6 flex inline-block items-center hover:bg-menu md:text-lg hover:text-menu-accent transition-linear capitalize min-w-14"
                         >
                             {LL().header.NAV[idx()]()}
                         </a>

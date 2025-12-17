@@ -77,7 +77,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
             <div class=":: flex my-8 justify-between text-xl font-headline ">
                 {
                     currentPage() != 1 && (
-                        <button title="Prev" class=":: flex gap-2 items-center hover:text-menu-transition " onClick={() => { updatePage(-1) }}>
+                        <button title="Prev" class=":: flex gap-2 items-center hover:text-menu-accent " onClick={() => { updatePage(-1) }}>
                             <IconArrowLeft />
                             <span>Prev</span>
                         </button>
@@ -86,7 +86,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 <div />
                 {
                     data().count > resultPerPage * currentPage() &&
-                    <button title="Next" class=":: flex gap-2 items-center hover:text-menu-transition " onClick={() => { updatePage(1) }}>
+                    <button title="Next" class=":: flex gap-2 items-center hover:text-menu-accent " onClick={() => { updatePage(1) }}>
                         <span>Next</span>
                         <IconArrowRight />
                     </button>

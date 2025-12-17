@@ -11,7 +11,7 @@ const Category = () => {
             <div class=":: mb-6 md:w-48 md:grid text-[var(--extra)]  grid-rows-4 grid-flow-col gap-x-4 ">
                 <For each={categories}>
                     {(cate) => (
-                        <a class=":: hover:text-menu-transition " href={`/category/${cate.title}/`}>
+                        <a class=":: hover:text-menu-accent " href={`/category/${cate.title}/`}>
                             <p>{cate.title}（{cate.count}）</p>
                         </a>
                     )}

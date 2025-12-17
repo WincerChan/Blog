@@ -53,10 +53,6 @@ header ul,
     @apply px-2 rounded py-1 border-none hover:bg-menu text-[var(--extra)];
 }
 
-.no-click li a {
-    @apply disable-hover;
-}
-
 #TableOfContents li a.active {
     @apply text-menu-active;
 }
@@ -95,7 +91,7 @@ section ul {
 section h2,
 section h3,
 section h4 {
-    @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline !mobile-width-beyond;
+    @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline !mobile-full-bleed;
 }
 
 section h2 {
@@ -115,7 +111,7 @@ section hr {
 }
 
 section blockquote {
-    @apply border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4 !mobile-width-beyond;
+    @apply border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4 !mobile-full-bleed;
 }
 
 blockquote p {

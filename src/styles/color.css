@@ -1,6 +1,6 @@
 :root {
     --menu-hover-bg: #f0f0f4;
-    --ers-bg: #ffffff;
+    --surface-bg: #ffffff;
     --copyright-bg: #f5f5f5;
     --menu-hover-text: #065279;
     --main-text: rgb(57, 47, 65);
@@ -21,7 +21,7 @@
 
 html.dark {
     --menu-hover-bg: #464646;
-    --ers-bg: #2e2e2e;
+    --surface-bg: #2e2e2e;
     --copyright-bg: #2e3133;
     --menu-hover-text: #ffa631;
     --main-text: #f0f0f4;

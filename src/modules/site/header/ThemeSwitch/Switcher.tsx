@@ -52,7 +52,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
 
     return (
-        <div class={`:: absolute shadow-round text-sm right-0 bg-ers z-20 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
+        <div class={`:: absolute shadow-card text-sm right-0 bg-surface z-20 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
             <For each={ThemeMapping}>
                 {
                     (themeItem, idx) => {
@@ -91,7 +91,7 @@ const ToggleButton = () => {
                 e.preventDefault()
                 toggleShow(e);
                 globalStore.trackEvent("Menu CTR", { props: { type: "theme" } })
-            }} title="Switch Theme" class={`:: menu-hover-transition h-full px-3 sm:px[14px] lg:px-6 flex items-center ${show() ? 'bg-menu text-menu-transition' : ''}`}>
+            }} title="Switch Theme" class={`:: menu-item-hover h-full px-3 sm:px[14px] lg:px-6 flex items-center ${show() ? 'bg-menu text-menu-accent' : ''}`}>
                 <IconWindowSwitcher width={20} height={20} class=":: md:w-6 md:h-6 " />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />

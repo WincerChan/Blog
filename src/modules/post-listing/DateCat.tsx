@@ -11,7 +11,7 @@ const DateCat = ({ date, category }: DateCatProps) => {
             <span>{formatDate(date)}</span>
             <div class=":: h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)] "></div>
             {category && (
-                <a class="hover:text-menu-transition" href={`/category/${category}/`}>
+                <a class="hover:text-menu-accent" href={`/category/${category}/`}>
                     {category}
                 </a>
             )}

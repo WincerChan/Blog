@@ -17,7 +17,7 @@ const FooterNav = () => {
   const elems = [Stats, Category, Archives];
   const year = createMemo(() => new Date().getFullYear());
   return (
-    <footer class=":: mt-16 bg-ers shadow-round py-5 <lg:px-4 ">
+    <footer class=":: mt-16 bg-surface shadow-card py-5 <lg:px-4 ">
       <div class=":: xl:w-284 lg:w-220 mx-auto max-w-full ">
         <div class="::  mt-4 grid auto-cols-fr grid-flow-col text-sm leading-9 ">
           <For each={elems}>{(Elem, idx) => <Elem LL={LL} />}</For>
@@ -70,7 +70,7 @@ const FooterNav = () => {
             <span class="mx-2 inline-block">|</span>
             Designed and developed by{" "}
             <a
-              class="hover:text-menu-transition"
+              class="hover:text-menu-accent"
               href="https://itswincer.com"
               target="_blank"
               rel="noopener"

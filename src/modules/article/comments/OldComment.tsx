@@ -16,7 +16,7 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
         const aTags = self!.querySelectorAll("a")
         aTags.forEach(a => {
             a.target = "_blank"
-            a.classList.add("hover:text-menu-transition")
+            a.classList.add("hover:text-menu-accent")
             a.rel = "noopener noreferrer"
         })
     })

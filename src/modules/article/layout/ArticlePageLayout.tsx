@@ -64,7 +64,7 @@ const PostMeta = ({
                             {(tag) => (
                                 <a
                                     href={`/search/?q=tags:${tag}`}
-                                    class="hover:text-menu-transition"
+                                    class="hover:text-menu-accent"
                                 >
                                     <span class="text-menu-active">#</span>
                                     {tag}
@@ -75,7 +75,7 @@ const PostMeta = ({
                 </Show>
             </LazyBg>
             <Show when={blog.category && !isRecently}>
-                <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 mobile-width-beyond ">
+                <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 mobile-full-bleed ">
                     <p>
                         {LL &&
                             LL().post.EXPIRED_NOTIFY({
@@ -98,7 +98,7 @@ export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) =
             {next && (
                 <a
                     href={next.slug}
-                    class=":: mr-auto hover:text-menu-transition my-2 flex inline-flex gap-2 items-center "
+                    class=":: mr-auto hover:text-menu-accent my-2 flex inline-flex gap-2 items-center "
                 >
                     <IconArrowLeft />
                     {next.title}
@@ -107,7 +107,7 @@ export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) =
             {prev && (
                 <a
                     href={prev.slug}
-                    class=":: ml-auto hover:text-menu-transition my-2 flex inline-flex gap-2 items-center "
+                    class=":: ml-auto hover:text-menu-accent my-2 flex inline-flex gap-2 items-center "
                 >
                     {prev.title}
                     <IconArrowRight />
@@ -174,7 +174,7 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
             <PostMeta blog={blog} lang={locale} LL={LL} />
             <Show when={blog.cover}>
                 <img
-                    class=":: w-full xl:h-86 h-76 rounded object-cover my-6 mobile-width-beyond! "
+                    class=":: w-full xl:h-86 h-76 rounded object-cover my-6 mobile-full-bleed! "
                     src={blog.cover}
                     alt={blog.cover}
                 />
