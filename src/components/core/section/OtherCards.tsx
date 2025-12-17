@@ -26,14 +26,23 @@ const CompactBlog = ({ blog }: BlogProps) => {
 }
 type BlogCardsProps = {
     posts: () => BlogMinimal[],
-    description?: string
+    description?: string | null
     length?: number
 }
 const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
     const { LL } = useI18nContext()
+    const resolvedDescription = () => {
+        if (description === null) return null;
+        if (description !== undefined) return description;
+        return LL && LL().archive.ARCHIVES_SUBTITLE({ total: posts().length });
+    };
     return (
         <>
-            <p class=":: md:text-2xl text-xl font-headline font-semibold leading-loose md:my-4 my-2 ">{description ?? (LL && LL().archive.SUBTITLE({ total: posts().length }))}</p>
+            <Show when={resolvedDescription() !== null}>
+                <p class=":: md:text-2xl text-xl font-headline font-semibold leading-loose md:my-4 my-2 ">
+                    {resolvedDescription()}
+                </p>
+            </Show>
             <div class="grid-cols-2 lg:gap-8 lg:grid ">
                 <For each={posts()}>
                     {
@@ -48,4 +57,3 @@ const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
 }
 
 export default OtherBlogs;
-

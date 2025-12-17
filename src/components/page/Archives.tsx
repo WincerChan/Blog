@@ -1,61 +1,43 @@
-import { useSearchParams } from "@solidjs/router";
-import { For, createMemo, createSignal, onMount } from "solid-js";
+import { For } from "solid-js";
 import OtherBlogs from "~/components/core/section/OtherCards";
 import { ArchiveLayout } from "~/components/layouts/PageLayout";
-import { BlogMinimal } from "~/schema/Post";
-
-
-
-const groupByYear = (posts: BlogMinimal[]) => {
-    let byYears: { [key: string]: BlogMinimal[] } = {};
-    posts.forEach((post) => {
-        const year = new Date(post.date).getFullYear()
-        if (!byYears[year]) byYears[`${year}`] = [];
-        byYears[year].push({ ...post, slug: `/posts/${post.slug}/` })
-    })
-    return byYears
-}
-
-const YearArchive = ({ posts, year, ...props }: { posts: BlogMinimal[], year: string }) => {
-    return (
-        <>
-            <h2 id={year()} class=":: font-headline text-3xl mt-8 ">
-                <a href={`#${year()}`}>{year}</a>
-            </h2>
-            <OtherBlogs posts={posts} />
-        </>
-    )
-}
 
 const Archives = ({ page }) => {
-    let posts = __POSTS_BY_YEAR_DETAIL
-    const allYears = Object.keys(posts).filter(x => x != "undefined").sort((a, b) => (Number(b) - Number(a)))
-    const [activeYear, setActiveYear] = createSignal(allYears[0])
-    const [searchParams, setSearchParams] = useSearchParams()
-    const activePosts = createMemo(() => posts[activeYear()])
-
-    onMount(() => {
-        const year = searchParams.year
-        if (!year) return
-        setActiveYear(year)
-
-    })
-    const updateActivePosts = (year) => {
-        setSearchParams({ year })
-        setActiveYear(year)
-    }
-    // 规范化之后的页面
+    const postsByYear = __POSTS_BY_YEAR_DETAIL;
+    const allYears = Object.keys(postsByYear)
+        .filter((x) => x !== "undefined")
+        .sort((a, b) => Number(b) - Number(a));
 
     return (
         <ArchiveLayout page={page} lang={page.lang}>
-            <div id="post-meta" class=":: font-mono text-base flex overflow-x-scroll hyphens-auto whitespace-nowrap  space-x-4 mt-4 mb-6 ">
+            <div
+                id="post-meta"
+                class=":: font-mono text-base flex overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 mt-4 mb-6 "
+            >
                 <For each={allYears}>
-                    {(year, index) => (
-                        <button title={year} onClick={() => updateActivePosts(year)} class=":: border rounded py-2 px-4 ">{year}</button>
+                    {(year) => (
+                        <a
+                            class=":: border rounded py-2 px-4 hover:text-menu-transition"
+                            href={`#year-${year}`}
+                            title={year}
+                        >
+                            {year}
+                        </a>
                     )}
                 </For>
             </div>
-            <YearArchive posts={activePosts} year={activeYear} />
+            <For each={allYears}>
+                {(year) => (
+                    <section>
+                        <h2 id={`year-${year}`} class=":: font-headline text-3xl mt-8 ">
+                            <a class="hover:text-menu-transition" href={`#year-${year}`}>
+                                {year}
+                            </a>
+                        </h2>
+                        <OtherBlogs posts={() => postsByYear[year] ?? []} description={null} />
+                    </section>
+                )}
+            </For>
         </ArchiveLayout >
     )
 }

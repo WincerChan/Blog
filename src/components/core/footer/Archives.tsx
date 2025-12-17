@@ -13,7 +13,7 @@ const Archives = () => {
                     .map((val) => (
                         <a
                             class=":: hover:text-menu-transition block "
-                            href={`/archives/?year=${val[0]}`}
+                            href={`/archives/#year-${val[0]}`}
                         >
                             {val[0]}（{val[1]}）
                         </a>
