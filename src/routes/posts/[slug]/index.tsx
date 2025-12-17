@@ -40,7 +40,7 @@ export default function PostRoute() {
                 return (
                     <PostPageLayout rawBlog={rawBlog} relates={relates}>
                         {p.encrypt_pwd ? content : (
-                            <section class="md-content" innerHTML={content} />
+                            <section innerHTML={content} />
                         )}
                     </PostPageLayout>
                 );

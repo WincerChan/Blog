@@ -56,7 +56,13 @@ const groupByYear = (posts: BlogMinimal[]) => {
 }
 const groupByYearDetail = (posts: BlogMinimal[]) => {
     let byYears: { [key: string]: BlogMinimal[] } = { undefined: [] };
-    posts.forEach((post) => {
+    const toTime = (date: unknown) => {
+        const time = new Date(String(date ?? "")).getTime();
+        return Number.isFinite(time) ? time : 0;
+    };
+
+    const sortedPosts = [...posts].sort((a, b) => toTime(b.date) - toTime(a.date));
+    sortedPosts.forEach((post) => {
         const year = new Date(post.date).getFullYear()
         if (!byYears[year]) byYears[`${year}`] = [];
         const ret = { slug: `/posts/${post.slug}/` }
@@ -117,4 +123,3 @@ const en_nav_pages = zh_nav_pages.map(x => `${x}-en`)
 
 
 export { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages };
-

@@ -2,6 +2,7 @@ import { useLocation } from "@solidjs/router";
 import { For, createEffect, onCleanup, onMount } from "solid-js";
 import OtherBlogs from "~/components/core/section/OtherCards";
 import SimplePageLayout from "~/components/layouts/pages/SimplePageLayout";
+import IconChevronRight from "~icons/carbon/chevron-right";
 
 const Archives = ({ page }) => {
     const location = useLocation();
@@ -63,7 +64,7 @@ const Archives = ({ page }) => {
                     {(year) => (
                         <details
                             id={`year-${year}`}
-                            class="archives-year :: mb-6 last:mb-0"
+                            class="archives-year :: mb-2 last:mb-0"
                             onToggle={(e) => {
                                 if (!(e as Event).isTrusted) return;
                                 const details = e.currentTarget as HTMLDetailsElement;
@@ -85,7 +86,7 @@ const Archives = ({ page }) => {
                                 <h2 class=":: font-headline text-3xl leading-loose">
                                     <span class=":: inline-flex items-center gap-2">
                                         <span class="archives-year__chevron :: inline-block transition-transform select-none text-[var(--extra)]">
-                                            ▸
+                                            <IconChevronRight width={18} height={18} class="block" />
                                         </span>
                                         <span class="hover:text-menu-transition">{year}</span>
                                         <span class=":: ml-2 text-base font-mono text-[var(--extra)]">

@@ -31,7 +31,7 @@ const ProtectBlog = ({ source }) => {
                 </form>
             </Show>
             <Show when={error()}><b class="">密码错误，这个未知的领域离你还很遥远。</b></Show>
-            <Show when={show()}><section class="md-content" innerHTML={content()} /></Show>
+            <Show when={show()}><section innerHTML={content()} /></Show>
         </>
     )
 }

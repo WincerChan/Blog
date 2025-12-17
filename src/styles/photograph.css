@@ -7,7 +7,7 @@ body {
 }
 
 pre {
-    @apply rounded overflow-x-auto relative;
+    @apply rounded overflow-x-auto;
     scrollbar-width: none;
 }
 
@@ -71,12 +71,12 @@ header ul,
 
 /* section  */
 
-.md-content>ul,
-.md-content>ol {
+section>ul,
+section>ol {
     @apply pl-8 px-4 my-2;
 }
 
-li {
+section li {
     @apply my-2;
 }
 
@@ -84,47 +84,47 @@ li li {
     @apply ml-lg;
 }
 
-ol {
+section ol {
     @apply list-decimal;
 }
 
-ul {
+section ul {
     @apply list-disc;
 }
 
-.md-content h2,
-.md-content h3,
-.md-content h4 {
+section h2,
+section h3,
+section h4 {
     @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline !mobile-width-beyond;
 }
 
-.md-content h2 {
+section h2 {
     @apply text-2xl;
 }
 
-.md-content h3 {
+section h3 {
     @apply text-xl;
 }
 
-.md-content h4 {
+section h4 {
     @apply text-lg;
 }
 
-.md-content hr {
+section hr {
     @apply mx-auto w-[50%] my-8 border-none h-2px bg-[--blockquote-border];
 }
 
-.md-content blockquote {
+section blockquote {
     @apply border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4 !mobile-width-beyond;
 }
 
-.md-content blockquote p {
+blockquote p {
     @apply py-3;
 }
 
-.md-content p a,
-.md-content td a,
-.md-content li a {
+section p a,
+section td a,
+section li a {
     @apply transition relative duration-200 ease-linear text-link hover:underline-[var(--menu-hover-text)];
 }
 
@@ -132,36 +132,32 @@ ul {
     @apply transition relative duration-200 ease-linear text-link underline-none;
 }
 
-.md-content table {
+section table {
     @apply text-center mx-auto mb-8 table-auto;
 }
 
-.md-content p,
-.md-content li {
+section p,
+section li {
     @apply text-lg leading-8 text-justify;
 }
 
-.md-content p {
+section p {
     @apply my-4;
 }
 
-.md-content table tr>th {
+section table tr>th {
     @apply px-4 py-2;
 }
 
-.md-content table tr>td {
+section table tr>td {
     @apply border px-4 py-2;
 }
 
-.md-content :not(pre)>code {
+section code {
     @apply bg-[var(--copyright-bg)] px-1 pb-2px rounded font-mono mx-1;
 }
 
-.md-content pre>code {
-    @apply block;
-}
-
-.md-content img {
+section img {
     @apply mx-auto;
 }
 
