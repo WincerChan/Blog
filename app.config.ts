@@ -4,8 +4,8 @@ import path from "path";
 import UnoCSS from 'unocss/vite';
 import Icons from 'unplugin-icons/vite';
 import { fileURLToPath } from 'url';
-import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./plugin/statsPreload";
-import SwBuild from "./plugin/swBuild";
+import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./src/modules/site/build/statsPreload";
+import SwBuild from "./src/modules/site/build/swBuild";
 const isProd = process.env.NODE_ENV === "production";
 
 const siteConfigPath = fileURLToPath(new URL("./site.config.json", import.meta.url));

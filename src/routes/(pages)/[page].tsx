@@ -1,10 +1,10 @@
 import { useParams } from "@solidjs/router";
 import { Show, createMemo } from "solid-js";
-import PostPageLayout from "~/components/layouts/pages/PostPageLayout";
-import Archives from "~/components/page/Archives";
-import Friends from "~/components/page/Friends";
-import Life from "~/components/page/Life";
-import Search from "~/components/page/Search";
+import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
+import Archives from "~/modules/archives/ArchivesPage";
+import Friends from "~/modules/friends/FriendsPage";
+import Life from "~/modules/life/LifePage";
+import Search from "~/modules/search/SearchPage";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
@@ -46,9 +46,9 @@ export default function PageRoute() {
                 if (key === "life") return <Life page={pageProps}>{body()}</Life>;
 
                 return (
-                    <PostPageLayout rawBlog={pageProps} relates={[]}>
+                    <ArticlePageLayout rawBlog={pageProps} relates={[]}>
                         {body()}
-                    </PostPageLayout>
+                    </ArticlePageLayout>
                 );
             }}
         </Show>

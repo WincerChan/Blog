@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import { Show, createMemo } from "solid-js";
-import PostPageLayout from "~/components/layouts/pages/PostPageLayout";
+import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
 import { getPostBySlug, getPostNeighbours, postUrl } from "~/content/velite";
 import { findRelatedPosts, maybeEncryptHtml } from "~/content/post-utils";
 import NotFound from "~/routes/[...404]";
@@ -38,11 +38,11 @@ export default function PostRoute() {
                 if (p.isTranslation !== undefined) rawBlog.isTranslation = p.isTranslation;
 
                 return (
-                    <PostPageLayout rawBlog={rawBlog} relates={relates}>
+                    <ArticlePageLayout rawBlog={rawBlog} relates={relates}>
                         {p.encrypt_pwd ? content : (
-                            <section innerHTML={content} />
+                            <section class="md-content" innerHTML={content} />
                         )}
-                    </PostPageLayout>
+                    </ArticlePageLayout>
                 );
             }}
         </Show>

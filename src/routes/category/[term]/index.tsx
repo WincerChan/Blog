@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import { createMemo } from "solid-js";
-import TaxonomyPageLayout from "~/components/layouts/pages/TaxonomyPageLayout";
+import CategoryPageView from "~/modules/category/CategoryPage";
 import { getPostsByCategory, postUrl } from "~/content/velite";
 
 export default function CategoryPage() {
@@ -13,7 +13,7 @@ export default function CategoryPage() {
         })),
     );
     return (
-        <TaxonomyPageLayout
+        <CategoryPageView
             rawTaxo={{ term: term(), pages: posts() as any }}
             type="分类"
             basePath="/category"

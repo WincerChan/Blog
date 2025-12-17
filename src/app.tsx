@@ -2,15 +2,15 @@ import { MetaProvider } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { createEffect, onMount, Suspense } from "solid-js";
-import Footer from "./components/core/footer";
-import Header from "./components/core/header";
+import Footer from "./modules/site/footer";
+import Header from "./modules/site/header";
 import TypesafeI18n from "./i18n/i18n-solid";
 
 import { type RouteSectionProps } from "@solidjs/router";
 import {
     globalStore,
     setGlobalStore,
-} from "./components/core/header/ThemeSwitch/Provider";
+} from "./modules/site/header/ThemeSwitch/Provider";
 import { Locale } from "./utils/locale";
 
 import Plausible from "plausible-tracker";

@@ -1,6 +1,6 @@
-import LatestBlog from '~/components/core/section/LatestCard';
-import OtherBlogs from '~/components/core/section/OtherCards';
-import PageShell from '~/components/layouts/shell/PageShell';
+import LatestBlog from "~/modules/home/LatestCard";
+import OtherBlogs from "~/modules/post-listing/OtherCards";
+import PageShell from "~/modules/site/shell/PageShell";
 import { getLatestPosts, postUrl } from "~/content/velite";
 
 
