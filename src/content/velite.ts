@@ -97,9 +97,6 @@ const getPostNeighbours = (slug: string) => {
 const getPageBySlug = (slug: string) =>
     visiblePages().find((p) => String(p.slug) === String(slug));
 
-const getPostsByTag = (tag: string) =>
-    publishedPosts().filter((p) => (p.tags ?? []).includes(tag));
-
 const getPostsByCategory = (category: string) =>
     publishedPosts().filter((p) => String(p.category ?? "") === String(category));
 
@@ -125,7 +122,6 @@ export {
     getPostBySlug,
     getPostNeighbours,
     getPostsByCategory,
-    getPostsByTag,
     pageUrl,
     postUrl,
     publishedPages,

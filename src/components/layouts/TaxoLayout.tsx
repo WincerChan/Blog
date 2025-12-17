@@ -21,7 +21,7 @@ const constructHeadParams = (term: string, basePath: string, pages: BlogMinimal[
     }
 }
 
-const TaxoLayout = ({ rawTaxo, type, basePath = "/tags" }: TaxoLayoutProps) => {
+const TaxoLayout = ({ rawTaxo, type, basePath = "/category" }: TaxoLayoutProps) => {
     const { LL } = useI18nContext()
     const blogsByTerm = rawTaxo.pages;
     const headParams = constructHeadParams(rawTaxo.term, basePath, blogsByTerm);
