@@ -1,10 +1,10 @@
 import { For, Show } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import { BlogMinimal } from "~/schema/Post";
 import DateCat from "./DateCat";
+import type { PostListItem } from "./types";
 
 type BlogProps = {
-    blog: BlogMinimal,
+    blog: PostListItem,
 }
 
 const CompactBlog = ({ blog }: BlogProps) => {
@@ -25,7 +25,7 @@ const CompactBlog = ({ blog }: BlogProps) => {
     )
 }
 type BlogCardsProps = {
-    posts: () => BlogMinimal[],
+    posts: () => PostListItem[],
     description?: string | null
     length?: number
 }

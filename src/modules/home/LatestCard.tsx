@@ -1,9 +1,9 @@
 import { Show } from "solid-js";
-import { BlogMinimal } from "~/schema/Post";
 import DateCat from "~/modules/post-listing/DateCat";
+import type { PostListItem } from "~/modules/post-listing/types";
 
 type BlogProps = {
-    blog: BlogMinimal,
+    blog: PostListItem,
 }
 
 const LatestBlog = ({ blog }: BlogProps) => {

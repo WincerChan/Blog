@@ -1,14 +1,20 @@
 import { Meta } from "@solidjs/meta";
 import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
-import { BasePage } from "~/schema/Page";
 
-const page: BasePage = {
+const page = {
     title: "404 Not Found",
-    date: new Date(),
+    date: new Date().toDateString(),
+    updated: new Date().toDateString(),
+    cover: "",
+    tags: [],
+    category: "",
+    words: 0,
+    toc: "",
+    neighbours: {},
     content: "您访问的页面已经消失得无影无踪，就像我的前任一样。",
     slug: "404",
-    summary: "您访问的页面已经消失得无影无踪，就像我的前任一样。"
-}
+    summary: "您访问的页面已经消失得无影无踪，就像我的前任一样。",
+};
 
 export default function NotFound() {
     return (

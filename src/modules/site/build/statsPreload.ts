@@ -1,8 +1,13 @@
 import { readFileSync } from "fs";
 import path from "path";
-import { BlogMinimal } from "~/schema/Post";
 
-type VelitePost = BlogMinimal & {
+type VelitePost = {
+    slug: string;
+    title: string;
+    date: string;
+    category?: string;
+    tags?: string[];
+    subtitle?: string;
     draft?: boolean;
     private?: boolean;
     isTranslation?: boolean;
@@ -45,7 +50,15 @@ const pages = allPages
     .filter((p) => p.isTranslation !== true)
     .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0));
 
-const groupByYear = (posts: BlogMinimal[]) => {
+type ArchiveListItem = {
+    slug: string;
+    title: string;
+    date: string;
+    category?: string;
+    subtitle?: string;
+};
+
+const groupByYear = (posts: VelitePost[]) => {
     let byYears: { [key: string]: number } = {};
     posts.forEach((post) => {
         const year = new Date(post.date).getFullYear()
@@ -54,8 +67,8 @@ const groupByYear = (posts: BlogMinimal[]) => {
     })
     return byYears
 }
-const groupByYearDetail = (posts: BlogMinimal[]) => {
-    let byYears: { [key: string]: BlogMinimal[] } = { undefined: [] };
+const groupByYearDetail = (posts: VelitePost[]) => {
+    let byYears: { [key: string]: ArchiveListItem[] } = { undefined: [] };
     const toTime = (date: unknown) => {
         const time = new Date(String(date ?? "")).getTime();
         return Number.isFinite(time) ? time : 0;
@@ -65,13 +78,13 @@ const groupByYearDetail = (posts: BlogMinimal[]) => {
     sortedPosts.forEach((post) => {
         const year = new Date(post.date).getFullYear()
         if (!byYears[year]) byYears[`${year}`] = [];
-        const ret = { slug: `/posts/${post.slug}/` }
-        if (post.subtitle) ret['subtitle'] = post.subtitle
-        ret['title'] = post.title
-        ret['category'] = post.category
-        ret['date'] = post.date
-
-        byYears[year].push(ret)
+        byYears[year].push({
+            slug: `/posts/${post.slug}/`,
+            title: post.title,
+            category: post.category,
+            date: post.date,
+            subtitle: post.subtitle,
+        })
     })
     return byYears
 }

@@ -2,49 +2,7 @@ import postsRaw from "../../.velite/posts.json";
 import pagesRaw from "../../.velite/pages.json";
 import friendsRaw from "../../.velite/friends.json";
 
-type VelitePost = {
-    title: string;
-    subtitle?: string;
-    date: string;
-    updated?: string;
-    category?: string;
-    tags?: string[];
-    slug: string;
-    cover?: string;
-    draft?: boolean;
-    private?: boolean;
-    isTranslation?: boolean;
-    lang?: string;
-    encrypt_pwd?: string;
-    mathrender?: boolean;
-    html?: string;
-    toc?: string;
-    summary?: string;
-    words?: number;
-};
-
-type VelitePage = {
-    title: string;
-    date: string;
-    updated?: string;
-    slug: string;
-    weight?: number;
-    cover?: string;
-    draft?: boolean;
-    private?: boolean;
-    isTranslation?: boolean;
-    lang?: string;
-    html?: string;
-    toc?: string;
-    summary?: string;
-};
-
-type FriendLink = {
-    name: string;
-    url: string;
-    avatar?: string;
-    inactive?: boolean;
-};
+import type { FriendLink, VelitePage, VelitePost } from "./types";
 
 const allPosts = postsRaw as unknown as VelitePost[];
 const allPages = pagesRaw as unknown as VelitePage[];

@@ -1,7 +1,7 @@
 import { Meta } from "@solidjs/meta";
-import { HeadParamsTyoe } from "~/schema/Head";
+import type { HeadParams } from "./types";
 
-const OpenGraph = ({ params }: { params: HeadParamsTyoe }) => {
+const OpenGraph = ({ params }: { params: HeadParams }) => {
     const title = params.title ? `${params.title} · ${__SITE_CONF.title}` : __SITE_CONF.title
     return (
         <>

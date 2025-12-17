@@ -1,8 +1,8 @@
 import { Link, Meta, Title } from "@solidjs/meta";
 import { Show } from 'solid-js';
-import { HeadParamsTyoe } from '~/schema/Head';
+import type { HeadParams } from "./types";
 
-const MainMeta = ({ params }: { params: HeadParamsTyoe }) => {
+const MainMeta = ({ params }: { params: HeadParams }) => {
     const title = params.title ? `${params.title} · ${__SITE_CONF.title}` : `首页 · ${__SITE_CONF.title}`
     return (
         <>

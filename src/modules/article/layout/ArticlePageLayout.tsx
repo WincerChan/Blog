@@ -10,7 +10,6 @@ import {
 } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
-import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
@@ -20,6 +19,7 @@ import Comment from "~/modules/article/comments/Comment";
 import Copyright from "~/modules/article/sections/Copyright";
 import LazyBg from "~/modules/site/media/BG";
 import ArticleShell from "~/modules/article/shell/ArticleShell";
+import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/modules/article/types";
 
 const ProtectBlog = lazy(() => import("../encryption/EncryptBlock"));
 
@@ -28,11 +28,11 @@ const PostMeta = ({
     lang,
     LL,
 }: {
-    blog: BlogDetailed;
+    blog: ArticleMeta;
     lang: Accessor<Locales>;
     LL: Accessor<Translations>;
 }) => {
-    const updatedDate = new Date(blog.updated);
+    const updatedDate = new Date(blog.updated ?? blog.date);
     const isRecently =
         new Date().getTime() - updatedDate.getTime() < 90 * 24 * 60 * 60 * 1000;
     return (
@@ -80,7 +80,7 @@ const PostMeta = ({
                         {LL &&
                             LL().post.EXPIRED_NOTIFY({
                                 date: calculateDateDifference(
-                                    new Date(blog.updated),
+                                    new Date(blog.updated ?? blog.date),
                                     lang() as string,
                                 ),
                             })}
@@ -91,8 +91,8 @@ const PostMeta = ({
     );
 };
 
-export const Neighbours = ({ neighbours }: { neighbours: any }) => {
-    const { prev, next } = neighbours;
+export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) => {
+    const { prev, next } = neighbours ?? {};
     return (
         <div class=":: leading-loose my-6 flex justify-between flex-wrap text-xl ">
             {next && (
@@ -117,7 +117,7 @@ export const Neighbours = ({ neighbours }: { neighbours: any }) => {
     );
 };
 
-const constructHeadParams = (blog: BlogDetailed) => {
+const constructHeadParams = (blog: ArticleMeta) => {
     return {
         title: blog.title,
         description: blog.summary || blog.title,
@@ -126,9 +126,9 @@ const constructHeadParams = (blog: BlogDetailed) => {
         pageURL: blog.slug,
         words: blog.words,
         subtitle: blog.subtitle || "",
-        cover: blog.cover,
-        updated: blog.updated,
-        mathrender: blog.mathrender,
+        cover: blog.cover ?? "",
+        updated: blog.updated ?? blog.date,
+        mathrender: !!blog.mathrender,
         lang: blog.lang,
         isTranslation: blog.isTranslation,
         toc: blog.toc,
@@ -138,8 +138,8 @@ const constructHeadParams = (blog: BlogDetailed) => {
 
 type PostProps = {
     children: JSXElement;
-    rawBlog: BlogDetailed;
-    relates: BlogScore[];
+    rawBlog: ArticleMeta;
+    relates: RelatedPost[];
     hideComment?: boolean;
 };
 
@@ -154,12 +154,8 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
 
     const { LL, locale } = useI18nContext();
 
-    const blog = rawBlog,
-        blogParams = {
-            toc: blog.toc,
-            relates: relates,
-        },
-        headParams = constructHeadParams(blog);
+    const blog = rawBlog;
+    const headParams = constructHeadParams(blog);
 
     let wrapper: JSXElement;
     if (!!blog.password) wrapper = <ProtectBlog source={children} />;
@@ -189,8 +185,8 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
 };
 
 interface PostExtraProps {
-    rawBlog: BlogDetailed;
-    relates: BlogScore[];
+    rawBlog: ArticleMeta;
+    relates: RelatedPost[];
     hideComment?: boolean;
     LL: Accessor<Translations>;
 }
@@ -207,7 +203,7 @@ export const PostExtra = ({
                 <Copyright
                     title={rawBlog.title}
                     slug={rawBlog.slug}
-                    updated={rawBlog.updated}
+                    updated={new Date(rawBlog.updated ?? rawBlog.date)}
                     LL={LL}
                 />
                 <Relates relates={relates} LL={LL} />

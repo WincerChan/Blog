@@ -1,21 +1,21 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
-import { BlogMinimal } from "~/schema/Post";
 import OtherBlogs from "~/modules/post-listing/OtherCards";
+import type { PostListItem } from "~/modules/post-listing/types";
 import PageShell from "~/modules/site/shell/PageShell";
 
 type TaxoLayoutProps = {
     rawTaxo: {
         term: string,
-        pages: BlogMinimal[]
+        pages: PostListItem[]
     },
     type: string,
     basePath?: string
 }
 
-const constructHeadParams = (term: string, basePath: string, pages: BlogMinimal[]) => {
+const constructHeadParams = (term: string, basePath: string, pages: PostListItem[]) => {
     return {
         title: `${term}`,
-        date: pages[0].date,
+        date: pages[0]?.date ?? new Date().toDateString(),
         keywords: [term],
         pageURL: `${basePath}/${term}/`,
     }

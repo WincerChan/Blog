@@ -1,13 +1,19 @@
 import { JSX } from "solid-js";
-import { BasePage } from "~/schema/Page";
 import PageShell from "./PageShell";
+
+type SimplePage = {
+    title: string;
+    summary: string;
+    slug: string;
+    lang?: string;
+};
 
 type PageLayoutProps = {
     children: JSX.Element,
-    page: BasePage
+    page: SimplePage
 }
 
-const constructHeadParams = (page: BasePage) => {
+const constructHeadParams = (page: SimplePage) => {
     return {
         title: page.title,
         description: page.summary,

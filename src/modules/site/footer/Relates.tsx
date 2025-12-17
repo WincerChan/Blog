@@ -1,11 +1,11 @@
 import { Accessor, For, Show } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
-import { BlogScore } from "~/schema/Post";
+import type { RelatedPost } from "~/modules/article/types";
 import { formatDate } from "~/utils";
 import IconBadge from "~icons/carbon/badge";
 
 
-const Relates = ({ relates, LL }: { relates: BlogScore[], LL: Accessor<Translations> }) => {
+const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Translations> }) => {
     return (
         <Show when={relates.length}>
             <div>

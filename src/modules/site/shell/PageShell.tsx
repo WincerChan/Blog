@@ -1,12 +1,12 @@
 import { JSX } from "solid-js";
-import { HeadParamsTyoe } from "~/schema/Head";
 import { Locale } from "~/utils/locale";
 import HeadTag from "~/modules/site/head";
 import AppShell from "./AppShell";
+import type { HeadParamsInput } from "~/modules/site/head/types";
 
 type PageShellProps = {
     children: JSX.Element;
-    headParams: HeadParamsTyoe;
+    headParams: HeadParamsInput;
     lang?: Locale;
 };
 

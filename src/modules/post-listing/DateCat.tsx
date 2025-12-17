@@ -1,8 +1,8 @@
 import { formatDate } from "~/utils";
 
 type DateCatProps = {
-    date: Date,
-    category: string
+    date: Date | string,
+    category?: string
 }
 
 const DateCat = ({ date, category }: DateCatProps) => {
@@ -10,7 +10,11 @@ const DateCat = ({ date, category }: DateCatProps) => {
         <div class=":: flex items-center leading-tight ">
             <span>{formatDate(date)}</span>
             <div class=":: h-0.5 w-0.5 mx-4 rounded-full bg-[var(--subtitle)] "></div>
-            <a class="hover:text-menu-transition" href={`/category/${category}/`}>{category}</a>
+            {category && (
+                <a class="hover:text-menu-transition" href={`/category/${category}/`}>
+                    {category}
+                </a>
+            )}
         </div>
     )
 }

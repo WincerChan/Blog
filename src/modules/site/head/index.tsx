@@ -1,7 +1,7 @@
-import { HeadParamsTyoe } from "~/schema/Head";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
+import { HeadParams, HeadParamsInput, resolveHeadParams } from "./types";
 
 import katexCssHref from "katex/dist/katex.min.css?url";
 
@@ -14,7 +14,7 @@ const blogLDJSON = () => {
     })
 }
 
-const postLDJSON = (params: HeadParamsTyoe) => {
+const postLDJSON = (params: HeadParams) => {
     const base = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
@@ -54,36 +54,21 @@ const postLDJSON = (params: HeadParamsTyoe) => {
     return JSON.stringify(base)
 }
 
-
-const HeadParamsDefault = {
-    title: "",
-    date: new Date().toDateString(),
-    description: __SITE_CONF.description,
-    keywords: __SITE_CONF.keywords.split(", "),
-    pageURL: __SITE_CONF.baseURL,
-    updated: new Date().toDateString(),
-    cover: "",
-    words: 0,
-    subtitle: "",
-    genre: "Technology",
-    mathrender: false,
-}
-
-const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
-    headParams = {
-        ...HeadParamsDefault,
-        ...headParams
-    }
-    const isPost = headParams.description !== __SITE_CONF.description
+const HeadTag = ({ headParams }: { headParams: HeadParamsInput }) => {
+    const resolved = resolveHeadParams(headParams);
+    const isPost = resolved.description !== __SITE_CONF.description;
     return (
         <>
-            <MainMeta params={headParams} />
-            {headParams.mathrender && (
+            <MainMeta params={resolved} />
+            {resolved.mathrender && (
                 <link rel="stylesheet" href={katexCssHref} />
             )}
             <ApplicationMeta />
-            <OpenGraph params={headParams} />
-            <script type="application/ld+json" innerHTML={isPost ? postLDJSON(headParams) : blogLDJSON()} />
+            <OpenGraph params={resolved} />
+            <script
+                type="application/ld+json"
+                innerHTML={isPost ? postLDJSON(resolved) : blogLDJSON()}
+            />
         </>
     )
 }
