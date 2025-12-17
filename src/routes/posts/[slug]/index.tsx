@@ -16,6 +16,7 @@ export default function PostRoute() {
                 const content = p.encrypt_pwd ? maybeEncryptHtml(p, html) : html;
                 const neighbours = getPostNeighbours(p.slug);
                 const relates = findRelatedPosts(p);
+                const hasMath = !!p.mathrender || String(p.html ?? "").includes("katex");
 
                 const rawBlog: any = {
                     slug: postUrl(p.slug),
@@ -30,7 +31,7 @@ export default function PostRoute() {
                     words: p.words ?? 0,
                     toc: p.toc ?? "",
                     neighbours,
-                    mathrender: !!p.mathrender,
+                    mathrender: hasMath,
                 };
                 if (p.encrypt_pwd) rawBlog.password = p.encrypt_pwd;
                 if (p.lang) rawBlog.lang = p.lang;

@@ -4,14 +4,9 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import crypto from "node:crypto";
 import YAML from "yaml";
-import { toText } from "hast-util-to-text";
-import hljs from "highlight.js";
-import katex from "katex";
-import he from "he";
-import rehypeParse from "rehype-parse";
-import rehypeStringify from "rehype-stringify";
-import { visit } from "unist-util-visit";
-import { unified } from "unified";
+import rehypeHighlight from "rehype-highlight";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 
 const MATTER_RE =
   /^---(?:\r?\n|\r)(?:([\s\S]*?)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/;
@@ -86,14 +81,8 @@ const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>)
   return `<nav id="TableOfContents"><ul>${render(entries)}</ul></nav>`;
 };
 
-const parseHtmlFragment = (html: string) =>
-  unified().use(rehypeParse, { fragment: true }).parse(String(html ?? ""));
-
-const stringifyHtmlFragment = (tree: any) =>
-  unified().use(rehypeStringify, { allowDangerousHtml: true }).stringify(tree);
-
-const htmlToPlainText = (html: string) =>
-  toText(parseHtmlFragment(html)).replace(/\s+/g, " ").trim();
+const normalizeWhitespace = (value: string) =>
+  String(value ?? "").replace(/\s+/g, " ").trim();
 
 const countWords = (input: string) => {
   const text = input.normalize("NFKC");
@@ -110,128 +99,91 @@ const getClassList = (node: any) => {
   return [];
 };
 
-const setClassList = (node: any, classes: string[]) => {
-  node.properties ??= {};
-  node.properties.className = Array.from(new Set(classes.map(String).filter(Boolean)));
-};
+const MORE_MARKER_RE = /<!--\s*more\s*-->/i;
 
-const wrapTables = (tree: any) => {
-  visit(tree, "element", (node: any, index: number | null, parent: any) => {
-    if (!parent || typeof index !== "number") return;
-    if (node.tagName !== "table") return;
-
-    if (
-      parent.type === "element" &&
-      parent.tagName === "div" &&
-      getClassList(parent).includes("table-wrapper")
-    ) {
-      return;
-    }
-
-    const wrapper = {
-      type: "element",
-      tagName: "div",
-      properties: { className: ["table-wrapper"] },
-      children: [node],
+const rehypeBlogEnhancements = () => {
+  return (tree: any, file: any) => {
+    const isMoreMarkerNode = (node: any) => {
+      if (!node) return false;
+      if (node.type === "comment") return String(node.value ?? "").trim().toLowerCase() === "more";
+      if (node.type === "raw") return MORE_MARKER_RE.test(String(node.value ?? ""));
+      return false;
     };
-    parent.children.splice(index, 1, wrapper);
-  });
-};
 
-const normalizeHtmlForSite = (tree: any) => {
-  visit(tree, "element", (node: any) => {
-    if (node.tagName !== "img") return;
-    node.properties ??= {};
-    if (!node.properties.loading) node.properties.loading = "lazy";
-    if (!node.properties.decoding) node.properties.decoding = "async";
-    if (!node.properties.referrerpolicy) node.properties.referrerpolicy = "no-referrer";
-  });
-  wrapTables(tree);
-};
+    const isTableWrapper = (node: any) =>
+      node?.type === "element" &&
+      String(node.tagName || "").toLowerCase() === "div" &&
+      getClassList(node).includes("table-wrapper");
 
-const highlightHtmlCodeBlocks = (tree: any) => {
-  visit(tree, "element", (node: any) => {
-    if (node.tagName !== "pre") return;
-    const code = (node.children || []).find(
-      (c: any) => c?.type === "element" && c.tagName === "code",
-    );
-    if (!code) return;
+    const walk = (node: any, ancestorTags: string[]) => {
+      if (!node) return;
+      const isElement = node.type === "element";
+      const tag = isElement ? String(node.tagName || "").toLowerCase() : "";
+      const nextAncestors = isElement ? ancestorTags.concat(tag) : ancestorTags;
 
-    const classes = getClassList(code);
-    const langClass = classes.find((c) => c.startsWith("language-"));
-    const lang = langClass ? langClass.slice("language-".length).toLowerCase() : undefined;
-
-    const rawCode = toText(code);
-    const highlighted =
-      lang && hljs.getLanguage(lang)
-        ? hljs.highlight(rawCode, { language: lang, ignoreIllegals: true }).value
-        : hljs.highlightAuto(rawCode).value;
-
-    code.children = [{ type: "raw", value: highlighted }];
-    if (lang) {
-      code.properties ??= {};
-      code.properties["data-lang"] = lang;
-    }
-    setClassList(code, classes.concat(["hljs"]).concat(lang ? [`language-${lang}`] : []));
-  });
-};
-
-const renderMathToKatexHtml = (tree: any) => {
-  const render = (formula: string) => {
-    const decoded = he.decode(formula);
-    const displayMode = decoded.trim().startsWith("\\begin");
-    const html = katex.renderToString(decoded, {
-      output: "html",
-      displayMode,
-      strict: "warn",
-    });
-    return html.replace(/<annotation[\s\S]*?<\/annotation>/g, "");
-  };
-
-  const processChildren = (parent: any) => {
-    if (!parent?.children || !Array.isArray(parent.children)) return;
-    for (let i = 0; i < parent.children.length; i++) {
-      const child = parent.children[i];
-      if (child?.type === "element") {
-        const tag = String(child.tagName || "").toLowerCase();
-        if (tag === "code" || tag === "pre" || tag === "script" || tag === "style") continue;
-        processChildren(child);
-        continue;
+      if (isElement && tag === "img") {
+        node.properties ??= {};
+        if (!node.properties.loading) node.properties.loading = "lazy";
+        if (!node.properties.decoding) node.properties.decoding = "async";
+        if (!node.properties.referrerpolicy) node.properties.referrerpolicy = "no-referrer";
       }
 
-      if (child?.type !== "text") continue;
-      const value = String(child.value ?? "");
-      if (!value.includes("$$")) continue;
+      if (!Array.isArray(node.children)) return;
+      for (let i = 0; i < node.children.length; i++) {
+        const child = node.children[i];
 
-      const parts: any[] = [];
-      let last = 0;
-      const re = /\$\$([\s\S]+?)\$\$/g;
-      for (let m = re.exec(value); m; m = re.exec(value)) {
-        const start = m.index;
-        const end = start + m[0].length;
-        if (start > last) parts.push({ type: "text", value: value.slice(last, start) });
-        try {
-          parts.push({ type: "raw", value: render(m[1]) });
-        } catch {
-          parts.push({ type: "text", value: m[0] });
+        if (isMoreMarkerNode(child)) {
+          node.children.splice(i, 1);
+          i -= 1;
+          continue;
         }
-        last = end;
-      }
-      if (last < value.length) parts.push({ type: "text", value: value.slice(last) });
-      parent.children.splice(i, 1, ...parts);
-      i += parts.length - 1;
-    }
-  };
 
-  processChildren(tree);
+        if (
+          child?.type === "element" &&
+          String(child.tagName || "").toLowerCase() === "table" &&
+          !isTableWrapper(node)
+        ) {
+          const wrapper = {
+            type: "element",
+            tagName: "div",
+            properties: { className: ["table-wrapper"] },
+            children: [child],
+          };
+          node.children.splice(i, 1, wrapper);
+          walk(wrapper, nextAncestors);
+          continue;
+        }
+
+        walk(child, nextAncestors);
+      }
+    };
+
+    walk(tree, []);
+  };
 };
 
-const processHtmlForSite = (html: string, opts?: { math?: boolean }) => {
-  const tree = parseHtmlFragment(html);
-  normalizeHtmlForSite(tree);
-  highlightHtmlCodeBlocks(tree);
-  if (opts?.math) renderMathToKatexHtml(tree);
-  return stringifyHtmlFragment(tree);
+const getMetaFromZodCtx = (ctx: unknown) => (ctx as any)?.meta as any;
+
+const summaryFromMeta = (meta: any, maxLen: number) => {
+  const mdast = meta?.mdast;
+  if (mdast) {
+    const state = { parts: [] as string[], done: false };
+    const collect = (node: any) => {
+      if (!node || state.done) return;
+      if (node.type === "html" && MORE_MARKER_RE.test(String(node.value ?? ""))) {
+        state.done = true;
+        return;
+      }
+      if (node.type === "text") state.parts.push(String(node.value ?? ""));
+      if (node.type === "inlineCode") state.parts.push(String(node.value ?? ""));
+      if (node.type === "code") state.parts.push(String(node.value ?? ""));
+      const children = node.children;
+      if (Array.isArray(children)) for (const c of children) collect(c);
+    };
+    collect(mdast);
+    if (state.done) return normalizeWhitespace(state.parts.join(" ")).slice(0, maxLen);
+  }
+  return normalizeWhitespace(String(meta?.plain ?? "")).slice(0, maxLen);
 };
 
 const readSiteConf = async (repoRoot: string) => {
@@ -281,12 +233,25 @@ const Post = defineCollection({
     mathrender: s.boolean().optional(),
     isTranslation: s.boolean().optional(),
     lang: s.string().optional(),
-    contentHtml: s.markdown({
+    html: s.markdown({
       copyLinkedFiles: false,
       removeComments: false,
-      rehypePlugins: [rehypeSlug],
+      remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeBlogEnhancements,
+        [rehypeHighlight, { ignoreMissing: true }],
+        [rehypeKatex, { strict: "warn" }],
+      ],
     }),
-    tocEntries: s.toc({ maxDepth: 5 }),
+    toc: s.toc({ maxDepth: 5 }).transform((entries) =>
+      tocToHtml(Array.isArray(entries) ? (entries as any) : []),
+    ),
+    summary: s.raw().transform((_, ctx) => summaryFromMeta(getMetaFromZodCtx(ctx), 260)),
+    words: s.raw().transform((_, ctx) => {
+      const meta = getMetaFromZodCtx(ctx);
+      return countWords(normalizeWhitespace(String(meta?.plain ?? "")));
+    }),
   }),
 });
 
@@ -304,12 +269,21 @@ const Page = defineCollection({
     cover: s.string().optional(),
     isTranslation: s.boolean().optional(),
     lang: s.string().optional(),
-    contentHtml: s.markdown({
+    html: s.markdown({
       copyLinkedFiles: false,
       removeComments: false,
-      rehypePlugins: [rehypeSlug],
+      remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeBlogEnhancements,
+        [rehypeHighlight, { ignoreMissing: true }],
+        [rehypeKatex, { strict: "warn" }],
+      ],
     }),
-    tocEntries: s.toc({ maxDepth: 5 }),
+    toc: s.toc({ maxDepth: 5 }).transform((entries) =>
+      tocToHtml(Array.isArray(entries) ? (entries as any) : []),
+    ),
+    summary: s.raw().transform((_, ctx) => summaryFromMeta(getMetaFromZodCtx(ctx), 260)),
   }),
 });
 
@@ -341,25 +315,9 @@ export default defineConfig({
     const site = await readSiteConf(repoRoot);
     const publicDir = path.join(repoRoot, "public");
 
-    const markerRe = /<!--\s*more\s*-->/i;
-    const markerReGlobal = /<!--\s*more\s*-->/gi;
-
     const posts = (data.posts as any[]).map((p) => {
       const dateObj = parseDateLikeHugo(p.date);
       const updatedObj = parseDateLikeHugo(p.updated ?? p.date);
-
-      const originalHtml = String(p.contentHtml ?? "");
-      const markerIdx = originalHtml.search(markerRe);
-      const summaryHtml =
-        markerIdx >= 0 ? originalHtml.slice(0, markerIdx) : originalHtml;
-      const withoutMarker =
-        markerIdx >= 0 ? originalHtml.replace(markerReGlobal, "") : originalHtml;
-
-      const html = processHtmlForSite(withoutMarker, { math: !!p.mathrender });
-
-      const summary = htmlToPlainText(summaryHtml).slice(0, 260);
-      const words = countWords(htmlToPlainText(html));
-      const toc = tocToHtml(Array.isArray(p.tocEntries) ? p.tocEntries : []);
 
       return {
         ...p,
@@ -367,36 +325,18 @@ export default defineConfig({
         dateObj,
         updatedObj,
         url: `/posts/${String(p.slug)}/`,
-        html,
-        toc,
-        summary,
-        words,
       };
     });
 
     const pages = (data.pages as any[]).map((p) => {
       const dateObj = parseDateLikeHugo(p.date);
       const updatedObj = parseDateLikeHugo(p.updated ?? p.date);
-      const originalHtml = String(p.contentHtml ?? "");
-      const markerIdx = originalHtml.search(markerRe);
-      const summaryHtml =
-        markerIdx >= 0 ? originalHtml.slice(0, markerIdx) : originalHtml;
-      const withoutMarker =
-        markerIdx >= 0 ? originalHtml.replace(markerReGlobal, "") : originalHtml;
-
-      const html = processHtmlForSite(withoutMarker);
-
-      const summary = htmlToPlainText(summaryHtml).slice(0, 260);
-      const toc = tocToHtml(Array.isArray(p.tocEntries) ? p.tocEntries : []);
 
       return {
         ...p,
         dateObj,
         updatedObj,
         url: `/${String(p.slug)}/`,
-        html,
-        toc,
-        summary,
       };
     });
 
@@ -514,23 +454,6 @@ export default defineConfig({
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&apos;");
 
-    const stripHtmlDocument = (html: string) => {
-      const raw = String(html ?? "");
-      const tree = parseHtmlFragment(raw);
-      let bodyNode: any | undefined;
-      visit(tree, "element", (node: any) => {
-        if (node.tagName === "body") bodyNode = node;
-      });
-      if (bodyNode?.children?.length) {
-        return stringifyHtmlFragment({ type: "root", children: bodyNode.children });
-      }
-      return raw;
-    };
-
-    const stripToPlainText = (html: string) => {
-      return htmlToPlainText(stripHtmlDocument(html));
-    };
-
     const siteBaseForAtom = new URL("/", site.baseURL).toString();
     const feedId = hugoAtomIdFromString(siteBaseForAtom);
     const feedUpdated = formatUtc(
@@ -552,15 +475,14 @@ export default defineConfig({
         const summaryText =
           isEncrypted
             ? "抱歉，本文已加密，请至网站输入密码后阅读。"
-            : String(p.summary || "").trim() ||
-            stripToPlainText(stripHtmlDocument(String(p.html ?? ""))).slice(0, 220);
+            : String(p.summary || "").trim() || String(p.title || "").trim();
 
         const cover = String(p.cover ?? "").trim();
         const coverHtml = cover
           ? `<p><img src="${escapeXmlText(cover)}" alt="cover" /></p>`
           : "";
 
-        const bodyHtml = stripHtmlDocument(String(p.html ?? ""));
+        const bodyHtml = String(p.html ?? "");
         const fullHtml = coverHtml + bodyHtml;
 
         const contentXml = isEncrypted ? escapeXmlText(summaryText) : escapeXmlText(fullHtml);
