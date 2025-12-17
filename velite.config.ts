@@ -88,10 +88,12 @@ const plainifyHtml = (html: string) => {
   return text.replace(/\s+/g, " ").trim();
 };
 
-const countWords = (plain: string) => {
-  const asciiWords = (plain.match(/[A-Za-z0-9_]+/g) || []).length;
-  const cjkChars = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-  return asciiWords + Math.round(cjkChars * 0.6);
+const countWords = (input: string) => {
+  const text = input.normalize("NFKC");
+  const han = (text.match(/\p{Script=Han}/gu) || []).length;
+  const latinWords = (text.match(/[A-Za-z0-9]+(?:[’'-][A-Za-z0-9]+)*/g) || []).length;
+
+  return han + latinWords;
 };
 
 const renderMathToKatexHtml = (html: string) => {
