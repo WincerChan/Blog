@@ -1,5 +1,5 @@
 import { useLocation } from "@solidjs/router";
-import { createEffect, createMemo, createSignal, onMount } from "solid-js";
+import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconCatalog from "~icons/carbon/catalog";
 import Modal from "../section/Modal";
@@ -19,45 +19,56 @@ const ToC = ({ toc, slug }: ToCInterface) => {
     const loc = useLocation()
     const hash = createMemo(() => loc.hash)
 
+    const decodeFragment = (fragment: string) => {
+        try {
+            return decodeURIComponent(fragment);
+        } catch {
+            return fragment;
+        }
+    };
+
     const [isScrolling, setIsScrolling] = createSignal(false)
     const [activeId, setActiveId] = createSignal('');
-    const [hrefs, setHrefs] = createSignal<NodeListOf<HTMLAnchorElement>>([])
-    let cancelHoverFunc: NodeJS.Timeout, cancelScrollFunc: NodeJS.Timeout;
-    const handleScroll = (event: Event) => {
-        const currScrollTop = (event.target as Document).documentElement.scrollTop
+    const [hrefs, setHrefs] = createSignal<HTMLAnchorElement[]>([])
+    let scrollTargetTop: number | null = null;
+    let scrollEndTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const stopScrolling = () => {
+        if (scrollEndTimer) clearTimeout(scrollEndTimer);
+        scrollEndTimer = undefined;
+        scrollTargetTop = null;
+        setIsScrolling(false);
+    };
+
+    const getScrollTop = () =>
+        (document.scrollingElement ?? document.documentElement).scrollTop ?? 0;
+
+    const handleScroll = () => {
+        const currScrollTop = getScrollTop();
         if (currScrollTop < 64 && !isScrolling()) {
-            setActiveId('')
-            return
+            setActiveId("");
+            return;
         }
-        const id = activeId()
-        if (!id) return
-        const heading = document.getElementById(id)
-        if (!heading) return
-        if (currScrollTop == heading.offsetTop) {
-            clearTimeout(cancelHoverFunc)
-            clearTimeout(cancelScrollFunc)
-            setIsScrolling(false)
+
+        if (!isScrolling()) return;
+
+        if (scrollTargetTop !== null && Math.abs(currScrollTop - scrollTargetTop) <= 2) {
+            stopScrolling();
+            return;
         }
-    }
+
+        if (scrollEndTimer) clearTimeout(scrollEndTimer);
+        scrollEndTimer = setTimeout(() => {
+            stopScrolling();
+        }, 140);
+    };
 
     createEffect(() => {
         if (!hash()) return
 
-        const id = decodeURI(hash().slice(1))
+        const id = decodeFragment(hash().slice(1))
         if (!id) return
         setActiveId(id)
-        const heading = document.getElementById(id)
-        if (!heading) return
-        document.documentElement.scrollTop = heading.offsetTop
-    })
-
-    createEffect(() => {
-        if (isScrolling()) {
-            ref.classList.add("no-click")
-            cancelHoverFunc = setTimeout(() => { ref.classList.remove("disable-hover") }, 1000)
-        } else {
-            ref.classList.remove("no-click")
-        }
     })
 
     const handleIntersect = (entries) => {
@@ -71,20 +82,32 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
     // add event listener for toc
     createEffect(() => {
+        const anchors = hrefs();
+        if (!anchors.length) return;
+
         const observer = new IntersectionObserver(handleIntersect, {
             root: null,
             rootMargin: '0px 0px -95% 0px',
             threshold: 0.1,
         })
-        hrefs().forEach(elem => {
-            const id = decodeURI(elem.href.split('#')[1])
-            elem.addEventListener('click', (event) =>
-                isScrolling() ? event.preventDefault() : handleClick(id)
-            )
-            const heading = document.getElementById(id)
-            heading && observer.observe(heading)
-        })
 
+        const cleanup: Array<() => void> = [];
+        anchors.forEach((elem) => {
+            const id = decodeFragment(elem.href.split("#")[1] ?? "");
+            if (!id) return;
+
+            const onClick = () => handleClick(id);
+            elem.addEventListener("click", onClick);
+            cleanup.push(() => elem.removeEventListener("click", onClick));
+
+            const heading = document.getElementById(id);
+            heading && observer.observe(heading);
+        });
+
+        onCleanup(() => {
+            observer.disconnect();
+            cleanup.forEach((fn) => fn());
+        });
     })
 
     createEffect(() => {
@@ -93,7 +116,8 @@ const ToC = ({ toc, slug }: ToCInterface) => {
             ref.scrollTop = 0
         }
         anchors.forEach(anchor => {
-            const hrefLink = decodeURI(anchor.href.split('#')[1])
+            const hrefLink = decodeFragment(anchor.href.split("#")[1] ?? "");
+            if (!hrefLink) return;
             if (hrefLink == activeId()) {
                 anchor.classList.add('active')
                 ref.scrollTo({ top: anchor.offsetTop - 54 })
@@ -106,9 +130,8 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
     onMount(() => {
         window.addEventListener('scroll', handleScroll)
-        const id = decodeURI(hash().slice(1))
-        id && handleClick(id)
-        setHrefs(ref.querySelectorAll('a'))
+        onCleanup(() => window.removeEventListener("scroll", handleScroll));
+        setHrefs(Array.from(ref.querySelectorAll('a')))
     })
 
 
@@ -116,11 +139,10 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         if (!id) return
         const heading = document.getElementById(id)
         if (!heading) return
-        if (document.documentElement.scrollTop == heading.offsetTop) return
-        setIsScrolling(true)
-        cancelScrollFunc = setTimeout(() => setIsScrolling(false), 1000)
-        setActiveId(id)
-        document.documentElement.scrollTop = heading.offsetTop
+        scrollTargetTop = heading.offsetTop;
+        if (Math.abs(getScrollTop() - scrollTargetTop) <= 2) return;
+        setIsScrolling(true);
+        setActiveId(id);
     }
 
 

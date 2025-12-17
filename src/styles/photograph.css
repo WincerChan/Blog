@@ -41,7 +41,7 @@ header ul,
     @apply ml-2;
 }
 
-#TableOfContents > ul > li {
+#TableOfContents>ul>li {
     @apply pl-0;
 }
 
@@ -71,24 +71,24 @@ header ul,
 
 /* section  */
 
-.md-content > ul,
-.md-content > ol {
+.md-content>ul,
+.md-content>ol {
     @apply pl-8 px-4 my-2;
 }
 
-.md-content li {
+li {
     @apply my-2;
 }
 
-.md-content li li {
+li li {
     @apply ml-lg;
 }
 
-.md-content ol {
+ol {
     @apply list-decimal;
 }
 
-.md-content ul {
+ul {
     @apply list-disc;
 }
 
@@ -145,19 +145,19 @@ header ul,
     @apply my-4;
 }
 
-.md-content table tr > th {
+.md-content table tr>th {
     @apply px-4 py-2;
 }
 
-.md-content table tr > td {
+.md-content table tr>td {
     @apply border px-4 py-2;
 }
 
-.md-content :not(pre) > code {
+.md-content :not(pre)>code {
     @apply bg-[var(--copyright-bg)] px-1 pb-2px rounded font-mono mx-1;
 }
 
-.md-content pre > code {
+.md-content pre>code {
     @apply block;
 }
 
@@ -204,11 +204,11 @@ b {
     max-width: 100%;
 }
 
-details.archives-year > summary {
+details.archives-year>summary {
     list-style: none;
 }
 
-details.archives-year > summary::-webkit-details-marker {
+details.archives-year>summary::-webkit-details-marker {
     display: none;
 }
 
