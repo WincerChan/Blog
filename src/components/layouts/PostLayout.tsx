@@ -128,6 +128,7 @@ const constructHeadParams = (blog: BlogDetailed) => {
         subtitle: blog.subtitle || "",
         cover: blog.cover,
         updated: blog.updated,
+        mathrender: blog.mathrender,
         lang: blog.lang,
         isTranslation: blog.isTranslation,
         toc: blog.toc,

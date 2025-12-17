@@ -4,10 +4,14 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import crypto from "node:crypto";
 import YAML from "yaml";
-import { load } from "cheerio";
+import { toText } from "hast-util-to-text";
 import hljs from "highlight.js";
 import katex from "katex";
 import he from "he";
+import rehypeParse from "rehype-parse";
+import rehypeStringify from "rehype-stringify";
+import { visit } from "unist-util-visit";
+import { unified } from "unified";
 
 const MATTER_RE =
   /^---(?:\r?\n|\r)(?:([\s\S]*?)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/;
@@ -82,11 +86,14 @@ const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>)
   return `<nav id="TableOfContents"><ul>${render(entries)}</ul></nav>`;
 };
 
-const plainifyHtml = (html: string) => {
-  const $ = load(html);
-  const text = $.text();
-  return text.replace(/\s+/g, " ").trim();
-};
+const parseHtmlFragment = (html: string) =>
+  unified().use(rehypeParse, { fragment: true }).parse(String(html ?? ""));
+
+const stringifyHtmlFragment = (tree: any) =>
+  unified().use(rehypeStringify, { allowDangerousHtml: true }).stringify(tree);
+
+const htmlToPlainText = (html: string) =>
+  toText(parseHtmlFragment(html)).replace(/\s+/g, " ").trim();
 
 const countWords = (input: string) => {
   const text = input.normalize("NFKC");
@@ -96,62 +103,135 @@ const countWords = (input: string) => {
   return han + latinWords;
 };
 
-const renderMathToKatexHtml = (html: string) => {
-  const mathPattern = /\$\$([\s\S]+?)\$\$/g;
-  return he.decode(html).replace(mathPattern, (match, formula) => {
-    try {
-      const renderResult = katex.renderToString(he.decode(formula), {
-        output: "html",
-        displayMode: formula.trim().startsWith("\\begin"),
-        strict: "warn",
-      });
-      const $ = load(renderResult);
-      $("annotation").remove();
-      return $("body").html() || renderResult;
-    } catch {
-      return match;
+const getClassList = (node: any) => {
+  const cn = node?.properties?.className;
+  if (Array.isArray(cn)) return cn.map(String).filter(Boolean);
+  if (typeof cn === "string") return cn.split(/\s+/).filter(Boolean);
+  return [];
+};
+
+const setClassList = (node: any, classes: string[]) => {
+  node.properties ??= {};
+  node.properties.className = Array.from(new Set(classes.map(String).filter(Boolean)));
+};
+
+const wrapTables = (tree: any) => {
+  visit(tree, "element", (node: any, index: number | null, parent: any) => {
+    if (!parent || typeof index !== "number") return;
+    if (node.tagName !== "table") return;
+
+    if (
+      parent.type === "element" &&
+      parent.tagName === "div" &&
+      getClassList(parent).includes("table-wrapper")
+    ) {
+      return;
     }
+
+    const wrapper = {
+      type: "element",
+      tagName: "div",
+      properties: { className: ["table-wrapper"] },
+      children: [node],
+    };
+    parent.children.splice(index, 1, wrapper);
   });
 };
 
-const highlightHtmlCodeBlocks = (html: string) => {
-  const $ = load(html, { decodeEntities: false });
-  $("pre > code").each((_, elem) => {
-    const codeElem = $(elem);
-    const classAttr = String(codeElem.attr("class") || "");
-    const match = classAttr.match(/language-([a-zA-Z0-9_+-]+)/);
-    const lang = match?.[1]?.toLowerCase();
-    const text = he.decode(codeElem.text());
+const normalizeHtmlForSite = (tree: any) => {
+  visit(tree, "element", (node: any) => {
+    if (node.tagName !== "img") return;
+    node.properties ??= {};
+    if (!node.properties.loading) node.properties.loading = "lazy";
+    if (!node.properties.decoding) node.properties.decoding = "async";
+    if (!node.properties.referrerpolicy) node.properties.referrerpolicy = "no-referrer";
+  });
+  wrapTables(tree);
+};
 
-    const highlighted = lang && hljs.getLanguage(lang)
-      ? hljs.highlight(text, { language: lang, ignoreIllegals: true }).value
-      : hljs.highlightAuto(text).value;
-
-    codeElem.html(highlighted);
-    if (lang) codeElem.attr("data-lang", lang);
-    else codeElem.removeAttr("data-lang");
-    const nextClass = new Set(
-      classAttr
-        .split(/\s+/)
-        .filter(Boolean)
-        .concat(["hljs"])
-        .concat(lang ? [`language-${lang}`] : []),
+const highlightHtmlCodeBlocks = (tree: any) => {
+  visit(tree, "element", (node: any) => {
+    if (node.tagName !== "pre") return;
+    const code = (node.children || []).find(
+      (c: any) => c?.type === "element" && c.tagName === "code",
     );
-    codeElem.attr("class", Array.from(nextClass).join(" "));
+    if (!code) return;
+
+    const classes = getClassList(code);
+    const langClass = classes.find((c) => c.startsWith("language-"));
+    const lang = langClass ? langClass.slice("language-".length).toLowerCase() : undefined;
+
+    const rawCode = toText(code);
+    const highlighted =
+      lang && hljs.getLanguage(lang)
+        ? hljs.highlight(rawCode, { language: lang, ignoreIllegals: true }).value
+        : hljs.highlightAuto(rawCode).value;
+
+    code.children = [{ type: "raw", value: highlighted }];
+    if (lang) {
+      code.properties ??= {};
+      code.properties["data-lang"] = lang;
+    }
+    setClassList(code, classes.concat(["hljs"]).concat(lang ? [`language-${lang}`] : []));
   });
-  return $.html();
 };
 
-const normalizeHtmlForSite = (html: string) => {
-  const $ = load(html, { decodeEntities: false });
-  $("img").each((_, elem) => {
-    const e = $(elem);
-    if (!e.attr("loading")) e.attr("loading", "lazy");
-    if (!e.attr("decoding")) e.attr("decoding", "async");
-    if (!e.attr("referrerpolicy")) e.attr("referrerpolicy", "no-referrer");
-  });
-  $("table").wrap('<div class="table-wrapper"></div>');
-  return $.html();
+const renderMathToKatexHtml = (tree: any) => {
+  const render = (formula: string) => {
+    const decoded = he.decode(formula);
+    const displayMode = decoded.trim().startsWith("\\begin");
+    const html = katex.renderToString(decoded, {
+      output: "html",
+      displayMode,
+      strict: "warn",
+    });
+    return html.replace(/<annotation[\s\S]*?<\/annotation>/g, "");
+  };
+
+  const processChildren = (parent: any) => {
+    if (!parent?.children || !Array.isArray(parent.children)) return;
+    for (let i = 0; i < parent.children.length; i++) {
+      const child = parent.children[i];
+      if (child?.type === "element") {
+        const tag = String(child.tagName || "").toLowerCase();
+        if (tag === "code" || tag === "pre" || tag === "script" || tag === "style") continue;
+        processChildren(child);
+        continue;
+      }
+
+      if (child?.type !== "text") continue;
+      const value = String(child.value ?? "");
+      if (!value.includes("$$")) continue;
+
+      const parts: any[] = [];
+      let last = 0;
+      const re = /\$\$([\s\S]+?)\$\$/g;
+      for (let m = re.exec(value); m; m = re.exec(value)) {
+        const start = m.index;
+        const end = start + m[0].length;
+        if (start > last) parts.push({ type: "text", value: value.slice(last, start) });
+        try {
+          parts.push({ type: "raw", value: render(m[1]) });
+        } catch {
+          parts.push({ type: "text", value: m[0] });
+        }
+        last = end;
+      }
+      if (last < value.length) parts.push({ type: "text", value: value.slice(last) });
+      parent.children.splice(i, 1, ...parts);
+      i += parts.length - 1;
+    }
+  };
+
+  processChildren(tree);
+};
+
+const processHtmlForSite = (html: string, opts?: { math?: boolean }) => {
+  const tree = parseHtmlFragment(html);
+  normalizeHtmlForSite(tree);
+  highlightHtmlCodeBlocks(tree);
+  if (opts?.math) renderMathToKatexHtml(tree);
+  return stringifyHtmlFragment(tree);
 };
 
 const readSiteConf = async (repoRoot: string) => {
@@ -275,12 +355,10 @@ export default defineConfig({
       const withoutMarker =
         markerIdx >= 0 ? originalHtml.replace(markerReGlobal, "") : originalHtml;
 
-      let html = normalizeHtmlForSite(withoutMarker);
-      html = highlightHtmlCodeBlocks(html);
-      if (p.mathrender) html = renderMathToKatexHtml(html);
+      const html = processHtmlForSite(withoutMarker, { math: !!p.mathrender });
 
-      const summary = plainifyHtml(summaryHtml).slice(0, 260);
-      const words = countWords(plainifyHtml(html));
+      const summary = htmlToPlainText(summaryHtml).slice(0, 260);
+      const words = countWords(htmlToPlainText(html));
       const toc = tocToHtml(Array.isArray(p.tocEntries) ? p.tocEntries : []);
 
       return {
@@ -306,10 +384,9 @@ export default defineConfig({
       const withoutMarker =
         markerIdx >= 0 ? originalHtml.replace(markerReGlobal, "") : originalHtml;
 
-      let html = normalizeHtmlForSite(withoutMarker);
-      html = highlightHtmlCodeBlocks(html);
+      const html = processHtmlForSite(withoutMarker);
 
-      const summary = plainifyHtml(summaryHtml).slice(0, 260);
+      const summary = htmlToPlainText(summaryHtml).slice(0, 260);
       const toc = tocToHtml(Array.isArray(p.tocEntries) ? p.tocEntries : []);
 
       return {
@@ -438,14 +515,20 @@ export default defineConfig({
         .replaceAll("'", "&apos;");
 
     const stripHtmlDocument = (html: string) => {
-      const $ = load(String(html ?? ""), { decodeEntities: false });
-      return $("body").html() || $.root().html() || "";
+      const raw = String(html ?? "");
+      const tree = parseHtmlFragment(raw);
+      let bodyNode: any | undefined;
+      visit(tree, "element", (node: any) => {
+        if (node.tagName === "body") bodyNode = node;
+      });
+      if (bodyNode?.children?.length) {
+        return stringifyHtmlFragment({ type: "root", children: bodyNode.children });
+      }
+      return raw;
     };
 
     const stripToPlainText = (html: string) => {
-      const $ = load(String(html ?? ""), { decodeEntities: true });
-      const text = $("body").text() || $.root().text() || "";
-      return text.replace(/\s+/g, " ").trim();
+      return htmlToPlainText(stripHtmlDocument(html));
     };
 
     const siteBaseForAtom = new URL("/", site.baseURL).toString();

@@ -11,6 +11,7 @@ export const HeadParamsSchema = z.object({
     words: z.number().default(0),
     subtitle: z.string().default(""),
     genre: z.string().default("Technology"),
+    mathrender: z.boolean().optional(),
     lang: z.string().optional(),
     isTranslation: z.boolean().optional(),
     toc: z.string().optional()

@@ -30,9 +30,9 @@ export default function PostRoute() {
                     words: p.words ?? 0,
                     toc: p.toc ?? "",
                     neighbours,
+                    mathrender: !!p.mathrender,
                 };
                 if (p.encrypt_pwd) rawBlog.password = p.encrypt_pwd;
-                if (p.mathrender) rawBlog.mathrender = true;
                 if (p.lang) rawBlog.lang = p.lang;
                 if (p.isTranslation !== undefined) rawBlog.isTranslation = p.isTranslation;
 

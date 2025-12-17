@@ -3,6 +3,8 @@ import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
 
+import katexCssHref from "katex/dist/katex.min.css?url";
+
 const blogLDJSON = () => {
     return JSON.stringify({
         "@context": "https://schema.org",
@@ -64,6 +66,7 @@ const HeadParamsDefault = {
     words: 0,
     subtitle: "",
     genre: "Technology",
+    mathrender: false,
 }
 
 const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
@@ -75,6 +78,9 @@ const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
     return (
         <>
             <MainMeta params={headParams} />
+            {headParams.mathrender && (
+                <link rel="stylesheet" href={katexCssHref} />
+            )}
             <ApplicationMeta />
             <OpenGraph params={headParams} />
             <script type="application/ld+json" innerHTML={isPost ? postLDJSON(headParams) : blogLDJSON()} />
@@ -83,4 +89,3 @@ const HeadTag = ({ headParams }: { headParams: HeadParamsTyoe }) => {
 }
 
 export default HeadTag;
-
