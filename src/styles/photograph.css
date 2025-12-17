@@ -71,60 +71,60 @@ header ul,
 
 /* section  */
 
-section > ul,
-section > ol {
+.md-content > ul,
+.md-content > ol {
     @apply pl-8 px-4 my-2;
 }
 
-section li {
+.md-content li {
     @apply my-2;
 }
 
-li li {
+.md-content li li {
     @apply ml-lg;
 }
 
-section ol {
+.md-content ol {
     @apply list-decimal;
 }
 
-section ul {
+.md-content ul {
     @apply list-disc;
 }
 
-section h2,
-section h3,
-section h4 {
+.md-content h2,
+.md-content h3,
+.md-content h4 {
     @apply pl-3 font-medium my-6 py-1 border-l-6 border-[var(--subtitle)] leading-loose font-headline !mobile-width-beyond;
 }
 
-section h2 {
+.md-content h2 {
     @apply text-2xl;
 }
 
-section h3 {
+.md-content h3 {
     @apply text-xl;
 }
 
-section h4 {
+.md-content h4 {
     @apply text-lg;
 }
 
-section hr {
+.md-content hr {
     @apply mx-auto w-[50%] my-8 border-none h-2px bg-[--blockquote-border];
 }
 
-section blockquote {
+.md-content blockquote {
     @apply border-l-6 border-[var(--blockquote-border)] text-[var(--blockquote-text)] my-4 pl-3 pr-4 !mobile-width-beyond;
 }
 
-blockquote p {
+.md-content blockquote p {
     @apply py-3;
 }
 
-section p a,
-section td a,
-section li a {
+.md-content p a,
+.md-content td a,
+.md-content li a {
     @apply transition relative duration-200 ease-linear text-link hover:underline-[var(--menu-hover-text)];
 }
 
@@ -132,36 +132,36 @@ section li a {
     @apply transition relative duration-200 ease-linear text-link underline-none;
 }
 
-section table {
+.md-content table {
     @apply text-center mx-auto mb-8 table-auto;
 }
 
-section p,
-section li {
+.md-content p,
+.md-content li {
     @apply text-lg leading-8 text-justify;
 }
 
-section p {
+.md-content p {
     @apply my-4;
 }
 
-section table tr > th {
+.md-content table tr > th {
     @apply px-4 py-2;
 }
 
-section table tr > td {
+.md-content table tr > td {
     @apply border px-4 py-2;
 }
 
-section :not(pre) > code {
+.md-content :not(pre) > code {
     @apply bg-[var(--copyright-bg)] px-1 pb-2px rounded font-mono mx-1;
 }
 
-section pre > code {
+.md-content pre > code {
     @apply block;
 }
 
-section img {
+.md-content img {
     @apply mx-auto;
 }
 
@@ -202,4 +202,16 @@ b {
 .table-wrapper {
     overflow-x: auto;
     max-width: 100%;
+}
+
+details.archives-year > summary {
+    list-style: none;
+}
+
+details.archives-year > summary::-webkit-details-marker {
+    display: none;
+}
+
+details.archives-year[open] .archives-year__chevron {
+    transform: rotate(90deg);
 }

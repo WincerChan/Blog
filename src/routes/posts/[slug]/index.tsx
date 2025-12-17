@@ -39,7 +39,9 @@ export default function PostRoute() {
 
                 return (
                     <PostLayout rawBlog={rawBlog} relates={relates}>
-                        {p.encrypt_pwd ? content : <section innerHTML={content} />}
+                        {p.encrypt_pwd ? content : (
+                            <section class="md-content" innerHTML={content} />
+                        )}
                     </PostLayout>
                 );
             }}

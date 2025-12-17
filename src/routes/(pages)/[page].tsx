@@ -37,7 +37,7 @@ export default function PageRoute() {
             {(p) => {
                 const pageProps = toPageProps(p);
                 const key = baseKeyFromSlug(String(p.slug || slug()));
-                const body = () => <section innerHTML={p.html ?? ""} />;
+                const body = () => <section class="md-content" innerHTML={p.html ?? ""} />;
 
                 if (key === "archives") return <Archives page={pageProps} />;
                 if (key === "friends")
