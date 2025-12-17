@@ -1,5 +1,5 @@
 import { Meta } from "@solidjs/meta";
-import PostLayout from "~/components/layouts/PostLayout";
+import PostPageLayout from "~/components/layouts/pages/PostPageLayout";
 import { BasePage } from "~/schema/Page";
 
 const page: BasePage = {
@@ -14,11 +14,11 @@ export default function NotFound() {
     return (
         <>
             <Meta charset="utf-8" />
-            <PostLayout rawBlog={page} hideComment={true}>
+            <PostPageLayout rawBlog={page} hideComment={true}>
                 <section>
                     <p class=":: text-xl mb-8 leading-relaxed">{page.content}</p>
                 </section>
-            </PostLayout>
+            </PostPageLayout>
         </>
     );
 }

@@ -1,6 +1,6 @@
 import { JSX } from "solid-js";
 import { BasePage } from "~/schema/Page";
-import ContentLayout from "./ContentLayout";
+import PageShell from "../shell/PageShell";
 
 type PageLayoutProps = {
     children: JSX.Element,
@@ -15,14 +15,14 @@ const constructHeadParams = (page: BasePage) => {
     }
 }
 
-const ArchiveLayout = ({ children, page, lang }) => {
+const SimplePageLayout = ({ children, page, lang }) => {
     const headParams = constructHeadParams(page);
     return (
-        <ContentLayout headParams={headParams} lang={lang}>
+        <PageShell headParams={headParams} lang={lang}>
             {page && <h1 class=":: text-headline ">{page.title}</h1>}
             {children}
-        </ContentLayout>
+        </PageShell>
     )
 }
 
-export { ArchiveLayout };
+export default SimplePageLayout;

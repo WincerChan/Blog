@@ -1,7 +1,7 @@
 import { useLocation } from "@solidjs/router";
 import { For, createEffect, onCleanup, onMount } from "solid-js";
 import OtherBlogs from "~/components/core/section/OtherCards";
-import { ArchiveLayout } from "~/components/layouts/PageLayout";
+import SimplePageLayout from "~/components/layouts/pages/SimplePageLayout";
 
 const Archives = ({ page }) => {
     const location = useLocation();
@@ -57,7 +57,7 @@ const Archives = ({ page }) => {
     });
 
     return (
-        <ArchiveLayout page={page} lang={page.lang}>
+        <SimplePageLayout page={page} lang={page.lang}>
             <div class=":: mt-6 ">
                 <For each={allYears}>
                     {(year) => (
@@ -101,7 +101,7 @@ const Archives = ({ page }) => {
                     )}
                 </For>
             </div>
-        </ArchiveLayout >
+        </SimplePageLayout >
     )
 }
 

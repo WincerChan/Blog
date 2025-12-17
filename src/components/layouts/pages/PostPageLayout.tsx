@@ -14,14 +14,14 @@ import { BlogDetailed, BlogScore } from "~/schema/Post";
 import { calculateDateDifference, formatDate } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
-import Relates from "../core/footer/Relates";
-import { setGlobalStore } from "../core/header/ThemeSwitch/Provider";
-import Comment from "../core/section/Comment";
-import Copyright from "../core/section/Copyright";
-import LazyBg from "../lazy/BG";
-import { ArticleLayout } from "./ContentLayout";
+import Relates from "~/components/core/footer/Relates";
+import { setGlobalStore } from "~/components/core/header/ThemeSwitch/Provider";
+import Comment from "~/components/core/section/Comment";
+import Copyright from "~/components/core/section/Copyright";
+import LazyBg from "~/components/lazy/BG";
+import ArticleShell from "../shell/ArticleShell";
 
-const ProtectBlog = lazy(() => import("./EncryptBlock"));
+const ProtectBlog = lazy(() => import("../EncryptBlock"));
 
 const PostMeta = ({
     blog,
@@ -143,7 +143,7 @@ type PostProps = {
     hideComment?: boolean;
 };
 
-const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
+const PostPageLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
     const hash = createMemo(() => useLocation().hash);
     onMount(() => {
         if (!hash()) return;
@@ -174,7 +174,7 @@ const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
         />
     );
     return (
-        <ArticleLayout headParams={headParams} extra={extra} LL={LL}>
+        <ArticleShell headParams={headParams} extra={extra} LL={LL}>
             <PostMeta blog={blog} lang={locale} LL={LL} />
             <Show when={blog.cover}>
                 <img
@@ -184,7 +184,7 @@ const PostLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
                 />
             </Show>
             {wrapper}
-        </ArticleLayout>
+        </ArticleShell>
     );
 };
 
@@ -220,4 +220,4 @@ export const PostExtra = ({
     );
 };
 
-export default PostLayout;
+export default PostPageLayout;

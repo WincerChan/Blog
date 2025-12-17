@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import { Show, createMemo } from "solid-js";
-import PostLayout from "~/components/layouts/PostLayout";
+import PostPageLayout from "~/components/layouts/pages/PostPageLayout";
 import Archives from "~/components/page/Archives";
 import Friends from "~/components/page/Friends";
 import Life from "~/components/page/Life";
@@ -46,9 +46,9 @@ export default function PageRoute() {
                 if (key === "life") return <Life page={pageProps}>{body()}</Life>;
 
                 return (
-                    <PostLayout rawBlog={pageProps} relates={[]}>
+                    <PostPageLayout rawBlog={pageProps} relates={[]}>
                         {body()}
-                    </PostLayout>
+                    </PostPageLayout>
                 );
             }}
         </Show>

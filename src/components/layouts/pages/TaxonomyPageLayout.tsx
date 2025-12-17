@@ -1,7 +1,7 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { BlogMinimal } from "~/schema/Post";
-import OtherBlogs from "../core/section/OtherCards";
-import ContentLayout from "./ContentLayout";
+import OtherBlogs from "~/components/core/section/OtherCards";
+import PageShell from "../shell/PageShell";
 
 type TaxoLayoutProps = {
     rawTaxo: {
@@ -21,16 +21,16 @@ const constructHeadParams = (term: string, basePath: string, pages: BlogMinimal[
     }
 }
 
-const TaxoLayout = ({ rawTaxo, type, basePath = "/category" }: TaxoLayoutProps) => {
+const TaxonomyPageLayout = ({ rawTaxo, type, basePath = "/category" }: TaxoLayoutProps) => {
     const { LL } = useI18nContext()
     const blogsByTerm = rawTaxo.pages;
     const headParams = constructHeadParams(rawTaxo.term, basePath, blogsByTerm);
     return (
-        <ContentLayout headParams={headParams} >
+        <PageShell headParams={headParams} >
             <h1 class=":: text-headline ">{LL && LL().archive.CATE()}{headParams.title}</h1>
             <OtherBlogs posts={() => blogsByTerm} />
-        </ContentLayout>
+        </PageShell>
     )
 }
 
-export default TaxoLayout;
+export default TaxonomyPageLayout;
