@@ -9,7 +9,6 @@ declare const __POSTS_BY_YEAR_DETAIL: {
 declare const __EN_POSTS: string[]
 declare const __TOTAL_POSTS: number
 declare const __IS_PROD: boolean
-declare const __ASSET_VERSION: string
 declare const __SW_HASH: string
 declare const __EN_NAV: string[]
 declare const __ZH_NAV: string[]

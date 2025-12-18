@@ -25,7 +25,6 @@ const computeSwHash = () => {
 };
 
 const swHash = computeSwHash();
-const assetVersion = String(process.env.VITE_ASSET_VERSION ?? "");
 
 const definedVars = {
     __WORDS: wordsCount,
@@ -38,7 +37,6 @@ const definedVars = {
     __ZH_NAV: JSON.stringify(zh_nav_pages),
     __TOTAL_CATEGORIES: totalCategories,
     __SITE_CONF: BlogConf,
-    __ASSET_VERSION: JSON.stringify(assetVersion),
     __SW_HASH: JSON.stringify(swHash),
 }
 
