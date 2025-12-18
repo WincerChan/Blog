@@ -12,7 +12,7 @@ echo -e "${YELLOW}Installing dependencies...${RESET}"
 pnpm install --no-frozen-lockfile
 if [ ! -d "_blogs" ]; then
     echo -e "${YELLOW}Cloning Blogs...${RESET}"
-    git clone -b new_blog https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
+    git clone https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
 else
     echo -e "${YELLOW}Updating Blogs...${RESET}"
     cd _blogs
