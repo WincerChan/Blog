@@ -1,4 +1,4 @@
-import { useParams } from "@solidjs/router";
+import { createAsync, useParams } from "@solidjs/router";
 import { createMemo } from "solid-js";
 import CategoryPageView from "~/modules/category/CategoryPage";
 import { getPostsByCategory, postUrl } from "~/content/velite";
@@ -6,10 +6,11 @@ import { getPostsByCategory, postUrl } from "~/content/velite";
 export default function CategoryPage() {
     const params = useParams();
     const term = createMemo(() => decodeURIComponent(params.term));
+    const resource = createAsync(() => getPostsByCategory(term()));
     const posts = createMemo(() =>
-        getPostsByCategory(term()).map((p) => ({
+        (resource() ?? []).map((p) => ({
             ...p,
-            slug: postUrl(p.slug),
+            slug: (p as any).url ?? postUrl(String((p as any).slug)),
         })),
     );
     return (

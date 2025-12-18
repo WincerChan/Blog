@@ -1,7 +1,5 @@
 import pkg from "crypto-js";
 import { padTo32 } from "~/utils";
-import type { RelatedPost } from "~/modules/article/types";
-import { postUrl, publishedPosts } from "./velite";
 
 const { enc, AES } = pkg as any;
 
@@ -23,32 +21,4 @@ const maybeEncryptHtml = (post: VelitePost, html: string) => {
     if (!post.encrypt_pwd) return html;
     return encryptHtml(post.encrypt_pwd, html);
 };
-
-const findRelatedPosts = (post: VelitePost): RelatedPost[] => {
-    const sameCate = String(post.category ?? "");
-    const tags = new Set((post.tags ?? []).map(String));
-    const scores = new Map<string, { score: number; p: any }>();
-
-    for (const p of publishedPosts()) {
-        if (p.slug === post.slug) continue;
-        let score = 0;
-        if (sameCate && String(p.category ?? "") === sameCate) score += 0.5;
-        for (const t of p.tags ?? []) {
-            if (tags.has(String(t))) score += 1;
-        }
-        if (score <= 0) continue;
-        scores.set(p.slug, { score, p });
-    }
-
-    return Array.from(scores.values())
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 6)
-        .map(({ score, p }) => ({
-            title: p.title,
-            slug: postUrl(p.slug),
-            date: p.date,
-            score,
-        }));
-};
-
-export { findRelatedPosts, maybeEncryptHtml };
+export { maybeEncryptHtml };

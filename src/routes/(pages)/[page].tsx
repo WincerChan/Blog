@@ -1,14 +1,15 @@
-import { useParams } from "@solidjs/router";
-import { Show, createMemo } from "solid-js";
+import { createAsync, useParams } from "@solidjs/router";
+import { Show, Suspense, createMemo, lazy } from "solid-js";
 import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
-import Archives from "~/modules/archives/ArchivesPage";
-import Friends from "~/modules/friends/FriendsPage";
-import Life from "~/modules/life/LifePage";
-import Search from "~/modules/search/SearchPage";
 import { getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...404]";
 
 const baseKeyFromSlug = (slug: string) => slug.replace(/-en$/, "");
+
+const Archives = lazy(() => import("~/modules/archives/ArchivesPage"));
+const Friends = lazy(() => import("~/modules/friends/FriendsPage"));
+const Life = lazy(() => import("~/modules/life/LifePage"));
+const Search = lazy(() => import("~/modules/search/SearchPage"));
 
 const toPageProps = (page: any) => ({
     slug: pageUrl(page.slug),
@@ -30,20 +31,41 @@ const toPageProps = (page: any) => ({
 export default function PageRoute() {
     const params = useParams();
     const slug = createMemo(() => String(params.page || ""));
-    const page = createMemo(() => (slug() ? getPageBySlug(slug()) : undefined));
+    const page = createAsync(() => getPageBySlug(slug()));
 
     return (
         <Show keyed when={page()} fallback={<NotFound />}>
             {(p) => {
                 const pageProps = toPageProps(p);
                 const key = baseKeyFromSlug(String(p.slug || slug()));
-                const body = () => <section class="md-content" innerHTML={p.html ?? ""} />;
+                const body = () => (
+                    <section class="md-content" innerHTML={p.html ?? ""} />
+                );
 
-                if (key === "archives") return <Archives page={pageProps} />;
+                if (key === "archives")
+                    return (
+                        <Suspense fallback={body()}>
+                            <Archives page={pageProps} />
+                        </Suspense>
+                    );
                 if (key === "friends")
-                    return <Friends page={pageProps}>{body()}</Friends>;
-                if (key === "search") return <Search page={pageProps}>{body()}</Search>;
-                if (key === "life") return <Life page={pageProps}>{body()}</Life>;
+                    return (
+                        <Suspense fallback={body()}>
+                            <Friends page={pageProps}>{body()}</Friends>
+                        </Suspense>
+                    );
+                if (key === "search")
+                    return (
+                        <Suspense fallback={body()}>
+                            <Search page={pageProps}>{body()}</Search>
+                        </Suspense>
+                    );
+                if (key === "life")
+                    return (
+                        <Suspense fallback={body()}>
+                            <Life page={pageProps}>{body()}</Life>
+                        </Suspense>
+                    );
 
                 return (
                     <ArticlePageLayout rawBlog={pageProps} relates={[]}>

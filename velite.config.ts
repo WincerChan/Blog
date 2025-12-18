@@ -162,6 +162,48 @@ const rehypeBlogEnhancements = () => {
   };
 };
 
+const rehypeCodeLangAttr = () => {
+  const getClassList = (node: any) => {
+    const cn = node?.properties?.className;
+    if (Array.isArray(cn)) return cn.map(String).filter(Boolean);
+    if (typeof cn === "string") return cn.split(/\s+/).filter(Boolean);
+    return [];
+  };
+
+  const inferLang = (node: any) => {
+    const classes = getClassList(node);
+    for (const c of classes) {
+      const m = /^language-(.+)$/.exec(c);
+      if (m?.[1]) return m[1];
+    }
+    for (const c of classes) {
+      const m = /^lang(?:uage)?-(.+)$/.exec(c);
+      if (m?.[1]) return m[1];
+    }
+    return undefined;
+  };
+
+  return (tree: any) => {
+    const walk = (node: any, parentTag?: string) => {
+      if (!node) return;
+      if (node.type === "element") {
+        const tag = String(node.tagName || "").toLowerCase();
+        if (tag === "code" && parentTag === "pre") {
+          node.properties ??= {};
+          const lang = inferLang(node);
+          if (lang && !node.properties["data-lang"]) node.properties["data-lang"] = lang;
+        }
+        if (Array.isArray(node.children)) {
+          for (const child of node.children) walk(child, tag);
+        }
+      } else if (Array.isArray(node.children)) {
+        for (const child of node.children) walk(child, parentTag);
+      }
+    };
+    walk(tree, undefined);
+  };
+};
+
 const getMetaFromZodCtx = (ctx: unknown) => (ctx as any)?.meta as any;
 
 const summaryFromMeta = (meta: any, maxLen: number) => {
@@ -241,6 +283,7 @@ const Post = defineCollection({
         rehypeSlug,
         rehypeBlogEnhancements,
         [rehypeHighlight, { ignoreMissing: true }],
+        rehypeCodeLangAttr,
         [rehypeKatex, { strict: "warn" }],
       ],
     }),
@@ -277,6 +320,7 @@ const Page = defineCollection({
         rehypeSlug,
         rehypeBlogEnhancements,
         [rehypeHighlight, { ignoreMissing: true }],
+        rehypeCodeLangAttr,
         [rehypeKatex, { strict: "warn" }],
       ],
     }),

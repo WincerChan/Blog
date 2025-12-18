@@ -7,7 +7,7 @@ body {
 }
 
 pre {
-    @apply rounded overflow-x-auto;
+    @apply rounded overflow-x-auto relative;
     scrollbar-width: none;
 }
 
@@ -15,7 +15,7 @@ pre {
     @apply rounded max-w-screen relative;
 }
 
-code::before {
+pre > code::before {
     content: attr(data-lang);
     color: var(--head-border);
     text-transform: uppercase;

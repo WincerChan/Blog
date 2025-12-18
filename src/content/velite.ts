@@ -1,76 +1,103 @@
-import postsRaw from "../../.velite/posts.json";
-import pagesRaw from "../../.velite/pages.json";
-import friendsRaw from "../../.velite/friends.json";
-
 import type { FriendLink, VelitePage, VelitePost } from "./types";
 
-const allPosts = postsRaw as unknown as VelitePost[];
-const allPages = pagesRaw as unknown as VelitePage[];
-const allFriends = friendsRaw as unknown as FriendLink[];
+type PostNeighbourLink = { title: string; slug: string };
+type PostNeighbours = { prev?: PostNeighbourLink; next?: PostNeighbourLink };
+type RelatedPost = { title: string; slug: string; date: string; score: number };
 
-const visiblePosts = () =>
-    allPosts.filter((p) => p.draft !== true).filter((p) => p.private !== true);
+export type VelitePostPublic = VelitePost & {
+    url?: string;
+    neighbours?: PostNeighbours;
+    relates?: RelatedPost[];
+    hasMath?: boolean;
+};
 
-const canonicalPosts = () => visiblePosts().filter((p) => p.isTranslation !== true);
-
-const visiblePages = () =>
-    allPages
-        .filter((p) => p.draft !== true)
-        .filter((p) => p.private !== true)
-        .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0));
-
-const publishedPosts = () => canonicalPosts();
-const publishedPages = () => visiblePages();
-
-const byDateDesc = <T extends { date: string }>(items: T[]) =>
-    [...items].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+type CategoryIndexItem = { title: string; count: number; url?: string };
 
 const postUrl = (slug: string) => `/posts/${slug}/`;
 const pageUrl = (slug: string) => `/${slug}/`;
 
-const getPostBySlug = (slug: string) =>
-    visiblePosts().find((p) => String(p.slug) === String(slug));
+const safePathSegment = (value: string) =>
+    String(value ?? "")
+        .replace(/\0/g, "")
+        .replace(/[\\/]/g, "_")
+        .trim();
 
-const getPostNeighbours = (slug: string) => {
-    const current = getPostBySlug(slug);
-    const list = byDateDesc(
-        current?.isTranslation ? visiblePosts().filter((p) => p.isTranslation === true) : publishedPosts(),
-    );
-    const idx = list.findIndex((p) => String(p.slug) === String(slug));
-    const prev = idx >= 0 ? list[idx + 1] : undefined;
-    const next = idx >= 0 ? list[idx - 1] : undefined;
-    const toLink = (p?: VelitePost) =>
-        p
-            ? {
-                title: p.title,
-                slug: postUrl(p.slug),
+const safeEncode = (value: string) => encodeURIComponent(safePathSegment(value));
+
+const readPublicJson = async <T>(urlPath: string, fallback: T): Promise<T> => {
+    const normalized = urlPath.startsWith("/") ? urlPath : `/${urlPath}`;
+
+    if (import.meta.env.SSR) {
+        const [{ readFile }, path] = await Promise.all([
+            import("node:fs/promises"),
+            import("node:path"),
+        ]);
+        try {
+            let decoded = normalized;
+            try {
+                decoded = decodeURIComponent(normalized);
+            } catch {
+                // keep encoded path
             }
-            : undefined;
-    return {
-        prev: toLink(prev),
-        next: toLink(next),
-    };
-};
-
-const getPageBySlug = (slug: string) =>
-    visiblePages().find((p) => String(p.slug) === String(slug));
-
-const getPostsByCategory = (category: string) =>
-    publishedPosts().filter((p) => String(p.category ?? "") === String(category));
-
-const getLatestPosts = (limit = 5) => byDateDesc(publishedPosts()).slice(0, limit);
-
-const getCategoryIndex = () => {
-    const counts = new Map<string, number>();
-    for (const p of publishedPosts()) {
-        const c = p.category;
-        if (!c) continue;
-        counts.set(c, (counts.get(c) ?? 0) + 1);
+            const filepath = path.join(
+                process.cwd(),
+                "public",
+                decoded.replace(/^\//, ""),
+            );
+            return JSON.parse(await readFile(filepath, "utf8")) as T;
+        } catch {
+            return fallback;
+        }
     }
-    return Array.from(counts.entries()).map(([title, count]) => ({ title, count }));
+
+    try {
+        const res = await fetch(normalized);
+        if (!res.ok) return fallback;
+        return (await res.json()) as T;
+    } catch {
+        return fallback;
+    }
 };
 
-const getFriendLinks = () => allFriends;
+const getLatestPosts = async (limit = 5) => {
+    const data = await readPublicJson<VelitePostPublic[]>(
+        "/_data/posts/latest.json",
+        [],
+    );
+    return data.slice(0, limit);
+};
+
+const getPostBySlug = async (slug: string) => {
+    if (!slug) return undefined;
+    return await readPublicJson<VelitePostPublic | undefined>(
+        `/_data/posts/${safeEncode(slug)}.json`,
+        undefined,
+    );
+};
+
+const getPostNeighbours = async (slug: string) => (await getPostBySlug(slug))?.neighbours;
+
+const getPageBySlug = async (slug: string) => {
+    if (!slug) return undefined;
+    return await readPublicJson<VelitePage | undefined>(
+        `/_data/pages/${safeEncode(slug)}.json`,
+        undefined,
+    );
+};
+
+const getPostsByCategory = async (category: string) => {
+    if (!category) return [] as VelitePostPublic[];
+    return await readPublicJson<VelitePostPublic[]>(
+        `/_data/category/${safeEncode(category)}.json`,
+        [],
+    );
+};
+
+const getCategoryIndex = async () =>
+    await readPublicJson<CategoryIndexItem[]>("/_data/category/index.json", []);
+
+const getFriendLinks = async () =>
+    await readPublicJson<FriendLink[]>("/_data/friends.json", []);
 
 export {
     getCategoryIndex,
@@ -82,6 +109,4 @@ export {
     getPostsByCategory,
     pageUrl,
     postUrl,
-    publishedPages,
-    publishedPosts,
 };

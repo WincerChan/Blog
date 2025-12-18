@@ -2,12 +2,12 @@
   "name": "example-basic",
   "type": "module",
   "scripts": {
-    "dev:content": "velite build --clean",
+    "dev:content": "velite build --clean && node scripts/generate-velite-public-data.mjs",
     "dev": "pnpm dev:content && vinxi dev",
     "build": "pnpm dev:content && vinxi build --preset static",
     "start": "npx serve .output/public",
     "version": "vinxi version",
-    "clean": "rm -rf .velite node_modules/.vinxi src/routes/\\(hugo\\) \\(hugo\\) .output public/sitemap.xml public/atom.xml public/manifest.webmanifest public/posts public/base public/category public/tags public/sass",
+    "clean": "rm -rf .velite node_modules/.vinxi src/routes/\\(hugo\\) \\(hugo\\) .output public/_data public/sitemap.xml public/atom.xml public/manifest.webmanifest public/posts public/base public/category public/tags public/sass",
     "i18n": "typesafe-i18n"
   },
   "dependencies": {
