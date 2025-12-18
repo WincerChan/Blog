@@ -28,7 +28,7 @@ export default createHandler((context) => (
                             <script
                                 innerHTML={`
             if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register("/sw.js?v=${import.meta.env.VITE_ASSET_VERSION}",{scope:"/"}).then(reg => {
+          navigator.serviceWorker.register("/sw.js?v=${__SW_HASH}&av=${__ASSET_VERSION}",{scope:"/"}).then(reg => {
             reg.addEventListener('updatefound', () => {
               const newWorker = reg.installing;
               newWorker?.addEventListener('statechange', () => {

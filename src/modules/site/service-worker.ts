@@ -12,6 +12,9 @@ const ASSETS_PREFIXES = [
     ``
 ]
 
+const looksLikeSemver = (value: string) =>
+    /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(String(value ?? ""));
+
 const fetchAsset = (url: string, signal: AbortSignal) => {
     return new Promise((resolve, reject) => {
         fetch(url, { signal })
@@ -20,9 +23,18 @@ const fetchAsset = (url: string, signal: AbortSignal) => {
     })
 }
 
-const getAssetVersion = () => {
+const getSwHash = () => {
     try {
         return new URL(self.location.href).searchParams.get("v") ?? "";
+    } catch {
+        return "";
+    }
+};
+
+const getAssetVersion = () => {
+    try {
+        const sp = new URL(self.location.href).searchParams;
+        return sp.get("av") ?? sp.get("v") ?? "";
     } catch {
         return "";
     }
@@ -31,10 +43,12 @@ const getAssetVersion = () => {
 const fetchAssets = async (pathname: string, version: string) => {
     const controller = new AbortController();
     const signal = controller.signal;
+    const prefixes =
+        version && looksLikeSemver(version) ? ASSETS_PREFIXES : [``];
 
     try {
         const res = await Promise.any(
-            ASSETS_PREFIXES.map((prefix) =>
+            prefixes.map((prefix) =>
                 fetchAsset(!prefix ? pathname : `${prefix}${version}${pathname.slice(7)}`, signal),
             ),
         );
@@ -57,3 +71,38 @@ registerRoute(({ request }) => request.url.includes("_build/assets") && (request
         return new Response(body, rest);
     }
 );
+
+const dataCacheName = () => `data-${getSwHash() || "dev"}`;
+
+registerRoute(
+    ({ request, url }) =>
+        request.method === "GET" &&
+        url.origin === self.location.origin &&
+        url.pathname.startsWith("/_data/"),
+    async ({ request }) => {
+        const cache = await caches.open(dataCacheName());
+        try {
+            const res = await fetch(request, { cache: "no-store" });
+            if (res.ok) void cache.put(request, res.clone());
+            return res;
+        } catch {
+            const cached = await cache.match(request);
+            if (cached) return cached;
+            return new Response("offline", { status: 504 });
+        }
+    },
+);
+
+self.addEventListener("activate", (event) => {
+    const keep = dataCacheName();
+    event.waitUntil(
+        (async () => {
+            const keys = await caches.keys();
+            await Promise.all(
+                keys
+                    .filter((k) => k.startsWith("data-") && k !== keep)
+                    .map((k) => caches.delete(k)),
+            );
+        })(),
+    );
+});
