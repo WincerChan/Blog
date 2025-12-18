@@ -15,11 +15,11 @@ pre {
     @apply rounded max-w-screen relative;
 }
 
-pre > code::before {
+pre>code::before {
     content: attr(data-lang);
     color: var(--head-border);
     text-transform: uppercase;
-    @apply text-lg absolute right-1.5 top-0.1;
+    @apply text-lg absolute right-2.5 top-0.2;
 }
 
 #post-meta::-webkit-scrollbar,

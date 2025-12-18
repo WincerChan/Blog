@@ -34,45 +34,47 @@ export default function PageRoute() {
     const page = createAsync(() => getPageBySlug(slug()));
 
     return (
-        <Show keyed when={page()} fallback={<NotFound />}>
-            {(p) => {
-                const pageProps = toPageProps(p);
-                const key = baseKeyFromSlug(String(p.slug || slug()));
-                const body = () => (
-                    <section class="md-content" innerHTML={p.html ?? ""} />
-                );
-
-                if (key === "archives")
-                    return (
-                        <Suspense fallback={body()}>
-                            <Archives page={pageProps} />
-                        </Suspense>
-                    );
-                if (key === "friends")
-                    return (
-                        <Suspense fallback={body()}>
-                            <Friends page={pageProps}>{body()}</Friends>
-                        </Suspense>
-                    );
-                if (key === "search")
-                    return (
-                        <Suspense fallback={body()}>
-                            <Search page={pageProps}>{body()}</Search>
-                        </Suspense>
-                    );
-                if (key === "life")
-                    return (
-                        <Suspense fallback={body()}>
-                            <Life page={pageProps}>{body()}</Life>
-                        </Suspense>
+        <Suspense fallback={<section class="md-content" />}>
+            <Show keyed when={page()} fallback={<NotFound />}>
+                {(p) => {
+                    const pageProps = toPageProps(p);
+                    const key = baseKeyFromSlug(String(p.slug || slug()));
+                    const body = () => (
+                        <section class="md-content" innerHTML={p.html ?? ""} />
                     );
 
-                return (
-                    <ArticlePageLayout rawBlog={pageProps} relates={[]}>
-                        {body()}
-                    </ArticlePageLayout>
-                );
-            }}
-        </Show>
+                    if (key === "archives")
+                        return (
+                            <Suspense fallback={body()}>
+                                <Archives page={pageProps} />
+                            </Suspense>
+                        );
+                    if (key === "friends")
+                        return (
+                            <Suspense fallback={body()}>
+                                <Friends page={pageProps}>{body()}</Friends>
+                            </Suspense>
+                        );
+                    if (key === "search")
+                        return (
+                            <Suspense fallback={body()}>
+                                <Search page={pageProps}>{body()}</Search>
+                            </Suspense>
+                        );
+                    if (key === "life")
+                        return (
+                            <Suspense fallback={body()}>
+                                <Life page={pageProps}>{body()}</Life>
+                            </Suspense>
+                        );
+
+                    return (
+                        <ArticlePageLayout rawBlog={pageProps} relates={[]}>
+                            {body()}
+                        </ArticlePageLayout>
+                    );
+                }}
+            </Show>
+        </Suspense>
     );
 }
