@@ -300,7 +300,7 @@ const Post = defineCollection({
 
 const Page = defineCollection({
   name: "Page",
-  pattern: "page/**/*.md",
+  pattern: "pages/**/*.md",
   schema: s.object({
     title: s.string(),
     date: s.string(),
@@ -401,6 +401,64 @@ export default defineConfig({
     const latestUpdated = (items: any[]) =>
       items.reduce((acc, x) => Math.max(acc, x.updatedObj?.getTime?.() ?? 0), 0);
 
+    const escapeXmlText = (value: string) =>
+      String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&apos;");
+
+    const toAbsoluteUrl = (value: string) => {
+      const src = String(value ?? "").trim();
+      if (!src || src.startsWith("data:")) return null;
+      try {
+        return new URL(src, site.baseURL).toString();
+      } catch {
+        return null;
+      }
+    };
+
+    const extractImagesFromHtml = (html: string, max = 5) => {
+      const out: Array<{ src: string; alt?: string }> = [];
+      const raw = String(html ?? "");
+      const imgRe = /<img\b[^>]*>/gi;
+      let m: RegExpExecArray | null;
+      while ((m = imgRe.exec(raw)) && out.length < max) {
+        const tag = m[0]!;
+        const srcMatch =
+          /\bsrc\s*=\s*(?:"([^"]+)"|'([^']+)'|([^\s>]+))/i.exec(tag);
+        const src = srcMatch?.[1] ?? srcMatch?.[2] ?? srcMatch?.[3];
+        if (!src) continue;
+        const altMatch = /\balt\s*=\s*(?:"([^"]*)"|'([^']*)')/i.exec(tag);
+        const alt = altMatch?.[1] ?? altMatch?.[2] ?? undefined;
+        out.push({ src, alt });
+      }
+      return out;
+    };
+
+    const imagesForSitemap = (entry: any) => {
+      const images: Array<{ loc: string; caption?: string }> = [];
+      const seen = new Set<string>();
+
+      const add = (src: string, caption?: string) => {
+        const abs = toAbsoluteUrl(src);
+        if (!abs) return;
+        if (seen.has(abs)) return;
+        seen.add(abs);
+        images.push({ loc: abs, caption: caption?.trim() || undefined });
+      };
+
+      const cover = String(entry.cover ?? "").trim();
+      if (cover) add(cover, "cover");
+
+      for (const img of extractImagesFromHtml(String(entry.html ?? ""), 5)) {
+        add(img.src, img.alt);
+      }
+
+      return images;
+    };
+
     const sitemapHeader =
       '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>';
 
@@ -408,7 +466,7 @@ export default defineConfig({
       `${sitemapHeader}\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
       [
         { section: "posts", lastmod: latestUpdated(renderablePosts) },
-        { section: "base", lastmod: latestUpdated(renderablePages) },
+        { section: "pages", lastmod: latestUpdated(renderablePages) },
         { section: "category", lastmod: Date.now() },
       ]
         .map(
@@ -446,9 +504,21 @@ export default defineConfig({
               `\n    <xhtml:link rel="alternate" hreflang="${lang}" href="${selfHref}" />\n` +
               `    <xhtml:link rel="alternate" hreflang="${reverseHrefLang}" href="${reverseHref}" />`;
           }
+
+          const imagesXml = imagesForSitemap(p)
+            .map((img) => {
+              const loc = escapeXmlText(img.loc);
+              const caption = img.caption
+                ? `\n      <image:caption>${escapeXmlText(img.caption)}</image:caption>`
+                : "";
+              return `\n    <image:image>\n      <image:loc>${loc}</image:loc>${caption}\n    </image:image>`;
+            })
+            .join("");
+
           return (
             `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>` +
             alt +
+            imagesXml +
             `\n    <changefreq>${site.sitemap.changeFreq}</changefreq>\n    <priority>${site.sitemap.priority}</priority>\n  </url>`
           );
         })
@@ -457,18 +527,32 @@ export default defineConfig({
 
     await writeFile(path.join(publicDir, "posts", "sitemap.xml"), postSitemap);
 
-    const baseSitemap =
+    const pagesSitemap =
       urlsetStart("") +
       `  <url>\n    <loc>${site.baseURL}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1</priority>\n  </url>\n` +
       renderablePages
         .map((p) => {
           const loc = `${site.baseURL}/${String(p.slug)}/`;
           const lastmod = formatUtc(p.updatedObj);
-          return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${site.sitemap.changeFreq}</changefreq>\n    <priority>${site.sitemap.priority}</priority>\n  </url>`;
+          const imagesXml = imagesForSitemap(p)
+            .map((img) => {
+              const loc = escapeXmlText(img.loc);
+              const caption = img.caption
+                ? `\n      <image:caption>${escapeXmlText(img.caption)}</image:caption>`
+                : "";
+              return `\n    <image:image>\n      <image:loc>${loc}</image:loc>${caption}\n    </image:image>`;
+            })
+            .join("");
+
+          return (
+            `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>` +
+            imagesXml +
+            `\n    <changefreq>${site.sitemap.changeFreq}</changefreq>\n    <priority>${site.sitemap.priority}</priority>\n  </url>`
+          );
         })
         .join("\n") +
       `\n${urlsetEnd}`;
-    await writeFile(path.join(publicDir, "base", "sitemap.xml"), baseSitemap);
+    await writeFile(path.join(publicDir, "pages", "sitemap.xml"), pagesSitemap);
 
     const categoryToPosts = new Map<string, any[]>();
     for (const p of publishedPosts) {
@@ -489,14 +573,6 @@ export default defineConfig({
         .join("\n") +
       `\n${urlsetEnd}`;
     await writeFile(path.join(publicDir, "category", "sitemap.xml"), categorySitemap);
-
-    const escapeXmlText = (value: string) =>
-      String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&apos;");
 
     const siteBaseForAtom = new URL("/", site.baseURL).toString();
     const feedId = hugoAtomIdFromString(siteBaseForAtom);

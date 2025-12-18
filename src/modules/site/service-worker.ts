@@ -9,19 +9,7 @@ const ASSETS_PREFIXES = [
     `https://npm.onmicrosoft.cn/wir@`,
     `https://jsd.nmmsl.top/npm/wir@`,
     `https://cdn.jsdmirror.com/npm/wir@`,
-    ``
 ]
-
-const looksLikeSemver = (value: string) =>
-    /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(String(value ?? ""));
-
-const fetchAsset = (url: string, signal: AbortSignal) => {
-    return new Promise((resolve, reject) => {
-        fetch(url, { signal })
-            .then(async res => res.ok ? resolve(res) : reject())
-            .catch(() => reject())
-    })
-}
 
 const getSwHash = () => {
     try {
@@ -31,45 +19,58 @@ const getSwHash = () => {
     }
 };
 
-const getAssetVersion = () => {
-    try {
-        const sp = new URL(self.location.href).searchParams;
-        return sp.get("av") ?? sp.get("v") ?? "";
-    } catch {
-        return "";
-    }
-};
-
-const fetchAssets = async (pathname: string, version: string) => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const prefixes =
-        version && looksLikeSemver(version) ? ASSETS_PREFIXES : [``];
+const fetchFirstOk = async (urls: string[]) => {
+    const controllers = urls.map(() => new AbortController());
+    const tasks = urls.map((url, index) =>
+        fetch(url, { signal: controllers[index]!.signal }).then((res) => {
+            if (!res.ok) throw new Error(`bad status: ${res.status}`);
+            return { res, index };
+        }),
+    );
 
     try {
-        const res = await Promise.any(
-            prefixes.map((prefix) =>
-                fetchAsset(!prefix ? pathname : `${prefix}${version}${pathname.slice(7)}`, signal),
-            ),
-        );
-        const body = await (res as Response).text();
-        controller.abort();
-        return { headers: (res as Response).headers, body, status: (res as Response).status };
+        const { res, index } = (await Promise.any(tasks)) as {
+            res: Response;
+            index: number;
+        };
+        controllers.forEach((c, i) => i !== index && c.abort());
+        return res;
     } catch {
-        controller.abort();
+        controllers.forEach((c) => c.abort());
         return null;
     }
 };
 
-registerRoute(({ request }) => request.url.includes("_build/assets") && (request.destination === 'script' || request.destination === 'style'),
-    async ({ event, request }) => {
-        const parsedUrl = new URL(request.url);
-        const version = getAssetVersion();
-        const fetched = await fetchAssets(parsedUrl.pathname, version);
-        if (!fetched) return fetch(request);
-        const { body, ...rest } = fetched;
-        return new Response(body, rest);
-    }
+const fetchNpmAsset = (pathname: string) => {
+    const npmPath = pathname.startsWith("/_build/")
+        ? pathname.slice("/_build".length)
+        : pathname;
+    const urls = [
+        ...ASSETS_PREFIXES.map((p) => `${p}latest${npmPath}`),
+        pathname,
+    ];
+    return fetchFirstOk(urls);
+};
+
+registerRoute(
+    ({ request, url }) =>
+        request.method === "GET" &&
+        url.origin === self.location.origin &&
+        url.pathname.startsWith("/_build/assets/") &&
+        (request.destination === "script" || request.destination === "style"),
+    async ({ request, url }) => {
+        const cache = await caches.open(`assets-${getSwHash() || "dev"}`);
+        const cached = await cache.match(request);
+        if (cached) return cached;
+
+        const res = await fetchNpmAsset(url.pathname);
+        if (res) {
+            void cache.put(request, res.clone());
+            return res;
+        }
+
+        return fetch(request);
+    },
 );
 
 const dataCacheName = () => `data-${getSwHash() || "dev"}`;
@@ -79,13 +80,31 @@ registerRoute(
         request.method === "GET" &&
         url.origin === self.location.origin &&
         url.pathname.startsWith("/_data/"),
-    async ({ request }) => {
+    async ({ request, url }) => {
         const cache = await caches.open(dataCacheName());
         try {
             const res = await fetch(request, { cache: "no-store" });
-            if (res.ok) void cache.put(request, res.clone());
+            if (res.ok) {
+                void cache.put(request, res.clone());
+                return res;
+            }
+
+            const mirror = await fetchFirstOk(
+                ASSETS_PREFIXES.map((p) => `${p}latest${url.pathname}`),
+            );
+            if (mirror) {
+                void cache.put(request, mirror.clone());
+                return mirror;
+            }
             return res;
         } catch {
+            const mirror = await fetchFirstOk(
+                ASSETS_PREFIXES.map((p) => `${p}latest${url.pathname}`),
+            );
+            if (mirror) {
+                void cache.put(request, mirror.clone());
+                return mirror;
+            }
             const cached = await cache.match(request);
             if (cached) return cached;
             return new Response("offline", { status: 504 });
@@ -94,13 +113,18 @@ registerRoute(
 );
 
 self.addEventListener("activate", (event) => {
-    const keep = dataCacheName();
+    const keepData = dataCacheName();
+    const keepAssets = `assets-${getSwHash() || "dev"}`;
     event.waitUntil(
         (async () => {
             const keys = await caches.keys();
             await Promise.all(
                 keys
-                    .filter((k) => k.startsWith("data-") && k !== keep)
+                    .filter(
+                        (k) =>
+                            (k.startsWith("data-") && k !== keepData) ||
+                            (k.startsWith("assets-") && k !== keepAssets),
+                    )
                     .map((k) => caches.delete(k)),
             );
         })(),

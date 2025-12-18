@@ -35,7 +35,7 @@ _blogs
 *.lock
 public/*.xml
 public/sass
-public/base
+public/pages
 public/posts
 public/category
 public/tags
