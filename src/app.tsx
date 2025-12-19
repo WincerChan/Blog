@@ -1,7 +1,7 @@
 import { MetaProvider } from "@solidjs/meta";
-import { Router } from "@solidjs/router";
+import { Router, useIsRouting } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { createEffect, onMount, Suspense } from "solid-js";
+import { Suspense, createEffect, onMount } from "solid-js";
 import Footer from "./modules/site/footer";
 import Header from "./modules/site/header";
 import TypesafeI18n from "./i18n/i18n-solid";
@@ -16,6 +16,7 @@ import { Locale } from "./utils/locale";
 import Plausible from "plausible-tracker";
 import { getRequestEvent, isServer } from "solid-js/web";
 import { loadLocale } from "./i18n/i18n-util.sync";
+import NProgress from "nprogress";
 let PlausibleTracker =
     "default" in Plausible ? Plausible["default"] : Plausible;
 const { trackPageview, trackEvent } = PlausibleTracker({
@@ -34,6 +35,11 @@ const detectLocaleFromPath = (pathname: string): Locale => {
 };
 
 const preloadHook = (props: RouteSectionProps<unknown>) => {
+    const isRouting = useIsRouting();
+    createEffect(() => {
+        if (isRouting()) NProgress.start();
+        else NProgress.done();
+    });
     return (
         <MetaProvider>
             <Suspense>{props.children}</Suspense>
@@ -55,15 +61,18 @@ export default function App() {
         document.documentElement.className = globalStore.theme;
     });
     onMount(() => {
+        NProgress.configure({ showSpinner: false });
         setGlobalStore({ trackEvent: trackEvent, trackPage: trackPageview });
     });
     return (
         <TypesafeI18n locale={globalStore.locale as Locale}>
-            <div class=":: font-base antialiased bg-main text-main md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ">
+            <div class=":: font-base antialiased bg-main text-main min-h-screen flex flex-col ">
                 <Header />
-                <Router root={(props) => preloadHook(props)}>
-                    <FileRoutes />
-                </Router>
+                <main class=":: min-h-0 flex-1">
+                    <Router root={(props) => preloadHook(props)}>
+                        <FileRoutes />
+                    </Router>
+                </main>
                 <Footer />
             </div>
         </TypesafeI18n>

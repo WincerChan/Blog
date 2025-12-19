@@ -8,9 +8,9 @@ import { Show, createMemo } from "solid-js";
 
 
 const Home = () => {
-    const latest = createAsync(() => getLatestPosts(5));
+    const latest = createAsync(() => getLatestPosts(5)) as any;
     const recentPosts = createMemo(() =>
-        (latest() ?? []).map((p) => ({
+        ((import.meta.env.SSR ? latest() : latest.latest) ?? []).map((p) => ({
             ...p,
             slug: p.url ?? postUrl(String(p.slug)),
         })),
@@ -22,7 +22,7 @@ const Home = () => {
                 {(first) => <LatestBlog blog={first() as any} />}
             </Show>
             <OtherBlogs posts={() => recentPosts().slice(1) as any} description="近期文章" />
-            <a class=":: transition leading-none duration-200 ease-linear text-link underline underline-1 underline-offset-2.5 hover:underline-[var(--menu-hover-text)] " href="/archives/">查看更多文章</a>
+            <a link={true} class=":: transition leading-none duration-200 ease-linear text-link underline underline-1 underline-offset-2.5 hover:underline-[var(--menu-hover-text)] " href="/archives/">查看更多文章</a>
         </PageShell>
     );
 }

@@ -6,9 +6,9 @@ import { getPostsByCategory, postUrl } from "~/content/velite";
 export default function CategoryPage() {
     const params = useParams();
     const term = createMemo(() => decodeURIComponent(params.term));
-    const resource = createAsync(() => getPostsByCategory(term()));
+    const resource = createAsync(() => getPostsByCategory(term())) as any;
     const posts = createMemo(() =>
-        (resource() ?? []).map((p) => ({
+        ((import.meta.env.SSR ? resource() : resource.latest) ?? []).map((p) => ({
             ...p,
             slug: (p as any).url ?? postUrl(String((p as any).slug)),
         })),

@@ -16,7 +16,7 @@ const page = {
     summary: "您访问的页面已经消失得无影无踪，就像我的前任一样。",
 };
 
-export default function NotFound() {
+export default function NotFoundRoute() {
     return (
         <>
             <Meta charset="utf-8" />

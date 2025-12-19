@@ -1,4 +1,6 @@
 import type { FriendLink, VelitePage, VelitePost } from "./types";
+import { pageUrl, postUrl, safeEncode } from "./velite-utils";
+import { readPublicJsonSync } from "./velite.server";
 
 type PostNeighbourLink = { title: string; slug: string };
 type PostNeighbours = { prev?: PostNeighbourLink; next?: PostNeighbourLink };
@@ -13,43 +15,11 @@ export type VelitePostPublic = VelitePost & {
 
 type CategoryIndexItem = { title: string; count: number; url?: string };
 
-const postUrl = (slug: string) => `/posts/${slug}/`;
-const pageUrl = (slug: string) => `/${slug}/`;
+const VELITE_NOT_FOUND = { __veliteNotFound: true } as const;
+type VeliteNotFound = typeof VELITE_NOT_FOUND;
 
-const safePathSegment = (value: string) =>
-    String(value ?? "")
-        .replace(/\0/g, "")
-        .replace(/[\\/]/g, "_")
-        .trim();
-
-const safeEncode = (value: string) => encodeURIComponent(safePathSegment(value));
-
-const readPublicJson = async <T>(urlPath: string, fallback: T): Promise<T> => {
+const readPublicJsonClient = async <T>(urlPath: string, fallback: T): Promise<T> => {
     const normalized = urlPath.startsWith("/") ? urlPath : `/${urlPath}`;
-
-    if (import.meta.env.SSR) {
-        const [{ readFile }, path] = await Promise.all([
-            import("node:fs/promises"),
-            import("node:path"),
-        ]);
-        try {
-            let decoded = normalized;
-            try {
-                decoded = decodeURIComponent(normalized);
-            } catch {
-                // keep encoded path
-            }
-            const filepath = path.join(
-                process.cwd(),
-                "public",
-                decoded.replace(/^\//, ""),
-            );
-            return JSON.parse(await readFile(filepath, "utf8")) as T;
-        } catch {
-            return fallback;
-        }
-    }
-
     try {
         const res = await fetch(normalized);
         if (!res.ok) return fallback;
@@ -59,29 +29,40 @@ const readPublicJson = async <T>(urlPath: string, fallback: T): Promise<T> => {
     }
 };
 
-const getLatestPosts = async (limit = 5) => {
-    const data = await readPublicJson<VelitePostPublic[]>(
-        "/_data/posts/latest.json",
-        [],
-    );
-    return data.slice(0, limit);
+const readPublicJson = (import.meta.env.SSR
+    ? readPublicJsonSync
+    : readPublicJsonClient) as <T>(urlPath: string, fallback: T) => T | Promise<T>;
+
+const isPromiseLike = (value: unknown): value is PromiseLike<unknown> =>
+    !!value &&
+    (typeof value === "object" || typeof value === "function") &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    typeof (value as any).then === "function";
+
+const getLatestPosts = (limit = 5) => {
+    const data = readPublicJson<VelitePostPublic[]>("/_data/posts/latest.json", []);
+    if (isPromiseLike(data))
+        return data.then((d) =>
+            Array.isArray(d) ? d.slice(0, limit) : ([] as VelitePostPublic[]),
+        ) as Promise<VelitePostPublic[]>;
+    return Array.isArray(data) ? data.slice(0, limit) : [];
 };
 
-const getPostBySlug = async (slug: string) => {
-    if (!slug) return undefined;
-    return await readPublicJson<VelitePostPublic | undefined>(
+const getPostBySlug = (slug: string) => {
+    if (!slug) return VELITE_NOT_FOUND;
+    return readPublicJson<VelitePostPublic | VeliteNotFound>(
         `/_data/posts/${safeEncode(slug)}.json`,
-        undefined,
+        VELITE_NOT_FOUND,
     );
 };
 
 const getPostNeighbours = async (slug: string) => (await getPostBySlug(slug))?.neighbours;
 
-const getPageBySlug = async (slug: string) => {
-    if (!slug) return undefined;
-    return await readPublicJson<VelitePage | undefined>(
+const getPageBySlug = (slug: string) => {
+    if (!slug) return VELITE_NOT_FOUND;
+    return readPublicJson<VelitePage | VeliteNotFound>(
         `/_data/pages/${safeEncode(slug)}.json`,
-        undefined,
+        VELITE_NOT_FOUND,
     );
 };
 
@@ -100,6 +81,7 @@ const getFriendLinks = async () =>
     await readPublicJson<FriendLink[]>("/_data/friends.json", []);
 
 export {
+    VELITE_NOT_FOUND,
     getCategoryIndex,
     getFriendLinks,
     getLatestPosts,

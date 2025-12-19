@@ -12,7 +12,7 @@ const CompactBlog = ({ blog }: BlogProps) => {
         <div class=":: text-base mb-8 lg:space-y-5 ">
             <div class=":: md:space-y-2 mb-2 ">
                 <div class=":: flex-grow flex flex-col leading-relaxed ">
-                    <a href={blog.slug} class="mb-1">
+                    <a link={true} href={blog.slug} class="mb-1">
                         <h2 class=":: text-headline ">{blog.title}</h2>
                     </a>
                     <Show when={blog.subtitle}>

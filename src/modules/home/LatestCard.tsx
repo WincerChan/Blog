@@ -20,7 +20,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                     <p class=":: text-lg leading-loose relative sm:my-2 my-1 text-justify overflow-hidden " innerText={blog.summary} />
                     <div class=":: mt-auto justify-between text-[var(--extra)] flex ">
                         <DateCat date={blog.date} category={blog.category} />
-                        <a class=":: text-base transition duration-200 ease-linear leading-tight text-link " href={blog.slug}>继续阅读 »</a>
+                        <a link={true} class=":: text-base transition duration-200 ease-linear leading-tight text-link " href={blog.slug}>继续阅读 »</a>
                     </div>
                 </div>
                 <img width={352} height={304} class=":: lg:basis-1/2 lg:max-w-1/2 lg:h-80 h-82 block w-auto object-cover rounded !mobile-full-bleed " src={blog.cover} alt={`${blog.title}-cover`} />

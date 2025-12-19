@@ -46,7 +46,7 @@ export const collections = {
   }),
   pages: defineCollection({
     name: "Page",
-    pattern: ["pages/**/*.md", "page/**/*.md"],
+    pattern: ["pages/**/*.md"],
     schema: s.object({
       title: s.string(),
       date: s.string(),
@@ -87,4 +87,3 @@ export const collections = {
     }),
   }),
 };
-
