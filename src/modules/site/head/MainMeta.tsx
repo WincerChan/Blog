@@ -6,7 +6,6 @@ const MainMeta = ({ params }: { params: HeadParams }) => {
     const title = params.title ? `${params.title} · ${__SITE_CONF.title}` : `首页 · ${__SITE_CONF.title}`
     return (
         <>
-            <Link rel="preconnect" href="https://npm.onmicrosoft.cn" crossOrigin='' />
             <Meta charset="utf-8" />
             <Meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
             <Title>{title}</Title>
