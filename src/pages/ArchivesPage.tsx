@@ -1,18 +1,18 @@
 import { useLocation } from "@solidjs/router";
 import { For, createEffect, onCleanup, onMount } from "solid-js";
+import { useI18nContext } from "~/i18n/i18n-solid";
 import OtherBlogs from "~/modules/post-listing/OtherCards";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
 import IconChevronRight from "~icons/carbon/chevron-right";
 
 const Archives = ({ page }) => {
+    const { LL } = useI18nContext();
     const location = useLocation();
     const postsByYear = __CONTENT_POSTS_BY_YEAR_DETAIL;
     const allYears = Object.keys(postsByYear)
         .filter((x) => x !== "undefined")
         .sort((a, b) => Number(b) - Number(a));
 
-    const isZh = String(page?.lang ?? "").startsWith("zh");
-    const formatCount = (count: number) => (isZh ? `${count} 篇` : `${count} posts`);
     const yearCount = (year: string) => (postsByYear?.[year]?.length ?? 0) as number;
 
     onMount(() => {
@@ -89,14 +89,16 @@ const Archives = ({ page }) => {
                                             <IconChevronRight width={18} height={18} class="block" />
                                         </span>
                                         <span class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4">{year}</span>
-                                        <span class=":: ml-2 text-base font-mono text-[var(--extra)]">
-                                            {formatCount(yearCount(year))}
-                                        </span>
                                     </span>
                                 </h2>
                             </summary>
                             <div class=":: pt-2 ">
-                                <OtherBlogs posts={() => postsByYear[year] ?? []} description={null} />
+                                <OtherBlogs
+                                    posts={() => postsByYear[year] ?? []}
+                                    description={
+                                        LL && LL().archive.ARCHIVES_SUBTITLE({ total: yearCount(year) })
+                                    }
+                                />
                             </div>
                         </details>
                     )}
