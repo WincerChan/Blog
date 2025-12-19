@@ -1,6 +1,7 @@
 import { createAsync, useParams } from "@solidjs/router";
 import { Show, Suspense, createEffect, createMemo, createSignal, lazy } from "solid-js";
 import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
+import SimplePageLayout from "~/modules/site/shell/SimplePageLayout";
 import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...all]";
 
@@ -51,28 +52,49 @@ export default function PageRoute() {
                 const pageProps = toPageProps(p);
                 const key = baseKeyFromSlug(String(p.slug || slug()));
                 const body = () => <section class="md-content" innerHTML={p.html ?? ""} />;
+                const fallbackLayout = () => {
+                    if (key === "archives") {
+                        return (
+                            <SimplePageLayout page={pageProps} lang={pageProps.lang}>
+                                {body()}
+                            </SimplePageLayout>
+                        );
+                    }
+                    if (key === "search") {
+                        return (
+                            <ArticlePageLayout rawBlog={pageProps} relates={[]} hideComment={true}>
+                                {body()}
+                            </ArticlePageLayout>
+                        );
+                    }
+                    return (
+                        <ArticlePageLayout rawBlog={pageProps} relates={[]}>
+                            {body()}
+                        </ArticlePageLayout>
+                    );
+                };
 
                 if (key === "archives")
                     return (
-                        <Suspense fallback={body()}>
+                        <Suspense fallback={fallbackLayout()}>
                             <Archives page={pageProps} />
                         </Suspense>
                     );
                 if (key === "friends")
                     return (
-                        <Suspense fallback={body()}>
+                        <Suspense fallback={fallbackLayout()}>
                             <Friends page={pageProps}>{body()}</Friends>
                         </Suspense>
                     );
                 if (key === "search")
                     return (
-                        <Suspense fallback={body()}>
+                        <Suspense fallback={fallbackLayout()}>
                             <Search page={pageProps}>{body()}</Search>
                         </Suspense>
                     );
                 if (key === "life")
                     return (
-                        <Suspense fallback={body()}>
+                        <Suspense fallback={fallbackLayout()}>
                             <Life page={pageProps}>{body()}</Life>
                         </Suspense>
                     );
