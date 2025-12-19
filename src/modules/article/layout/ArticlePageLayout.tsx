@@ -14,7 +14,6 @@ import { calculateDateDifference, formatDate } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
 import Relates from "~/modules/site/footer/Relates";
-import { setGlobalStore } from "~/modules/site/header/ThemeSwitch/Provider";
 import Comment from "~/modules/article/comments/Comment";
 import Copyright from "~/modules/article/sections/Copyright";
 import LazyBg from "~/modules/site/media/BG";
@@ -150,8 +149,6 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
         const id = decodeURIComponent(hash());
         document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
     });
-    if (rawBlog.lang) setGlobalStore({ locale: rawBlog.lang });
-
     const { LL, locale } = useI18nContext();
 
     const blog = rawBlog;

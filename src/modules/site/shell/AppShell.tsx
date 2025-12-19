@@ -30,27 +30,27 @@ const trackHook = () => {
     });
 };
 
-const localeHook = (lang?: Locale) => {
-    lang = lang || "zh-CN";
+const localeHook = (lang: () => Locale | undefined) => {
     const { setLocale } = useI18nContext();
 
     createEffect(() => {
-        document.documentElement.lang = lang;
-        if (globalStore.locale !== lang) setGlobalStore({ locale: lang });
-        loadLocaleAsync(lang).then(() => setLocale(lang));
+        const next = lang() || "zh-CN";
+        document.documentElement.lang = next;
+        if (globalStore.locale !== next) setGlobalStore({ locale: next });
+        loadLocaleAsync(next).then(() => setLocale(next));
     });
 };
 
 
-const AppShell = ({ children, className, lang }: MainProps) => {
+const AppShell = (props: MainProps) => {
     globalThis.loadedLocale = false;
 
     trackHook();
-    localeHook(lang);
+    localeHook(() => props.lang);
 
     return (
-        <main class={className}>
-            {children}
+        <main class={props.className}>
+            {props.children}
         </main>
     );
 };
