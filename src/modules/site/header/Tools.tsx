@@ -1,8 +1,7 @@
 import { useI18nContext } from "~/i18n/i18n-solid"
 import IconRSS from "~icons/carbon/rss"
 import IconSearch from "~icons/carbon/search-advanced"
-import { globalStore } from "./ThemeSwitch/Provider"
-import ToggleButton from "./ThemeSwitch/Switcher"
+import { globalStore, ThemeSwitcher } from "~/features/theme"
 
 const Tools = () => {
     const { locale } = useI18nContext()
@@ -18,7 +17,7 @@ const Tools = () => {
                     <IconRSS width={20} height={20} class=":: md:w-6 md:h-6 " />
                 </a>
             </li>
-            <ToggleButton />
+            <ThemeSwitcher />
         </ul>
     )
 }

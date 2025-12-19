@@ -2,7 +2,7 @@ import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createResource, 
 import CommentList from "~/modules/article/comments/OldComment";
 import { Translations } from "~/i18n/i18n-types";
 import { fetcher } from "~/utils";
-import { globalStore } from "~/modules/site/header/ThemeSwitch/Provider";
+import { globalStore } from "~/features/theme";
 
 interface GiscusCommentProps {
     pageURL: string

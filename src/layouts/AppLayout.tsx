@@ -3,7 +3,7 @@ import nProgress from "nprogress";
 import { JSXElement, createEffect, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { loadLocaleAsync } from "~/i18n/i18n-util.async";
-import { globalStore, setGlobalStore } from "~/modules/site/header/ThemeSwitch/Provider";
+import { globalStore, setGlobalStore } from "~/features/theme";
 import { Locale } from "~/utils/locale";
 
 interface MainProps {

@@ -16,24 +16,15 @@ import {
     contentStatsWordsCount,
     contentStatsZhNavPages,
 } from "./tools/velite/build/contentStats";
+import reloadPublicData from "./tools/vite/reloadPublicData";
 import ServiceWorkerBuild from "./tools/vite/serviceWorkerBuild";
+import computeSwHash from "./tools/build/swHash";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename);
 
 const siteConfigPath = fileURLToPath(new URL("./site.config.json", import.meta.url));
 const BlogConf = JSON.parse(fs.readFileSync(siteConfigPath, "utf8"));
-
-const computeSwHash = () => {
-    const slice = (v: string) => String(v).trim().slice(0, 12);
-
-    const cfBuildId = process.env.CF_PAGES_BUILD_ID;
-    if (cfBuildId) return slice(cfBuildId);
-    const cf = process.env.CF_PAGES_COMMIT_SHA;
-    if (cf) return cf.slice(0, 12);
-
-    return slice(String(Date.now()));
-};
 
 const swHash = computeSwHash();
 
@@ -70,7 +61,8 @@ export default defineConfig({
             velite(),
             Icons({ autoInstall: true, compiler: 'solid' }),
             UnoCSS(),
-            ServiceWorkerBuild(__dirname)
+            ServiceWorkerBuild(__dirname),
+            reloadPublicData(__dirname),
         ],
         build: {
             rollupOptions: {

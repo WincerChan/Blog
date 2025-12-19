@@ -1,6 +1,6 @@
 import { Show, createSignal, onMount } from "solid-js";
 import IconTranslate from "~icons/carbon/translate";
-import { globalStore } from "~/modules/site/header/ThemeSwitch/Provider";
+import { globalStore } from "~/features/theme";
 import { safeEncode } from "~/content/velite-utils";
 
 interface TranslateProps {

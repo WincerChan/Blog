@@ -10,7 +10,8 @@ import { type RouteSectionProps } from "@solidjs/router";
 import {
     globalStore,
     setGlobalStore,
-} from "./modules/site/header/ThemeSwitch/Provider";
+} from "./features/theme";
+import { applyTheme } from "./features/theme";
 import { Locale } from "./utils/locale";
 
 import Plausible from "plausible-tracker";
@@ -58,7 +59,7 @@ export default function App() {
         loadLocale(locale);
     }
     createEffect(() => {
-        document.documentElement.className = globalStore.theme;
+        applyTheme(globalStore.theme);
     });
     onMount(() => {
         NProgress.configure({ showSpinner: false });

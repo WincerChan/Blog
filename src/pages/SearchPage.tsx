@@ -4,7 +4,7 @@ import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, creat
 import { isBrowser, range } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
-import { globalStore } from "~/modules/site/header/ThemeSwitch/Provider";
+import { globalStore } from "~/features/theme";
 import ArticlePage from "~/layouts/ArticlePage";
 
 const resultPerPage = 8

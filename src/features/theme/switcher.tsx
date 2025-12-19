@@ -1,24 +1,30 @@
-import { Accessor, For, createSignal, onMount } from "solid-js";
+import { Accessor, For, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import { isBrowser } from "~/utils";
 import IconHaze from "~icons/carbon/haze";
 import IconHazeNight from "~icons/carbon/haze-night";
 import IconWindowSwitcher from "~icons/carbon/window-black-saturation";
 import IconWorkflowAuto from "~icons/carbon/workflow-automation";
 
-import { globalStore, setGlobalStore } from "./Provider";
+import { globalStore, setGlobalStore } from "./provider";
+import {
+    getStoredThemePreference,
+    getSystemTheme,
+    resolveTheme,
+    setStoredThemePreference,
+    type ThemePreference,
+} from "./theme";
 
-const ThemeMapping = [
+const ThemeMapping: Array<[ThemePreference, string]> = [
     ["light", "浅色模式"],
     ["dark", "深色模式"],
-    ["auto", "跟随系统"]
-]
+    ["auto", "跟随系统"],
+];
 
 const Icons = [
     IconHaze,
     IconHazeNight,
     IconWorkflowAuto
-]
+];
 
 type ThemeMenuProps = {
     show: Accessor<boolean>,
@@ -28,26 +34,24 @@ type ThemeMenuProps = {
 
 const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
     const { LL } = useI18nContext()
-    const [selected, setSelected] = createSignal(isBrowser ? window.lt() : "auto")
-    const handleClick = (e: MouseEvent, key: string) => {
+    const [selected, setSelected] = createSignal<ThemePreference>("auto");
+    const handleClick = (e: MouseEvent, key: ThemePreference) => {
         toggleShow(e)
-        setSelected(key)
-        // 如果跟随系统，就需要先获取系统属于哪种模式
-        // 要把系统的真实模式放在 theme 保存
-        let systemMode = key;
-        if (key === "auto")
-            systemMode = window.mt();
-        setGlobalStore({ theme: systemMode })
-        localStorage.setItem("customer-theme", key)
+        setSelected(key);
+        setGlobalStore({ theme: resolveTheme(key) })
+        setStoredThemePreference(key);
     };
 
 
     onMount(() => {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        setSelected(getStoredThemePreference());
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = () => {
             if (selected() !== 'auto') return
-            const newColorScheme = e.matches ? 'dark' : 'light';
-            setGlobalStore({ theme: newColorScheme })
-        })
+            setGlobalStore({ theme: getSystemTheme() })
+        };
+        media.addEventListener('change', handleChange);
+        onCleanup(() => media.removeEventListener('change', handleChange));
     })
 
 

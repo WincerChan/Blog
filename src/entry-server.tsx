@@ -2,6 +2,7 @@
 import { createHandler, StartServer } from "@solidjs/start/server";
 
 import { Locale } from "~/utils/locale";
+import { themeInitScript } from "~/features/theme";
 
 export default createHandler((context) => (
     <StartServer
@@ -15,9 +16,7 @@ export default createHandler((context) => (
             return (
                 <html lang={locale}>
                     <head>
-                        <script
-                            innerHTML={`window.lt=()=>localStorage.getItem('customer-theme')||'auto';window.mt=()=>window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';!function(){let e=window.lt(); if(e==='auto') e = window.mt();document.documentElement.setAttribute("class", e);}()`}
-                        />
+                        <script innerHTML={themeInitScript} />
                         {assets}
                     </head>
                     <body>
