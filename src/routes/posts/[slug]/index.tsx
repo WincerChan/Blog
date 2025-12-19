@@ -1,5 +1,5 @@
 import { createAsync, useParams } from "@solidjs/router";
-import { Show } from "solid-js";
+import { Show, createEffect, createSignal } from "solid-js";
 import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
 import { VELITE_NOT_FOUND, getPostBySlug, postUrl } from "~/content/velite";
 import { maybeEncryptHtml } from "~/content/post-utils";
@@ -11,9 +11,18 @@ export default function PostRoute() {
     const slug = () => String(params.slug || "");
     const post = createAsync(() => getPostBySlug(slug())) as any;
     const resolved = () => (import.meta.env.SSR ? post() : post.latest) as any;
+    const [stale, setStale] = createSignal<any>();
+
+    createEffect(() => {
+        const v = resolved();
+        if (!v || v === VELITE_NOT_FOUND) return;
+        setStale(v);
+    });
+
+    const displayed = () => resolved() ?? stale();
 
     return (
-        <Show keyed when={resolved()} fallback={<section class="md-content" />}>
+        <Show keyed when={displayed()} fallback={<section class="md-content" />}>
             {(p) => {
                 if (p === VELITE_NOT_FOUND) return <NotFound />;
 

@@ -1,5 +1,5 @@
 import { createAsync, useParams } from "@solidjs/router";
-import { Show, Suspense, createMemo, lazy } from "solid-js";
+import { Show, Suspense, createEffect, createMemo, createSignal, lazy } from "solid-js";
 import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
 import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...all]";
@@ -33,9 +33,18 @@ export default function PageRoute() {
     const slug = createMemo(() => String(params.page || ""));
     const page = createAsync(() => getPageBySlug(slug())) as any;
     const resolved = () => (import.meta.env.SSR ? page() : page.latest) as any;
+    const [stale, setStale] = createSignal<any>();
+
+    createEffect(() => {
+        const v = resolved();
+        if (!v || v === VELITE_NOT_FOUND) return;
+        setStale(v);
+    });
+
+    const displayed = () => resolved() ?? stale();
 
     return (
-        <Show keyed when={resolved()} fallback={<section class="md-content" />}>
+        <Show keyed when={displayed()} fallback={<section class="md-content" />}>
             {(p) => {
                 if (p === VELITE_NOT_FOUND) return <NotFound />;
 

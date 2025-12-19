@@ -66,13 +66,11 @@ export default function App() {
     });
     return (
         <TypesafeI18n locale={globalStore.locale as Locale}>
-            <div class=":: font-base antialiased bg-main text-main min-h-screen flex flex-col ">
+            <div class=":: font-base antialiased bg-main text-main md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ">
                 <Header />
-                <main class=":: min-h-0 flex-1">
-                    <Router root={(props) => preloadHook(props)}>
-                        <FileRoutes />
-                    </Router>
-                </main>
+                <Router root={(props) => preloadHook(props)}>
+                    <FileRoutes />
+                </Router>
                 <Footer />
             </div>
         </TypesafeI18n>
