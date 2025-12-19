@@ -6,7 +6,7 @@ import IconChevronRight from "~icons/carbon/chevron-right";
 
 const Archives = ({ page }) => {
     const location = useLocation();
-    const postsByYear = __POSTS_BY_YEAR_DETAIL;
+    const postsByYear = __CONTENT_POSTS_BY_YEAR_DETAIL;
     const allYears = Object.keys(postsByYear)
         .filter((x) => x !== "undefined")
         .sort((a, b) => Number(b) - Number(a));

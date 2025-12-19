@@ -6,35 +6,40 @@ import { emitAtom } from "./emit/atom";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSitemaps } from "./emit/sitemap";
 
+const normalizeDates = (value: { date?: string; updated?: string }) => {
+  const dateObj = parseDateLikeHugo(value.date);
+  const updatedObj = parseDateLikeHugo(value.updated ?? value.date);
+  return { dateObj, updatedObj };
+};
+
+const normalizePost = (post: any) => {
+  const { dateObj, updatedObj } = normalizeDates(post);
+  return {
+    ...post,
+    tags: Array.isArray(post.tags) ? post.tags.map((x: unknown) => String(x)).filter(Boolean) : [],
+    dateObj,
+    updatedObj,
+    url: `/posts/${String(post.slug)}/`,
+  };
+};
+
+const normalizePage = (page: any) => {
+  const { dateObj, updatedObj } = normalizeDates(page);
+  return {
+    ...page,
+    dateObj,
+    updatedObj,
+    url: `/${String(page.slug)}/`,
+  };
+};
+
 export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const repoRoot = path.dirname(context.config.configPath);
   const site = await readSiteConf(repoRoot);
   const publicDir = path.join(repoRoot, "public");
 
-  const posts = (data.posts as any[]).map((p) => {
-    const dateObj = parseDateLikeHugo(p.date);
-    const updatedObj = parseDateLikeHugo(p.updated ?? p.date);
-
-    return {
-      ...p,
-      tags: Array.isArray(p.tags) ? p.tags.map((x) => String(x)).filter(Boolean) : [],
-      dateObj,
-      updatedObj,
-      url: `/posts/${String(p.slug)}/`,
-    };
-  });
-
-  const pages = (data.pages as any[]).map((p) => {
-    const dateObj = parseDateLikeHugo(p.date);
-    const updatedObj = parseDateLikeHugo(p.updated ?? p.date);
-
-    return {
-      ...p,
-      dateObj,
-      updatedObj,
-      url: `/${String(p.slug)}/`,
-    };
-  });
+  const posts = (data.posts as any[]).map(normalizePost);
+  const pages = (data.pages as any[]).map(normalizePage);
 
   data.posts = posts;
   data.pages = pages;
@@ -64,4 +69,3 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
 
   await emitPublicAssets({ site, publicDir });
 };
-

@@ -3,14 +3,7 @@ import path from "node:path";
 import type { SiteConf } from "../site";
 import { writeFile } from "../io";
 import { formatUtc } from "../time";
-
-const escapeXmlText = (value: string) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
+import { escapeXmlText, latestUpdated } from "./xml";
 
 const uuidFromSha1 = (hex: string) =>
   `urn:uuid:${hex.slice(0, 8)}-${hex.slice(8, 12)}-5${hex.slice(13, 16)}-${hex.slice(16, 17)}9${hex.slice(17, 19)}-${hex.slice(21, 33)}`;
@@ -30,9 +23,6 @@ export const emitAtom = async ({
   publishedPosts: any[];
   renderablePosts: any[];
 }) => {
-  const latestUpdated = (items: any[]) =>
-    items.reduce((acc, x) => Math.max(acc, x.updatedObj?.getTime?.() ?? 0), 0);
-
   const siteBaseForAtom = new URL("/", site.baseURL).toString();
   const feedId = hugoAtomIdFromString(siteBaseForAtom);
   const feedUpdated = formatUtc(new Date(Math.max(latestUpdated(renderablePosts), Date.now())));
@@ -146,4 +136,3 @@ export const emitAtom = async ({
 
   await writeFile(path.join(publicDir, "atom.xsl"), atomXsl);
 };
-

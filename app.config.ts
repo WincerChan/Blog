@@ -4,7 +4,17 @@ import path from "path";
 import UnoCSS from 'unocss/vite';
 import Icons from 'unplugin-icons/vite';
 import { fileURLToPath } from 'url';
-import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./tools/velite/statsPreload";
+import {
+    contentStatsEnNavPages,
+    contentStatsEnPosts,
+    contentStatsPostsByYear,
+    contentStatsPostsByYearDetail,
+    contentStatsTotalCategories,
+    contentStatsTotalPosts,
+    contentStatsTotalTags,
+    contentStatsWordsCount,
+    contentStatsZhNavPages,
+} from "./tools/velite/build/contentStats";
 import ServiceWorkerBuild from "./tools/vite/serviceWorkerBuild";
 import { execSync } from "node:child_process";
 const isProd = process.env.NODE_ENV === "production";
@@ -55,15 +65,15 @@ const computeSwHash = () => {
 const swHash = computeSwHash();
 
 const definedVars = {
-    __WORDS: wordsCount,
-    __ALL_TAGS: totalTags,
-    __TOTAL_POSTS: totalPosts,
-    __POSTS_BY_YEAR: JSON.stringify(postsByYear),
-    __POSTS_BY_YEAR_DETAIL: JSON.stringify(postsByYearDetail),
-    __EN_POSTS: JSON.stringify(en_posts),
-    __EN_NAV: JSON.stringify(en_nav_pages),
-    __ZH_NAV: JSON.stringify(zh_nav_pages),
-    __TOTAL_CATEGORIES: totalCategories,
+    __CONTENT_WORDS: contentStatsWordsCount,
+    __CONTENT_TAGS: contentStatsTotalTags,
+    __CONTENT_TOTAL_POSTS: contentStatsTotalPosts,
+    __CONTENT_POSTS_BY_YEAR: JSON.stringify(contentStatsPostsByYear),
+    __CONTENT_POSTS_BY_YEAR_DETAIL: JSON.stringify(contentStatsPostsByYearDetail),
+    __CONTENT_EN_POSTS: JSON.stringify(contentStatsEnPosts),
+    __CONTENT_EN_NAV: JSON.stringify(contentStatsEnNavPages),
+    __CONTENT_ZH_NAV: JSON.stringify(contentStatsZhNavPages),
+    __CONTENT_TOTAL_CATEGORIES: contentStatsTotalCategories,
     __SITE_CONF: BlogConf,
     __SW_HASH: JSON.stringify(swHash),
 }
@@ -72,7 +82,7 @@ export default defineConfig({
     server: {
         prerender: {
             crawlLinks: true,
-            routes: ["/", ...en_posts, "/404/"]
+            routes: ["/", ...contentStatsEnPosts, "/404/"]
         },
     },
     vite: {

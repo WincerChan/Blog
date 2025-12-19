@@ -6,10 +6,10 @@ import { getCategoryIndex } from "~/content/velite";
 const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
     const categories = createAsync(() => getCategoryIndex())
     const elems = createMemo(() => [
-        __TOTAL_POSTS,
+        __CONTENT_TOTAL_POSTS,
         (categories() ?? []).length,
-        `${(__WORDS / 1000).toPrecision(3)}`,
-        __ALL_TAGS,
+        `${(__CONTENT_WORDS / 1000).toPrecision(3)}`,
+        __CONTENT_TAGS,
     ])
 
     return (

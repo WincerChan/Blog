@@ -2,14 +2,7 @@ import path from "node:path";
 import { formatUtc } from "../time";
 import type { SiteConf } from "../site";
 import { writeFile } from "../io";
-
-const escapeXmlText = (value: string) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
+import { escapeXmlText, latestUpdated } from "./xml";
 
 const toAbsoluteUrl = (baseURL: string, value: string) => {
   const src = String(value ?? "").trim();
@@ -92,9 +85,6 @@ export const emitSitemaps = async ({
   renderablePages: any[];
   publishedPosts: any[];
 }) => {
-  const latestUpdated = (items: any[]) =>
-    items.reduce((acc, x) => Math.max(acc, x.updatedObj?.getTime?.() ?? 0), 0);
-
   const sitemapIndex =
     `${sitemapHeader}\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     [
@@ -186,4 +176,3 @@ export const emitSitemaps = async ({
     `\n${urlsetEnd}`;
   await writeFile(path.join(publicDir, "category", "sitemap.xml"), categorySitemap);
 };
-

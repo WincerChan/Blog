@@ -8,7 +8,7 @@ const Archives = () => {
                 {LL && LL().footer.A()}
             </label>
             <div class=":: mb-6 md:w-48 text-[var(--extra)] md:grid grid-flow-row grid-cols-2 gap-x-4 ">
-                {Object.entries(__POSTS_BY_YEAR)
+                {Object.entries(__CONTENT_POSTS_BY_YEAR)
                     .filter(([year]) => year !== "undefined")
                     .sort(([a], [b]) => Number(b) - Number(a))
                     .map((val) => (

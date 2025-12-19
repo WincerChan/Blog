@@ -52,11 +52,10 @@ const rehypeBlogEnhancements = () => {
       String(node.tagName || "").toLowerCase() === "div" &&
       getClassList(node).includes("table-wrapper");
 
-    const walk = (node: any, ancestorTags: string[]) => {
+    const walk = (node: any) => {
       if (!node) return;
       const isElement = node.type === "element";
       const tag = isElement ? String(node.tagName || "").toLowerCase() : "";
-      const nextAncestors = isElement ? ancestorTags.concat(tag) : ancestorTags;
 
       if (isElement && tag === "img") {
         node.properties ??= {};
@@ -87,26 +86,19 @@ const rehypeBlogEnhancements = () => {
             children: [child],
           };
           node.children.splice(i, 1, wrapper);
-          walk(wrapper, nextAncestors);
+          walk(wrapper);
           continue;
         }
 
-        walk(child, nextAncestors);
+        walk(child);
       }
     };
 
-    walk(tree, []);
+    walk(tree);
   };
 };
 
 const rehypeCodeLangAttr = () => {
-  const getClassList = (node: any) => {
-    const cn = node?.properties?.className;
-    if (Array.isArray(cn)) return cn.map(String).filter(Boolean);
-    if (typeof cn === "string") return cn.split(/\s+/).filter(Boolean);
-    return [];
-  };
-
   const inferLang = (node: any) => {
     const classes = getClassList(node);
     for (const c of classes) {
@@ -183,4 +175,3 @@ export const transforms = {
   countWords,
   normalizeWhitespace,
 };
-

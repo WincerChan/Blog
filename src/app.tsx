@@ -30,7 +30,7 @@ const normalizePath = (pathname: string) =>
 const detectLocaleFromPath = (pathname: string): Locale => {
     const p = normalizePath(pathname);
     if (p.endsWith("-en/")) return "en";
-    if ((__EN_POSTS as unknown as string[]).includes(p)) return "en";
+    if ((__CONTENT_EN_POSTS as unknown as string[]).includes(p)) return "en";
     return "zh-CN";
 };
 

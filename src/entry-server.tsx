@@ -7,7 +7,7 @@ export default createHandler((context) => (
     <StartServer
         document={({ assets, children, scripts }) => {
             let locale: Locale = "zh-CN";
-            __EN_POSTS.forEach(
+            __CONTENT_EN_POSTS.forEach(
                 (post) =>
                     context.nativeEvent._path?.includes(post) &&
                     (locale = "en"),

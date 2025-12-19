@@ -10,7 +10,9 @@ type PagesProps = {
 
 const Pages = () => {
     const { LL, locale } = useI18nContext();
-    let pages = createMemo(() => (locale() === "zh-CN" ? __ZH_NAV : __EN_NAV));
+    let pages = createMemo(() =>
+        (locale() === "zh-CN" ? __CONTENT_ZH_NAV : __CONTENT_EN_NAV),
+    );
     return (
         <ul class="flex overflow-x-auto">
             <For each={pages()}>

@@ -1,28 +1,6 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-
-type VelitePost = {
-  slug: string;
-  title: string;
-  date: string;
-  category?: string;
-  tags?: string[];
-  subtitle?: string;
-  draft?: boolean;
-  private?: boolean;
-  isTranslation?: boolean;
-  lang?: string;
-  words?: number;
-};
-
-type VelitePage = {
-  slug: string;
-  draft?: boolean;
-  private?: boolean;
-  isTranslation?: boolean;
-  lang?: string;
-  weight?: number;
-};
+import type { VelitePage, VelitePost } from "../../../src/content/types";
 
 const readJson = <T>(filepath: string, fallback: T): T => {
   try {
@@ -90,8 +68,8 @@ const groupByYearDetail = (posts: VelitePost[]) => {
   return byYears;
 };
 
-const wordsCount = posts.reduce((acc, post) => acc + (post.words ?? 0), 0);
-const totalPosts = posts.length;
+const contentStatsWordsCount = posts.reduce((acc, post) => acc + (post.words ?? 0), 0);
+const contentStatsTotalPosts = posts.length;
 
 const tagsCount = new Set(posts.flatMap((p) => (p.tags ?? []) as string[])).size;
 const categoryCounts = Object.entries(
@@ -107,30 +85,29 @@ const zhWithLang = posts
   .filter((p) => p.lang !== undefined)
   .filter((p) => p.lang?.startsWith("zh"));
 
-const en_posts = zhWithLang
+const contentStatsEnPosts = zhWithLang
   .map((p) => (p.slug.endsWith("-zh") ? p.slug.replace("-zh", "-en") : `${p.slug}-en`))
   .map((slug) => `/posts/${slug}/`)
   .concat(pages.map((p) => `/${p.slug}-en/`))
   .concat(["/archives-en/"])
   .concat(posts.filter((p) => p.lang === "en").map((p) => `/posts/${p.slug}/`));
 
-const totalTags = tagsCount;
-const totalCategories = categoryCounts;
-const postsByYear = groupByYear(posts);
-const postsByYearDetail = groupByYearDetail(posts);
+const contentStatsTotalTags = tagsCount;
+const contentStatsTotalCategories = categoryCounts;
+const contentStatsPostsByYear = groupByYear(posts);
+const contentStatsPostsByYearDetail = groupByYearDetail(posts);
 
-const zh_nav_pages = pages.map((x) => x.slug).filter((x) => !x.includes("search"));
-const en_nav_pages = zh_nav_pages.map((x) => `${x}-en`);
+const contentStatsZhNavPages = pages.map((x) => x.slug).filter((x) => !x.includes("search"));
+const contentStatsEnNavPages = contentStatsZhNavPages.map((x) => `${x}-en`);
 
 export {
-  en_nav_pages,
-  en_posts,
-  postsByYear,
-  postsByYearDetail,
-  totalCategories,
-  totalPosts,
-  totalTags,
-  wordsCount,
-  zh_nav_pages,
+  contentStatsEnNavPages,
+  contentStatsEnPosts,
+  contentStatsPostsByYear,
+  contentStatsPostsByYearDetail,
+  contentStatsTotalCategories,
+  contentStatsTotalPosts,
+  contentStatsTotalTags,
+  contentStatsWordsCount,
+  contentStatsZhNavPages,
 };
-
