@@ -1,85 +1,87 @@
 # Wincer's Blog
 
-Personal blog built with SolidStart + Velite. The codebase was migrated from a Hugo-era setup and reorganized around a content-first pipeline to keep build/runtime responsibilities clean.
+基于 SolidStart + Velite 构建的个人博客。当前默认分支（`master`）为 Velite 版本；历史的 Hugo + SolidStart 版本保留在 `legacy/hugo-solidstart` 分支。
 
-## Features
+English version: `README.en.md`
 
-- SolidStart app with static preset output
-- Velite content pipeline (`_blogs/content` -> `.velite` -> `public/_data`)
-- Multi-language pages and posts
-- RSS/Atom, sitemap, and public assets emitted at build time
-- Optional encrypted posts (content is encrypted in build output)
-- Service worker update notification
+## 特性
 
-## Tech Stack
+- SolidStart 静态输出（static preset）
+- Velite 内容管线（`_blogs/content` -> `.velite` -> `public/_data`）
+- 多语言页面与文章
+- 构建期生成 RSS/Atom、Sitemap 与公共资源
+- 可选文章加密（输出只保留密文）
+- Service Worker 更新提示
+
+## 技术栈
 
 - SolidStart + SolidJS
-- Velite (content pipeline)
+- Velite（内容管线）
 - Vite + UnoCSS
-- Typesafe i18n
+- typesafe-i18n
 
-## Project Structure
+## 目录结构
 
-- `src/routes/` routes (content pages under `src/routes/(pages)`)
-- `src/pages/` page view components
-- `src/layouts/` layout shells
-- `src/features/` cross-cutting features (e.g. `features/theme`)
-- `tools/velite/` content pipeline utilities
-- `_blogs/content/` markdown source (external content repo)
-- `public/_data/` generated runtime JSON data
+- `src/routes/` 路由（内容页在 `src/routes/(pages)`）
+- `src/pages/` 页面视图组件
+- `src/layouts/` 布局层
+- `src/features/` 业务功能模块（如 `features/theme`）
+- `tools/velite/` 内容构建工具
+- `_blogs/content/` Markdown 内容仓库
+- `public/_data/` 运行时 JSON 数据
 
-## Content Workflow
+## 内容流程
 
-1. Write content in `_blogs/content/posts` and `_blogs/content/pages`.
-2. Velite parses markdown and emits `.velite/*.json`.
-3. Build step generates runtime JSON into `public/_data`.
-4. The app reads data from `public/_data` at runtime.
+1. 在 `_blogs/content/posts` 与 `_blogs/content/pages` 写作。
+2. Velite 解析 Markdown 并生成 `.velite/*.json`。
+3. 构建期生成 `public/_data` 供运行时读取。
+4. 前端从 `public/_data` 读取内容渲染。
 
-### Encrypted Posts
+### 加密文章
 
-If a post has `encrypt_pwd` in its front matter, the build will:
+若 front matter 包含 `encrypt_pwd`，构建过程会：
 
-- Encrypt the HTML and store it in `public/_data/posts/*.json` under `html`.
-- Remove the original `encrypt_pwd` from the output.
-- Add `encrypted: true` so the UI can prompt for a password.
+- 将文章 HTML 加密后写入 `public/_data/posts/*.json` 的 `html` 字段。
+- 去除 `encrypt_pwd` 字段，避免在产物中泄露。
+- 增加 `encrypted: true` 标记，前端提示输入密码。
 
-## Development
+## 本地开发
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Content build only:
+仅构建内容：
 
 ```bash
 pnpm content:build
 ```
 
-## Build
+## 构建
 
 ```bash
 pnpm build
 ```
 
-Output is generated in `.output/public` (static preset). This repo is intended to be deployed to Cloudflare Pages.
+产物位于 `.output/public`（static preset），适配 Cloudflare Pages 部署。
 
-## Optional Build Script
+## 构建脚本（可选）
 
-`build.sh` is a convenience script that:
+`build.sh` 会：
 
-- Installs deps
-- Pulls `_blogs` content
-- Builds content and site
+- 安装依赖
+- 拉取 `_blogs` 内容
+- 构建内容与站点
 
-If your content repo is private, set `GH_TOKEN` for the clone step.
+如果内容仓库为私有，需设置 `GH_TOKEN`。
 
-## Environment Variables
+## 环境变量
 
-- `GH_TOKEN` (optional): used by `build.sh` to clone private content repo
-- `CF_PAGES_BUILD_ID` / `CF_PAGES_COMMIT_SHA`: used to hash the service worker version
+- `GH_TOKEN`（可选）：`build.sh` 用于拉取私有内容仓库
+- `CF_PAGES_BUILD_ID` / `CF_PAGES_COMMIT_SHA`：用于生成 SW 版本哈希
 
-## Notes
+## 备注
 
-- The content repo is separate from this codebase. Ensure `_blogs/` exists locally.
-- `public/_data` is generated content; it should not contain raw passwords.
+- 内容仓库与代码仓库分离，需确保本地存在 `_blogs/`。
+- `public/_data` 为构建产物，不应包含明文密码。
