@@ -1,8 +1,0 @@
-{{ $dest := .Destination }}
-{{ $text := .Text }}
-{{ with .Page.Params.encrypt_pwd }}
-<img class="w-full" src="{{ $dest | safeURL }}" alt="{{ $text }}" />
-{{ else }}
-<Img src="{{ $dest | safeURL }}"
-    alt="{{ $text }}" />
-{{ end }}
