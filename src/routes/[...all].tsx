@@ -1,5 +1,5 @@
 import { Meta } from "@solidjs/meta";
-import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
+import ArticlePage from "~/layouts/ArticlePage";
 
 const page = {
     title: "404 Not Found",
@@ -20,11 +20,11 @@ export default function NotFoundRoute() {
     return (
         <>
             <Meta charset="utf-8" />
-            <ArticlePageLayout rawBlog={page} relates={[]} hideComment={true}>
+            <ArticlePage rawBlog={page} relates={[]} hideComment={true}>
                 <section class="md-content">
                     <p class=":: text-xl mb-8 leading-relaxed">{page.content}</p>
                 </section>
-            </ArticlePageLayout>
+            </ArticlePage>
         </>
     );
 }

@@ -1,35 +1,66 @@
-import { Accessor, createSignal, onMount } from "solid-js";
-import { Translations } from "~/i18n/i18n-types";
+import { Show, createSignal, onMount } from "solid-js";
 import IconTranslate from "~icons/carbon/translate";
 import { globalStore } from "~/modules/site/header/ThemeSwitch/Provider";
+import { safeEncode } from "~/content/velite-utils";
 
 interface TranslateProps {
-    LL: Accessor<Translations>,
     lang?: string,
     pageURL: string
 }
 
-const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
-    const [toggle, setToggle] = createSignal(false)
-    const [aviableLangs, setAviableLangs] = createSignal({})
+const Translate = ({ pageURL, lang }: TranslateProps) => {
+    const [toggle, setToggle] = createSignal(false);
+    const [availableLangs, setAvailableLangs] = createSignal<
+        Record<string, { name: string; url: string }>
+    >({});
+    const [hasTranslation, setHasTranslation] = createSignal(false);
     const click = () => {
-        setToggle(!toggle())
-    }
+        setToggle(!toggle());
+    };
+
+    const normalizeUrl = (value: string) => (value.endsWith("/") ? value : `${value}/`);
+    const getSlugInfo = (url: string) => {
+        const normalized = normalizeUrl(url);
+        const isPost = normalized.startsWith("/posts/");
+        const slug = isPost
+            ? normalized.slice("/posts/".length, -1)
+            : normalized.slice(1, -1);
+        return { isPost, slug, normalized };
+    };
 
     onMount(() => {
-        let translateURL;
-        let langShort = lang?.split("-")[0]
-        let translateLangShort = langShort == "zh" ? "en" : "zh"
-        if (pageURL.endsWith(`-${langShort}/`)) {
-            translateURL = pageURL.replace(`-${langShort}`, ``)
-        } else {
-            translateURL = pageURL.slice(0, -1) + `-${translateLangShort}/`
-        }
-        setAviableLangs({
-            "en": { name: "English", url: langShort == "zh" ? translateURL : pageURL },
-            "zh-CN": { name: "中文", url: langShort == "zh" ? pageURL : translateURL }
-        })
-    })
+        if (!lang || !pageURL) return;
+        const langShort = String(lang).split("-")[0] || "";
+        if (!langShort) return;
+
+        const { isPost, slug, normalized } = getSlugInfo(pageURL);
+        if (!slug) return;
+
+        const targetLangShort = langShort === "zh" ? "en" : "zh";
+        const targetSlug = slug.endsWith(`-${langShort}`)
+            ? slug.replace(new RegExp(`-${langShort}$`), "")
+            : `${slug}-${targetLangShort}`;
+        if (!targetSlug || targetSlug === slug) return;
+
+        const targetUrl = isPost ? `/posts/${targetSlug}/` : `/${targetSlug}/`;
+        const dataBase = isPost ? "/_data/posts/" : "/_data/pages/";
+        const targetDataUrl = `${dataBase}${safeEncode(targetSlug)}.json`;
+
+        fetch(targetDataUrl)
+            .then((res) => res.ok)
+            .then((exists) => {
+                if (!exists) {
+                    setHasTranslation(false);
+                    return;
+                }
+                setAvailableLangs({
+                    en: { name: "English", url: langShort === "zh" ? targetUrl : normalized },
+                    "zh-CN": { name: "中文", url: langShort === "zh" ? normalized : targetUrl },
+                });
+                setHasTranslation(true);
+            })
+            .catch(() => setHasTranslation(false));
+    });
 
     const onblur = () => {
         setTimeout(() => {
@@ -39,17 +70,31 @@ const Translate = ({ LL, pageURL, lang }: TranslateProps) => {
 
 
     return (
-        <button onClick={click} onBlur={onblur} title="Translate" class={`:: hover:text-indigo-500 focus:text-indigo-500 relative transition-linear h-15 w-24 animate-shake-y`}>
-            <IconTranslate class=":: mx-auto " height={36} width={36} />
-            <div class={`:: absolute font-bold text-lg bg-surface shadow-card rounded-lg left-0 right-0 mx-auto flex flex-col text-[var(--subtitle)] bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}>
-                {
-                    Object.entries(aviableLangs()).map(([key, name]) => (
-                        <a lang={key} href={name.url} class={` my-2 ${globalStore.locale == key ? 'text-menu-active' : ''}`} title={globalStore.locale == key ? `Current: ${name.name}` : name.name}>{name.name}</a>
-                    ))
-                }
-            </div>
-        </button>
-    )
+        <Show when={hasTranslation()}>
+            <button
+                onClick={click}
+                onBlur={onblur}
+                title="Translate"
+                class={`:: hover:text-indigo-500 focus:text-indigo-500 relative transition-linear h-15 w-24 animate-shake-y`}
+            >
+                <IconTranslate class=":: mx-auto " height={36} width={36} />
+                <div
+                    class={`:: absolute font-bold text-lg bg-surface shadow-card rounded-lg left-0 right-0 mx-auto flex flex-col text-[var(--subtitle)] bottom-16 duration-200 transition-max-height lg:w-24 overflow-hidden ${toggle() ? 'max-h-24' : 'max-h-0'}`}
+                >
+                    {Object.entries(availableLangs()).map(([key, name]) => (
+                        <a
+                            lang={key}
+                            href={name.url}
+                            class={` my-2 ${globalStore.locale == key ? 'text-menu-active' : ''}`}
+                            title={globalStore.locale == key ? `Current: ${name.name}` : name.name}
+                        >
+                            {name.name}
+                        </a>
+                    ))}
+                </div>
+            </button>
+        </Show>
+    );
 }
 
 export default Translate

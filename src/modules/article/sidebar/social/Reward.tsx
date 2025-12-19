@@ -1,6 +1,5 @@
 import { toCanvas } from "qrcode";
-import { Accessor, For, Match, Switch, createEffect, createSignal } from "solid-js";
-import { Translations } from "~/i18n/i18n-types";
+import { For, Match, Switch, createEffect, createSignal } from "solid-js";
 import Modal from "../../ui/Modal";
 
 import IconWeChat from "~icons/tabler/brand-wechat";
@@ -13,10 +12,9 @@ import IconSol from "~icons/tabler/currency-solana";
 interface RewardProps {
     toggle: () => boolean;
     setToggle: (toggle: boolean) => void;
-    LL: Accessor<Translations>;
 }
 
-const Reward = ({ toggle, setToggle, lang }: RewardProps) => {
+const Reward = ({ toggle, setToggle }: RewardProps) => {
     const { setLocale, LL, locale } = useI18nContext()
     if (!globalThis.loadedLocale) {
         globalThis.loadedLocale = true

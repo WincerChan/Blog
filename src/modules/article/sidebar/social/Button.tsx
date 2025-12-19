@@ -1,20 +1,18 @@
 import { IconTypes } from "solid-icons";
-import { Accessor, createEffect, createSignal, lazy, Match, Show, Suspense, Switch } from "solid-js";
-import { Translations } from "~/i18n/i18n-types";
+import { createEffect, createSignal, lazy, Match, Show, Suspense, Switch } from "solid-js";
 
 interface ButtonProps {
     IconName: IconTypes;
     hoverColor: string;
     text: string;
-    LL?: Accessor<Translations>;
-    lang: string
+    kind: "reward" | "share";
 }
 
 const Reward = lazy(() => import("./Reward"))
 const Share = lazy(() => import("./Share"))
 
 
-const SocialButton = ({ IconName, hoverColor, text, LL, lang }: ButtonProps) => {
+const SocialButton = ({ IconName, hoverColor, text, kind }: ButtonProps) => {
     const [toggle, setToggle] = createSignal(false);
 
     createEffect(() => {
@@ -35,11 +33,11 @@ const SocialButton = ({ IconName, hoverColor, text, LL, lang }: ButtonProps) => 
             <Show when={toggle()}>
                 <Suspense>
                     <Switch>
-                        <Match when={text === "Reward"}>
-                            <Reward toggle={toggle} setToggle={setToggle} lang={lang} />
+                        <Match when={kind === "reward"}>
+                            <Reward toggle={toggle} setToggle={setToggle} />
                         </Match>
-                        <Match when={text === "Share"}>
-                            <Share toggle={toggle} setToggle={setToggle} lang={lang} />
+                        <Match when={kind === "share"}>
+                            <Share toggle={toggle} setToggle={setToggle} />
                         </Match>
                     </Switch>
                 </Suspense>

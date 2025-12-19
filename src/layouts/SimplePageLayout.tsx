@@ -1,5 +1,5 @@
 import { JSX } from "solid-js";
-import PageShell from "./PageShell";
+import PageLayout from "./PageLayout";
 
 type SimplePage = {
     title: string;
@@ -24,10 +24,10 @@ const constructHeadParams = (page: SimplePage) => {
 const SimplePageLayout = ({ children, page, lang }) => {
     const headParams = constructHeadParams(page);
     return (
-        <PageShell headParams={headParams} lang={lang}>
+        <PageLayout headParams={headParams} lang={lang}>
             {page && <h1 class=":: text-headline ">{page.title}</h1>}
             {children}
-        </PageShell>
+        </PageLayout>
     )
 }
 

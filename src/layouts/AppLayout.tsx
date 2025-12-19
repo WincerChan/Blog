@@ -42,7 +42,7 @@ const localeHook = (lang: () => Locale | undefined) => {
 };
 
 
-const AppShell = (props: MainProps) => {
+const AppLayout = (props: MainProps) => {
     globalThis.loadedLocale = false;
 
     trackHook();
@@ -55,4 +55,4 @@ const AppShell = (props: MainProps) => {
     );
 };
 
-export default AppShell;
+export default AppLayout;

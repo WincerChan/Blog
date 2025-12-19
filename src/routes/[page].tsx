@@ -1,7 +1,7 @@
 import { createAsync, useParams } from "@solidjs/router";
 import { Show, Suspense, createEffect, createMemo, createSignal, lazy } from "solid-js";
-import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
-import SimplePageLayout from "~/modules/site/shell/SimplePageLayout";
+import ArticlePage from "~/layouts/ArticlePage";
+import SimplePageLayout from "~/layouts/SimplePageLayout";
 import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
 import NotFound from "~/routes/[...all]";
 
@@ -62,15 +62,15 @@ export default function PageRoute() {
                     }
                     if (key === "search") {
                         return (
-                            <ArticlePageLayout rawBlog={pageProps} relates={[]} hideComment={true}>
+                            <ArticlePage rawBlog={pageProps} relates={[]} hideComment={true}>
                                 {body()}
-                            </ArticlePageLayout>
+                            </ArticlePage>
                         );
                     }
                     return (
-                        <ArticlePageLayout rawBlog={pageProps} relates={[]}>
+                        <ArticlePage rawBlog={pageProps} relates={[]}>
                             {body()}
-                        </ArticlePageLayout>
+                        </ArticlePage>
                     );
                 };
 
@@ -100,9 +100,9 @@ export default function PageRoute() {
                     );
 
                 return (
-                    <ArticlePageLayout rawBlog={pageProps} relates={[]}>
+                    <ArticlePage rawBlog={pageProps} relates={[]}>
                         {body()}
-                    </ArticlePageLayout>
+                    </ArticlePage>
                 );
             }}
         </Show>

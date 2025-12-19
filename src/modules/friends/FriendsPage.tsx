@@ -1,7 +1,7 @@
 import { createAsync } from "@solidjs/router";
 import { For, createMemo } from "solid-js";
 import FriendLink from "~/modules/friends/FriendLink";
-import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
+import ArticlePage from "~/layouts/ArticlePage";
 import { getFriendLinks } from "~/content/velite";
 
 const Friend = ({ page, children }) => {
@@ -13,12 +13,12 @@ const Friend = ({ page, children }) => {
         return activeLinks.concat(inactiveLinks);
     });
     return (
-        <ArticlePageLayout rawBlog={page} relates={[]}>
+        <ArticlePage rawBlog={page} relates={[]}>
             {children}
             <div class=":: grid grid-cols-1 gap-6 my-6 sm:grid-cols-2 ">
                 <For each={sortedLinks()}>{(link) => <FriendLink {...link} />}</For>
             </div>
-        </ArticlePageLayout>
+        </ArticlePage>
     );
 };
 

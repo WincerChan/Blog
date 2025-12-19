@@ -1,6 +1,6 @@
 import { createAsync, useParams } from "@solidjs/router";
 import { Show, createEffect, createSignal } from "solid-js";
-import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
+import ArticlePage from "~/layouts/ArticlePage";
 import { VELITE_NOT_FOUND, getPostBySlug, postUrl } from "~/content/velite";
 import { maybeEncryptHtml } from "~/content/post-utils";
 import type { RelatedPost } from "~/modules/article/types";
@@ -53,9 +53,9 @@ export default function PostRoute() {
                 if (p.isTranslation !== undefined) rawBlog.isTranslation = p.isTranslation;
 
                 return (
-                    <ArticlePageLayout rawBlog={rawBlog} relates={relates}>
+                    <ArticlePage rawBlog={rawBlog} relates={relates}>
                         {p.encrypt_pwd ? content : <section class="md-content" innerHTML={content} />}
-                    </ArticlePageLayout>
+                    </ArticlePage>
                 );
             }}
         </Show>

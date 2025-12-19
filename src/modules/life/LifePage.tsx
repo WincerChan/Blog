@@ -11,7 +11,7 @@ import {
 import LazyImg from "~/modules/site/media/Img";
 import { fetcher } from "~/utils";
 import { range } from "~/utils/index";
-import ArticlePageLayout from "~/modules/article/layout/ArticlePageLayout";
+import ArticlePage from "~/layouts/ArticlePage";
 
 type WishingItemType = {
     date: string;
@@ -82,7 +82,7 @@ const Life = ({ page, children }) => {
     const [resource] = createResource(url, fetcher);
     const { content, ...rest } = page;
     return (
-        <ArticlePageLayout rawBlog={rest} relates={[]}>
+        <ArticlePage rawBlog={rest} relates={[]}>
             {children}
             <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">
                 文字、光影与沉浸的梦（{year()}）
@@ -102,7 +102,7 @@ const Life = ({ page, children }) => {
                     </ErrorBoundary>
                 </Suspense>
             </div>
-        </ArticlePageLayout>
+        </ArticlePage>
     );
 };
 

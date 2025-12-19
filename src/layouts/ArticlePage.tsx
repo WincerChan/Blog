@@ -17,10 +17,10 @@ import Relates from "~/modules/site/footer/Relates";
 import Comment from "~/modules/article/comments/Comment";
 import Copyright from "~/modules/article/sections/Copyright";
 import LazyBg from "~/modules/site/media/BG";
-import ArticleShell from "~/modules/article/shell/ArticleShell";
+import ArticleLayout from "~/layouts/ArticleLayout";
 import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/modules/article/types";
 
-const ProtectBlog = lazy(() => import("../encryption/EncryptBlock"));
+const ProtectBlog = lazy(() => import("~/modules/article/encryption/EncryptBlock"));
 
 const PostMeta = ({
     blog,
@@ -142,7 +142,7 @@ type PostProps = {
     hideComment?: boolean;
 };
 
-const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProps) => {
+const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => {
     const hash = createMemo(() => useLocation().hash);
     onMount(() => {
         if (!hash()) return;
@@ -167,7 +167,7 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
         />
     );
     return (
-        <ArticleShell headParams={headParams} extra={extra} LL={LL}>
+        <ArticleLayout headParams={headParams} extra={extra}>
             <PostMeta blog={blog} lang={locale} LL={LL} />
             <Show when={blog.cover}>
                 <img
@@ -177,7 +177,7 @@ const ArticlePageLayout = ({ children, rawBlog, relates, hideComment }: PostProp
                 />
             </Show>
             {wrapper}
-        </ArticleShell>
+        </ArticleLayout>
     );
 };
 
@@ -213,4 +213,4 @@ export const PostExtra = ({
     );
 };
 
-export default ArticlePageLayout;
+export default ArticlePage;

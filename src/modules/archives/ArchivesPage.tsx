@@ -1,7 +1,7 @@
 import { useLocation } from "@solidjs/router";
 import { For, createEffect, onCleanup, onMount } from "solid-js";
 import OtherBlogs from "~/modules/post-listing/OtherCards";
-import SimplePageLayout from "~/modules/site/shell/SimplePageLayout";
+import SimplePageLayout from "~/layouts/SimplePageLayout";
 import IconChevronRight from "~icons/carbon/chevron-right";
 
 const Archives = ({ page }) => {

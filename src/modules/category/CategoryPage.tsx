@@ -1,7 +1,7 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
 import OtherBlogs from "~/modules/post-listing/OtherCards";
 import type { PostListItem } from "~/modules/post-listing/types";
-import PageShell from "~/modules/site/shell/PageShell";
+import PageLayout from "~/layouts/PageLayout";
 import { createMemo } from "solid-js";
 
 type TaxoLayoutProps = {
@@ -30,10 +30,10 @@ const CategoryPage = (props: TaxoLayoutProps) => {
         constructHeadParams(props.rawTaxo.term, basePath(), blogsByTerm()),
     );
     return (
-        <PageShell headParams={headParams()} >
+        <PageLayout headParams={headParams()} >
             <h1 class=":: text-headline ">{LL && LL().archive.CATE()}{headParams().title}</h1>
             <OtherBlogs posts={() => blogsByTerm()} />
-        </PageShell>
+        </PageLayout>
     )
 }
 
