@@ -3,6 +3,7 @@ import type { VeliteConfig } from "velite";
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
 import { emitAtom } from "./emit/atom";
+import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSitemaps } from "./emit/sitemap";
 
@@ -68,4 +69,10 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   });
 
   await emitPublicAssets({ site, publicDir });
+  await emitPublicData({
+    publicDir,
+    posts,
+    pages,
+    friends: (data as any).friends ?? [],
+  });
 };

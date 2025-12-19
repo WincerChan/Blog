@@ -1,10 +1,10 @@
 {
-  "name": "example-basic",
+  "name": "wicer-blog",
   "type": "module",
   "scripts": {
-    "dev:content": "velite build --clean && tsx scripts/generate-velite-public-data.ts",
-    "dev": "pnpm dev:content && vinxi dev",
-    "build": "pnpm dev:content && vinxi build --preset static",
+    "content:build": "velite build --clean",
+    "dev": " vinxi dev",
+    "build": "pnpm content:build && vinxi build --preset static",
     "start": "npx serve .output/public",
     "version": "vinxi version",
     "clean": "rm -rf .velite node_modules/.vinxi src/routes/\\(hugo\\) \\(hugo\\) .output public/_data public/sitemap.xml public/atom.xml public/manifest.webmanifest public/posts public/base public/category public/tags public/sass",
@@ -27,6 +27,7 @@
     "@iconify-json/carbon": "^1.2.8",
     "@iconify-json/tabler": "^1.2.17",
     "@unocss/reset": "^66.1.2",
+    "@velite/plugin-vite": "^0.0.2",
     "crypto-js": "^4.2.0",
     "giscus": "^1.6.0",
     "he": "^1.2.0",
@@ -38,6 +39,7 @@
     "rehype-katex": "^7.0.1",
     "rehype-slug": "^6.0.0",
     "remark-math": "^6.0.0",
+    "tsx": "^4.19.2",
     "unist-util-visit": "^5.0.0",
     "unocss": "^66.1.2",
     "unplugin-icons": "^22.1.0",
@@ -45,8 +47,7 @@
     "vite": "^6.3.5",
     "workbox-core": "^7.3.0",
     "workbox-routing": "^7.3.0",
-    "yaml": "^2.8.2",
-    "tsx": "^4.19.2"
+    "yaml": "^2.8.2"
   },
   "pnpm": {
     "patchedDependencies": {
