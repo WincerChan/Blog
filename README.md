@@ -1,32 +1,85 @@
-# SolidStart
+# Wincer's Blog
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+Personal blog built with SolidStart + Velite. The codebase was migrated from a Hugo-era setup and reorganized around a content-first pipeline to keep build/runtime responsibilities clean.
 
-## Creating a project
+## Features
+
+- SolidStart app with static preset output
+- Velite content pipeline (`_blogs/content` -> `.velite` -> `public/_data`)
+- Multi-language pages and posts
+- RSS/Atom, sitemap, and public assets emitted at build time
+- Optional encrypted posts (content is encrypted in build output)
+- Service worker update notification
+
+## Tech Stack
+
+- SolidStart + SolidJS
+- Velite (content pipeline)
+- Vite + UnoCSS
+- Typesafe i18n
+
+## Project Structure
+
+- `src/routes/` routes (content pages under `src/routes/(pages)`)
+- `src/pages/` page view components
+- `src/layouts/` layout shells
+- `src/features/` cross-cutting features (e.g. `features/theme`)
+- `tools/velite/` content pipeline utilities
+- `_blogs/content/` markdown source (external content repo)
+- `public/_data/` generated runtime JSON data
+
+## Content Workflow
+
+1. Write content in `_blogs/content/posts` and `_blogs/content/pages`.
+2. Velite parses markdown and emits `.velite/*.json`.
+3. Build step generates runtime JSON into `public/_data`.
+4. The app reads data from `public/_data` at runtime.
+
+### Encrypted Posts
+
+If a post has `encrypt_pwd` in its front matter, the build will:
+
+- Encrypt the HTML and store it in `public/_data/posts/*.json` under `html`.
+- Remove the original `encrypt_pwd` from the output.
+- Add `encrypted: true` so the UI can prompt for a password.
+
+## Development
 
 ```bash
-# create a new project in the current directory
-npm init solid@latest
-
-# create a new project in my-app
-npm init solid@latest my-app
+pnpm install
+pnpm dev
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Content build only:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm content:build
 ```
 
-## Building
+## Build
 
-Solid apps are built with _presets_, which optimise your project for deployment to different environments.
+```bash
+pnpm build
+```
 
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
+Output is generated in `.output/public` (static preset). This repo is intended to be deployed to Cloudflare Pages.
 
-## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+## Optional Build Script
+
+`build.sh` is a convenience script that:
+
+- Installs deps
+- Pulls `_blogs` content
+- Builds content and site
+
+If your content repo is private, set `GH_TOKEN` for the clone step.
+
+## Environment Variables
+
+- `GH_TOKEN` (optional): used by `build.sh` to clone private content repo
+- `CF_PAGES_BUILD_ID` / `CF_PAGES_COMMIT_SHA`: used to hash the service worker version
+
+## Notes
+
+- The content repo is separate from this codebase. Ensure `_blogs/` exists locally.
+- `public/_data` is generated content; it should not contain raw passwords.
