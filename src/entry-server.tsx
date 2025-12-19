@@ -22,29 +22,6 @@ export default createHandler((context) => (
                     <body>
                         {children}
                         {scripts}
-
-                        {import.meta.env.PROD && (
-                            <script
-                                innerHTML={`
-            if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register("/sw.js?v=${__SW_HASH}",{scope:"/"}).then(reg => {
-            reg.addEventListener('updatefound', () => {
-              const newWorker = reg.installing;
-              newWorker?.addEventListener('statechange', () => {
-                switch (newWorker.state) {
-                  case 'installed':
-                    if (navigator.serviceWorker.controller) {const updateButton = document.getElementById('sw-notify');updateButton.style.display = 'block';setTimeout(()=>updateButton.style.display='', 5000)}
-                    break;
-                  case 'redundant':
-                    break;
-                }
-              });
-            });
-          })
-        }
-            `}
-                            />
-                        )}
                     </body>
                 </html>
             );
