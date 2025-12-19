@@ -2,7 +2,7 @@
   "name": "example-basic",
   "type": "module",
   "scripts": {
-    "dev:content": "velite build --clean && node scripts/generate-velite-public-data.mjs",
+    "dev:content": "velite build --clean && tsx scripts/generate-velite-public-data.ts",
     "dev": "pnpm dev:content && vinxi dev",
     "build": "pnpm dev:content && vinxi build --preset static",
     "start": "npx serve .output/public",
@@ -45,7 +45,8 @@
     "vite": "^6.3.5",
     "workbox-core": "^7.3.0",
     "workbox-routing": "^7.3.0",
-    "yaml": "^2.8.2"
+    "yaml": "^2.8.2",
+    "tsx": "^4.19.2"
   },
   "pnpm": {
     "patchedDependencies": {
