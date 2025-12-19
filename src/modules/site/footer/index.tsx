@@ -77,7 +77,15 @@ const FooterNav = () => {
             >
               Wincer
             </a>
-            , powered by Velite + SolidStart
+            , powered by Velite + SolidStart{" · "}
+            <a
+              class=":: hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4"
+              href="https://github.com/WincerChan/Blog"
+              target="_blank"
+              rel="noopener"
+            >
+              Source
+            </a>
           </p>
         </div>
       </div>
