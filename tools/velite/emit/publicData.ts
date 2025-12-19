@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import pkg from "crypto-js";
 import {
   byDateDesc,
   canonicalPosts,
@@ -11,6 +12,18 @@ import {
   visiblePages,
   visiblePosts,
 } from "../shared";
+
+const { enc, AES } = pkg as any;
+
+const padTo32 = (str: string) => {
+  if (str.length >= 32) return str.slice(0, 32);
+  return str + "0".repeat(32 - str.length);
+};
+
+const encryptHtml = (pwd: string, html: string) => {
+  const key = enc.Hex.parse(padTo32(pwd ? pwd : ""));
+  return AES.encrypt(html, key, { iv: key }).toString();
+};
 
 type EmitPublicDataOptions = {
   publicDir: string;
@@ -68,10 +81,16 @@ const buildPostOutputs = async ({
     const neighbours = computeNeighbours(p, { canon, canonSlugSet, slugToPost });
     const relates = computeRelated(p, canon);
     const html = String(p.html ?? "");
+    const encryptPwd = String(p.encrypt_pwd ?? "");
+    const encrypted = !!encryptPwd;
+    const content = encrypted ? encryptHtml(encryptPwd, html) : html;
     const hasMath = !!p.mathrender || html.includes("katex");
+    const { encrypt_pwd, ...rest } = p;
     const data = {
-      ...p,
+      ...rest,
       url: postUrl(slug),
+      html: content,
+      encrypted,
       neighbours,
       relates,
       hasMath,

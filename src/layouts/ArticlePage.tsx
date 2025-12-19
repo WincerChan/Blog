@@ -155,7 +155,7 @@ const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => 
     const headParams = constructHeadParams(blog);
 
     let wrapper: JSXElement;
-    if (!!blog.password) wrapper = <ProtectBlog source={children} />;
+    if (blog.encrypted) wrapper = <ProtectBlog source={children} />;
     else wrapper = <div id="blog-article">{children}</div>;
 
     let extra = (

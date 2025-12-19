@@ -11,7 +11,7 @@ export type VelitePost = {
     private?: boolean;
     isTranslation?: boolean;
     lang?: string;
-    encrypt_pwd?: string;
+    encrypted?: boolean;
     mathrender?: boolean;
     html?: string;
     toc?: string;
@@ -41,4 +41,3 @@ export type FriendLink = {
     avatar?: string;
     inactive?: boolean;
 };
-

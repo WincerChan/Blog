@@ -28,9 +28,8 @@ export type ArticleMeta = {
     words?: number;
     toc?: string;
     mathrender?: boolean;
-    password?: string;
+    encrypted?: boolean;
     isTranslation?: boolean;
     lang?: string;
     neighbours?: ArticleNeighbours;
 };
-
