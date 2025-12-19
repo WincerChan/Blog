@@ -9,7 +9,7 @@ if ! command -v pnpm >/dev/null 2>&1; then
 fi
 pnpm clean
 echo -e "${YELLOW}Installing dependencies...${RESET}"
-pnpm install --frozen-lockfile
+pnpm install --no-frozen-lockfile
 if [ ! -d "_blogs" ]; then
     echo -e "${YELLOW}Cloning Blogs...${RESET}"
     git clone https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
