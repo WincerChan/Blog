@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
 import IconPiggyBank from "~icons/carbon/piggy-bank";
 import IconShare from "~icons/carbon/share";
-import ToC from "../toc/ToC";
+import ToC from "~/modules/article/toc/ToC";
 import SocialButton from "./social/Button";
 import Like from "./social/Like";
 import Translate from "./social/Translate";

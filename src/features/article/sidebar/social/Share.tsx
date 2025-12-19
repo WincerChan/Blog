@@ -5,7 +5,7 @@ import IconTelegram from "~icons/tabler/brand-telegram";
 import IconTwitter from "~icons/tabler/brand-twitter";
 import IconClipboardCheck from "~icons/tabler/clipboard-check";
 import IconClipboard from "~icons/tabler/clipboard-copy";
-import Modal from "../../ui/Modal";
+import Modal from "~/modules/article/ui/Modal";
 
 
 interface ShareProps {

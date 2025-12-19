@@ -1,6 +1,6 @@
 import { JSX } from "solid-js";
 import { Locale } from "~/utils/locale";
-import { SideBar } from "~/modules/article/sidebar";
+import { SideBar } from "~/features/article/sidebar";
 import ToC from "~/modules/article/toc/ToC";
 import HeadTag from "~/modules/site/head";
 import AppLayout from "~/layouts/AppLayout";
