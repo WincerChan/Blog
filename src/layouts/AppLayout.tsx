@@ -43,8 +43,6 @@ const localeHook = (lang: () => Locale | undefined) => {
 
 
 const AppLayout = (props: MainProps) => {
-    globalThis.loadedLocale = false;
-
     trackHook();
     localeHook(() => props.lang);
 

@@ -10,8 +10,8 @@ declare const __CONTENT_EN_POSTS: string[]
 declare const __CONTENT_TOTAL_POSTS: number
 declare const __IS_PROD: boolean
 declare const __SW_HASH: string
-declare const __CONTENT_EN_NAV: string[]
-declare const __CONTENT_ZH_NAV: string[]
+declare const __CONTENT_EN_NAV: Array<{ slug: string; title: string }>
+declare const __CONTENT_ZH_NAV: Array<{ slug: string; title: string }>
 declare const __CONTENT_TOTAL_CATEGORIES: Array<{ title: string; count: number }>
 declare const __SITE_CONF: {
     title: string,

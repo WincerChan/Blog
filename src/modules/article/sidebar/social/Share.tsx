@@ -1,7 +1,6 @@
 import { toCanvas } from "qrcode";
 import { Match, Switch, createEffect, createSignal, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import { loadLocale } from "~/i18n/i18n-util.sync";
 import IconTelegram from "~icons/tabler/brand-telegram";
 import IconTwitter from "~icons/tabler/brand-twitter";
 import IconClipboardCheck from "~icons/tabler/clipboard-check";
@@ -15,12 +14,7 @@ interface ShareProps {
 }
 
 const Share = ({ toggle, setToggle }: ShareProps) => {
-    const { setLocale, LL, locale } = useI18nContext()
-    if (!globalThis.loadedLocale) {
-        globalThis.loadedLocale = true
-        loadLocale(locale())
-        setLocale(locale())
-    }
+    const { LL } = useI18nContext()
 
     const [twitterUrl, setTwitterUrl] = createSignal("")
     const [telegramUrl, setTelegramUrl] = createSignal("")

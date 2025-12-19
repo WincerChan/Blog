@@ -1,5 +1,5 @@
 import { createAsync, useParams } from "@solidjs/router";
-import { Show, Suspense, createEffect, createMemo, createSignal, lazy } from "solid-js";
+import { JSXElement, Show, Suspense, createEffect, createMemo, createSignal, lazy } from "solid-js";
 import ArticlePage from "~/layouts/ArticlePage";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
 import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
@@ -11,6 +11,18 @@ const Archives = lazy(() => import("~/modules/archives/ArchivesPage"));
 const Friends = lazy(() => import("~/modules/friends/FriendsPage"));
 const Life = lazy(() => import("~/modules/life/LifePage"));
 const Search = lazy(() => import("~/modules/search/SearchPage"));
+
+type LayoutKind = "simple" | "article" | "article-no-comment";
+
+const PAGE_COMPONENTS: Record<
+    string,
+    { Component: any; layout: LayoutKind; withChildren?: boolean }
+> = {
+    archives: { Component: Archives, layout: "simple" },
+    friends: { Component: Friends, layout: "article", withChildren: true },
+    search: { Component: Search, layout: "article-no-comment", withChildren: true },
+    life: { Component: Life, layout: "article", withChildren: true },
+};
 
 const toPageProps = (page: any) => ({
     slug: pageUrl(page.slug),
@@ -28,6 +40,40 @@ const toPageProps = (page: any) => ({
     isTranslation: page.isTranslation,
     content: page.html ?? "",
 });
+
+const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement) => {
+    if (layout === "simple") {
+        return (
+            <SimplePageLayout page={pageProps} lang={pageProps.lang}>
+                {body()}
+            </SimplePageLayout>
+        );
+    }
+    if (layout === "article-no-comment") {
+        return (
+            <ArticlePage rawBlog={pageProps} relates={[]} hideComment={true}>
+                {body()}
+            </ArticlePage>
+        );
+    }
+    return (
+        <ArticlePage rawBlog={pageProps} relates={[]}>
+            {body()}
+        </ArticlePage>
+    );
+};
+
+const renderSpecialPage = (key: string, pageProps: any, body: () => JSXElement) => {
+    const view = PAGE_COMPONENTS[key];
+    if (!view) return null;
+    const fallback = renderLayout(view.layout, pageProps, body);
+    const content = view.withChildren ? (
+        <view.Component page={pageProps}>{body()}</view.Component>
+    ) : (
+        <view.Component page={pageProps} />
+    );
+    return <Suspense fallback={fallback}>{content}</Suspense>;
+};
 
 export default function PageRoute() {
     const params = useParams();
@@ -52,52 +98,9 @@ export default function PageRoute() {
                 const pageProps = toPageProps(p);
                 const key = baseKeyFromSlug(String(p.slug || slug()));
                 const body = () => <section class="md-content" innerHTML={p.html ?? ""} />;
-                const fallbackLayout = () => {
-                    if (key === "archives") {
-                        return (
-                            <SimplePageLayout page={pageProps} lang={pageProps.lang}>
-                                {body()}
-                            </SimplePageLayout>
-                        );
-                    }
-                    if (key === "search") {
-                        return (
-                            <ArticlePage rawBlog={pageProps} relates={[]} hideComment={true}>
-                                {body()}
-                            </ArticlePage>
-                        );
-                    }
-                    return (
-                        <ArticlePage rawBlog={pageProps} relates={[]}>
-                            {body()}
-                        </ArticlePage>
-                    );
-                };
 
-                if (key === "archives")
-                    return (
-                        <Suspense fallback={fallbackLayout()}>
-                            <Archives page={pageProps} />
-                        </Suspense>
-                    );
-                if (key === "friends")
-                    return (
-                        <Suspense fallback={fallbackLayout()}>
-                            <Friends page={pageProps}>{body()}</Friends>
-                        </Suspense>
-                    );
-                if (key === "search")
-                    return (
-                        <Suspense fallback={fallbackLayout()}>
-                            <Search page={pageProps}>{body()}</Search>
-                        </Suspense>
-                    );
-                if (key === "life")
-                    return (
-                        <Suspense fallback={fallbackLayout()}>
-                            <Life page={pageProps}>{body()}</Life>
-                        </Suspense>
-                    );
+                const special = renderSpecialPage(key, pageProps, body);
+                if (special) return special;
 
                 return (
                     <ArticlePage rawBlog={pageProps} relates={[]}>

@@ -97,8 +97,30 @@ const contentStatsTotalCategories = categoryCounts;
 const contentStatsPostsByYear = groupByYear(posts);
 const contentStatsPostsByYearDetail = groupByYearDetail(posts);
 
-const contentStatsZhNavPages = pages.map((x) => x.slug).filter((x) => !x.includes("search"));
-const contentStatsEnNavPages = contentStatsZhNavPages.map((x) => `${x}-en`);
+const navBasePages = pages.filter((x) => !String(x.slug ?? "").includes("search"));
+const pageBySlug = new Map(allPages.map((p) => [String(p.slug ?? ""), p]));
+
+const toLangSlug = (slug: string, target: "en" | "zh") => {
+  const s = String(slug ?? "");
+  if (target === "en") {
+    if (s.endsWith("-en")) return s;
+    if (s.endsWith("-zh")) return s.replace(/-zh$/, "-en");
+    return `${s}-en`;
+  }
+  if (s.endsWith("-zh")) return s;
+  if (s.endsWith("-en")) return s.replace(/-en$/, "");
+  return s;
+};
+
+const contentStatsZhNavPages = navBasePages.map((p) => ({
+  slug: toLangSlug(String(p.slug ?? ""), "zh"),
+  title: String(p.title ?? ""),
+}));
+const contentStatsEnNavPages = navBasePages.map((p) => {
+  const slug = toLangSlug(String(p.slug ?? ""), "en");
+  const title = pageBySlug.get(slug)?.title ?? p.title;
+  return { slug, title: String(title ?? "") };
+});
 
 export {
   contentStatsEnNavPages,

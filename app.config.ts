@@ -25,6 +25,7 @@ const __dirname = path.dirname(__filename);
 const siteConfigPath = fileURLToPath(new URL("./site.config.json", import.meta.url));
 const BlogConf = JSON.parse(fs.readFileSync(siteConfigPath, "utf8"));
 
+// TODO
 const computeSwHash = () => {
     const slice = (v: string) => String(v).trim().slice(0, 12);
 
