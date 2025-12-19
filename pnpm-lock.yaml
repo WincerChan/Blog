@@ -50,9 +50,6 @@ importers:
       '@unocss/reset':
         specifier: ^66.1.2
         version: 66.1.2
-      '@velite/plugin-vite':
-        specifier: ^0.0.2
-        version: 0.0.2(velite@0.3.1)(vite@6.3.5(@types/node@22.15.18)(jiti@2.4.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
@@ -1616,12 +1613,6 @@ packages:
     resolution: {integrity: sha512-ZJHN8+HKSrclVjT/+S7Vh2t59DK8J44d5nLZPG1Goua7uNK8yYJeOLK2sCGX7aackRer1ZynmglFFzxNFVt+IA==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0
-
-  '@velite/plugin-vite@0.0.2':
-    resolution: {integrity: sha512-ycCjdcaLti1OFDWX4Oe6NuAWK6S24Py4A6Y6PXPkkWn/OrXBwU16T5DpNUCZ7OVbzO9xz73CFlafwNvIX0OrPA==}
-    peerDependencies:
-      velite: ^0.2.0
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0
 
   '@vercel/nft@0.27.7':
     resolution: {integrity: sha512-FG6H5YkP4bdw9Ll1qhmbxuE8KwW2E/g8fJpM183fWQLeVDGqzeywMIeJ9h2txdWZ03psgWMn6QymTxaDLmdwUg==}
@@ -6085,11 +6076,6 @@ snapshots:
       vite: 6.3.5(@types/node@22.15.18)(jiti@2.4.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2)
     transitivePeerDependencies:
       - vue
-
-  '@velite/plugin-vite@0.0.2(velite@0.3.1)(vite@6.3.5(@types/node@22.15.18)(jiti@2.4.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
-    dependencies:
-      velite: 0.3.1
-      vite: 6.3.5(@types/node@22.15.18)(jiti@2.4.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2)
 
   '@vercel/nft@0.27.7(rollup@4.40.2)':
     dependencies:

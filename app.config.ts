@@ -1,5 +1,5 @@
 import { defineConfig } from "@solidjs/start/config";
-import velite from "@velite/plugin-vite";
+import velite from "./tools/vite/velitePlugin";
 import fs from "fs";
 import path from "path";
 import UnoCSS from 'unocss/vite';
