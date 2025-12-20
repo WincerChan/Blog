@@ -10,12 +10,15 @@ type PageLayoutProps = {
     lang?: Locale;
 };
 
-const PageLayout = ({ children, headParams, lang }: PageLayoutProps) => {
+const PageLayout = (props: PageLayoutProps) => {
     return (
-        <AppLayout className=":: xl:w-284 lg:w-220 mx-auto max-w-full " lang={lang}>
-            <HeadTag headParams={headParams} />
+        <AppLayout
+            className=":: xl:w-284 lg:w-220 mx-auto max-w-full "
+            lang={props.lang}
+        >
+            <HeadTag headParams={props.headParams} />
             <article class=":: md:w-168 lg:w-220 xl:w-full <md:mx-4 leading-7 text-justify ">
-                {children}
+                {props.children}
             </article>
         </AppLayout>
     );

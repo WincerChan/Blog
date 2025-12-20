@@ -1,3 +1,4 @@
+import { createMemo } from "solid-js";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
@@ -54,20 +55,22 @@ const postLDJSON = (params: HeadParams) => {
     return JSON.stringify(base)
 }
 
-const HeadTag = ({ headParams }: { headParams: HeadParamsInput }) => {
-    const resolved = resolveHeadParams(headParams);
-    const isPost = resolved.description !== __SITE_CONF.description;
+const HeadTag = (props: { headParams: HeadParamsInput }) => {
+    const resolved = createMemo(() => resolveHeadParams(props.headParams));
+    const isPost = createMemo(
+        () => resolved().description !== __SITE_CONF.description,
+    );
     return (
         <>
-            <MainMeta params={resolved} />
-            {resolved.mathrender && (
+            <MainMeta params={resolved()} />
+            {resolved().mathrender && (
                 <link rel="stylesheet" href={katexCssHref} />
             )}
             <ApplicationMeta />
-            <OpenGraph params={resolved} />
+            <OpenGraph params={resolved()} />
             <script
                 type="application/ld+json"
-                innerHTML={isPost ? postLDJSON(resolved) : blogLDJSON()}
+                innerHTML={isPost() ? postLDJSON(resolved()) : blogLDJSON()}
             />
         </>
     )
