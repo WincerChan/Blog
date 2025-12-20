@@ -22,7 +22,7 @@ const toPageProps = (page: any) => ({
     updated: page.updated ?? page.date,
     cover: page.cover ?? "",
     summary: page.summary,
-    toc: page.toc ?? "",
+    toc: "",
     category: "",
     tags: [],
     words: 0,

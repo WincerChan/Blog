@@ -8,7 +8,7 @@ import {
     createSignal,
     onMount,
 } from "solid-js";
-import LazyImg from "~/modules/site/media/Img";
+import LazyImg from "~/ui/media/Img";
 import { fetcher } from "~/utils";
 import { range } from "~/utils/index";
 import ArticlePage from "~/layouts/ArticlePage";

@@ -1,7 +1,7 @@
 import { useLocation } from "@solidjs/router";
 import { For, createEffect, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import OtherBlogs from "~/modules/post-listing/OtherCards";
+import OtherBlogs from "~/features/post-listing/OtherCards";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
 import IconChevronRight from "~icons/carbon/chevron-right";
 

@@ -2,7 +2,7 @@ import { useLocation } from "@solidjs/router";
 import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconCatalog from "~icons/carbon/catalog";
-import Modal from "../ui/Modal";
+import Modal from "../components/Modal";
 
 interface ToCInterface {
     toc: string;

@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import { createMemo } from "solid-js";
-import PageRouteView from "~/pages/PageRouteView";
+import PageRouteView from "~/features/pages/PageRouteView";
 
 export default function PageRoute() {
     const params = useParams();

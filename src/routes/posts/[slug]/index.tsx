@@ -2,7 +2,7 @@ import { createAsync, useParams } from "@solidjs/router";
 import { Show, createEffect, createSignal } from "solid-js";
 import ArticlePage from "~/layouts/ArticlePage";
 import { VELITE_NOT_FOUND, getPostBySlug, postUrl } from "~/content/velite";
-import type { RelatedPost } from "~/modules/article/types";
+import type { RelatedPost } from "~/features/article/types";
 import NotFound from "~/routes/[...all]";
 
 export default function PostRoute() {

@@ -1,6 +1,6 @@
 import { toCanvas } from "qrcode";
 import { For, Match, Switch, createEffect, createSignal } from "solid-js";
-import Modal from "~/modules/article/ui/Modal";
+import Modal from "~/features/article/components/Modal";
 
 import IconWeChat from "~icons/tabler/brand-wechat";
 

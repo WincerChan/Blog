@@ -1,5 +1,5 @@
 import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createMemo, createResource, createSignal } from "solid-js";
-import CommentList from "~/modules/article/comments/OldComment";
+import CommentList from "./OldComment";
 import { Translations } from "~/i18n/i18n-types";
 import { globalStore } from "~/features/theme";
 import { safeEncode } from "~/content/velite-utils";

@@ -21,7 +21,7 @@ Personal blog built with SolidStart + Velite. The default branch (`master`) cont
 ## Project Structure
 
 - `src/routes/` routes (content pages under `src/routes/(pages)`)
-- `src/pages/` page view components
+- `src/features/pages/` page view components
 - `src/layouts/` layout shells
 - `src/features/` cross-cutting features (e.g. `features/theme`)
 - `tools/velite/` content pipeline utilities

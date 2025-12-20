@@ -2,8 +2,8 @@ import { MetaProvider } from "@solidjs/meta";
 import { Router, useIsRouting } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense, createEffect, onMount } from "solid-js";
-import Footer from "./modules/site/footer";
-import Header from "./modules/site/header";
+import Footer from "./site/footer";
+import Header from "./site/header";
 import TypesafeI18n from "./i18n/i18n-solid";
 
 import { type RouteSectionProps } from "@solidjs/router";

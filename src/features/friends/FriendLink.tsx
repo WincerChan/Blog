@@ -1,4 +1,4 @@
-import LazyImg from "~/modules/site/media/Img";
+import LazyImg from "~/ui/media/Img";
 
 type LinkProps = {
     name: string;

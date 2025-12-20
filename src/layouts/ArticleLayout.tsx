@@ -1,11 +1,11 @@
 import { JSX } from "solid-js";
 import { Locale } from "~/utils/locale";
 import { SideBar } from "~/features/article/sidebar";
-import ToC from "~/modules/article/toc/ToC";
-import HeadTag from "~/modules/site/head";
+import ToC from "~/features/article/components/ToC";
+import HeadTag from "~/site/seo";
 import AppLayout from "~/layouts/AppLayout";
-import type { HeadParamsInput } from "~/modules/site/head/types";
-import { resolveHeadParams } from "~/modules/site/head/types";
+import type { HeadParamsInput } from "~/site/seo/types";
+import { resolveHeadParams } from "~/site/seo/types";
 
 type ArticleLayoutProps = {
     children: JSX.Element;

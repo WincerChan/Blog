@@ -1,8 +1,8 @@
 import { JSX } from "solid-js";
 import { Locale } from "~/utils/locale";
-import HeadTag from "~/modules/site/head";
+import HeadTag from "~/site/seo";
 import AppLayout from "./AppLayout";
-import type { HeadParamsInput } from "~/modules/site/head/types";
+import type { HeadParamsInput } from "~/site/seo/types";
 
 type PageLayoutProps = {
     children: JSX.Element;

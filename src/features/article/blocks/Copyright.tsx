@@ -1,6 +1,6 @@
 import { Accessor, For, JSXElement } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
-import NotByAi from "~/modules/site/assets/not-by-ai";
+import NotByAi from "~/ui/icons/not-by-ai";
 import { formatDate } from "~/utils";
 
 

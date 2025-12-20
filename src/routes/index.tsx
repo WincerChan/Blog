@@ -1,5 +1,5 @@
-import LatestBlog from "~/modules/home/LatestCard";
-import OtherBlogs from "~/modules/post-listing/OtherCards";
+import LatestBlog from "~/features/home/LatestCard";
+import OtherBlogs from "~/features/post-listing/OtherCards";
 import PageLayout from "~/layouts/PageLayout";
 import { getLatestPosts, postUrl } from "~/content/velite";
 import { createAsync } from "@solidjs/router";

@@ -23,7 +23,7 @@ English version: `README.en.md`
 ## 目录结构
 
 - `src/routes/` 路由（内容页在 `src/routes/(pages)`）
-- `src/pages/` 页面视图组件
+- `src/features/pages/` 页面视图组件
 - `src/layouts/` 布局层
 - `src/features/` 业务功能模块（如 `features/theme`）
 - `tools/velite/` 内容构建工具

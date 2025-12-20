@@ -7,8 +7,8 @@ import IconPhoto from "~icons/tabler/photo-heart";
 import Archives from "./Archives";
 import Category from "./Category";
 import Stats from "./Stats";
-import BackTop from "./BackTop";
-import UpdateNotify from "./UpdateNotify";
+import BackTop from "../widgets/BackTop";
+import UpdateNotify from "~/features/pwa/UpdateNotify";
 
 const SINCE = 2017;
 

@@ -1,5 +1,5 @@
-import PageRouteView from "~/pages/PageRouteView";
-import SearchPage from "~/pages/SearchPage";
+import PageRouteView from "~/features/pages/PageRouteView";
+import SearchPage from "~/features/pages/SearchPage";
 
 export default function SearchEnRoute() {
     const slug = () => "search-en";

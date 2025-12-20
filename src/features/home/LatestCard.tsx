@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
-import DateCat from "~/modules/post-listing/DateCat";
-import type { PostListItem } from "~/modules/post-listing/types";
+import DateCat from "~/features/post-listing/DateCat";
+import type { PostListItem } from "~/features/post-listing/types";
 
 type BlogProps = {
     blog: PostListItem,

@@ -1,5 +1,5 @@
-import PageRouteView from "~/pages/PageRouteView";
-import LifePage from "~/pages/LifePage";
+import PageRouteView from "~/features/pages/PageRouteView";
+import LifePage from "~/features/pages/LifePage";
 
 export default function LifeRoute() {
     const slug = () => "life";

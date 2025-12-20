@@ -13,14 +13,14 @@ import { Locales, Translations } from "~/i18n/i18n-types";
 import { calculateDateDifference, formatDate } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
-import Relates from "~/modules/site/footer/Relates";
-import Comment from "~/modules/article/comments/Comment";
-import Copyright from "~/modules/article/sections/Copyright";
-import LazyBg from "~/modules/site/media/BG";
+import Relates from "~/features/article/blocks/Relates";
+import Comment from "~/features/article/comments/Comment";
+import Copyright from "~/features/article/blocks/Copyright";
+import LazyBg from "~/ui/media/BG";
 import ArticleLayout from "~/layouts/ArticleLayout";
-import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/modules/article/types";
+import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/features/article/types";
 
-const ProtectBlog = lazy(() => import("~/modules/article/encryption/EncryptBlock"));
+const ProtectBlog = lazy(() => import("~/features/article/blocks/EncryptBlock"));
 
 const PostMeta = ({
     blog,

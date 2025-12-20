@@ -1,6 +1,6 @@
 import { createAsync, useParams } from "@solidjs/router";
 import { createMemo } from "solid-js";
-import CategoryPageView from "~/modules/category/CategoryPage";
+import CategoryPageView from "~/features/pages/CategoryPage";
 import { getPostsByCategory, postUrl } from "~/content/velite";
 
 export default function CategoryPage() {

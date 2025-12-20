@@ -15,7 +15,7 @@ import {
     contentStatsTotalTags,
     contentStatsWordsCount,
     contentStatsZhNavPages,
-} from "./tools/velite/build/contentStats";
+} from "./tools/velite/stats";
 import reloadPublicData from "./tools/vite/reloadPublicData";
 import ServiceWorkerBuild from "./tools/vite/serviceWorkerBuild";
 import computeSwHash from "./tools/build/swHash";

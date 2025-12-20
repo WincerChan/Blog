@@ -1,5 +1,5 @@
-import PageRouteView from "~/pages/PageRouteView";
-import FriendsPage from "~/pages/FriendsPage";
+import PageRouteView from "~/features/pages/PageRouteView";
+import FriendsPage from "~/features/pages/FriendsPage";
 
 export default function FriendsEnRoute() {
     const slug = () => "friends-en";

@@ -1,6 +1,6 @@
 import { createAsync } from "@solidjs/router";
 import { For, createMemo } from "solid-js";
-import FriendLink from "~/modules/friends/FriendLink";
+import FriendLink from "~/features/friends/FriendLink";
 import ArticlePage from "~/layouts/ArticlePage";
 import { getFriendLinks } from "~/content/velite";
 
