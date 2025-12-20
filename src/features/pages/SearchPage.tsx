@@ -1,5 +1,4 @@
 import { useSearchParams } from "@solidjs/router";
-import nProgress from "nprogress";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { isBrowser, range } from "~/utils";
 import IconArrowLeft from "~icons/carbon/arrow-left";
@@ -125,10 +124,6 @@ const Search = ({ page, children }) => {
     createEffect(() => {
         setTimeout(() => scrollElem?.scrollIntoView({ behavior: 'smooth', block: 'start' }), currentPage() * 0)
     })
-    createEffect(() => {
-        if (resource()) nProgress.done()
-    })
-
     const [resource] = createResource(query, fetchSearchResult)
     // 从 URL 读取
     const handleSubmit = (e) => {

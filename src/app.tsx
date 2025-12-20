@@ -1,5 +1,5 @@
 import { MetaProvider } from "@solidjs/meta";
-import { Router, useIsRouting } from "@solidjs/router";
+import { Router, useBeforeLeave, useIsRouting } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense, createEffect, onMount } from "solid-js";
 import Footer from "./site/footer";
@@ -37,9 +37,11 @@ const detectLocaleFromPath = (pathname: string): Locale => {
 
 const preloadHook = (props: RouteSectionProps<unknown>) => {
     const isRouting = useIsRouting();
+    useBeforeLeave((e) => {
+        if (e.to.pathname !== e.from.pathname) NProgress.start();
+    });
     createEffect(() => {
-        if (isRouting()) NProgress.start();
-        else NProgress.done();
+        if (!isRouting()) NProgress.done();
     });
     return (
         <MetaProvider>
@@ -62,7 +64,7 @@ export default function App() {
         applyTheme(globalStore.theme);
     });
     onMount(() => {
-        NProgress.configure({ showSpinner: false });
+        NProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 });
         setGlobalStore({ trackEvent: trackEvent, trackPage: trackPageview });
     });
     return (

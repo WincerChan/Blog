@@ -1,5 +1,5 @@
-import { createAsync, useParams } from "@solidjs/router";
-import { Show, createEffect, createSignal } from "solid-js";
+import { useParams } from "@solidjs/router";
+import { Show, createEffect, createResource, createSignal } from "solid-js";
 import ArticlePage from "~/layouts/ArticlePage";
 import { VELITE_NOT_FOUND, getPostBySlug, postUrl } from "~/content/velite";
 import type { VelitePostPublic } from "~/content/velite";
@@ -17,8 +17,8 @@ export default function PostRoute() {
     const options = import.meta.env.SSR
         ? { initialValue: serverPost, ssrLoadFrom: "initial" as const }
         : undefined;
-    const post = createAsync(() => getPostBySlug(slug()), options) as any;
-    const resolved = () => (import.meta.env.SSR ? post() : post.latest) as PostPayload;
+    const [post] = createResource(slug, getPostBySlug, options);
+    const resolved = () => post() as PostPayload;
     const [stale, setStale] = createSignal<PostPayload>();
 
     createEffect(() => {

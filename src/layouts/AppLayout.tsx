@@ -1,5 +1,3 @@
-import { useBeforeLeave } from "@solidjs/router";
-import nProgress from "nprogress";
 import { JSXElement, createEffect, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { loadLocaleAsync } from "~/i18n/i18n-util.async";
@@ -12,18 +10,8 @@ interface MainProps {
     lang?: Locale;
 }
 
-nProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 });
-
 const trackHook = () => {
-    useBeforeLeave((e) => {
-        const to_path = e.to.toString(),
-            from_path = e.from.pathname;
-        if (!(to_path == from_path || (to_path.startsWith(from_path) && from_path !== "/")))
-            nProgress.start();
-    });
-
     onMount(() => {
-        nProgress.done();
         setTimeout(() => {
             globalStore.trackPage();
         }, 100);
