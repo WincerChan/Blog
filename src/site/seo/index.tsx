@@ -59,7 +59,8 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
     const resolved = createMemo(() => resolveHeadParams(props.headParams));
     onMount(() => {
         if (typeof document === "undefined") return;
-        // Clean up SSR meta tags that failed to hydrate (stale data-sm).
+        // @solidjs/meta leaves SSR tags with data-sm; if hydration doesn't claim them,
+        // they stay in head and block future updates. Clean once on mount.
         const staleTags = document.head?.querySelectorAll("[data-sm]");
         if (!staleTags?.length) return;
         staleTags.forEach((tag) => tag.parentNode?.removeChild(tag));
