@@ -1,4 +1,4 @@
-import { createMemo } from "solid-js";
+import { Show, createMemo, onMount } from "solid-js";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
@@ -57,23 +57,35 @@ const postLDJSON = (params: HeadParams) => {
 
 const HeadTag = (props: { headParams: HeadParamsInput }) => {
     const resolved = createMemo(() => resolveHeadParams(props.headParams));
-    const isPost = createMemo(
-        () => resolved().description !== __SITE_CONF.description,
-    );
+    onMount(() => {
+        if (typeof document === "undefined") return;
+        // Clean up SSR meta tags that failed to hydrate (stale data-sm).
+        const staleTags = document.head?.querySelectorAll("[data-sm]");
+        if (!staleTags?.length) return;
+        staleTags.forEach((tag) => tag.parentNode?.removeChild(tag));
+    });
     return (
-        <>
-            <MainMeta params={resolved()} />
-            {resolved().mathrender && (
-                <link rel="stylesheet" href={katexCssHref} />
+        <Show keyed when={resolved()}>
+            {(params) => (
+                <>
+                    <MainMeta params={params} />
+                    {params.mathrender && (
+                        <link rel="stylesheet" href={katexCssHref} />
+                    )}
+                    <ApplicationMeta />
+                    <OpenGraph params={params} />
+                    <script
+                        type="application/ld+json"
+                        innerHTML={
+                            params.description !== __SITE_CONF.description
+                                ? postLDJSON(params)
+                                : blogLDJSON()
+                        }
+                    />
+                </>
             )}
-            <ApplicationMeta />
-            <OpenGraph params={resolved()} />
-            <script
-                type="application/ld+json"
-                innerHTML={isPost() ? postLDJSON(resolved()) : blogLDJSON()}
-            />
-        </>
-    )
-}
+        </Show>
+    );
+};
 
 export default HeadTag;
