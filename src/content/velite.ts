@@ -66,12 +66,15 @@ const getPageBySlug = (slug: string) => {
     );
 };
 
-const getPostsByCategory = async (category: string) => {
+const getPostsByCategory = (category: string) => {
     if (!category) return [] as VelitePostPublic[];
-    return await readPublicJson<VelitePostPublic[]>(
+    const data = readPublicJson<VelitePostPublic[]>(
         `/_data/category/${safeEncode(category)}.json`,
         [],
     );
+    if (isPromiseLike(data))
+        return data.then((d) => (Array.isArray(d) ? d : [])) as Promise<VelitePostPublic[]>;
+    return Array.isArray(data) ? data : [];
 };
 
 const getCategoryIndex = async () =>

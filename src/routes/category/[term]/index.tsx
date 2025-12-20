@@ -1,14 +1,28 @@
-import { createAsync, useParams } from "@solidjs/router";
-import { createMemo } from "solid-js";
+import { useParams } from "@solidjs/router";
+import { createMemo, createResource } from "solid-js";
 import CategoryPageView from "~/features/pages/CategoryPage";
 import { getPostsByCategory, postUrl } from "~/content/velite";
 
+const decodeTerm = (value: string | undefined) => {
+    if (!value) return "";
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return value;
+    }
+};
+
 export default function CategoryPage() {
     const params = useParams();
-    const term = createMemo(() => decodeURIComponent(params.term));
-    const resource = createAsync(() => getPostsByCategory(term())) as any;
+    const term = createMemo(() => decodeTerm(params.term));
+    const serverPosts = import.meta.env.SSR ? getPostsByCategory(term()) : undefined;
+    const initialValue = Array.isArray(serverPosts) ? serverPosts : undefined;
+    const options = initialValue
+        ? { initialValue, ssrLoadFrom: "initial" as const }
+        : undefined;
+    const [resource] = createResource(term, getPostsByCategory, options);
     const posts = createMemo(() =>
-        ((import.meta.env.SSR ? resource() : resource.latest) ?? []).map((p) => ({
+        (resource() ?? []).map((p) => ({
             ...p,
             slug: (p as any).url ?? postUrl(String((p as any).slug)),
         })),
