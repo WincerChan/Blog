@@ -1,5 +1,4 @@
-import { createAsync } from "@solidjs/router";
-import { Accessor, JSXElement, Show, Suspense, createEffect, createSignal } from "solid-js";
+import { Accessor, JSXElement, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
 import ArticlePage from "~/layouts/ArticlePage";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
 import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
@@ -56,8 +55,12 @@ const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement
 };
 
 const PageRouteView = ({ slug, view, layout = "article", withChildren }: PageRouteViewProps) => {
-    const page = createAsync(() => getPageBySlug(slug())) as any;
-    const resolved = () => (import.meta.env.SSR ? page() : page.latest) as any;
+    const serverPage = import.meta.env.SSR ? getPageBySlug(slug()) : undefined;
+    const options = import.meta.env.SSR
+        ? { initialValue: serverPage, ssrLoadFrom: "initial" as const }
+        : undefined;
+    const [page] = createResource(slug, getPageBySlug, options);
+    const resolved = () => page() as any;
     const [stale, setStale] = createSignal<any>();
 
     createEffect(() => {
