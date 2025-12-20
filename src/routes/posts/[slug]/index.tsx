@@ -15,6 +15,7 @@ export default function PostRoute() {
         ? (getPostBySlug(slug()) as PostPayload)
         : undefined;
     const options = import.meta.env.SSR
+        // SSR uses initialValue to render without serializing resource data into HTML.
         ? { initialValue: serverPost, ssrLoadFrom: "initial" as const }
         : undefined;
     const [post] = createResource(slug, getPostBySlug, options);

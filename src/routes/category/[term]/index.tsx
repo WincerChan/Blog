@@ -18,6 +18,7 @@ export default function CategoryPage() {
     const serverPosts = import.meta.env.SSR ? getPostsByCategory(term()) : undefined;
     const initialValue = Array.isArray(serverPosts) ? serverPosts : undefined;
     const options = initialValue
+        // SSR uses initialValue to render without serializing resource data into HTML.
         ? { initialValue, ssrLoadFrom: "initial" as const }
         : undefined;
     const [resource] = createResource(term, getPostsByCategory, options);

@@ -57,6 +57,7 @@ const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement
 const PageRouteView = ({ slug, view, layout = "article", withChildren }: PageRouteViewProps) => {
     const serverPage = import.meta.env.SSR ? getPageBySlug(slug()) : undefined;
     const options = import.meta.env.SSR
+        // SSR uses initialValue to render without serializing resource data into HTML.
         ? { initialValue: serverPage, ssrLoadFrom: "initial" as const }
         : undefined;
     const [page] = createResource(slug, getPageBySlug, options);
