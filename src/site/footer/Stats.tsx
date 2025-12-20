@@ -1,13 +1,10 @@
-import { createAsync } from "@solidjs/router";
 import { Accessor, For, createMemo } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
-import { getCategoryIndex } from "~/content/velite";
 
 const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
-    const categories = createAsync(() => getCategoryIndex())
     const elems = createMemo(() => [
         __CONTENT_TOTAL_POSTS,
-        (categories() ?? []).length,
+        __CONTENT_TOTAL_CATEGORIES.length,
         `${(__CONTENT_WORDS / 1000).toPrecision(3)}`,
         __CONTENT_TAGS,
     ])

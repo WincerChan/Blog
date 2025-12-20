@@ -37,7 +37,7 @@ const definedVars = {
     __CONTENT_EN_POSTS: JSON.stringify(contentStatsEnPosts),
     __CONTENT_EN_NAV: JSON.stringify(contentStatsEnNavPages),
     __CONTENT_ZH_NAV: JSON.stringify(contentStatsZhNavPages),
-    __CONTENT_TOTAL_CATEGORIES: contentStatsTotalCategories,
+    __CONTENT_TOTAL_CATEGORIES: JSON.stringify(contentStatsTotalCategories),
     __SITE_CONF: BlogConf,
     __SW_HASH: JSON.stringify(swHash),
 }
@@ -71,11 +71,11 @@ export default defineConfig({
                     experimentalMinChunkSize: 102400,
                 }
             },
-            // minify: false,
-            // terserOptions: {
-            //     compress: false,
-            //     mangle: false,
-            // },
+            minify: false,
+            terserOptions: {
+                compress: false,
+                mangle: false,
+            },
         }
     }
 });
