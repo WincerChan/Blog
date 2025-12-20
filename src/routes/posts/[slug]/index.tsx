@@ -49,6 +49,9 @@ export default function PostRoute() {
                     mathrender: hasMath,
                 };
                 if (isEncrypted) rawBlog.encrypted = true;
+                if (p.hasLegacyComments !== undefined) {
+                    rawBlog.hasLegacyComments = p.hasLegacyComments;
+                }
                 if (p.lang) rawBlog.lang = p.lang;
                 if (p.isTranslation !== undefined) rawBlog.isTranslation = p.isTranslation;
 

@@ -207,7 +207,11 @@ export const PostExtra = ({
                 <Neighbours neighbours={rawBlog.neighbours} />
             </Show>
             <Show when={!hideComment}>
-                <Comment pageURL={rawBlog.slug} LL={LL} />
+                <Comment
+                    pageURL={rawBlog.slug}
+                    LL={LL}
+                    hasLegacyComments={rawBlog.hasLegacyComments}
+                />
             </Show>
         </>
     );

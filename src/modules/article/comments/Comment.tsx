@@ -1,18 +1,52 @@
-import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
+import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createMemo, createResource, createSignal } from "solid-js";
 import CommentList from "~/modules/article/comments/OldComment";
 import { Translations } from "~/i18n/i18n-types";
-import { fetcher } from "~/utils";
 import { globalStore } from "~/features/theme";
+import { safeEncode } from "~/content/velite-utils";
 
 interface GiscusCommentProps {
     pageURL: string
     LL: Accessor<Translations>
+    hasLegacyComments?: boolean
 }
 
-export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
+export default function GiscusComment({ pageURL, LL, hasLegacyComments }: GiscusCommentProps) {
     const [visible, setVisible] = createSignal(false)
-    const [url, setUrl] = createSignal()
-    const [resource] = createResource(url, fetcher)
+    const [url, setUrl] = createSignal<string | null>(null)
+    const normalizePath = (input: string) => {
+        let pathname = String(input || "");
+        if (/^https?:\/\//.test(pathname)) {
+            try {
+                pathname = new URL(pathname).pathname;
+            } catch {
+                // keep raw path
+            }
+        }
+        pathname = pathname.split("?")[0].split("#")[0];
+        if (!pathname.startsWith("/")) pathname = `/${pathname}`;
+        if (!pathname.endsWith("/")) pathname = `${pathname}/`;
+        return pathname;
+    };
+    const legacyPath = createMemo(() => normalizePath(pageURL));
+    const legacyUrl = createMemo(() => {
+        const path = legacyPath();
+        const parts = path.split("/").filter(Boolean);
+        if (parts.length === 0) return "";
+        const encoded = parts.map((part) => safeEncode(part)).join("/");
+        return `/_data/legacy-comments/${encoded}.json`;
+    });
+    const fetchLegacyComments = async (target: string | null) => {
+        if (!target) return [];
+        try {
+            const resp = await fetch(target);
+            if (!resp.ok) return [];
+            return await resp.json();
+        } catch {
+            return [];
+        }
+    };
+    const hasLegacy = createMemo(() => hasLegacyComments === true);
+    const [resource] = createResource(url, fetchLegacyComments)
     let self;
     createEffect(() => {
         const observer = new IntersectionObserver(entries => {
@@ -25,8 +59,15 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     })
 
     createEffect(() => {
-        const pathEncoded = btoa(pageURL).replace("+", "-").replace("/", "_")
-        if (visible()) { import('giscus'); setUrl(`${__SITE_CONF.extURL}/api/comments/${pathEncoded}`) }
+        if (!visible()) return;
+        import('giscus');
+    })
+    createEffect(() => {
+        if (!visible()) {
+            setUrl(null);
+            return;
+        }
+        setUrl(hasLegacy() ? legacyUrl() : null);
     })
 
     return (
@@ -48,16 +89,18 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                     lang={LL && LL().post.S()}
                     loading="lazy"
                 />
-                <Suspense fallback={<span class=":: text-lg font-headline ">{LL && LL().post.DIS()}</span>}>
-                    <ErrorBoundary fallback={<span></span>}>
-                        <Show when={resource()}>
-                            {Object.keys(resource()).length && <p class=":: my-6 text-lg font-headline ">
-                                以下是旧时在 Disqus 上的评论，仅作展示用。
-                            </p>}
-                            <CommentList comments={resource()} />
-                        </Show>
-                    </ErrorBoundary>
-                </Suspense>
+                <Show when={hasLegacy()}>
+                    <Suspense fallback={<span class=":: text-lg font-headline ">{LL && LL().post.DIS()}</span>}>
+                        <ErrorBoundary fallback={<span></span>}>
+                            <Show when={resource()}>
+                                {Object.keys(resource()).length && <p class=":: my-6 text-lg font-headline ">
+                                    以下是旧时在 Disqus 上的评论，仅作展示用。
+                                </p>}
+                                <CommentList comments={resource()} />
+                            </Show>
+                        </ErrorBoundary>
+                    </Suspense>
+                </Show>
             </Show>
         </div>
     )

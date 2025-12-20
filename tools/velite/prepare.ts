@@ -3,6 +3,11 @@ import type { VeliteConfig } from "velite";
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
 import { emitAtom } from "./emit/atom";
+import {
+  collectLegacyCommentPaths,
+  emitLegacyComments,
+  loadLegacyCommentsMap,
+} from "./emit/legacyComments";
 import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSitemaps } from "./emit/sitemap";
@@ -69,10 +74,16 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   });
 
   await emitPublicAssets({ site, publicDir });
+  const legacyCommentsMap = await loadLegacyCommentsMap(repoRoot);
+  const legacyCommentPaths = legacyCommentsMap
+    ? collectLegacyCommentPaths(legacyCommentsMap)
+    : undefined;
   await emitPublicData({
     publicDir,
     posts,
     pages,
     friends: (data as any).friends ?? [],
+    legacyCommentPaths,
   });
+  await emitLegacyComments({ repoRoot, publicDir, commentsMap: legacyCommentsMap });
 };

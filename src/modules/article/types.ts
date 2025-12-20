@@ -32,4 +32,5 @@ export type ArticleMeta = {
     isTranslation?: boolean;
     lang?: string;
     neighbours?: ArticleNeighbours;
+    hasLegacyComments?: boolean;
 };

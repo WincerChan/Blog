@@ -30,6 +30,7 @@ const toPageProps = (page: any) => ({
     lang: page.lang,
     isTranslation: page.isTranslation,
     content: page.html ?? "",
+    hasLegacyComments: page.hasLegacyComments ?? false,
 });
 
 const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement) => {

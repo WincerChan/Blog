@@ -30,6 +30,7 @@ type EmitPublicDataOptions = {
   posts: any[];
   pages: any[];
   friends?: any[];
+  legacyCommentPaths?: Set<string>;
 };
 
 const writeJson = async (filepath: string, data: unknown) => {
@@ -69,15 +70,20 @@ const buildPostOutputs = async ({
   canonSlugSet,
   slugToPost,
   outDir,
+  legacyCommentPaths,
 }: {
   visPosts: any[];
   canon: any[];
   canonSlugSet: Set<string>;
   slugToPost: Map<string, any>;
   outDir: string;
+  legacyCommentPaths?: Set<string>;
 }) => {
   for (const p of visPosts) {
     const slug = String(p.slug);
+    const hasLegacyComments = legacyCommentPaths
+      ? legacyCommentPaths.has(postUrl(slug))
+      : false;
     const neighbours = computeNeighbours(p, { canon, canonSlugSet, slugToPost });
     const relates = computeRelated(p, canon);
     const html = String(p.html ?? "");
@@ -91,6 +97,7 @@ const buildPostOutputs = async ({
       url: postUrl(slug),
       html: content,
       encrypted,
+      hasLegacyComments,
       neighbours,
       relates,
       hasMath,
@@ -99,18 +106,35 @@ const buildPostOutputs = async ({
   }
 };
 
-const buildPageOutputs = async ({ pages, outDir }: { pages: any[]; outDir: string }) => {
+const buildPageOutputs = async ({
+  pages,
+  outDir,
+  legacyCommentPaths,
+}: {
+  pages: any[];
+  outDir: string;
+  legacyCommentPaths?: Set<string>;
+}) => {
   const visPages = visiblePages(pages);
   for (const p of visPages) {
     const slug = String(p.slug);
+    const pagePath = `/${slug}/`;
+    const hasLegacyComments = legacyCommentPaths ? legacyCommentPaths.has(pagePath) : false;
     await writeJson(path.join(outDir, "pages", `${safePathSegment(slug)}.json`), {
       ...p,
-      url: `/${slug}/`,
+      url: pagePath,
+      hasLegacyComments,
     });
   }
 };
 
-export const emitPublicData = async ({ publicDir, posts, pages, friends = [] }: EmitPublicDataOptions) => {
+export const emitPublicData = async ({
+  publicDir,
+  posts,
+  pages,
+  friends = [],
+  legacyCommentPaths,
+}: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
   await clearOutDir(outDir);
 
@@ -123,8 +147,15 @@ export const emitPublicData = async ({ publicDir, posts, pages, friends = [] }: 
   await writeJson(path.join(outDir, "posts", "latest.json"), latest);
 
   await buildCategoryOutputs({ canon, outDir });
-  await buildPostOutputs({ visPosts, canon, canonSlugSet, slugToPost, outDir });
-  await buildPageOutputs({ pages, outDir });
+  await buildPostOutputs({
+    visPosts,
+    canon,
+    canonSlugSet,
+    slugToPost,
+    outDir,
+    legacyCommentPaths,
+  });
+  await buildPageOutputs({ pages, outDir, legacyCommentPaths });
 
   await writeJson(path.join(outDir, "friends.json"), friends);
 };
