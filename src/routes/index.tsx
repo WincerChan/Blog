@@ -2,15 +2,20 @@ import LatestBlog from "~/features/home/LatestCard";
 import OtherBlogs from "~/features/post-listing/OtherCards";
 import PageLayout from "~/layouts/PageLayout";
 import { getLatestPosts, postUrl } from "~/content/velite";
-import { createAsync } from "@solidjs/router";
-import { Show, createMemo } from "solid-js";
+import { Show, createMemo, createResource } from "solid-js";
 
 
 
 const Home = () => {
-    const latest = createAsync(() => getLatestPosts(5)) as any;
+    const serverPosts = import.meta.env.SSR ? getLatestPosts(5) : undefined;
+    const initialValue = Array.isArray(serverPosts) ? serverPosts : undefined;
+    const options = initialValue
+        // SSR uses initialValue to render without serializing resource data into HTML.
+        ? { initialValue, ssrLoadFrom: "initial" as const }
+        : undefined;
+    const [latest] = createResource(() => 5, () => getLatestPosts(5), options);
     const recentPosts = createMemo(() =>
-        ((import.meta.env.SSR ? latest() : latest.latest) ?? []).map((p) => ({
+        (latest() ?? []).map((p) => ({
             ...p,
             slug: p.url ?? postUrl(String(p.slug)),
         })),
