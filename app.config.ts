@@ -25,6 +25,15 @@ const __dirname = path.dirname(__filename);
 
 const siteConfigPath = fileURLToPath(new URL("./site.config.json", import.meta.url));
 const BlogConf = JSON.parse(fs.readFileSync(siteConfigPath, "utf8"));
+const friendsConfigPath = fileURLToPath(new URL("./_blogs/content/friends.json", import.meta.url));
+let friendsConfig: unknown[] = [];
+try {
+    const raw = fs.readFileSync(friendsConfigPath, "utf8");
+    const parsed = JSON.parse(raw);
+    friendsConfig = Array.isArray(parsed) ? parsed : [];
+} catch {
+    friendsConfig = [];
+}
 
 const swHash = computeSwHash();
 
@@ -39,6 +48,7 @@ const definedVars = {
     __CONTENT_ZH_NAV: JSON.stringify(contentStatsZhNavPages),
     __CONTENT_TOTAL_CATEGORIES: JSON.stringify(contentStatsTotalCategories),
     __SITE_CONF: BlogConf,
+    __CONTENT_FRIENDS: JSON.stringify(friendsConfig),
     __SW_HASH: JSON.stringify(swHash),
 }
 export default defineConfig({

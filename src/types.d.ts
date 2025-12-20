@@ -13,6 +13,12 @@ declare const __SW_HASH: string
 declare const __CONTENT_EN_NAV: Array<{ slug: string; title: string }>
 declare const __CONTENT_ZH_NAV: Array<{ slug: string; title: string }>
 declare const __CONTENT_TOTAL_CATEGORIES: Array<{ title: string; count: number }>
+declare const __CONTENT_FRIENDS: Array<{
+    name: string,
+    url: string,
+    avatar?: string,
+    inactive?: boolean,
+}>
 declare const __SITE_CONF: {
     title: string,
     avatar: string,

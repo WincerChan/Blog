@@ -1,22 +1,22 @@
-import { createAsync } from "@solidjs/router";
-import { For, createMemo } from "solid-js";
+import { For } from "solid-js";
 import FriendLink from "~/features/friends/FriendLink";
 import ArticlePage from "~/layouts/ArticlePage";
-import { getFriendLinks } from "~/content/velite";
+import type { FriendLink as FriendLinkType } from "~/content/types";
 
 const Friend = ({ page, children }) => {
-    const links = createAsync(() => getFriendLinks());
-    const sortedLinks = createMemo(() => {
-        const friendLinks = links() ?? [];
-        const activeLinks = friendLinks.filter((link) => !link.inactive);
-        const inactiveLinks = friendLinks.filter((link) => link.inactive === true);
-        return activeLinks.concat(inactiveLinks);
-    });
+    const links = Array.isArray(__CONTENT_FRIENDS) ? __CONTENT_FRIENDS : [];
+    const sortedLinks = () => {
+        const activeLinks = links.filter((link) => !link.inactive);
+        const inactiveLinks = links.filter((link) => link.inactive === true);
+        return activeLinks.concat(inactiveLinks) as FriendLinkType[];
+    };
     return (
         <ArticlePage rawBlog={page} relates={[]}>
             {children}
             <div class=":: grid grid-cols-1 gap-6 my-6 sm:grid-cols-2 ">
-                <For each={sortedLinks()}>{(link) => <FriendLink {...link} />}</For>
+                <For each={sortedLinks()}>
+                    {(link) => <FriendLink {...link} />}
+                </For>
             </div>
         </ArticlePage>
     );
