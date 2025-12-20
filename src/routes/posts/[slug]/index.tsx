@@ -11,14 +11,7 @@ type PostPayload = VelitePostPublic | typeof VELITE_NOT_FOUND | null | undefined
 export default function PostRoute() {
     const params = useParams();
     const slug = () => String(params.slug || "");
-    const serverPost = import.meta.env.SSR
-        ? (getPostBySlug(slug()) as PostPayload)
-        : undefined;
-    const options = import.meta.env.SSR
-        // SSR uses initialValue to render without serializing resource data into HTML.
-        ? { initialValue: serverPost, ssrLoadFrom: "initial" as const }
-        : undefined;
-    const [post] = createResource(slug, getPostBySlug, options);
+    const [post] = createResource(slug, getPostBySlug);
     const resolved = () => post() as PostPayload;
     const [stale, setStale] = createSignal<PostPayload>();
 

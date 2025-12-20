@@ -81,11 +81,11 @@ export default defineConfig({
                     experimentalMinChunkSize: 102400,
                 }
             },
-            minify: false,
-            terserOptions: {
-                compress: false,
-                mangle: false,
-            },
+            //minify: false,
+            //terserOptions: {
+            //    compress: false,
+            //    mangle: false,
+            //},
         }
     }
 });

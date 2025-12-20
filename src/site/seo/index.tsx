@@ -1,4 +1,4 @@
-import { Show, createMemo, onMount } from "solid-js";
+import { Show, createMemo } from "solid-js";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
@@ -57,14 +57,6 @@ const postLDJSON = (params: HeadParams) => {
 
 const HeadTag = (props: { headParams: HeadParamsInput }) => {
     const resolved = createMemo(() => resolveHeadParams(props.headParams));
-    onMount(() => {
-        if (typeof document === "undefined") return;
-        // @solidjs/meta leaves SSR tags with data-sm; if hydration doesn't claim them,
-        // they stay in head and block future updates. Clean once on mount.
-        const staleTags = document.head?.querySelectorAll("[data-sm]");
-        if (!staleTags?.length) return;
-        staleTags.forEach((tag) => tag.parentNode?.removeChild(tag));
-    });
     return (
         <Show keyed when={resolved()}>
             {(params) => (

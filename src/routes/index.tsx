@@ -7,13 +7,7 @@ import { Show, createMemo, createResource } from "solid-js";
 
 
 const Home = () => {
-    const serverPosts = import.meta.env.SSR ? getLatestPosts(5) : undefined;
-    const initialValue = Array.isArray(serverPosts) ? serverPosts : undefined;
-    const options = initialValue
-        // SSR uses initialValue to render without serializing resource data into HTML.
-        ? { initialValue, ssrLoadFrom: "initial" as const }
-        : undefined;
-    const [latest] = createResource(() => 5, () => getLatestPosts(5), options);
+    const [latest] = createResource(() => 5, () => getLatestPosts(5));
     const recentPosts = createMemo(() =>
         (latest() ?? []).map((p) => ({
             ...p,
