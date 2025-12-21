@@ -51,6 +51,23 @@ export const emitAtom = async ({
       const fullHtml = coverHtml + bodyHtml;
 
       const contentXml = isEncrypted ? escapeXmlText(summaryText) : escapeXmlText(fullHtml);
+      const categoryTerm = String(p.category ?? "").trim();
+      const categoryScheme = new URL("/category", site.baseURL).toString();
+      const tagScheme = new URL("/tag", site.baseURL).toString();
+      const tags = Array.isArray(p.tags) ? p.tags : [];
+      const categoryXml = categoryTerm
+        ? `    <category term="${escapeXmlText(categoryTerm)}" scheme="${escapeXmlText(
+            categoryScheme,
+          )}" label="${escapeXmlText(categoryTerm)}" />\n`
+        : "";
+      const tagsXml = tags
+        .map(
+          (tag) =>
+            `    <category term="${escapeXmlText(String(tag))}" scheme="${escapeXmlText(
+              tagScheme,
+            )}" label="${escapeXmlText(String(tag))}" />\n`,
+        )
+        .join("");
 
       return (
         `  <entry>\n` +
@@ -59,6 +76,8 @@ export const emitAtom = async ({
         `    <id>${id}</id>\n` +
         `    <published>${published}</published>\n` +
         `    <updated>${updated}</updated>\n` +
+        categoryXml +
+        tagsXml +
         `    <summary>${escapeXmlText(summaryText)}</summary>\n` +
         (isEncrypted
           ? `    <content type="text">${contentXml}</content>\n`
