@@ -42,3 +42,4 @@ public/tags
 public/manifest.*
 public/sw.js
 public/_data
+public/valid_paths.txt

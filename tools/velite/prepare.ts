@@ -11,6 +11,7 @@ import {
 import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSitemaps } from "./emit/sitemap";
+import { emitValidPaths } from "./emit/validPaths";
 
 const normalizeDates = (value: { date?: string; updated?: string }) => {
   const dateObj = parseDateLikeHugo(value.date);
@@ -84,6 +85,11 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     pages,
     friends: (data as any).friends ?? [],
     legacyCommentPaths,
+  });
+  await emitValidPaths({
+    publicDir,
+    renderablePosts,
+    renderablePages,
   });
   await emitLegacyComments({ repoRoot, publicDir, commentsMap: legacyCommentsMap });
 };
