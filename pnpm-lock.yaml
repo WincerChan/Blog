@@ -83,9 +83,6 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.21.0
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
       unocss:
         specifier: ^66.1.2
         version: 66.5.10(postcss@8.5.6)(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
