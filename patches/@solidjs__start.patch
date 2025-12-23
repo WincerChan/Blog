@@ -35,19 +35,19 @@ index 6d92c763c90ff1579b706511c7e8781534eb3e5a..dfdfcc19d0f4af1236dfd5796db01428
      }
    }
 diff --git a/dist/router/lazyRoute.js b/dist/router/lazyRoute.js
-index 463636a16572208dfbd801e758dc45c0657ddccc..ff2c5bca787f7c2556b729897a46543eb4f0089a 100644
+index 463636a16572208dfbd801e758dc45c0657ddccc..e713d0c78f1a77257a0421601f065d5652fc6246 100644
 --- a/dist/router/lazyRoute.js
 +++ b/dist/router/lazyRoute.js
-@@ -15,8 +15,7 @@ export default function lazyRoute(component, clientManifest, serverManifest, exp
-             if (!mod[exported])
-                 console.error(`Module ${component.src} does not export ${exported}`);
+@@ -39,8 +39,7 @@ export default function lazyRoute(component, clientManifest, serverManifest, exp
+         else {
+             const mod = await component.import();
              const Component = mod[exported];
--            let assets = await clientManifest.inputs?.[component.src]?.assets();
--            const styles = assets.filter((asset) => asset.tag === "style");
+-            let assets = await clientManifest.inputs?.[component.src].assets();
+-            const styles = assets.filter((asset) => asset.tag === "style" || asset.attrs.rel === "stylesheet");
 +            const styles = []
-             if (typeof window !== "undefined" && import.meta.hot) {
-                 import.meta.hot.on("css-update", data => {
-                     updateStyles(styles, data);
+             if (typeof window !== "undefined") {
+                 preloadStyles(styles);
+             }
 diff --git a/dist/server/StartServer.jsx b/dist/server/StartServer.jsx
 index 0c6a9fe3121a88520db252570a8b5997a36e0452..b4fc8d14706eced99b022113af8846af75be393b 100644
 --- a/dist/server/StartServer.jsx

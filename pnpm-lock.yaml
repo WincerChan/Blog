@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@solidjs/start':
-    hash: bd640f2999d754135217d473a19a4c3f889610f0bf91d76363f2461983d8dfa9
+    hash: b1d1b707046559d6a2ce47742d5227ef3f24c1fc0b5110593b83dddea95723b3
     path: patches/@solidjs__start.patch
   vinxi:
     hash: 174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b
@@ -24,7 +24,7 @@ importers:
         version: 0.15.4(solid-js@1.9.10)
       '@solidjs/start':
         specifier: ^1.1.4
-        version: 1.2.1(patch_hash=bd640f2999d754135217d473a19a4c3f889610f0bf91d76363f2461983d8dfa9)(solid-js@1.9.10)(vinxi@0.5.10(patch_hash=174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b)(db0@0.3.4)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
+        version: 1.2.1(patch_hash=b1d1b707046559d6a2ce47742d5227ef3f24c1fc0b5110593b83dddea95723b3)(solid-js@1.9.10)(vinxi@0.5.10(patch_hash=174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b)(db0@0.3.4)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
@@ -4368,7 +4368,7 @@ snapshots:
     dependencies:
       solid-js: 1.9.10
 
-  '@solidjs/start@1.2.1(patch_hash=bd640f2999d754135217d473a19a4c3f889610f0bf91d76363f2461983d8dfa9)(solid-js@1.9.10)(vinxi@0.5.10(patch_hash=174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b)(db0@0.3.4)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
+  '@solidjs/start@1.2.1(patch_hash=b1d1b707046559d6a2ce47742d5227ef3f24c1fc0b5110593b83dddea95723b3)(solid-js@1.9.10)(vinxi@0.5.10(patch_hash=174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b)(db0@0.3.4)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@tanstack/server-functions-plugin': 1.121.21(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       '@vinxi/plugin-directives': 0.5.1(vinxi@0.5.10(patch_hash=174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b)(db0@0.3.4)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
