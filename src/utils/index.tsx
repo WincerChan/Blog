@@ -11,16 +11,6 @@ const formatDate = (date: Date | string) => {
     };
     return new Intl.DateTimeFormat('en-US', options).format(date);
 }
-const padTo32 = (str: string) => {
-    if (str.length >= 32) {
-        return str.slice(0, 32);
-    }
-    const paddingLength = 32 - str.length;
-    const padding = '0'.repeat(paddingLength);
-    return str + padding;
-}
-
-
 const calculateDateDifference = (startDate: Date, lang: string): string => {
     const endDate = new Date();
 
@@ -82,5 +72,4 @@ const range = (end: number, step = 1) =>
     Array.from({ length: end }, (_, i) => i * step);
 
 
-export { calculateDateDifference, fetcher, formatDate, isBrowser, padTo32, range, shuffle };
-
+export { calculateDateDifference, fetcher, formatDate, isBrowser, range, shuffle };

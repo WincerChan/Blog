@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import pkg from "crypto-js";
+import { createCipheriv, pbkdf2Sync, randomBytes } from "node:crypto";
 import {
   byDateDesc,
   canonicalPosts,
@@ -13,16 +13,26 @@ import {
   visiblePosts,
 } from "../shared";
 
-const { enc, AES } = pkg as any;
-
-const padTo32 = (str: string) => {
-  if (str.length >= 32) return str.slice(0, 32);
-  return str + "0".repeat(32 - str.length);
-};
+const ENCRYPTION_VERSION = "v1";
+const PBKDF2_ITERATIONS = 120000;
+const KEY_BYTES = 32;
+const SALT_BYTES = 16;
+const IV_BYTES = 12;
 
 const encryptHtml = (pwd: string, html: string) => {
-  const key = enc.Hex.parse(padTo32(pwd ? pwd : ""));
-  return AES.encrypt(html, key, { iv: key }).toString();
+  const salt = randomBytes(SALT_BYTES);
+  const iv = randomBytes(IV_BYTES);
+  const key = pbkdf2Sync(String(pwd ?? ""), salt, PBKDF2_ITERATIONS, KEY_BYTES, "sha256");
+  const cipher = createCipheriv("aes-256-gcm", key, iv);
+  const encrypted = Buffer.concat([cipher.update(html, "utf8"), cipher.final()]);
+  const tag = cipher.getAuthTag();
+
+  const saltB64 = salt.toString("base64");
+  const ivB64 = iv.toString("base64");
+  const tagB64 = tag.toString("base64");
+  const payloadB64 = encrypted.toString("base64");
+
+  return `${ENCRYPTION_VERSION}:${saltB64}:${ivB64}:${tagB64}:${payloadB64}`;
 };
 
 type EmitPublicDataOptions = {
