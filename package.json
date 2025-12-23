@@ -29,7 +29,6 @@
     "@unocss/reset": "^66.1.2",
     "crypto-js": "^4.2.0",
     "giscus": "^1.6.0",
-    "he": "^1.2.0",
     "highlight.js": "^11.11.1",
     "katex": "^0.16.22",
     "nprogress": "^0.2.0",
