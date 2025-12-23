@@ -90,6 +90,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     publicDir,
     renderablePosts,
     renderablePages,
+    publishedPosts,
   });
   await emitLegacyComments({ repoRoot, publicDir, commentsMap: legacyCommentsMap });
 };
