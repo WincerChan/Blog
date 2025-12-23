@@ -1,5 +1,5 @@
 import { MetaProvider } from "@solidjs/meta";
-import { Router, useBeforeLeave, useIsRouting } from "@solidjs/router";
+import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense, createEffect, onMount } from "solid-js";
 import Footer from "./site/footer";
@@ -17,7 +17,6 @@ import { Locale } from "./utils/locale";
 import Plausible from "plausible-tracker";
 import { getRequestEvent, isServer } from "solid-js/web";
 import { loadLocale } from "./i18n/i18n-util.sync";
-import NProgress from "nprogress";
 let PlausibleTracker =
     "default" in Plausible ? Plausible["default"] : Plausible;
 const { trackPageview, trackEvent } = PlausibleTracker({
@@ -36,13 +35,6 @@ const detectLocaleFromPath = (pathname: string): Locale => {
 };
 
 const preloadHook = (props: RouteSectionProps<unknown>) => {
-    const isRouting = useIsRouting();
-    useBeforeLeave((e) => {
-        if (e.to.pathname !== e.from.pathname) NProgress.start();
-    });
-    createEffect(() => {
-        if (!isRouting()) NProgress.done();
-    });
     return (
         <MetaProvider>
             <Suspense>{props.children}</Suspense>
@@ -64,7 +56,6 @@ export default function App() {
         applyTheme(globalStore.theme);
     });
     onMount(() => {
-        NProgress.configure({ showSpinner: false, speed: 200, trickleSpeed: 50 });
         setGlobalStore({ trackEvent: trackEvent, trackPage: trackPageview });
     });
     return (

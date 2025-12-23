@@ -25,9 +25,6 @@ importers:
       '@solidjs/start':
         specifier: ^1.1.4
         version: 1.2.1(patch_hash=b1d1b707046559d6a2ce47742d5227ef3f24c1fc0b5110593b83dddea95723b3)(solid-js@1.9.10)(vinxi@0.5.10(patch_hash=174c7e06021afae9b5b2f9e9dc66282e0d798afde85423ac6c067c9870fb6f7b)(db0@0.3.4)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vite@6.4.1(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
-      '@types/nprogress':
-        specifier: ^0.2.3
-        version: 0.2.3
       plausible-tracker:
         specifier: ^0.3.9
         version: 0.3.9
@@ -59,9 +56,6 @@ importers:
       katex:
         specifier: ^0.16.22
         version: 0.16.27
-      nprogress:
-        specifier: ^0.2.0
-        version: 0.2.0
       qrcode:
         specifier: ^1.5.4
         version: 1.5.4
@@ -1181,8 +1175,6 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/nprogress@0.2.3':
-    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -2537,8 +2529,6 @@ packages:
     resolution: {integrity: sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  nprogress@0.2.0:
-    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
 
   nypm@0.6.2:
     resolution: {integrity: sha512-7eM+hpOtrKrBDCh7Ypu2lJ9Z7PNZBdi/8AT3AX8xoCj43BBVHD0hPSTEvMtkMpfs8FCqBGhxB+uToIQimA111g==}
@@ -4473,7 +4463,6 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/nprogress@0.2.3': {}
 
   '@types/resolve@1.20.2': {}
 
@@ -6258,7 +6247,6 @@ snapshots:
     dependencies:
       path-key: 4.0.0
 
-  nprogress@0.2.0: {}
 
   nypm@0.6.2:
     dependencies:
