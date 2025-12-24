@@ -10,6 +10,7 @@ import {
 } from "solid-js";
 import LazyImg from "~/ui/media/Img";
 import { fetcher } from "~/utils";
+import { inkstoneApi } from "~/utils/inkstone";
 import { range } from "~/utils/index";
 import ArticlePage from "~/layouts/ArticlePage";
 
@@ -38,10 +39,10 @@ const FakeItems = ({ limit }: { limit: number }) => {
 
 type Item = {
     date: string;
-    id: number;
     poster: string;
     title: string;
     type: string;
+    url: string;
 };
 
 const action = (type: string) => {
@@ -49,24 +50,28 @@ const action = (type: string) => {
     if (type == "music") return "听过";
     if (type == "game") return "玩过";
     if (type == "book") return "读过";
+    return "";
 };
 
-const getURL = (type: string, id: number) => {
-    if (type == "game") return `https://www.douban.com/game/${id}`;
-    return `https://${type}.douban.com/subject/${id}`;
-};
-
-const RealItem = ({ poster, id, title, type, date }: Item) => {
+const RealItem = ({ poster, title, type, date, url }: Item) => {
+    const cover = (
+        <LazyImg
+            class=":: mx-auto rounded "
+            src={poster}
+            title={`${date} ${action(type)}`}
+        />
+    );
     return (
         <div class=":: rounded pb-6 ">
             <figure class=":: text-center text-sm rounded ">
-                <a href={getURL(type, id)} target="_blank">
-                    <LazyImg
-                        class=":: mx-auto rounded "
-                        src={poster}
-                        title={`${date} ${action(type)}`}
-                    />
-                </a>
+                <Show
+                    when={url}
+                    fallback={<span class=":: inline-block ">{cover}</span>}
+                >
+                    <a href={url} target="_blank" rel="noreferrer">
+                        {cover}
+                    </a>
+                </Show>
                 <span class=":: block truncate p-1px ">{title}</span>
             </figure>
         </div>
@@ -77,9 +82,10 @@ const Life = ({ page, children }) => {
     const [url, setUrl] = createSignal();
     const year = createMemo(() => new Date().getFullYear());
     onMount(() => {
-        setUrl("https://blog-exts.itswincer.com/api/doubans");
+        setUrl(inkstoneApi("douban/marks"));
     });
     const [resource] = createResource(url, fetcher);
+    const items = createMemo(() => resource()?.items ?? []);
     const { content, ...rest } = page;
     return (
         <ArticlePage rawBlog={rest} relates={[]}>
@@ -95,7 +101,7 @@ const Life = ({ page, children }) => {
                         )}
                     >
                         <Show when={resource()}>
-                            <For each={resource().data}>
+                            <For each={items()}>
                                 {(item) => <RealItem {...item} />}
                             </For>
                         </Show>
