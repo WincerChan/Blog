@@ -1,6 +1,7 @@
 import { useSearchParams } from "@solidjs/router";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { isBrowser, range } from "~/utils";
+import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
 import { globalStore } from "~/features/theme";
@@ -8,26 +9,6 @@ import ArticlePage from "~/layouts/ArticlePage";
 
 const resultPerPage = 8
 
-const parseParams = (query: string) => {
-    let terms: string[] = [], range = '', q: string[] = [], pages = ``;
-    query.split(" ").forEach(t => {
-        if (t.startsWith("tags:") || t.startsWith("category:")) {
-            terms.push(t)
-        } else if (t.startsWith("range:")) {
-            range = t.slice(6)
-        } else if (t.startsWith('pages')) {
-            pages = t.slice(6)
-        } else {
-            q.push(t)
-        }
-    })
-    return new URLSearchParams({
-        pages: pages,
-        terms: terms.join(","),
-        range: range,
-        q: q.join(" ")
-    }).toString()
-}
 const FakeResult = ({ limit }: { limit: number }) => {
     return (
         <>
@@ -58,17 +39,18 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
     }
     return (
         <>
-            <span>共搜索到 {data().count} 篇文章
-                <Show when={data().count > 8}>，目前展示第 {currentPage} 页结果</Show></span>
-            <For each={data().data}>
+            <span>共搜索到 {data().total} 篇文章
+                <Show when={data().elapsed_ms != null}>（耗时 {data().elapsed_ms}ms）</Show>
+                <Show when={data().total > 8}>，目前展示第 {currentPage} 页结果</Show></span>
+            <For each={data().hits}>
                 {ret => (
                     <div class="my-4">
                         <h3 class=":: text-2xl font-headline font-medium leading-loose border-0 pl-0 my-0 <md:pl-4 ">
                             <a href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
                         <p class=":: text-justify my-0 ">
-                            <span class=":: text-base font-medium mr-1 inline-block text-[var(--donate-text)] ">{formatDate(ret.date)} —</span>
-                            <span innerHTML={ret.snippet + '...'} />
+                            <span class=":: text-base font-medium mr-1 inline-block text-[var(--donate-text)] ">{formatDate(ret.published_at)} —</span>
+                            <span innerHTML={ret.content ? ret.content + '...' : ''} />
                         </p>
                     </div>
                 )}
@@ -84,7 +66,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 }
                 <div />
                 {
-                    data().count > resultPerPage * currentPage() &&
+                    data().total > resultPerPage * currentPage() &&
                     <button title="Next" class=":: flex gap-2 items-center hover:text-menu-active " onClick={() => { updatePage(1) }}>
                         <span>Next</span>
                         <IconArrowRight />
@@ -95,9 +77,17 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
     )
 }
 
-const fetchSearchResult = async (q) => {
-    const res = await fetch(`https://api.itswincer.com/blog-search/v1/?${parseParams(q)}`)
-    return res.json()
+const fetchSearchResult = async ({ q, page }: { q: string; page: number }) => {
+    const url = new URL(inkstoneApi("search"));
+    url.searchParams.set("q", q);
+    url.searchParams.set("limit", String(resultPerPage));
+    url.searchParams.set("offset", String((page - 1) * resultPerPage));
+    const res = await fetch(url);
+    if (!res.ok) {
+        const msg = await res.text().catch(() => "");
+        throw new Error(msg || res.statusText);
+    }
+    return res.json();
 }
 
 const errorMsg = (err: string) => {
@@ -111,7 +101,7 @@ const errorMsg = (err: string) => {
 const Search = ({ page, children }) => {
 
     const [input, setInput] = createSignal('')
-    const [query, setQuery] = createSignal()
+    const [query, setQuery] = createSignal<{ q: string; page: number }>()
     const [currentPage, setCurrentPage] = createSignal(1)
     const [serachParams, setSearchParams] = useSearchParams()
     const scrollElem = isBrowser ? document.querySelector('main') : null
@@ -119,7 +109,7 @@ const Search = ({ page, children }) => {
         const q = serachParams.q
         if (!q) return
         setInput(q)
-        setQuery(`${q} pages:${currentPage()}-${resultPerPage}`)
+        setQuery({ q, page: currentPage() })
     })
     createEffect(() => {
         setTimeout(() => scrollElem?.scrollIntoView({ behavior: 'smooth', block: 'start' }), currentPage() * 0)
@@ -132,13 +122,13 @@ const Search = ({ page, children }) => {
         if (!input()) return
         setSearchParams({ q: input() })
         globalStore.trackEvent("Search", { props: { keyword: input() } })
-        setQuery(`${input()} pages:${1}-${resultPerPage}`)
         setCurrentPage(1)
+        setQuery({ q: input(), page: 1 })
     }
     const handlePageChange = (action: number) => {
         const updatedPage = currentPage() + action
         setCurrentPage(updatedPage)
-        setQuery(`${input()} pages:${updatedPage}-${resultPerPage}`)
+        setQuery({ q: input(), page: updatedPage })
     }
     return (
         <ArticlePage rawBlog={page} relates={[]} hideComment={true}>
