@@ -5,7 +5,7 @@ import IconHazeNight from "~icons/carbon/haze-night";
 import IconWindowSwitcher from "~icons/carbon/window-black-saturation";
 import IconWorkflowAuto from "~icons/carbon/workflow-automation";
 
-import { globalStore, setGlobalStore } from "./provider";
+import { setGlobalStore } from "./provider";
 import {
     getStoredThemePreference,
     getSystemTheme,
@@ -94,7 +94,6 @@ const ToggleButton = () => {
             <button onClick={(e) => {
                 e.preventDefault()
                 toggleShow(e);
-                globalStore.trackEvent("Menu CTR", { props: { type: "theme" } })
             }} title="Switch Theme" class={`:: menu-item-hover h-full px-3 sm:px[14px] lg:px-6 flex items-center ${show() ? 'bg-menu text-menu-accent' : ''}`}>
                 <IconWindowSwitcher width={20} height={20} class=":: md:w-6 md:h-6 " />
             </button>

@@ -16,4 +16,4 @@ const inkstoneApi = (path: string) => {
     return joinBase(apiPath);
 };
 
-export { INKSTONE_BASE, inkstoneApi };
+export { inkstoneApi };

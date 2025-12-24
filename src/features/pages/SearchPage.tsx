@@ -4,7 +4,6 @@ import { isBrowser, range } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowLeft from "~icons/carbon/arrow-left";
 import IconArrowRight from "~icons/carbon/arrow-right";
-import { globalStore } from "~/features/theme";
 import ArticlePage from "~/layouts/ArticlePage";
 
 const resultPerPage = 8
@@ -121,7 +120,6 @@ const Search = ({ page, children }) => {
         // 结果写入到 URL
         if (!input()) return
         setSearchParams({ q: input() })
-        globalStore.trackEvent("Search", { props: { keyword: input() } })
         setCurrentPage(1)
         setQuery({ q: input(), page: 1 })
     }

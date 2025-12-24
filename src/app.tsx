@@ -14,15 +14,9 @@ import {
 import { applyTheme } from "./features/theme";
 import { Locale } from "./utils/locale";
 
-import Plausible from "plausible-tracker";
 import { getRequestEvent, isServer } from "solid-js/web";
 import { loadLocale } from "./i18n/i18n-util.sync";
-let PlausibleTracker =
-    "default" in Plausible ? Plausible["default"] : Plausible;
-const { trackPageview, trackEvent } = PlausibleTracker({
-    domain: "blog.itswincer.com",
-    apiHost: "https://track.itswincer.com",
-});
+import { trackEngage, trackPage } from "./utils/track";
 
 const normalizePath = (pathname: string) =>
     pathname.endsWith("/") ? pathname : `${pathname}/`;
@@ -56,7 +50,7 @@ export default function App() {
         applyTheme(globalStore.theme);
     });
     onMount(() => {
-        setGlobalStore({ trackEvent: trackEvent, trackPage: trackPageview });
+        setGlobalStore({ trackPage, trackEngage });
     });
     return (
         <TypesafeI18n locale={globalStore.locale as Locale}>
