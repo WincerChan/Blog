@@ -1,5 +1,6 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
+import { inkstoneApi } from "~/utils/inkstone";
 import IconThumbUp from "~icons/carbon/thumbs-up";
 import IconThumbUpFilled from "~icons/carbon/thumbs-up-filled";
 
@@ -9,23 +10,43 @@ const Like = ({ pageURL }) => {
     const [likes, setLikes] = createSignal(0)
     const [disabled, setDisabled] = createSignal(false)
     const [url, setUrl] = createSignal()
-    const [resource] = createResource(url, fetcher)
+    const fetchKudos = async (targetUrl: string) => {
+        const resp = await fetch(targetUrl, { credentials: "include" })
+        if (!resp.ok) throw new Error(resp.statusText)
+        return resp.json()
+    }
+    const [resource] = createResource(url, fetchKudos)
     const [animate, setAnimate] = createSignal(false)
+    const buildKudosUrl = (path: string) => {
+        const base = inkstoneApi("kudos")
+        const target = new URL(base)
+        target.searchParams.set("path", path)
+        return target.toString()
+    }
     onMount(() => {
         let slug = pageURL;
         if (pageURL.endsWith("-zh/")) slug = pageURL.replace("-zh/", "/")
         if (pageURL.endsWith("-en/")) slug = pageURL.replace("-en/", "/")
-        const pathEncoded = btoa(slug).replace("+", "-").replace("/", "_")
-        setUrl(`${__SITE_CONF.extURL}/api/likes/${pathEncoded}`)
+        setUrl(buildKudosUrl(slug))
     })
-    const click = () => {
-        fetch(url(), {
-            "method": "PUT",
-        })
-        setAnimate(true)
-        setLikes(likes() + 1)
+    const click = async () => {
+        if (!url()) return
         setDisabled(true)
-        setLiked(true)
+        try {
+            const resp = await fetch(url(), { method: "PUT", credentials: "include" })
+            if (!resp.ok) {
+                setDisabled(false)
+                return
+            }
+            const payload = await resp.json().catch(() => ({}))
+            const nextCount = typeof payload?.count === "number" ? payload.count : likes() + 1
+            setLikes(nextCount)
+            setLiked(true)
+            setAnimate(true)
+        } catch (error) {
+            console.error(error)
+            setDisabled(false)
+        }
     }
     const format = (number) => {
         if (number < 1000) return number; // Return the number itself if it's less than 1000
@@ -35,9 +56,11 @@ const Like = ({ pageURL }) => {
     createEffect(() => {
         const data = resource()
         if (data) {
-            setLikes(data.total)
-            setLiked(data["liked?"])
-            if (data["liked?"]) setDisabled(true)
+            if (typeof data.count === "number") setLikes(data.count)
+            if (typeof data.interacted === "boolean") {
+                setLiked(data.interacted)
+                if (data.interacted) setDisabled(true)
+            }
         } else if (data !== undefined) {
             setDisabled(true)
         }
