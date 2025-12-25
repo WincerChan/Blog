@@ -15,7 +15,7 @@ const createPageInstanceId = () => {
 let currentId: string | null = null;
 let currentPath: string | null = null;
 let startedAt = 0;
-let engagedSent = false;
+let accumulatedMs = 0;
 let hooksReady = false;
 
 const sendPulse = (endpoint: string, payload: Record<string, unknown>, useBeacon = false) => {
@@ -36,19 +36,32 @@ const sendPulse = (endpoint: string, payload: Record<string, unknown>, useBeacon
     }).catch(() => undefined);
 };
 
+const startTiming = () => {
+    if (!currentId || startedAt) return;
+    startedAt = Date.now();
+};
+
+const pauseAndSend = (useBeacon = false) => {
+    if (!currentId || !startedAt) return;
+    const now = Date.now();
+    accumulatedMs += Math.max(0, now - startedAt);
+    startedAt = 0;
+    sendPulse("pulse/engage", { page_instance_id: currentId, duration_ms: accumulatedMs }, useBeacon);
+};
+
 const trackEngage = (useBeacon = false) => {
-    if (!currentId || engagedSent) return;
-    const duration = Math.max(0, Date.now() - startedAt);
-    engagedSent = true;
-    sendPulse("pulse/engage", { page_instance_id: currentId, duration_ms: duration }, useBeacon);
+    pauseAndSend(useBeacon);
 };
 
 const ensureHooks = () => {
     if (!isBrowser || hooksReady) return;
     hooksReady = true;
-    window.addEventListener("pagehide", () => trackEngage(true));
     document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "hidden") trackEngage(true);
+        if (document.visibilityState === "hidden") {
+            pauseAndSend(true);
+        } else if (document.visibilityState === "visible") {
+            startTiming();
+        }
     });
 };
 
@@ -57,11 +70,11 @@ const trackPage = (pathname?: string) => {
     ensureHooks();
     const nextPath = normalizePath((pathname ?? window.location.pathname) || "/");
     if (currentPath === nextPath && currentId) return;
-    trackEngage();
+    pauseAndSend();
     currentId = createPageInstanceId();
     currentPath = nextPath;
-    startedAt = Date.now();
-    engagedSent = false;
+    accumulatedMs = 0;
+    startedAt = document.visibilityState === "visible" ? Date.now() : 0;
     sendPulse("pulse/pv", { page_instance_id: currentId, path: nextPath });
 };
 
