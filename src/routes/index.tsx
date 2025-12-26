@@ -21,7 +21,7 @@ const Home = () => {
                 {(first) => <LatestBlog blog={first() as any} />}
             </Show>
             <div class="mt-8 mb-4 flex items-end justify-between gap-4">
-                <h3 class="text-sm text-[var(--c-text-muted)]">近期文章</h3>
+                <h3 class="text-base font-medium text-[var(--c-text-muted)]">近期文章</h3>
                 <a
                     link={true}
                     class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:decoration-[var(--c-link)] transition-colors"
