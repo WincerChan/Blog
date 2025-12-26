@@ -56,13 +56,13 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
 
     return (
-        <div class={`:: absolute shadow-card text-sm right-0 bg-surface z-20 mt-2 rounded overflow-hidden duration-200 transition-max-height ${show() ? "max-h-45" : "max-h-0"}`}>
+        <div class="">
             <For each={ThemeMapping}>
                 {
                     (themeItem, idx) => {
                         const IconMod = Icons[idx()]
                         return (
-                            <div onClick={(e) => handleClick(e, themeItem[0])} class={`:: cursor-pointer text-lg hover:bg-menu p-4 gap-3 whitespace-nowrap flex items-center ${selected() == themeItem[0] ? 'text-menu-active' : ''}`}>
+                            <div onClick={(e) => handleClick(e, themeItem[0])} class="">
                                 <IconMod width={24} height={24} />
                                 <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
                             </div>
@@ -90,12 +90,12 @@ const ToggleButton = () => {
         }
     };
     return (
-        <li ref={self!} class=":: hover:bg-menu transition-linear relative">
+        <li ref={self!} class="">
             <button onClick={(e) => {
                 e.preventDefault()
                 toggleShow(e);
-            }} title="Switch Theme" class={`:: menu-item-hover h-full px-3 sm:px[14px] lg:px-6 flex items-center ${show() ? 'bg-menu text-menu-accent' : ''}`}>
-                <IconWindowSwitcher width={20} height={20} class=":: md:w-6 md:h-6 " />
+            }} title="Switch Theme" class="">
+                <IconWindowSwitcher width={20} height={20} class="" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </li>

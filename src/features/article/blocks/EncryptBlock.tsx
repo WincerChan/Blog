@@ -84,15 +84,15 @@ const ProtectBlog = ({ source }) => {
     return (
         <>
             <Show when={!show()}>
-                <form onSubmit={handleDecrypt} class=":: flex space-x-4 my-6 ">
-                    <input type="text" class=":: outline-card bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你面前的是一个未知的领域，输入密码才能继续前进。" />
-                    <button title="解密" class=":: font-headline px-4 outline-card rounded " disabled={loading()}>
+                <form onSubmit={handleDecrypt} class="">
+                    <input type="text" class="" placeholder="你面前的是一个未知的领域，输入密码才能继续前进。" />
+                    <button title="解密" class="" disabled={loading()}>
                         {loading() ? "解密中" : "解密"}
                     </button>
                 </form>
             </Show>
             <Show when={error()}><b class="">{error()}</b></Show>
-            <Show when={show()}><section class="md-content" innerHTML={content()} /></Show>
+            <Show when={show()}><section class="" innerHTML={content()} /></Show>
         </>
     )
 }

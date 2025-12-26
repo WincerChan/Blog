@@ -26,10 +26,10 @@ const FakeItems = ({ limit }: { limit: number }) => {
     return (
         <For each={range(limit)}>
             {(x) => (
-                <div class=":: rounded pb-6 ">
-                    <figure class=":: text-center text-sm rounded ">
-                        <div class=":: mx-auto xl:h-52 h-24 animate-pulse bg-[var(--blockquote-border)] "></div>
-                        <div class=":: block mx-auto mt-1 p-1px h-5 w-2/3 bg-[var(--blockquote-border)] "></div>
+                <div class="">
+                    <figure class="">
+                        <div class=""></div>
+                        <div class=""></div>
                     </figure>
                 </div>
             )}
@@ -56,23 +56,23 @@ const action = (type: string) => {
 const RealItem = ({ poster, title, type, date, url }: Item) => {
     const cover = (
         <LazyImg
-            class=":: mx-auto rounded "
+            class=""
             src={poster}
             title={`${date} ${action(type)}`}
         />
     );
     return (
-        <div class=":: rounded pb-6 ">
-            <figure class=":: text-center text-sm rounded ">
+        <div class="">
+            <figure class="">
                 <Show
                     when={url}
-                    fallback={<span class=":: inline-block ">{cover}</span>}
+                    fallback={<span class="">{cover}</span>}
                 >
                     <a href={url} target="_blank" rel="noreferrer">
                         {cover}
                     </a>
                 </Show>
-                <span class=":: block truncate p-1px ">{title}</span>
+                <span class="">{title}</span>
             </figure>
         </div>
     );
@@ -90,14 +90,14 @@ const Life = ({ page, children }) => {
     return (
         <ArticlePage rawBlog={rest} relates={[]}>
             {children}
-            <h3 class=":: text-center text-2xl font-headline leading-loose mb-4 border-0 ">
+            <h3 class="">
                 文字、光影与沉浸的梦（{year()}）
             </h3>
-            <div class=" md:grid-cols-5 grid grid-cols-4 gap-4 ">
+            <div class="">
                 <Suspense fallback={<FakeItems limit={5} />}>
                     <ErrorBoundary
                         fallback={(err) => (
-                            <b class=":: col-span-5  ">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>
+                            <b class="">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>
                         )}
                     >
                         <Show when={resource()}>

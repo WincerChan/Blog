@@ -40,7 +40,7 @@ const AppLayout = (props: MainProps) => {
     localeHook(() => props.lang);
 
     return (
-        <main class={props.className}>
+        <main class="">
             {props.children}
         </main>
     );

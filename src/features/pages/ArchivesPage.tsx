@@ -59,12 +59,12 @@ const Archives = ({ page }) => {
 
     return (
         <SimplePageLayout page={page} lang={page.lang}>
-            <div class=":: mt-6 ">
+            <div class="">
                 <For each={allYears}>
                     {(year) => (
                         <details
                             id={`year-${year}`}
-                            class="archives-year :: mb-2 last:mb-0"
+                            class=""
                             onToggle={(e) => {
                                 if (!(e as Event).isTrusted) return;
                                 const details = e.currentTarget as HTMLDetailsElement;
@@ -82,17 +82,17 @@ const Archives = ({ page }) => {
                                 }
                             }}
                         >
-                            <summary class=":: cursor-pointer select-none">
-                                <h2 class=":: font-headline text-3xl leading-loose">
-                                    <span class=":: inline-flex items-center gap-2">
-                                        <span class="archives-year__chevron :: inline-block transition-transform select-none text-[var(--extra)]">
-                                            <IconChevronRight width={18} height={18} class="block" />
+                            <summary class="">
+                                <h2 class="">
+                                    <span class="">
+                                        <span class="">
+                                            <IconChevronRight width={18} height={18} class="" />
                                         </span>
-                                        <span class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4">{year}</span>
+                                        <span class="">{year}</span>
                                     </span>
                                 </h2>
                             </summary>
-                            <div class=":: pt-2 ">
+                            <div class="">
                                 <OtherBlogs
                                     posts={() => postsByYear[year] ?? []}
                                     description={

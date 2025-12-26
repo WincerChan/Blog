@@ -21,8 +21,8 @@ export default function NotFoundRoute() {
         <>
             <Meta charset="utf-8" />
             <ArticlePage rawBlog={page} relates={[]} hideComment={true}>
-                <section class="md-content">
-                    <p class=":: text-xl mb-8 leading-relaxed">{page.content}</p>
+                <section class="">
+                    <p class="">{page.content}</p>
                 </section>
             </ArticlePage>
         </>

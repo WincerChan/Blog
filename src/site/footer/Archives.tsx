@@ -4,16 +4,16 @@ const Archives = () => {
     const { LL } = useI18nContext();
     return (
         <div class="">
-            <label class=":: text-[15px]  font-headline text-[var(--subtitle)]">
+            <label class="">
                 {LL && LL().footer.A()}
             </label>
-            <div class=":: mb-6 md:w-48 text-[var(--extra)] md:grid grid-flow-row grid-cols-2 gap-x-4 ">
+            <div class="">
                 {Object.entries(__CONTENT_POSTS_BY_YEAR)
                     .filter(([year]) => year !== "undefined")
                     .sort(([a], [b]) => Number(b) - Number(a))
                     .map((val) => (
                         <a
-                            class=":: hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4 block "
+                            class=""
                             href={`/archives/#year-${val[0]}`}
                         >
                             {val[0]}（{val[1]}）

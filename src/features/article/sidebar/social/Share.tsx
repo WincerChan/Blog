@@ -65,26 +65,26 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
-                <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-surface rounded-lg min-w-full md:min-w-120">
-                    <p class=":: text-2xl pb-6 font-headline ">{LL().sidebar.TOOLS.share.title()}</p>
-                    <div class=":: flex w-full gap-4 <md:flex-col ">
-                        <figure class="w-64 mx-auto">
-                            <canvas ref={canvas!} class=":: w-64 h-64 " />
-                            <figcaption class=":: text-center text-sm font-headline mt-2 ">{LL().sidebar.TOOLS.share.scan()}</figcaption>
+                <div class="">
+                    <p class="">{LL().sidebar.TOOLS.share.title()}</p>
+                    <div class="">
+                        <figure class="">
+                            <canvas ref={canvas!} class="" />
+                            <figcaption class="">{LL().sidebar.TOOLS.share.scan()}</figcaption>
                         </figure>
-                        <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
+                        <div class="">
                             {
                                 links.slice(0, 2).map((value, idx) => (
-                                    <button onClick={() => clickJump(idx)} class=":: transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu ">
+                                    <button onClick={() => clickJump(idx)} class="">
                                         <value.Icon width={32} height={32} stroke-width={1.5} />
                                         <span innerText={value.text}></span>
                                     </button>
                                 ))
                             }
-                            <button onClick={() => clickJump(2)} class=":: transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu ">
+                            <button onClick={() => clickJump(2)} class="">
                                 <Switch>
                                     <Match when={showCheck()}>
-                                        <p class=":: flex items-center gap-4 text-emerald-500 animate-fade-in animate-duration-200">
+                                        <p class="">
                                             <IconClipboardCheck width={32} height={32} />
                                             <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
                                         </p>

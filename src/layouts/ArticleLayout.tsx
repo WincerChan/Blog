@@ -19,9 +19,9 @@ const ArticleLayout = (props: ArticleLayoutProps) => {
     return (
         <AppLayout lang={resolved().lang}>
             <HeadTag headParams={props.headParams} />
-            <div class="lg:grid lg:grid-cols-[1fr_auto_1fr] ">
+            <div class="">
                 <ToC toc={resolved().toc ?? ""} slug={resolved().pageURL} />
-                <article class=":: md:w-168 xl:w-192 <md:mx-4 mx-auto ">
+                <article class="">
                     {props.children}
                 </article>
                 <SideBar
@@ -29,7 +29,7 @@ const ArticleLayout = (props: ArticleLayoutProps) => {
                     lang={resolved().lang}
                 />
             </div>
-            <div class=":: md:w-168 xl:w-192 md:mx-auto mx-4 ">{props.extra}</div>
+            <div class="">{props.extra}</div>
         </AppLayout>
     );
 };

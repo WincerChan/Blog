@@ -11,13 +11,13 @@ const resultPerPage = 8
 const FakeResult = ({ limit }: { limit: number }) => {
     return (
         <>
-            <div class=":: h-7 animate-pulse bg-[var(--blockquote-border)] mb-8 w-1/2 " />
+            <div class="" />
             <For each={range(limit)}>
                 {
                     x => (
-                        <div class=":: my-6 w-full ">
-                            <div class=":: h-7 my-3 animate-pulse bg-[var(--blockquote-border)] w-1/2 md:w-1/3 "></div>
-                            <div class=":: h-14 animate-pulse bg-[var(--blockquote-border)] "></div>
+                        <div class="">
+                            <div class=""></div>
+                            <div class=""></div>
                         </div>
                     )
                 }
@@ -43,21 +43,21 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 <Show when={data().total > 8}>，目前展示第 {currentPage} 页结果</Show></span>
             <For each={data().hits}>
                 {ret => (
-                    <div class="my-4">
-                        <h3 class=":: text-2xl font-headline font-medium leading-loose border-0 pl-0 my-0 <md:pl-4 ">
+                    <div class="">
+                        <h3 class="">
                             <a href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
-                        <p class=":: text-justify my-0 ">
-                            <span class=":: text-base font-medium mr-1 inline-block text-[var(--donate-text)] ">{formatDate(ret.published_at)} —</span>
+                        <p class="">
+                            <span class="">{formatDate(ret.published_at)} —</span>
                             <span innerHTML={ret.content ? ret.content + '...' : ''} />
                         </p>
                     </div>
                 )}
             </For>
-            <div class=":: flex my-8 justify-between text-xl font-headline ">
+            <div class="">
                 {
                     currentPage() != 1 && (
-                        <button title="Prev" class=":: flex gap-2 items-center hover:text-menu-active " onClick={() => { updatePage(-1) }}>
+                        <button title="Prev" class="" onClick={() => { updatePage(-1) }}>
                             <IconArrowLeft />
                             <span>Prev</span>
                         </button>
@@ -66,7 +66,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
                 <div />
                 {
                     data().total > resultPerPage * currentPage() &&
-                    <button title="Next" class=":: flex gap-2 items-center hover:text-menu-active " onClick={() => { updatePage(1) }}>
+                    <button title="Next" class="" onClick={() => { updatePage(1) }}>
                         <span>Next</span>
                         <IconArrowRight />
                     </button>
@@ -130,9 +130,9 @@ const Search = ({ page, children }) => {
     }
     return (
         <ArticlePage rawBlog={page} relates={[]} hideComment={true}>
-            <form onSubmit={handleSubmit} method="get" class=":: flex space-x-4 my-6 ">
-                <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class=":: outline-card bg-[var(--blockquote-border)] px-4 py-1.5 rounded flex-grow " placeholder="你想要找什么？我也想要" />
-                <button title="搜索" class=":: font-headline px-4 outline-card rounded ">搜索</button>
+            <form onSubmit={handleSubmit} method="get" class="">
+                <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class="" placeholder="你想要找什么？我也想要" />
+                <button title="搜索" class="">搜索</button>
             </form>
             <>
                 {!query() && children}

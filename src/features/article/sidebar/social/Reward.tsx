@@ -48,24 +48,24 @@ const Reward = ({ toggle, setToggle }: RewardProps) => {
     return (
         <>
             <Modal toggle={toggle} setToggle={setToggle}>
-                <div class=":: fixed z-100 top-1/2 left-1/2 -translate-1/2 p-6 bg-surface rounded-lg min-w-full md:min-w-120 ">
-                    <p class=":: text-2xl pb-6 font-headline ">{LL().sidebar.TOOLS.donate.title()}</p>
-                    <div class=":: flex w-full gap-4 <md:flex-col ">
-                        <figure class="mx-auto w-64">
+                <div class="">
+                    <p class="">{LL().sidebar.TOOLS.donate.title()}</p>
+                    <div class="">
+                        <figure class="">
                             <Switch>
                                 <Match when={addrIndex()}>
-                                    <canvas ref={canvas!} class=":: w-64 h-64 " />
+                                    <canvas ref={canvas!} class="" />
                                 </Match>
                                 <Match when={!addrIndex()}>
-                                    <img src="https://ae01.alicdn.com/kf/HTB1o49SQ9zqK1RjSZPx7634tVXaZ.png" class=":: w-64 h-64 " />
+                                    <img src="https://ae01.alicdn.com/kf/HTB1o49SQ9zqK1RjSZPx7634tVXaZ.png" class="" />
                                 </Match>
                             </Switch>
-                            <p class=":: w-64 mx-auto text-center text-sm font-headline mt-2 "><span>{addr[addrIndex()].val}</span></p>
+                            <p class=""><span>{addr[addrIndex()].val}</span></p>
                         </figure>
-                        <div class=":: flex flex-wrap gap-8 text-lg <md:justify-between md:flex-col md:w-40 ">
+                        <div class="">
                             <For each={addr}>
                                 {
-                                    (x, idx) => <button onClick={() => setAddrIndex(idx())} class={":: block transition-linear duration-150 flex p-2 items-center rounded-lg gap-4 hover:bg-menu " + (addrIndex() == idx() ? ' text-menu-active' : '')}><x.Icon width={32} height={32} stroke-width={1.5} /> <span>{x.fig}</span></button>
+                                    (x, idx) => <button onClick={() => setAddrIndex(idx())} class=""><x.Icon width={32} height={32} stroke-width={1.5} /> <span>{x.fig}</span></button>
                                 }
                             </For>
                         </div>

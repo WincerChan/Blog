@@ -15,27 +15,27 @@ const Copyright = ({ title, slug, updated, LL }: CopyrightProps) => {
     const elems: JSXElement[] = [
         "Wincer",
         formatDate(updated),
-        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4" target="_blank" rel="noopener">
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="" target="_blank" rel="noopener">
             CC BY-NC-ND 4.0
         </a>
     ];
     return (
-        <div class=":: overflow-hidden p-4 px-6 bg-[var(--copyright-bg)] relative leading-7 my-8 font-headline <md:px-4 mobile-full-bleed ">
+        <div class="">
             <div>
                 <p>{title}</p>
                 <p>{`${__SITE_CONF.baseURL}${slug}`}</p>
             </div>
-            <div class=":: flex mt-4 flex-wrap items-center gap-x-8 ">
+            <div class="">
                 <For each={elems}>
                     {(elem, idx) => (
-                        <div class="w-36">
+                        <div class="">
                             <p>{LL && LL().post.COPYRIGHT[idx() as 0 | 1 | 2]}</p>
                             {elem}
                         </div>
                     )}
                 </For>
             </div>
-            <a href="https://notbyai.fyi/" aria-label="not-by-ai" target="_blank" class=":: absolute opacity-60 bottom-6 right-6 ml-auto text-[var(--cc)] ">
+            <a href="https://notbyai.fyi/" aria-label="not-by-ai" target="_blank" class="">
                 <NotByAi />
             </a>
         </div>

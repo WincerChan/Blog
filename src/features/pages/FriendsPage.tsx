@@ -13,7 +13,7 @@ const Friend = ({ page, children }) => {
     return (
         <ArticlePage rawBlog={page} relates={[]}>
             {children}
-            <div class=":: grid grid-cols-1 gap-6 my-6 sm:grid-cols-2 ">
+            <div class="">
                 <For each={sortedLinks()}>
                     {(link) => <FriendLink {...link} />}
                 </For>

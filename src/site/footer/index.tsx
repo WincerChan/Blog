@@ -17,19 +17,19 @@ const FooterNav = () => {
   const elems = [Stats, Category, Archives];
   const year = createMemo(() => new Date().getFullYear());
   return (
-    <footer class=":: mt-16 bg-surface shadow-card py-5 <lg:px-4 ">
-      <div class=":: xl:w-284 lg:w-220 mx-auto max-w-full ">
-        <div class="::  mt-4 grid auto-cols-fr grid-flow-col text-sm leading-9 ">
+    <footer class="">
+      <div class="">
+        <div class="">
           <For each={elems}>{(Elem, idx) => <Elem LL={LL} />}</For>
         </div>
-        <div class="::  mt-6 justify-between mx-auto text-footer my-4 items-center ">
-          <div class=":: space-x-6 my-4 text-[var(--extra)] z-0 ">
+        <div class="">
+          <div class="">
             <a title="Home" href="https://itswincer.com" target="_blank">
               <IconHome
                 fill="currentColor"
                 width={32}
                 height={32}
-                class=":: inline-block "
+                class=""
               />
             </a>
             <a
@@ -41,7 +41,7 @@ const FooterNav = () => {
                 fill="currentColor"
                 width={32}
                 height={32}
-                class=":: inline-block "
+                class=""
               />
             </a>
             <a title="Telegram" href="https://t.me/Tivsae" target="_blank">
@@ -49,7 +49,7 @@ const FooterNav = () => {
                 fill="currentColor"
                 width={32}
                 height={32}
-                class=":: w-8 h-8 inline-block "
+                class=""
               />
             </a>
             <a
@@ -61,16 +61,16 @@ const FooterNav = () => {
                 fill="currentColor"
                 width={32}
                 height={32}
-                class=":: w-8 h-8 inline-block "
+                class=""
               />
             </a>
           </div>
-          <p class=":: text-sm leading-loose ">
+          <p class="">
             © {SINCE} - {year()} Wincer's Blog
-            <span class="mx-2 inline-block">|</span>
+            <span class="">|</span>
             Designed and developed by{" "}
             <a
-              class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4"
+              class=""
               href="https://itswincer.com"
               target="_blank"
               rel="noopener"
@@ -79,7 +79,7 @@ const FooterNav = () => {
             </a>
             , powered by Velite + SolidStart{" · "}
             <a
-              class=":: hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4"
+              class=""
               href="https://github.com/WincerChan/Blog"
               target="_blank"
               rel="noopener"

@@ -29,7 +29,7 @@ const BackTop = () => {
     return (
         <Show when={visible()}>
             <button
-                class=":: fixed bottom-10 right-10 p-2 rounded shadow-card text-[var(--meta-bg)] bg-surface "
+                class=""
                 onClick={scrollToTop}
             >
                 <IconUptoTop width={32} height={32} />

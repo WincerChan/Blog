@@ -13,11 +13,11 @@ type PageLayoutProps = {
 const PageLayout = (props: PageLayoutProps) => {
     return (
         <AppLayout
-            className=":: xl:w-284 lg:w-220 mx-auto max-w-full "
+            className=""
             lang={props.lang}
         >
             <HeadTag headParams={props.headParams} />
-            <article class=":: md:w-168 lg:w-220 xl:w-full <md:mx-4 leading-7 text-justify ">
+            <article class="">
                 {props.children}
             </article>
         </AppLayout>

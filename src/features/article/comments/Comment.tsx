@@ -71,7 +71,7 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
     })
 
     return (
-        <div ref={self!} id="gisdus" class=":: w-full mt-6 ">
+        <div ref={self!} id="gisdus" class="">
             <Show when={visible()}>
                 <giscus-widget
                     id="comments"
@@ -90,10 +90,10 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
                     loading="lazy"
                 />
                 <Show when={hasLegacy()}>
-                    <Suspense fallback={<span class=":: text-lg font-headline ">{LL && LL().post.DIS()}</span>}>
+                    <Suspense fallback={<span class="">{LL && LL().post.DIS()}</span>}>
                         <ErrorBoundary fallback={<span></span>}>
                             <Show when={resource()}>
-                                {Object.keys(resource()).length && <p class=":: my-6 text-lg font-headline ">
+                                {Object.keys(resource()).length && <p class="">
                                     以下是旧时在 Disqus 上的评论，仅作展示用。
                                 </p>}
                                 <CommentList comments={resource()} />

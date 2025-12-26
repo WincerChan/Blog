@@ -15,7 +15,7 @@ const Modal = ({ children, toggle, setToggle }: ModalProps) => {
     })
     return (
         <Show when={toggle()}>
-            <div onClick={() => setToggle(false)} class="fixed w-screen top-0 h-screen left-0 bg-[var(--meta-bg)] z-20" />
+            <div onClick={() => setToggle(false)} class="" />
             {children}
         </Show>
     )

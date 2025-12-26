@@ -6,15 +6,15 @@ import { ThemeSwitcher } from "~/features/theme"
 const Tools = () => {
     const { locale } = useI18nContext()
     return (
-        <ul class="flex">
-            <li class="menu-item-hover">
-                <a href={`/search${locale() == "zh-CN" ? "" : "-en"}/`} title="Search" class=":: h-full px-3 sm:px[14px] lg:px-6 flex items-center ">
-                    <IconSearch width={20} height={20} class=":: md:w-6 md:h-6 " />
+        <ul class="">
+            <li class="">
+                <a href={`/search${locale() == "zh-CN" ? "" : "-en"}/`} title="Search" class="">
+                    <IconSearch width={20} height={20} class="" />
                 </a>
             </li>
-            <li class="menu-item-hover">
-                <a href="/atom.xml" target="_blank" title="RSS" class=":: h-full px-3 sm:px[14px] lg:px-6 flex items-center ">
-                    <IconRSS width={20} height={20} class=":: md:w-6 md:h-6 " />
+            <li class="">
+                <a href="/atom.xml" target="_blank" title="RSS" class="">
+                    <IconRSS width={20} height={20} class="" />
                 </a>
             </li>
             <ThemeSwitcher />

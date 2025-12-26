@@ -65,18 +65,18 @@ const Like = ({ pageURL }) => {
             setDisabled(true)
         }
     })
-    const fallback = <span class="px-2">-</span>
+    const fallback = <span class="">-</span>
     return (
-        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class={`:: hover:text-rose-500 transition-linear h-15 w-24 font-sitetitle animated  ${liked() ? " text-rose-500" : ""} ${animate() ? "animate-tada animate-duration-700" : ""} ${disabled() ? " cursor-not-allowed" : ""}`}>
+        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class="">
             {liked() ?
-                <IconThumbUpFilled width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
+                <IconThumbUpFilled width={36} height={36} class="" stroke-width={1.5} />
                 :
-                <IconThumbUp width={36} height={36} class=":: inline lg:block mx-auto " stroke-width={1.5} />
+                <IconThumbUp width={36} height={36} class="" stroke-width={1.5} />
             }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
-                        <span class="<lg:px-2 inline-block align-mid">{format(likes())}</span>
+                        <span class="">{format(likes())}</span>
                     </Show>
                 </ErrorBoundary>
             </Suspense>

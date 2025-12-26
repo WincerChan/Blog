@@ -24,7 +24,7 @@ export default function PostRoute() {
     const displayed = () => resolved() ?? stale();
 
     return (
-        <Show keyed when={displayed()} fallback={<section class="md-content" />}>
+        <Show keyed when={displayed()} fallback={<section class="" />}>
             {(p) => {
                 if (p === VELITE_NOT_FOUND) return <NotFound />;
 
@@ -60,7 +60,7 @@ export default function PostRoute() {
 
                 return (
                     <ArticlePage rawBlog={rawBlog} relates={relates}>
-                        {isEncrypted ? content : <section class="md-content" innerHTML={content} />}
+                        {isEncrypted ? content : <section class="" innerHTML={content} />}
                     </ArticlePage>
                 );
             }}

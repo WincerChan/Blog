@@ -38,34 +38,34 @@ const PostMeta = ({
         <>
             <LazyBg
                 dataSrc={blog.cover}
-                class=":: bg-center bg-cover bg-clip-text backdrop-filter backdrop-blur-lg text-opacity-60 text-[var(--meta-bg)] "
+                class=""
             >
-                <h1 class=":: text-headline ">{blog.title}</h1>
+                <h1 class="">{blog.title}</h1>
                 <Show when={!!blog.subtitle}>
-                    <h2 class=":: font-headline font-semibold leading-relaxed text-2xl md:mt-2 md:mb-4 mb-2 ">
+                    <h2 class="">
                         {blog.subtitle}
                     </h2>
                 </Show>
                 <Show when={blog.category}>
                     <div
                         id="post-meta"
-                        class=":: flex items-center overflow-x-scroll hyphens-auto whitespace-nowrap space-x-4 leading-loose "
+                        class=""
                     >
                         <span>{formatDate(blog.date)}</span>
-                        <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
+                        <div class=""></div>
                         <Show when={blog.words}>
                             <span>
                                 {blog.words} {LL && LL().post.W}
                             </span>
                         </Show>
-                        <div class=":: h-0.5 w-0.5 mx-4 overflow-y-hidden flex-none rounded-full bg-[var(--subtitle)] "></div>
+                        <div class=""></div>
                         <For each={blog.tags}>
                             {(tag) => (
                                 <a
                                     href={`/search/?q=tags:${tag}`}
-                                    class="hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4"
+                                    class=""
                                 >
-                                    <span class="text-menu-active">#</span>
+                                    <span class="">#</span>
                                     {tag}
                                 </a>
                             )}
@@ -74,7 +74,7 @@ const PostMeta = ({
                 </Show>
             </LazyBg>
             <Show when={blog.category && !isRecently}>
-                <div class=":: pl-3 text-lg my-4 border-l-6 border-amber-200 text-[var(--notify)] py-3 pr-4 mobile-full-bleed ">
+                <div class="">
                     <p>
                         {LL &&
                             LL().post.EXPIRED_NOTIFY({
@@ -93,11 +93,11 @@ const PostMeta = ({
 export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) => {
     const { prev, next } = neighbours ?? {};
     return (
-        <div class=":: leading-loose my-6 flex justify-between flex-wrap text-xl ">
+        <div class="">
             {next && (
                 <a
                     href={next.slug}
-                    class=":: mr-auto hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4 my-2 flex inline-flex gap-2 items-center "
+                    class=""
                 >
                     <IconArrowLeft />
                     {next.title}
@@ -106,7 +106,7 @@ export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) =
             {prev && (
                 <a
                     href={prev.slug}
-                    class=":: ml-auto hover:text-menu-active hover:underline hover:decoration-1 hover:underline-offset-4 my-2 flex inline-flex gap-2 items-center "
+                    class=""
                 >
                     {prev.title}
                     <IconArrowRight />
@@ -171,7 +171,7 @@ const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => 
             <PostMeta blog={blog} lang={locale} LL={LL} />
             <Show when={blog.cover}>
                 <img
-                    class=":: w-full xl:h-86 h-76 rounded object-cover my-6 mobile-full-bleed! "
+                    class=""
                     src={blog.cover}
                     alt={blog.cover}
                 />

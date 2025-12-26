@@ -68,12 +68,12 @@ const PageRouteView = ({ slug, view, layout = "article", withChildren }: PageRou
     const displayed = () => resolved() ?? stale();
 
     return (
-        <Show keyed when={displayed()} fallback={<section class="md-content" />}>
+        <Show keyed when={displayed()} fallback={<section class="" />}>
             {(p) => {
                 if (p === VELITE_NOT_FOUND) return <NotFound />;
 
                 const pageProps = toPageProps(p);
-                const body = () => <section class="md-content" innerHTML={p.html ?? ""} />;
+                const body = () => <section class="" innerHTML={p.html ?? ""} />;
                 if (!view) return renderLayout(layout, pageProps, body);
 
                 const View = view;

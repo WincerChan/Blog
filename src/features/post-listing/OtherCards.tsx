@@ -9,14 +9,14 @@ type BlogProps = {
 
 const CompactBlog = ({ blog }: BlogProps) => {
     return (
-        <div class=":: text-base mb-8 lg:space-y-5 ">
-            <div class=":: md:space-y-2 mb-2 ">
-                <div class=":: flex-grow flex flex-col leading-relaxed ">
-                    <a link={true} href={blog.slug} class="mb-1">
-                        <h2 class=":: text-headline ">{blog.title}</h2>
+        <div class="">
+            <div class="">
+                <div class="">
+                    <a link={true} href={blog.slug} class="">
+                        <h2 class="">{blog.title}</h2>
                     </a>
                     <Show when={blog.subtitle}>
-                        <h3 class=":: text-2xl font-semibold font-headline mb-2 ">{blog.subtitle}</h3>
+                        <h3 class="">{blog.subtitle}</h3>
                     </Show>
                 </div>
                 <DateCat date={blog.date} category={blog.category} />
@@ -39,11 +39,11 @@ const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
     return (
         <>
             <Show when={resolvedDescription() !== null}>
-                <p class=":: md:text-2xl text-xl font-headline font-semibold leading-loose md:my-4 my-2 ">
+                <p class="">
                     {resolvedDescription()}
                 </p>
             </Show>
-            <div class="grid-cols-2 lg:gap-8 lg:grid ">
+            <div class="">
                 <For each={posts()}>
                     {
                         post => (

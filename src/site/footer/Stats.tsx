@@ -11,8 +11,8 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
 
     return (
         <div class="">
-            <label class=":: text-[15px]  font-headline text-[var(--subtitle)] ">{LL && LL().footer.S}</label>
-            <div class=":: mb-6 text-[var(--extra)] ">
+            <label class="">{LL && LL().footer.S}</label>
+            <div class="">
                 <For each={elems()}>
                     {(item, idx) => <p>{item}{LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}</p>}
                 </For>

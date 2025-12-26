@@ -151,17 +151,17 @@ const ToC = ({ toc, slug }: ToCInterface) => {
     }
     return (
         <>
-            <aside class=":: lg:max-w-80 lg:ml-6 <lg:fixed <lg:z-10 lg:order-last ">
-                <div class=":: lg:top-10 md:sticky ">
-                    <button title="ToC" onClick={(e) => { setVisible(true) }} class=":: fixed lg:hidden bottom-28 right-10 z-10 rounded shadow-card text-[var(--meta-bg)] bg-surface ">
-                        <IconCatalog width={32} height={32} class="m-2" />
+            <aside class="">
+                <div class="">
+                    <button title="ToC" onClick={(e) => { setVisible(true) }} class="">
+                        <IconCatalog width={32} height={32} class="" />
                     </button>
                     <Modal toggle={visible} setToggle={setVisible}>
                     </Modal>
-                    <div id="toc" class={`:: duration-200 z-20 overflow-y-auto transition-max-height toc-modal ${visible() ? '<lg:max-h-42vh' : '<lg:max-h-0'} `}>
-                        <div class=":: h-4 "></div>
-                        <div class=":: ml-2 flex font-headline "><label>{LL().sidebar.TOC()}</label> </div>
-                        <div ref={ref!} onClick={ClickToC} class=":: mt-2 mb-4 flex-wrap flex overflow-y-auto max-h-44vh " innerHTML={toc} />
+                    <div id="toc" class="">
+                        <div class=""></div>
+                        <div class=""><label>{LL().sidebar.TOC()}</label> </div>
+                        <div ref={ref!} onClick={ClickToC} class="" innerHTML={toc} />
                     </div>
                 </div>
             </aside >
