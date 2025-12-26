@@ -1,4 +1,4 @@
-type DateCatProps = {
+type PostMetaProps = {
     date: Date | string,
     category?: string
 }
@@ -12,7 +12,7 @@ const formatDateISO = (value: Date | string) => {
     return `${year}-${month}-${day}`;
 };
 
-const DateCat = ({ date, category }: DateCatProps) => {
+const PostMeta = ({ date, category }: PostMetaProps) => {
     const formattedDate = formatDateISO(date);
     return (
         <div class="flex items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
@@ -30,4 +30,4 @@ const DateCat = ({ date, category }: DateCatProps) => {
     )
 }
 
-export default DateCat;
+export default PostMeta;

@@ -1,5 +1,5 @@
 import { Show } from "solid-js";
-import DateCat from "~/features/post-listing/DateCat";
+import PostMeta from "~/features/post-listing/PostMeta";
 import type { PostListItem } from "~/features/post-listing/types";
 import IconPointFilled from "~icons/tabler/point-filled";
 import IconArrowRight from "~icons/tabler/arrow-right";
@@ -18,7 +18,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                             <IconPointFilled width={12} height={12} class="latest-pulse" />
                             Latest
                         </span>
-                        <DateCat date={blog.date} category={blog.category} />
+                        <PostMeta date={blog.date} category={blog.category} />
                     </div>
                     <a link={true} href={blog.slug} class="group block space-y-3">
                         <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)] group-hover:text-[var(--c-link)] transition-colors">

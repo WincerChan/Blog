@@ -1,6 +1,6 @@
 import { For, Show } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import DateCat from "./DateCat";
+import PostMeta from "./PostMeta";
 import type { PostListItem } from "./types";
 
 type BlogProps = {
@@ -24,7 +24,7 @@ const CompactBlog = ({ blog }: BlogProps) => {
                     </Show>
                 </div>
                 <div class="md:text-right md:whitespace-nowrap">
-                    <DateCat date={blog.date} category={blog.category} />
+                    <PostMeta date={blog.date} category={blog.category} />
                 </div>
             </div>
         </div>
