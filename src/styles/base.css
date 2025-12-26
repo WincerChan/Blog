@@ -8,10 +8,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--c-link-hover);
-}
-
 ::selection {
   background: var(--c-selection);
 }
