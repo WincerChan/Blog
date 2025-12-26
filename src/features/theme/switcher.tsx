@@ -108,8 +108,9 @@ const ToggleButton = () => {
             <button onClick={(e) => {
                 e.preventDefault()
                 toggleShow(e);
-            }} title="Switch Theme" class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors">
-                <IconWindowSwitcher width={20} height={20} class="transition-colors" />
+            }} title="Switch Theme" class="flex items-center justify-center w-[22px] h-[22px] text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors">
+                {/* Inline icon sizing can expand the wrapper; pin a fixed square button. */}
+                <IconWindowSwitcher class="block w-[22px] h-[22px] transition-colors" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </div>

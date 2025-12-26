@@ -6,21 +6,21 @@ import { ThemeSwitcher } from "~/features/theme"
 const Tools = () => {
     const { locale } = useI18nContext()
     return (
-        <div class="flex items-center gap-1 border-l border-[var(--c-border)] pl-4">
+        <div class="flex items-center gap-6 border-l border-[var(--c-border)] pl-4">
             <a
                 href={`/search${locale() == "zh-CN" ? "" : "-en"}/`}
                 title="Search"
-                class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+                class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
             >
-                <IconSearch width={20} height={20} class="transition-colors" />
+                <IconSearch width={22} height={22} class="block transition-colors" />
             </a>
             <a
                 href="/atom.xml"
                 target="_blank"
                 title="RSS"
-                class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+                class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
             >
-                <IconRSS width={20} height={20} class="transition-colors" />
+                <IconRSS width={22} height={22} class="block transition-colors" />
             </a>
             <ThemeSwitcher />
         </div>

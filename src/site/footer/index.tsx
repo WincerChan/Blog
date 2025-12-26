@@ -19,12 +19,12 @@ const FooterNav = () => {
   return (
     <footer class="w-full border-t border-[var(--c-border)] bg-[var(--c-bg)]">
       <div class="w-full max-w-5xl mx-auto px-4 md:px-6 py-10">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-4">
           <a
             title="Home"
             href="https://itswincer.com"
             target="_blank"
-            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
           >
             <IconHome fill="currentColor" width={28} height={28} />
           </a>
@@ -32,7 +32,7 @@ const FooterNav = () => {
             title="Moments"
             href="https://moments.itswincer.com"
             target="_blank"
-            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
           >
             <IconPhoto fill="currentColor" width={28} height={28} />
           </a>
@@ -40,7 +40,7 @@ const FooterNav = () => {
             title="Telegram"
             href="https://t.me/Tivsae"
             target="_blank"
-            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
           >
             <IconTelegram fill="currentColor" width={28} height={28} />
           </a>
@@ -48,7 +48,7 @@ const FooterNav = () => {
             title="Github"
             href="https://github.com/WincerChan"
             target="_blank"
-            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
           >
             <IconGithub fill="currentColor" width={28} height={28} />
           </a>
