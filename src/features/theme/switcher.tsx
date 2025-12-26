@@ -82,7 +82,7 @@ const ToggleButton = () => {
         if (!curr) document.addEventListener("click", handleClickOutside)
         else document.removeEventListener("click", handleClickOutside)
     }
-    let self: HTMLLIElement;
+    let self: HTMLDivElement;
 
     const handleClickOutside = (e: MouseEvent) => {
         if (!self.contains(e.target as Node)) {
@@ -90,7 +90,7 @@ const ToggleButton = () => {
         }
     };
     return (
-        <li ref={self!} class="">
+        <div ref={self!} class="">
             <button onClick={(e) => {
                 e.preventDefault()
                 toggleShow(e);
@@ -98,8 +98,8 @@ const ToggleButton = () => {
                 <IconWindowSwitcher width={20} height={20} class="" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
-        </li>
-    )
+        </div>
+    );
 }
 
 export default ToggleButton;

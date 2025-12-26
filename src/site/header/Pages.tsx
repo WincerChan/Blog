@@ -7,20 +7,16 @@ const Pages = () => {
         (locale() === "zh-CN" ? __CONTENT_ZH_NAV : __CONTENT_EN_NAV),
     );
     return (
-        <ul class="">
-            <For each={pages()}>
-                {(pageEntry) => (
-                    <li>
-                        <a
-                            href={`/${pageEntry.slug}/`}
-                            class=""
-                        >
-                            {pageEntry.title}
-                        </a>
-                    </li>
-                )}
-            </For>
-        </ul>
+        <For each={pages()}>
+            {(pageEntry) => (
+                <a
+                    href={`/${pageEntry.slug}/`}
+                    class=""
+                >
+                    {pageEntry.title}
+                </a>
+            )}
+        </For>
     );
 };
 export default Pages;

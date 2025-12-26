@@ -2,27 +2,16 @@ import Logo from "./Logo";
 import Pages from "./Pages";
 import Tools from "./Tools";
 
-
-const Nav = ({ children }) => {
-    return (
-        <header class="">
-            <nav class="">
-                {children}
-            </nav>
-        </header>
-    )
-}
-
 const Header = () => {
     return (
-        <Nav>
+        <header>
             <Logo />
-            <div class="">
+            <nav>
                 <Pages />
-                <Tools />
-            </div>
-        </Nav>
-    )
-}
+            </nav>
+            <Tools />
+        </header>
+    );
+};
 
-export default Header
+export default Header;
