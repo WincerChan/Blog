@@ -32,7 +32,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                     </Show>
                     <p class="text-[var(--c-text-muted)] leading-relaxed max-w-2xl" innerText={blog.summary} />
                     <div class="flex items-center gap-4">
-                        <a link={true} class="group inline-flex items-center gap-1 text-sm text-[var(--c-link)] hover:text-[var(--c-link-hover)] transition-colors" href={blog.slug}>
+                        <a link={true} class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:decoration-[var(--c-link)] transition-colors" href={blog.slug}>
                             继续阅读
                             <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
                         </a>
