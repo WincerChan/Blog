@@ -11,7 +11,7 @@ const Pages = () => {
             {(pageEntry) => (
                 <a
                     href={`/${pageEntry.slug}/`}
-                    class=""
+                    class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
                 >
                     {pageEntry.title}
                 </a>

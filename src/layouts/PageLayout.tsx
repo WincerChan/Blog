@@ -17,7 +17,7 @@ const PageLayout = (props: PageLayoutProps) => {
             lang={props.lang}
         >
             <HeadTag headParams={props.headParams} />
-            <article class="">
+            <article class="w-full max-w-3xl mx-auto px-4 md:px-6">
                 {props.children}
             </article>
         </AppLayout>

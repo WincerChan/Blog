@@ -56,13 +56,22 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
 
     return (
-        <div class="">
+        <div
+            class="absolute right-0 top-full mt-2 w-40 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] text-sm shadow-sm overflow-hidden transition duration-150"
+            classList={{
+                "opacity-0 pointer-events-none translate-y-1": !show(),
+                "opacity-100 translate-y-0": show(),
+            }}
+        >
             <For each={ThemeMapping}>
                 {
                     (themeItem, idx) => {
                         const IconMod = Icons[idx()]
                         return (
-                            <div onClick={(e) => handleClick(e, themeItem[0])} class="">
+                            <div
+                                onClick={(e) => handleClick(e, themeItem[0])}
+                                class="flex items-center gap-2 px-3 py-2 cursor-pointer text-[var(--c-text)] hover:bg-[var(--c-hover-bg)] transition-colors"
+                            >
                                 <IconMod width={24} height={24} />
                                 <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
                             </div>
@@ -90,12 +99,12 @@ const ToggleButton = () => {
         }
     };
     return (
-        <div ref={self!} class="">
+        <div ref={self!} class="relative">
             <button onClick={(e) => {
                 e.preventDefault()
                 toggleShow(e);
-            }} title="Switch Theme" class="">
-                <IconWindowSwitcher width={20} height={20} class="" />
+            }} title="Switch Theme" class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors">
+                <IconWindowSwitcher width={20} height={20} class="transition-colors" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </div>

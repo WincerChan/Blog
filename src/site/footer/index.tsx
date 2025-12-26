@@ -17,8 +17,8 @@ const FooterNav = () => {
   const elems = [Stats, Category, Archives];
   const year = createMemo(() => new Date().getFullYear());
   return (
-    <footer class="">
-      <div class="">
+    <footer class="w-full">
+      <div class="w-full max-w-5xl mx-auto px-4 md:px-6">
         <div class="">
           <For each={elems}>{(Elem, idx) => <Elem LL={LL} />}</For>
         </div>
