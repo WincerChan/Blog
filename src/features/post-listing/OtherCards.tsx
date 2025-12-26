@@ -9,20 +9,18 @@ type BlogProps = {
 
 const CompactBlog = ({ blog }: BlogProps) => {
     return (
-        <div class="py-4 md:py-5 border-b border-[var(--c-border)]">
+        <div class="py-4 md:py-5">
             <div class="flex flex-col gap-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-x-6 md:gap-y-2">
-                <div class="space-y-1">
-                    <a link={true} href={blog.slug} class="block">
-                        <h2 class="text-xl md:text-2xl font-semibold text-[var(--c-text)] hover:text-[var(--c-link)] transition-colors">
-                            {blog.title}
-                        </h2>
-                    </a>
+                <a link={true} href={blog.slug} class="group block space-y-1">
+                    <h2 class="text-xl md:text-2xl font-semibold text-[var(--c-text)] group-hover:text-[var(--c-link)] transition-colors">
+                        {blog.title}
+                    </h2>
                     <Show when={blog.subtitle}>
                         <h3 class="text-base md:text-lg text-[var(--c-text-muted)] leading-relaxed">
                             {blog.subtitle}
                         </h3>
                     </Show>
-                </div>
+                </a>
                 <div class="md:text-right md:whitespace-nowrap">
                     <PostMeta date={blog.date} category={blog.category} />
                 </div>
