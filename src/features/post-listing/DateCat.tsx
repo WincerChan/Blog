@@ -15,7 +15,7 @@ const formatDateISO = (value: Date | string) => {
 const DateCat = ({ date, category }: DateCatProps) => {
     const formattedDate = formatDateISO(date);
     return (
-        <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
+        <div class="flex items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
             <time dateTime={formattedDate}>{formattedDate}</time>
             {category && <span class="text-[var(--c-text-subtle)]">/</span>}
             {category && (
