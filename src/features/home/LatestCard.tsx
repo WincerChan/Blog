@@ -20,23 +20,23 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         </span>
                         <DateCat date={blog.date} category={blog.category} />
                     </div>
-                    <a link={true} href={blog.slug} class="block">
-                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)] hover:text-[var(--c-link)] transition-colors">
+                    <a link={true} href={blog.slug} class="group block space-y-3">
+                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)] group-hover:text-[var(--c-link)] transition-colors">
                             {blog.title}
                         </h2>
+                        <Show when={blog.subtitle}>
+                            <h3 title={blog.subtitle} class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
+                                {blog.subtitle}
+                            </h3>
+                        </Show>
+                        <p class="text-[var(--c-text)] opacity-85 leading-relaxed max-w-2xl" innerText={blog.summary} />
+                        <div class="flex items-center gap-4">
+                            <span class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] group-hover:decoration-[var(--c-link)] transition-colors">
+                                继续阅读
+                                <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
+                            </span>
+                        </div>
                     </a>
-                    <Show when={blog.subtitle}>
-                        <h3 title={blog.subtitle} class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
-                            {blog.subtitle}
-                        </h3>
-                    </Show>
-                    <p class="text-[var(--c-text-muted)] leading-relaxed max-w-2xl" innerText={blog.summary} />
-                    <div class="flex items-center gap-4">
-                        <a link={true} class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:decoration-[var(--c-link)] transition-colors" href={blog.slug}>
-                            继续阅读
-                            <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
-                        </a>
-                    </div>
                 </div>
                 <style>{`
                     @keyframes latest-pulse {
