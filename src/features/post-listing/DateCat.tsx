@@ -17,7 +17,7 @@ const DateCat = ({ date, category }: DateCatProps) => {
     return (
         <div class="flex items-center gap-2 text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
             <time dateTime={formattedDate}>{formattedDate}</time>
-            {category && <div class="h-1 w-1 rounded-full bg-[var(--c-border-strong)]" />}
+            {category && <span class="text-[var(--c-text-subtle)]">/</span>}
             {category && (
                 <a
                     class="text-[var(--c-text-subtle)] hover:text-[var(--c-link)] transition-colors"
