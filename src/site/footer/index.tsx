@@ -17,7 +17,7 @@ const FooterNav = () => {
   const elems = [Stats, Category, Archives];
   const year = createMemo(() => new Date().getFullYear());
   return (
-    <footer class="w-full border-t border-[var(--c-border)] bg-[var(--c-bg)]">
+    <footer class="w-full border-t border-[var(--c-border)] bg-[var(--c-surface-2)]">
       <div class="w-full max-w-5xl mx-auto px-4 md:px-6 py-10">
         <div class="flex items-center gap-4">
           <a
