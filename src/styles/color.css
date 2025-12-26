@@ -1,40 +1,45 @@
 :root {
-    --menu-hover-bg: #f0f0f4;
-    --surface-bg: #ffffff;
-    --copyright-bg: #f5f5f5;
-    --menu-hover-text: #065279;
-    --main-text: rgb(57, 47, 65);
-    --footer-text: #0a133a;
-    --title: rgb(57, 47, 65);
-    --head-border: #7a7374;
-    --subtitle: #343a40;
-    --main-bg: #FFFEFE;
-    --extra: #4a4040;
-    --meta-bg: rgb(15, 20, 35, 0.7);
-    --cc: #2d3a4a;
-    --notify: #815f25;
-    --blockquote-border: #e4e4e7;
-    --blockquote-text: #3f3f46;
-    --donate-border: #e2e8f0;
-    --donate-text: #334155;
+  color-scheme: light dark;
+}
+
+html.light {
+  --c-bg: #fafaf9;
+  --c-surface: #ffffff;
+  --c-surface-2: #f2f2f0;
+  --c-border: #e6e6e3;
+  --c-border-strong: #d0d0cc;
+  --c-text: #1a1a1a;
+  --c-text-muted: #6b6b6b;
+  --c-text-subtle: #8a8a8a;
+  --c-accent: #2f6fed;
+  --c-accent-weak: rgba(47, 111, 237, 0.12);
+  --c-link: #2f6fed;
+  --c-link-hover: #2458bf;
+  --c-focus: #2f6fed;
+  --c-hover-bg: rgba(26, 26, 26, 0.04);
+  --c-active: #2f6fed;
+  --c-shadow: rgba(0, 0, 0, 0.08);
+  --c-code-bg: #f5f5f2;
+  --c-selection: rgba(47, 111, 237, 0.2);
 }
 
 html.dark {
-    --menu-hover-bg: #464646;
-    --surface-bg: #2e2e2e;
-    --copyright-bg: #2e3133;
-    --menu-hover-text: #ffa631;
-    --main-text: #f0f0f4;
-    --footer-text: #d4d4d4;
-    --subtitle: #f3f9f1;
-    --title: rgb(248, 249, 250);
-    --main-bg: #19191A;
-    --extra: #e9f1f6;
-    --meta-bg: rgb(226, 225, 228, 0.8);
-    --cc: #c0c5ca;
-    --notify: #f9f1db;
-    --blockquote-border: #52525b;
-    --blockquote-text: #e4e4e7;
-    --donate-border: #64748b;
-    --donate-text: #e2e8f0;
+  --c-bg: #0e0f10;
+  --c-surface: #141519;
+  --c-surface-2: #1b1c21;
+  --c-border: #2a2b31;
+  --c-border-strong: #3a3b42;
+  --c-text: #e8e8e6;
+  --c-text-muted: #b1b1ac;
+  --c-text-subtle: #8e8e88;
+  --c-accent: #86a7ff;
+  --c-accent-weak: rgba(134, 167, 255, 0.16);
+  --c-link: #86a7ff;
+  --c-link-hover: #a9c0ff;
+  --c-focus: #86a7ff;
+  --c-hover-bg: rgba(232, 232, 230, 0.06);
+  --c-active: #86a7ff;
+  --c-shadow: rgba(0, 0, 0, 0.4);
+  --c-code-bg: #1f2026;
+  --c-selection: rgba(134, 167, 255, 0.28);
 }

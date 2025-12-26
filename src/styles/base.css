@@ -1,0 +1,22 @@
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+a {
+  color: var(--c-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--c-link-hover);
+}
+
+::selection {
+  background: var(--c-selection);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
