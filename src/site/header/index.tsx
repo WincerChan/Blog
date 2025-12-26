@@ -6,10 +6,12 @@ const Header = () => {
     return (
         <header class="sticky top-0 z-40 w-full bg-[var(--c-bg-glass)] backdrop-blur-sm border-b border-[var(--c-border)]">
             <div class="w-full max-w-5xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-6">
-                <Logo />
-                <nav class="flex items-center gap-6 text-sm">
-                    <Pages />
-                </nav>
+                <div class="flex items-center gap-8">
+                    <Logo />
+                    <nav class="flex items-center gap-6 text-sm">
+                        <Pages />
+                    </nav>
+                </div>
                 <Tools />
             </div>
         </header>
