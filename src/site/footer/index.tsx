@@ -17,76 +17,76 @@ const FooterNav = () => {
   const elems = [Stats, Category, Archives];
   const year = createMemo(() => new Date().getFullYear());
   return (
-    <footer class="w-full">
-      <div class="w-full max-w-5xl mx-auto px-4 md:px-6">
-        <div class="">
-          <For each={elems}>{(Elem, idx) => <Elem LL={LL} />}</For>
+    <footer class="w-full border-t border-[var(--c-border)] bg-[var(--c-bg)]">
+      <div class="w-full max-w-5xl mx-auto px-4 md:px-6 py-10">
+        <div class="flex items-center gap-2">
+          <a
+            title="Home"
+            href="https://itswincer.com"
+            target="_blank"
+            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+          >
+            <IconHome fill="currentColor" width={28} height={28} />
+          </a>
+          <a
+            title="Moments"
+            href="https://moments.itswincer.com"
+            target="_blank"
+            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+          >
+            <IconPhoto fill="currentColor" width={28} height={28} />
+          </a>
+          <a
+            title="Telegram"
+            href="https://t.me/Tivsae"
+            target="_blank"
+            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+          >
+            <IconTelegram fill="currentColor" width={28} height={28} />
+          </a>
+          <a
+            title="Github"
+            href="https://github.com/WincerChan"
+            target="_blank"
+            class="inline-flex items-center justify-center rounded-md p-2 text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:bg-[var(--c-hover-bg)] transition-colors"
+          >
+            <IconGithub fill="currentColor" width={28} height={28} />
+          </a>
         </div>
-        <div class="">
-          <div class="">
-            <a title="Home" href="https://itswincer.com" target="_blank">
-              <IconHome
-                fill="currentColor"
-                width={32}
-                height={32}
-                class=""
-              />
-            </a>
-            <a
-              title="Moments"
-              href="https://moments.itswincer.com"
-              target="_blank"
-            >
-              <IconPhoto
-                fill="currentColor"
-                width={32}
-                height={32}
-                class=""
-              />
-            </a>
-            <a title="Telegram" href="https://t.me/Tivsae" target="_blank">
-              <IconTelegram
-                fill="currentColor"
-                width={32}
-                height={32}
-                class=""
-              />
-            </a>
-            <a
-              title="Github"
-              href="https://github.com/WincerChan"
-              target="_blank"
-            >
-              <IconGithub
-                fill="currentColor"
-                width={32}
-                height={32}
-                class=""
-              />
-            </a>
-          </div>
-          <p class="">
+        <div class="mt-8 flex flex-col gap-8 md:flex-row md:justify-between md:gap-12">
+          <For each={elems}>
+            {(Elem) => (
+              <div class="w-full md:w-56">
+                <Elem LL={LL} />
+              </div>
+            )}
+          </For>
+        </div>
+        <div class="mt-10 border-t border-[var(--c-border)] pt-4 flex flex-col gap-2 text-xs text-[var(--c-text-muted)] md:flex-row md:items-center md:justify-between">
+          <p>
             © {SINCE} - {year()} Wincer's Blog
-            <span class="">|</span>
+            <span class="px-2 text-[var(--c-text-subtle)]">|</span>
             Designed and developed by{" "}
             <a
-              class=""
+              class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
               href="https://itswincer.com"
               target="_blank"
               rel="noopener"
             >
               Wincer
             </a>
-            , powered by Velite + SolidStart{" · "}
+            , powered by Velite + SolidStart
+          </p>
+          <div class="flex items-center gap-3">
             <a
-              class=""
+              class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
               href="https://github.com/WincerChan/Blog"
               target="_blank"
               rel="noopener"
             >
               Source
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </footer>

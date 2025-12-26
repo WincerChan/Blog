@@ -8,7 +8,7 @@ const Header = () => {
             <div class="w-full max-w-5xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-6">
                 <div class="flex items-center gap-8">
                     <Logo />
-                    <nav class="flex items-center gap-6 text-sm">
+                    <nav class="flex items-center gap-6 text-base">
                         <Pages />
                     </nav>
                 </div>
