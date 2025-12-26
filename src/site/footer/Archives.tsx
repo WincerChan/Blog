@@ -7,7 +7,7 @@ const Archives = () => {
             <label class="text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
                 {LL && LL().footer.A()}
             </label>
-            <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm leading-relaxed">
+            <div class="flex flex-col gap-2 text-sm leading-relaxed">
                 {Object.entries(__CONTENT_POSTS_BY_YEAR)
                     .filter(([year]) => year !== "undefined")
                     .sort(([a], [b]) => Number(b) - Number(a))

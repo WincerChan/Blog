@@ -8,7 +8,7 @@ const Category = () => {
             <label class="text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
                 {LL && LL().footer.C()}
             </label>
-            <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm leading-relaxed">
+            <div class="flex flex-col gap-2 text-sm leading-relaxed">
                 <For each={__CONTENT_TOTAL_CATEGORIES as any}>
                     {(cate) => (
                         <a
