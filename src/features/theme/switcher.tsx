@@ -57,7 +57,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
 
     return (
         <div
-            class="absolute right-0 top-full mt-2 w-40 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] text-sm shadow-sm overflow-hidden transition duration-150"
+            class="absolute right-0 top-full mt-2 w-32 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] text-sm shadow-sm overflow-hidden transition duration-150"
             classList={{
                 "opacity-0 pointer-events-none translate-y-1": !show(),
                 "opacity-100 translate-y-0": show(),
@@ -70,9 +70,14 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
                         return (
                             <div
                                 onClick={(e) => handleClick(e, themeItem[0])}
-                                class="flex items-center gap-2 px-3 py-2 cursor-pointer text-[var(--c-text)] hover:bg-[var(--c-hover-bg)] transition-colors"
+                                class="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-[var(--c-hover-bg)] transition-colors"
+                                classList={{
+                                    "text-[var(--c-text)]": selected() !== themeItem[0],
+                                    "text-[var(--c-accent)] font-medium":
+                                        selected() === themeItem[0],
+                                }}
                             >
-                                <IconMod width={24} height={24} />
+                                <IconMod width={20} height={20} />
                                 <span>{LL().header.THEME[idx() as 0 | 1 | 2]()}</span>
                             </div>
                         )
