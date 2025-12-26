@@ -9,17 +9,23 @@ type BlogProps = {
 
 const CompactBlog = ({ blog }: BlogProps) => {
     return (
-        <div class="">
-            <div class="">
-                <div class="">
-                    <a link={true} href={blog.slug} class="">
-                        <h2 class="">{blog.title}</h2>
+        <div class="py-4 md:py-5 border-b border-[var(--c-border)]">
+            <div class="flex flex-col gap-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-x-6 md:gap-y-2">
+                <div class="space-y-1">
+                    <a link={true} href={blog.slug} class="block">
+                        <h2 class="text-xl md:text-2xl font-semibold text-[var(--c-text)] hover:text-[var(--c-link)] transition-colors">
+                            {blog.title}
+                        </h2>
                     </a>
                     <Show when={blog.subtitle}>
-                        <h3 class="">{blog.subtitle}</h3>
+                        <h3 class="text-base md:text-lg text-[var(--c-text-muted)] leading-relaxed">
+                            {blog.subtitle}
+                        </h3>
                     </Show>
                 </div>
-                <DateCat date={blog.date} category={blog.category} />
+                <div class="md:text-right md:whitespace-nowrap">
+                    <DateCat date={blog.date} category={blog.category} />
+                </div>
             </div>
         </div>
     )
@@ -39,11 +45,11 @@ const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
     return (
         <>
             <Show when={resolvedDescription() !== null}>
-                <p class="">
+                <p class="text-sm text-[var(--c-text-muted)] mt-8 mb-4">
                     {resolvedDescription()}
                 </p>
             </Show>
-            <div class="">
+            <div class="divide-y divide-transparent">
                 <For each={posts()}>
                     {
                         post => (

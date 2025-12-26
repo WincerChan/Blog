@@ -5,7 +5,7 @@ const Category = () => {
     const { LL } = useI18nContext()
     return (
         <div class="space-y-3">
-            <label class="text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
+            <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                 {LL && LL().footer.C()}
             </label>
             <div class="flex flex-col gap-2 text-sm leading-relaxed">

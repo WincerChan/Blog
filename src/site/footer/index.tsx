@@ -62,7 +62,7 @@ const FooterNav = () => {
             )}
           </For>
         </div>
-        <div class="mt-10 border-t border-[var(--c-border)] pt-4 flex flex-col gap-2 text-xs text-[var(--c-text-muted)] md:flex-row md:items-center md:justify-between">
+        <div class="mt-10 border-t border-[var(--c-border)] pt-4 flex flex-col gap-2 text-sm text-[var(--c-text-muted)] md:flex-row md:items-center md:justify-between">
           <p>
             © {SINCE} - {year()} Wincer's Blog
             <span class="px-2 text-[var(--c-text-subtle)]">|</span>
