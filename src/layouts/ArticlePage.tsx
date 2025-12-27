@@ -124,7 +124,7 @@ export const Neighbours = ({
             {next && (
                 <a
                     href={next.slug}
-                    class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)] transition-colors hover:text-[var(--c-link)]"
+                    class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)]"
                 >
                     <span class="inline-flex items-center gap-2 text-sm text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">
                         <IconArrowLeft class="shrink-0 transition-transform group-hover:-translate-x-1" />
@@ -138,7 +138,7 @@ export const Neighbours = ({
             {prev && (
                 <a
                     href={prev.slug}
-                    class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)] transition-colors hover:text-[var(--c-link)] md:ml-auto md:items-end md:text-right"
+                    class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)] md:ml-auto md:items-end md:text-right"
                 >
                     <span class="inline-flex items-center gap-2 text-sm text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">
                         {LL && LL().post.OLDER}
@@ -250,7 +250,7 @@ export const PostExtra = ({
                     updated={new Date(rawBlog.updated ?? rawBlog.date)}
                 />
                 <Relates relates={relates} LL={LL} />
-                <Neighbours neighbours={rawBlog.neighbours} />
+                <Neighbours neighbours={rawBlog.neighbours} LL={LL} />
             </Show>
             <Show when={!hideComment}>
                 <Comment

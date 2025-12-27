@@ -17,10 +17,10 @@ const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Transla
                         {(post) => (
                             <li>
                                 <a
-                                    class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 text-[var(--c-text)]"
+                                    class="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 text-[var(--c-text)]"
                                     href={post.slug}
                                 >
-                                    <span class="min-w-0 text-base md:text-lg font-medium leading-tight decoration-[color-mix(in_srgb,var(--c-link)_70%,transparent)] decoration-2 underline-offset-6 hover:underline">
+                                    <span class="min-w-0 text-base md:text-lg font-medium leading-tight text-[var(--c-text)] transition-colors group-hover:text-[var(--c-link)]">
                                         {post.title}
                                     </span>
                                     <span class="text-sm font-mono tabular-nums leading-tight text-[var(--c-text-subtle)]">

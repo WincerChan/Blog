@@ -12,10 +12,10 @@ const Copyright = ({ updated }: CopyrightProps) => {
                     <div class="flex items-center gap-2 font-bold text-sm">
                         <span>Wincer</span>
                     </div>
-                    <div class="flex items-center gap-2 mt-1">
+                    <div class="flex items-center gap-2 mt-1 text-[var(--c-text-muted)]">
                         <a
                             href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh"
-                            class="underline decoration-[var(--c-border-strong)] underline-offset-4 transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
+                            class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
                             target="_blank"
                             rel="noopener"
                         >
