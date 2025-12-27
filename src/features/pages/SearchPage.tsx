@@ -145,7 +145,7 @@ const Search = ({ page, children }) => {
         setQuery({ q: input(), page: updatedPage })
     }
     return (
-        <ArticlePage rawBlog={page} relates={[]} hideComment={true}>
+        <ArticlePage rawBlog={page} relates={[]} hideComment={true} hideActions={true}>
             <form onSubmit={handleSubmit} method="get" class="">
                 <input value={input()} onChange={(e) => setInput(e.target.value)} type="text" class="" placeholder="你想要找什么？我也想要" />
                 <button title="搜索" class="">搜索</button>

@@ -248,9 +248,16 @@ type PostProps = {
     rawBlog: ArticleMeta;
     relates: RelatedPost[];
     hideComment?: boolean;
+    hideActions?: boolean;
 };
 
-const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => {
+const ArticlePage = ({
+    children,
+    rawBlog,
+    relates,
+    hideComment,
+    hideActions,
+}: PostProps) => {
     const hash = createMemo(() => useLocation().hash);
     onMount(() => {
         if (!hash()) return;
@@ -270,7 +277,9 @@ const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => 
         <ArticleLayout headParams={headParams}>
             <PostMeta blog={blog} lang={locale} LL={LL} />
             {wrapper}
-            <PostActions pageURL={blog.slug} />
+            <Show when={!hideActions}>
+                <PostActions pageURL={blog.slug} />
+            </Show>
             <PostExtra
                 rawBlog={blog}
                 relates={relates}
