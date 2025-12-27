@@ -1,5 +1,6 @@
 import { Accessor, For, createMemo } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
+import IconPointFilled from "~icons/tabler/point-filled";
 
 const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
     const elems = createMemo(() => [
@@ -21,7 +22,7 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
                             <span class="text-[var(--c-text-subtle)]">
                                 {LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}
                             </span>
-                            <span class="text-[var(--c-text-subtle)]">·</span>
+                            <IconPointFilled width={6} height={6} class="text-[var(--c-text-subtle)]" />
                             <span class="text-[var(--c-text)] font-medium tabular-nums">{item}</span>
                         </p>
                     )}

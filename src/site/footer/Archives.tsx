@@ -1,5 +1,6 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconArrowRight from "~icons/tabler/arrow-right";
+import IconPointFilled from "~icons/tabler/point-filled";
 
 const Archives = () => {
     const { LL } = useI18nContext();
@@ -22,7 +23,7 @@ const Archives = () => {
                             <span class="group-hover:text-[var(--c-text)] group-hover:underline group-hover:decoration-[var(--c-text)] decoration-1 underline-offset-4">
                                 {val[0]}
                             </span>
-                            <span class="text-[var(--c-text-subtle)]">·</span>
+                            <IconPointFilled width={6} height={6} class="text-[var(--c-text-subtle)]" />
                             <span class="text-[var(--c-text)] font-medium tabular-nums">{val[1]}</span>
                         </a>
                 ))}
