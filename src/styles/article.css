@@ -66,11 +66,11 @@
 }
 
 #blog-article pre {
-  @apply m-0 p-4 bg-[var(--c-code-bg)] border border-[var(--c-border)] rounded-md overflow-auto leading-relaxed;
+  @apply my-8 bg-[var(--c-code-bg)] border border-[var(--c-border)] rounded-md overflow-auto leading-relaxed;
 }
 
 #blog-article pre code {
-  @apply bg-transparent border-0 p-0;
+  @apply bg-transparent border-0 p-4;
 }
 
 #blog-article hr {
@@ -78,12 +78,12 @@
 }
 
 #blog-article table {
-  @apply w-full border-collapse border-spacing-0 m-0;
+  @apply w-full border-collapse border-spacing-0 my-8;
 }
 
 #blog-article th,
 #blog-article td {
-  @apply border border-[var(--c-border)] py-2.5 px-3 text-left align-top;
+  @apply border border-[var(--c-border)] py-2.5 px-3 text-center align-top;
 }
 
 #blog-article th {
