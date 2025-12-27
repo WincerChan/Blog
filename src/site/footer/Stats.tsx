@@ -2,11 +2,18 @@ import { Accessor, For, createMemo } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
 import IconPointFilled from "~icons/tabler/point-filled";
 
+const formatWordCount = (value: unknown) => {
+    const total = Number(value);
+    if (!Number.isFinite(total)) return "0";
+    if (total < 1000) return String(Math.max(0, Math.floor(total)));
+    return `${Math.max(1, Math.round(total / 1000))}k`;
+};
+
 const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
     const elems = createMemo(() => [
         __CONTENT_TOTAL_POSTS,
         __CONTENT_TOTAL_CATEGORIES.length,
-        `${(__CONTENT_WORDS / 1000).toPrecision(3)}`,
+        formatWordCount(__CONTENT_WORDS),
         __CONTENT_TAGS,
     ])
 

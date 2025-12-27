@@ -6,7 +6,7 @@ export default {
     STATS: [
         " Articles",
         " Categories",
-        "k Words",
+        " Words",
         " Tags"
     ]
 }
