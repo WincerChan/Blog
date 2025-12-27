@@ -108,6 +108,14 @@ type RootTranslation = {
 		 */
 		RELATES: string
 		/**
+		 * N​e​w​e​r
+		 */
+		NEWER: string
+		/**
+		 * O​l​d​e​r
+		 */
+		OLDER: string
+		/**
 		 * T​h​i​s​ ​a​r​t​i​c​l​e​ ​w​a​s​ ​l​a​s​t​ ​u​p​d​a​t​e​d​ ​{​d​a​t​e​}​ ​a​g​o​,​ ​a​n​d​ ​t​h​e​ ​c​o​n​t​e​n​t​ ​m​a​y​ ​h​a​v​e​ ​e​v​o​l​v​e​d​ ​o​r​ ​c​h​a​n​g​e​d​ ​s​i​n​c​e​ ​t​h​e​n​.
 		 * @param {string} date
 		 */
@@ -272,6 +280,14 @@ export type TranslationFunctions = {
 		 * Relates
 		 */
 		RELATES: () => LocalizedString
+		/**
+		 * Newer
+		 */
+		NEWER: () => LocalizedString
+		/**
+		 * Older
+		 */
+		OLDER: () => LocalizedString
 		/**
 		 * This article was last updated {date} ago, and the content may have evolved or changed since then.
 		 */

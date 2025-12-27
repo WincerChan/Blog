@@ -6,6 +6,8 @@ export default {
         "License"
     ],
     RELATES: "Relates",
+    NEWER: "Newer",
+    OLDER: "Older",
     EXPIRED_NOTIFY: "This article was last updated {date: string} ago, and the content may have evolved or changed since then.",
     S: "en",
     DIS: "Loading Disqus Comments",
