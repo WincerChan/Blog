@@ -46,12 +46,37 @@
 
 #blog-article ul,
 #blog-article ol {
-  @apply pl-5 mb-6;
+  @apply pl-5 mb-6 list-outside;
+}
+
+#blog-article ul {
+  @apply list-disc pl-6;
+}
+
+#blog-article ol {
+  @apply list-decimal pl-6;
 }
 
 #blog-article li+li {
-  @apply mt-1.5;
+  @apply mt-2;
 }
+
+#blog-article li {
+  @apply text-[1.05rem] leading-relaxed;
+}
+
+#blog-article ul ul li+li,
+#blog-article ul ol li+li,
+#blog-article ol ul li+li,
+#blog-article ol ol li+li {
+  @apply mt-1;
+}
+
+#blog-article ul li::marker,
+#blog-article ol li::marker {
+  @apply text-[var(--c-text-subtle)] font-mono tabular-nums;
+}
+
 
 #blog-article blockquote {
   @apply my-8 border-l-4 italic border-[var(--c-border-strong)] pl-5 py-4 space-y-4 text-lg text-[var(--c-text-muted)];
