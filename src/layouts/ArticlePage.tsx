@@ -50,7 +50,7 @@ const PostMeta = ({
                     {blog.title}
                 </h1>
                 <Show when={!!blog.subtitle}>
-                    <h2 class="text-lg md:text-xl text-[var(--c-text-muted)] leading-relaxed">
+                    <h2 class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
                         {blog.subtitle}
                     </h2>
                 </Show>
