@@ -31,9 +31,9 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         </Show>
                         <p class="text-[var(--c-text)] opacity-85 leading-relaxed" innerText={blog.summary} />
                         <div class="flex items-center gap-4">
-                            <span class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] transition-colors group-hover:text-[var(--c-link)]">
+                            <span class="latest-readmore inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]">
                                 继续阅读
-                                <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
+                                <IconArrowRight width={14} height={14} class="latest-readmore-arrow transition-transform" />
                             </span>
                         </div>
                     </a>
@@ -46,6 +46,9 @@ const LatestBlog = ({ blog }: BlogProps) => {
                     }
                     .latest-pulse {
                         animation: latest-pulse 2.4s ease-in-out infinite;
+                    }
+                    .latest-readmore:hover .latest-readmore-arrow {
+                        transform: translateX(0.25rem);
                     }
                 `}</style>
             </div>

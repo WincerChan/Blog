@@ -24,7 +24,7 @@ const FooterNav = () => {
             title="Home"
             href="https://itswincer.com"
             target="_blank"
-            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-text)] transition-colors"
           >
             <IconHome fill="currentColor" width={28} height={28} />
           </a>
@@ -32,7 +32,7 @@ const FooterNav = () => {
             title="Moments"
             href="https://moments.itswincer.com"
             target="_blank"
-            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-text)] transition-colors"
           >
             <IconPhoto fill="currentColor" width={28} height={28} />
           </a>
@@ -40,7 +40,7 @@ const FooterNav = () => {
             title="Telegram"
             href="https://t.me/Tivsae"
             target="_blank"
-            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-text)] transition-colors"
           >
             <IconTelegram fill="currentColor" width={28} height={28} />
           </a>
@@ -48,7 +48,7 @@ const FooterNav = () => {
             title="Github"
             href="https://github.com/WincerChan"
             target="_blank"
-            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+            class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-text)] transition-colors"
           >
             <IconGithub fill="currentColor" width={28} height={28} />
           </a>
