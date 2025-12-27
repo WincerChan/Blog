@@ -37,7 +37,6 @@ const PostMeta = ({
     return (
         <>
             <LazyBg
-                dataSrc={blog.cover}
                 class=""
             >
                 <h1 class="">{blog.title}</h1>
@@ -169,13 +168,6 @@ const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => 
     return (
         <ArticleLayout headParams={headParams} extra={extra}>
             <PostMeta blog={blog} lang={locale} LL={LL} />
-            <Show when={blog.cover}>
-                <img
-                    class=""
-                    src={blog.cover}
-                    alt={blog.cover}
-                />
-            </Show>
             {wrapper}
         </ArticleLayout>
     );

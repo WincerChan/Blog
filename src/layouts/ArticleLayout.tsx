@@ -21,7 +21,7 @@ const ArticleLayout = (props: ArticleLayoutProps) => {
             <HeadTag headParams={props.headParams} />
             <div class="w-full max-w-5xl mx-auto px-4 md:px-0">
                 <ToC toc={resolved().toc ?? ""} slug={resolved().pageURL} />
-                <article class="w-full max-w-2xl">
+                <article class="w-full max-w-2xl mx-auto">
                     {props.children}
                 </article>
                 <SideBar
