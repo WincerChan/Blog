@@ -62,18 +62,23 @@ const Translate = ({ pageURL, lang }: TranslateProps) => {
                     onClick={click}
                     onBlur={onblur}
                     title="Translate"
-                    class=""
+                    class="relative inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)]"
+                    aria-expanded={toggle()}
                 >
-                    <IconTranslate class="" height={36} width={36} />
+                    <IconTranslate class="block" height={24} width={24} />
                     <div
-                        class=""
+                        class="absolute left-0 top-full mt-2 min-w-[140px] rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] py-1 text-sm shadow-sm transition duration-150"
+                        classList={{
+                            "opacity-0 pointer-events-none translate-y-1": !toggle(),
+                            "opacity-100 translate-y-0": toggle(),
+                        }}
                     >
                         {Object.entries(info().langMap).map(([key, entry]) => (
                             <a
                                 lang={key}
                                 href={entry.url}
                                 link={true}
-                                class=""
+                                class="block px-3 py-1.5 text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)]"
                                 title={globalStore.locale == key ? `Current: ${entry.name}` : entry.name}
                             >
                                 {entry.name}

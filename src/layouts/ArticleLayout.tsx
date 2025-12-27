@@ -1,6 +1,5 @@
 import { JSX, createMemo } from "solid-js";
 import { Locale } from "~/utils/locale";
-import { SideBar } from "~/features/article/sidebar";
 import ToC from "~/features/article/components/ToC";
 import HeadTag from "~/site/seo";
 import AppLayout from "~/layouts/AppLayout";
@@ -24,10 +23,6 @@ const ArticleLayout = (props: ArticleLayoutProps) => {
                 <article class="w-full max-w-2xl mx-auto">
                     {props.children}
                 </article>
-                <SideBar
-                    pageURL={resolved().pageURL}
-                    lang={resolved().lang}
-                />
             </div>
             <div class="">{props.extra}</div>
         </AppLayout>

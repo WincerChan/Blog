@@ -67,16 +67,21 @@ const Like = ({ pageURL }) => {
     })
     const fallback = <span class="">-</span>
     return (
-        <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class="">
+        <button
+            disabled={disabled()}
+            onClick={click}
+            title={liked() ? `${likes()} 人已点赞` : "Like"}
+            class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)] disabled:opacity-60 disabled:cursor-not-allowed"
+        >
             {liked() ?
-                <IconHeartFilled width={36} height={36} class="" stroke-width={1.5} />
+                <IconHeartFilled width={36} height={36} class="block" stroke-width={1.5} />
                 :
-                <IconHeart width={36} height={36} class="" stroke-width={1.5} />
+                <IconHeart width={36} height={36} class="block" stroke-width={1.5} />
             }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
-                        <span class="">{format(likes())}</span>
+                        <span class="tabular-nums">{format(likes())}</span>
                     </Show>
                 </ErrorBoundary>
             </Suspense>

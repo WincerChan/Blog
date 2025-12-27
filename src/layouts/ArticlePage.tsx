@@ -14,11 +14,16 @@ import { calculateDateDifference, formatDate } from "~/utils";
 import IconArrowLeft from "~icons/tabler/arrow-left";
 import IconArrowRight from "~icons/tabler/arrow-right";
 import IconPointFilled from "~icons/tabler/point-filled";
+import IconPig from "~icons/tabler/pig";
+import IconShare from "~icons/tabler/share";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
 import LazyBg from "~/ui/media/BG";
 import ArticleLayout from "~/layouts/ArticleLayout";
+import SocialButton from "~/features/article/sidebar/social/Button";
+import Like from "~/features/article/sidebar/social/Like";
+import Translate from "~/features/article/sidebar/social/Translate";
 import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/features/article/types";
 
 const ProtectBlog = lazy(() => import("~/features/article/blocks/EncryptBlock"));
@@ -87,6 +92,11 @@ const PostMeta = ({
                         </Show>
                     </div>
                 </Show>
+                <Show when={!!blog.lang}>
+                    <div class="pt-2">
+                        <Translate pageURL={blog.slug} lang={blog.lang} />
+                    </div>
+                </Show>
             </LazyBg>
             <Show when={blog.category && !isRecently}>
                 <div class="mt-6 rounded-md border border-[var(--c-border)] bg-[var(--c-surface-2)] px-3 py-2 text-sm text-[var(--c-text-muted)]">
@@ -127,6 +137,26 @@ export const Neighbours = ({ neighbours }: { neighbours?: ArticleNeighbours }) =
                     <IconArrowRight />
                 </a>
             )}
+        </div>
+    );
+};
+
+const PostActions = ({ pageURL }: { pageURL: string }) => {
+    return (
+        <div class="mt-10 flex flex-wrap items-center gap-4">
+            <Like pageURL={pageURL} />
+            <SocialButton
+                IconName={IconPig}
+                text="Reward"
+                kind="reward"
+                hoverColor="hover:text-amber-500 focus:text-amber-500"
+            />
+            <SocialButton
+                IconName={IconShare}
+                text="Share"
+                kind="share"
+                hoverColor="hover:text-sky-500 focus:text-sky-500"
+            />
         </div>
     );
 };
@@ -185,6 +215,7 @@ const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => 
         <ArticleLayout headParams={headParams} extra={extra}>
             <PostMeta blog={blog} lang={locale} LL={LL} />
             {wrapper}
+            <PostActions pageURL={blog.slug} />
         </ArticleLayout>
     );
 };
