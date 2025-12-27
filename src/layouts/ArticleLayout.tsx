@@ -19,9 +19,9 @@ const ArticleLayout = (props: ArticleLayoutProps) => {
     return (
         <AppLayout lang={resolved().lang}>
             <HeadTag headParams={props.headParams} />
-            <div class="w-full max-w-5xl mx-auto px-4 md:px-6">
+            <div class="w-full max-w-5xl mx-auto px-4 md:px-0">
                 <ToC toc={resolved().toc ?? ""} slug={resolved().pageURL} />
-                <article class="w-full max-w-3xl">
+                <article class="w-full max-w-2xl">
                     {props.children}
                 </article>
                 <SideBar

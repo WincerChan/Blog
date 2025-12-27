@@ -29,7 +29,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                                 {blog.subtitle}
                             </h3>
                         </Show>
-                        <p class="text-[var(--c-text)] opacity-85 leading-relaxed max-w-2xl" innerText={blog.summary} />
+                        <p class="text-[var(--c-text)] opacity-85 leading-relaxed" innerText={blog.summary} />
                         <div class="flex items-center gap-4">
                             <span class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] group-hover:decoration-[var(--c-link)] transition-colors">
                                 继续阅读
