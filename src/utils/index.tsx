@@ -1,15 +1,14 @@
 const isBrowser = typeof window !== "undefined";
-const formatDate = (date: Date | string) => {
-    if (typeof date === 'string') {
-        date = new Date(date);
-    }
-    let options: Intl.DateTimeFormatOptions = {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        timeZone: 'Asia/Shanghai',
-    };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
+const formatDate = (value: Date | string) => {
+    const dateObj = typeof value === "string" ? new Date(value) : value;
+    if (!dateObj || Number.isNaN(dateObj.getTime())) return String(value ?? "");
+    const formatter = new Intl.DateTimeFormat("en-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Shanghai",
+    });
+    return formatter.format(dateObj);
 }
 const calculateDateDifference = (startDate: Date, lang: string): string => {
     const endDate = new Date();

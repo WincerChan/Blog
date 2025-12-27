@@ -13,6 +13,7 @@ import { Locales, Translations } from "~/i18n/i18n-types";
 import { calculateDateDifference, formatDate } from "~/utils";
 import IconArrowLeft from "~icons/tabler/arrow-left";
 import IconArrowRight from "~icons/tabler/arrow-right";
+import IconPointFilled from "~icons/tabler/point-filled";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
@@ -34,47 +35,62 @@ const PostMeta = ({
     const updatedDate = new Date(blog.updated ?? blog.date);
     const isRecently =
         new Date().getTime() - updatedDate.getTime() < 90 * 24 * 60 * 60 * 1000;
+    const tags = () => (blog.tags ?? []).filter(Boolean);
     return (
         <>
             <LazyBg
-                class=""
+                class="pt-10 md:pt-14 pb-8 border-b border-[var(--c-border)] space-y-3"
             >
-                <h1 class="">{blog.title}</h1>
+                <h1 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)]">
+                    {blog.title}
+                </h1>
                 <Show when={!!blog.subtitle}>
-                    <h2 class="">
+                    <h2 class="text-lg md:text-xl text-[var(--c-text-muted)] leading-relaxed">
                         {blog.subtitle}
                     </h2>
                 </Show>
                 <Show when={blog.category}>
                     <div
                         id="post-meta"
-                        class=""
+                        class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide"
                     >
-                        <span>{formatDate(blog.date)}</span>
-                        <div class=""></div>
+                        <span class="tabular-nums">{formatDate(blog.date)}</span>
                         <Show when={blog.words}>
-                            <span>
+                            <IconPointFilled
+                                width={6}
+                                height={6}
+                                class="text-[var(--c-text-subtle)] opacity-70"
+                            />
+                            <span class="tabular-nums">
                                 {blog.words} {LL && LL().post.W}
                             </span>
                         </Show>
-                        <div class=""></div>
-                        <For each={blog.tags}>
-                            {(tag) => (
-                                <a
-                                    href={`/search/?q=tags:${tag}`}
-                                    class=""
-                                >
-                                    <span class="">#</span>
-                                    {tag}
-                                </a>
-                            )}
-                        </For>
+                        <Show when={tags().length}>
+                            <IconPointFilled
+                                width={6}
+                                height={6}
+                                class="text-[var(--c-text-subtle)] opacity-70"
+                            />
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                <For each={tags()}>
+                                    {(tag) => (
+                                        <a
+                                            href={`/search/?q=tags:${tag}`}
+                                            class="group inline-flex items-center gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
+                                        >
+                                            <span class="text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">#</span>
+                                            {tag}
+                                        </a>
+                                    )}
+                                </For>
+                            </div>
+                        </Show>
                     </div>
                 </Show>
             </LazyBg>
             <Show when={blog.category && !isRecently}>
-                <div class="">
-                    <p>
+                <div class="mt-6 rounded-md border border-[var(--c-border)] bg-[var(--c-surface-2)] px-3 py-2 text-sm text-[var(--c-text-muted)]">
+                    <p class="leading-relaxed">
                         {LL &&
                             LL().post.EXPIRED_NOTIFY({
                                 date: calculateDateDifference(

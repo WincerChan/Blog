@@ -4,6 +4,7 @@ import { mount, StartClient } from "@solidjs/start/client";
 import '@unocss/reset/tailwind.css';
 import "~/styles/color.css";
 import "~/styles/base.css";
+import "~/styles/article.css";
 import "highlight.js/styles/magula.css";
 import "virtual:uno.css";
 import { registerServiceWorker } from "~/utils/sw";
