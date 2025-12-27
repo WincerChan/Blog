@@ -20,7 +20,7 @@ const PostMeta = ({ date, category }: PostMetaProps) => {
             {category && <span class="text-[var(--c-text-subtle)]">/</span>}
             {category && (
                 <a
-                    class="text-[var(--c-text-subtle)] hover:text-[var(--c-link)] hover:underline hover:decoration-[var(--c-link)] decoration-1 underline-offset-4 transition-colors"
+                    class="text-[var(--c-text-subtle)] hover:text-[var(--c-link)] hover:underline hover:decoration-[var(--c-link)] hover:decoration-dashed decoration-1 underline-offset-4 transition-colors"
                     href={`/category/${category}/`}
                 >
                     {category}

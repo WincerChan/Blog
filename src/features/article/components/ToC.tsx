@@ -213,18 +213,16 @@ const ToC = ({ toc, slug }: ToCInterface) => {
     return (
         <div class="md:col-start-3 md:row-start-1 md:justify-self-start">
             <aside class="hidden md:block md:sticky md:top-24">
-                <div class="rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-3 shadow-sm">
-                    <div class="flex items-center justify-between text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
-                        <span>{LL().sidebar.TOC()}</span>
-                    </div>
-                    <div
-                        id="toc"
-                        ref={desktopRef!}
-                        onClick={ClickToC}
-                        class="mt-3 max-h-[calc(100vh-12rem)] overflow-auto pr-2"
-                        innerHTML={toc}
-                    />
+                <div class="text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
+                    <span>{LL().sidebar.TOC()}</span>
                 </div>
+                <div
+                    id="toc"
+                    ref={desktopRef!}
+                    onClick={ClickToC}
+                    class="mt-3 max-h-[calc(100vh-12rem)] overflow-auto pr-2"
+                    innerHTML={toc}
+                />
             </aside>
             <button
                 title="ToC"

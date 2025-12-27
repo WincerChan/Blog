@@ -10,7 +10,7 @@ import {
 } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
-import { calculateDateDifference, formatDate } from "~/utils";
+import { calculateDateDifference } from "~/utils";
 import IconArrowLeft from "~icons/tabler/arrow-left";
 import IconArrowRight from "~icons/tabler/arrow-right";
 import IconPointFilled from "~icons/tabler/point-filled";
@@ -19,7 +19,7 @@ import IconShare from "~icons/tabler/share";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
-import LazyBg from "~/ui/media/BG";
+import DateCat from "~/features/post-listing/PostMeta";
 import ArticleLayout from "~/layouts/ArticleLayout";
 import SocialButton from "~/features/article/sidebar/social/Button";
 import Like from "~/features/article/sidebar/social/Like";
@@ -41,54 +41,50 @@ const PostMeta = ({
     const isRecently =
         new Date().getTime() - updatedDate.getTime() < 90 * 24 * 60 * 60 * 1000;
     const tags = () => (blog.tags ?? []).filter(Boolean);
+    const hasWords = () => typeof blog.words === "number" && blog.words > 0;
+    const hasTags = () => tags().length > 0;
     return (
         <>
-            <LazyBg
-                class="pt-10 md:pt-14 pb-8 border-b border-[var(--c-border)] space-y-3"
-            >
-                <h1 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)]">
-                    {blog.title}
-                </h1>
-                <Show when={!!blog.subtitle}>
-                    <h2 class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
-                        {blog.subtitle}
-                    </h2>
-                </Show>
-                <Show when={blog.category}>
-                    <div
-                        id="post-meta"
-                        class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide"
-                    >
-                        <span class="tabular-nums">{formatDate(blog.date)}</span>
-                        <Show when={blog.words}>
-                            <IconPointFilled
-                                width={6}
-                                height={6}
-                                class="text-[var(--c-text-subtle)] opacity-70"
-                            />
+            <div class="pt-10 md:pt-14 pb-8 border-b border-[var(--c-border)]">
+                <div class="space-y-4">
+                    <DateCat date={blog.date} category={blog.category} />
+                    <div class="space-y-3">
+                        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)]">
+                            {blog.title}
+                        </h1>
+                        <Show when={!!blog.subtitle}>
+                            <h2 class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
+                                {blog.subtitle}
+                            </h2>
+                        </Show>
+                    </div>
+                </div>
+                <Show when={hasWords() || hasTags()}>
+                    <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide">
+                        <Show when={hasWords()}>
                             <span class="tabular-nums">
                                 {blog.words} {LL && LL().post.W}
                             </span>
                         </Show>
-                        <Show when={tags().length}>
+                        <Show when={hasWords() && hasTags()}>
                             <IconPointFilled
                                 width={6}
                                 height={6}
                                 class="text-[var(--c-text-subtle)] opacity-70"
                             />
-                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                                <For each={tags()}>
-                                    {(tag) => (
-                                        <a
-                                            href={`/search/?q=tags:${tag}`}
-                                            class="group inline-flex items-center gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
-                                        >
-                                            <span class="text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">#</span>
-                                            {tag}
-                                        </a>
-                                    )}
-                                </For>
-                            </div>
+                        </Show>
+                        <Show when={hasTags()}>
+                            <For each={tags()}>
+                                {(tag) => (
+                                    <a
+                                        href={`/search/?q=tags:${tag}`}
+                                        class="group inline-flex items-center gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
+                                    >
+                                        <span class="text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">#</span>
+                                        {tag}
+                                    </a>
+                                )}
+                            </For>
                         </Show>
                     </div>
                 </Show>
@@ -97,7 +93,7 @@ const PostMeta = ({
                         <Translate pageURL={blog.slug} lang={blog.lang} />
                     </div>
                 </Show>
-            </LazyBg>
+            </div>
             <Show when={blog.category && !isRecently}>
                 <div class="mt-6 rounded-md border border-[var(--c-border)] bg-[var(--c-surface-2)] px-3 py-2 text-sm text-[var(--c-text-muted)]">
                     <p class="leading-relaxed">
