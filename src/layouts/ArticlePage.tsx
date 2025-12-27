@@ -95,7 +95,7 @@ const PostMeta = ({
                 </Show>
             </div>
             <Show when={blog.category && !isRecently}>
-                <div class="mt-6 rounded-md border border-[var(--c-border)] bg-[var(--c-surface-2)] px-3 py-2 text-sm text-[var(--c-text-muted)]">
+                <div class="my-8 border-l-4 border-[var(--c-border-strong)] pl-3 py-1 text-base text-[var(--c-text-muted)]">
                     <p class="leading-relaxed">
                         {LL &&
                             LL().post.EXPIRED_NOTIFY({
