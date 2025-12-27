@@ -11,9 +11,14 @@ const Like = ({ pageURL }) => {
     const [disabled, setDisabled] = createSignal(false)
     const [url, setUrl] = createSignal()
     const fetchKudos = async (targetUrl: string) => {
-        const resp = await fetch(targetUrl, { credentials: "include" })
-        if (!resp.ok) throw new Error(resp.statusText)
-        return resp.json()
+        if (!targetUrl) return null;
+        try {
+            const resp = await fetch(targetUrl, { credentials: "include" })
+            if (!resp.ok) return null;
+            return await resp.json();
+        } catch {
+            return null;
+        }
     }
     const [resource] = createResource(url, fetchKudos)
     const [animate, setAnimate] = createSignal(false)
@@ -55,14 +60,11 @@ const Like = ({ pageURL }) => {
     }
     createEffect(() => {
         const data = resource()
-        if (data) {
-            if (typeof data.count === "number") setLikes(data.count)
-            if (typeof data.interacted === "boolean") {
-                setLiked(data.interacted)
-                if (data.interacted) setDisabled(true)
-            }
-        } else if (data !== undefined) {
-            setDisabled(true)
+        if (!data || typeof data !== "object") return;
+        if (typeof data.count === "number") setLikes(data.count)
+        if (typeof data.interacted === "boolean") {
+            setLiked(data.interacted)
+            if (data.interacted) setDisabled(true)
         }
     })
     const fallback = <span class="">-</span>

@@ -27,7 +27,18 @@ const FakeResult = ({ limit }: { limit: number }) => {
 }
 
 
+const errorMsg = (err: string) => {
+    return (
+        <span>
+            <b>{`搜索出错了，原因可能是 ${err}，控制台或许有更详细的原因。`}</b>
+        </span>
+    )
+}
+
 const SearchResultComponent = ({ data, currentPage, updatePage }) => {
+    if (data().error) {
+        return errorMsg(data().error);
+    }
     const formatDate = (dateStr: string) => {
         const cleanDateStr = dateStr.split(" ")[0]
         return new Date(cleanDateStr).toLocaleString("en-us", { year: "numeric", month: "short", day: "numeric" })
@@ -76,25 +87,30 @@ const SearchResultComponent = ({ data, currentPage, updatePage }) => {
     )
 }
 
-const fetchSearchResult = async ({ q, page }: { q: string; page: number }) => {
-    const url = new URL(inkstoneApi("search"));
-    url.searchParams.set("q", q);
-    url.searchParams.set("limit", String(resultPerPage));
-    url.searchParams.set("offset", String((page - 1) * resultPerPage));
-    const res = await fetch(url);
-    if (!res.ok) {
-        const msg = await res.text().catch(() => "");
-        throw new Error(msg || res.statusText);
-    }
-    return res.json();
-}
+const emptySearchResult = (error?: string) => ({
+    total: 0,
+    hits: [],
+    elapsed_ms: null,
+    error,
+});
 
-const errorMsg = (err: string) => {
-    return (
-        <span>
-            <b>{`搜索出错了，原因可能是 ${err}，控制台或许有更详细的原因。`}</b>
-        </span>
-    )
+const fetchSearchResult = async ({ q, page }: { q: string; page: number }) => {
+    try {
+        const url = new URL(inkstoneApi("search"));
+        url.searchParams.set("q", q);
+        url.searchParams.set("limit", String(resultPerPage));
+        url.searchParams.set("offset", String((page - 1) * resultPerPage));
+        const res = await fetch(url);
+        if (!res.ok) {
+            const msg = await res.text().catch(() => "");
+            return emptySearchResult(msg || res.statusText);
+        }
+        const data = await res.json();
+        return { ...data, error: null };
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return emptySearchResult(message);
+    }
 }
 
 const Search = ({ page, children }) => {

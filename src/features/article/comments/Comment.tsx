@@ -60,7 +60,7 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
 
     createEffect(() => {
         if (!visible()) return;
-        import('giscus');
+        import('giscus').catch(() => undefined);
     })
     createEffect(() => {
         if (!visible()) {

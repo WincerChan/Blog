@@ -37,7 +37,7 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
     const clickJump = (idx) => {
         if (idx == 2) {
             const url = window.location.href
-            navigator.clipboard.writeText(url)
+            void navigator.clipboard.writeText(url).catch(() => undefined)
             setShowCheck(true)
             setTimeout(() => {
                 setShowCheck(false)
