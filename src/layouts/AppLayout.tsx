@@ -40,7 +40,7 @@ const AppLayout = (props: MainProps) => {
     localeHook(() => props.lang);
 
     return (
-        <main class="w-full">
+        <main class="w-full pb-16 md:pb-20">
             {props.children}
         </main>
     );
