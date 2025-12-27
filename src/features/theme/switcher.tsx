@@ -1,9 +1,9 @@
 import { Accessor, For, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconHaze from "~icons/carbon/haze";
-import IconHazeNight from "~icons/carbon/haze-night";
-import IconWindowSwitcher from "~icons/carbon/window-black-saturation";
-import IconWorkflowAuto from "~icons/carbon/workflow-automation";
+import IconSun from "~icons/tabler/sun";
+import IconMoon from "~icons/tabler/moon";
+import IconContrast from "~icons/tabler/contrast";
+import IconAutomation from "~icons/tabler/automation";
 
 import { setGlobalStore } from "./provider";
 import {
@@ -21,9 +21,9 @@ const ThemeMapping: Array<[ThemePreference, string]> = [
 ];
 
 const Icons = [
-    IconHaze,
-    IconHazeNight,
-    IconWorkflowAuto
+    IconSun,
+    IconMoon,
+    IconAutomation
 ];
 
 type ThemeMenuProps = {
@@ -110,7 +110,7 @@ const ToggleButton = () => {
                 toggleShow(e);
             }} title="Switch Theme" class="flex items-center justify-center w-[22px] h-[22px] text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors">
                 {/* Inline icon sizing can expand the wrapper; pin a fixed square button. */}
-                <IconWindowSwitcher class="block w-[22px] h-[22px] transition-colors" />
+                <IconContrast class="block w-[22px] h-[22px] transition-colors" />
             </button>
             <ThemeMenu show={show} toggleShow={toggleShow} />
         </div>

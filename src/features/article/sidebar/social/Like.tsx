@@ -1,8 +1,8 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
-import IconThumbUp from "~icons/carbon/thumbs-up";
-import IconThumbUpFilled from "~icons/carbon/thumbs-up-filled";
+import IconHeart from "~icons/tabler/heart";
+import IconHeartFilled from "~icons/tabler/heart-filled";
 
 
 const Like = ({ pageURL }) => {
@@ -69,9 +69,9 @@ const Like = ({ pageURL }) => {
     return (
         <button disabled={disabled()} onClick={click} title={liked() ? `${likes()} 人已点赞` : "Like"} class="">
             {liked() ?
-                <IconThumbUpFilled width={36} height={36} class="" stroke-width={1.5} />
+                <IconHeartFilled width={36} height={36} class="" stroke-width={1.5} />
                 :
-                <IconThumbUp width={36} height={36} class="" stroke-width={1.5} />
+                <IconHeart width={36} height={36} class="" stroke-width={1.5} />
             }
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>

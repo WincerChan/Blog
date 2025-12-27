@@ -1,7 +1,7 @@
 import { useLocation } from "@solidjs/router";
 import { createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconCatalog from "~icons/carbon/catalog";
+import IconList from "~icons/tabler/list";
 import Modal from "../components/Modal";
 
 interface ToCInterface {
@@ -154,7 +154,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
             <aside class="">
                 <div class="">
                     <button title="ToC" onClick={(e) => { setVisible(true) }} class="">
-                        <IconCatalog width={32} height={32} class="" />
+                        <IconList width={32} height={32} class="" />
                     </button>
                     <Modal toggle={visible} setToggle={setVisible}>
                     </Modal>

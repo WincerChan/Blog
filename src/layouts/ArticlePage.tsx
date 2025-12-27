@@ -11,8 +11,8 @@ import {
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
 import { calculateDateDifference, formatDate } from "~/utils";
-import IconArrowLeft from "~icons/carbon/arrow-left";
-import IconArrowRight from "~icons/carbon/arrow-right";
+import IconArrowLeft from "~icons/tabler/arrow-left";
+import IconArrowRight from "~icons/tabler/arrow-right";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";

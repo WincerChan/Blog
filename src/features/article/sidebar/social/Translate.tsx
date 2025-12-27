@@ -1,5 +1,5 @@
 import { Show, createMemo, createSignal } from "solid-js";
-import IconTranslate from "~icons/carbon/translate";
+import IconTranslate from "~icons/tabler/language";
 import { globalStore } from "~/features/theme";
 import { safeEncode } from "~/content/velite-utils";
 

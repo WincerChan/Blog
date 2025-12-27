@@ -1,6 +1,6 @@
 import { createSignal, onCleanup, onMount } from "solid-js";
 import { isBrowser } from "~/utils";
-import IconUpdateNow from "~icons/carbon/update-now";
+import IconRefresh from "~icons/tabler/refresh";
 
 const UpdateNotify = () => {
     const forcedRefresh = isBrowser ? window.location.reload.bind(window.location) : () => { }
@@ -21,7 +21,7 @@ const UpdateNotify = () => {
             class=""
             classList={{ hidden: !visible() }}
         >
-            <IconUpdateNow width={20} height={20} class="" />
+            <IconRefresh width={20} height={20} class="" />
             更新已就绪，刷新页面以查看新内容。
         </button>
     )

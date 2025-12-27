@@ -2,8 +2,8 @@ import { useSearchParams } from "@solidjs/router";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { isBrowser, range } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
-import IconArrowLeft from "~icons/carbon/arrow-left";
-import IconArrowRight from "~icons/carbon/arrow-right";
+import IconArrowLeft from "~icons/tabler/arrow-left";
+import IconArrowRight from "~icons/tabler/arrow-right";
 import ArticlePage from "~/layouts/ArticlePage";
 
 const resultPerPage = 8

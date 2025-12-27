@@ -1,5 +1,5 @@
 import { createSignal, onCleanup, onMount } from "solid-js"
-import IconUptoTop from "~icons/carbon/up-to-top"
+import IconArrowUp from "~icons/tabler/arrow-up"
 
 const BackTop = () => {
     const [visible, setVisible] = createSignal(false)
@@ -37,7 +37,7 @@ const BackTop = () => {
             onClick={scrollToTop}
             aria-label="Back to top"
         >
-            <IconUptoTop width={28} height={28} class="block" />
+            <IconArrowUp width={28} height={28} class="block" />
         </button>
     )
 }

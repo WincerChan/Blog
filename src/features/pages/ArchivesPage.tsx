@@ -3,7 +3,7 @@ import { For, createEffect, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import OtherBlogs from "~/features/post-listing/OtherCards";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
-import IconChevronRight from "~icons/carbon/chevron-right";
+import IconChevronRight from "~icons/tabler/chevron-right";
 
 const Archives = ({ page }) => {
     const { LL } = useI18nContext();
