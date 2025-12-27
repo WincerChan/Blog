@@ -83,11 +83,19 @@
 
 #blog-article th,
 #blog-article td {
-  @apply border border-[var(--c-border)] py-2.5 px-3 text-center align-top;
+  @apply border-0 py-2.5 px-3 text-left align-top;
 }
 
 #blog-article th {
-  @apply bg-[var(--c-surface-2)] font-semibold;
+  @apply font-sans font-semibold text-[var(--c-text)] border-b-1 border-[var(--c-border-strong)];
+}
+
+#blog-article td {
+  @apply text-[var(--c-text)];
+}
+
+#blog-article tbody tr {
+  @apply border-b border-[var(--c-border)];
 }
 
 #blog-article img,
