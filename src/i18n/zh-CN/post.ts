@@ -12,4 +12,5 @@ export default {
     ARCHIVES_SUBTITLE: "共计 {total: number} 篇文章",
     S: "zh-CN",
     DIS: "正在加载 Disqus 评论",
+    SWITCH_TO: "Switch to English"
 }

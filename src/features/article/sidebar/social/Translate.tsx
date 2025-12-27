@@ -1,7 +1,6 @@
-import { Show, createMemo, createSignal } from "solid-js";
+import { Show, createMemo } from "solid-js";
 import IconTranslate from "~icons/tabler/language";
-import { globalStore } from "~/features/theme";
-import { safeEncode } from "~/content/velite-utils";
+import { useI18nContext } from "~/i18n/i18n-solid";
 
 interface TranslateProps {
     lang?: string,
@@ -9,11 +8,7 @@ interface TranslateProps {
 }
 
 const Translate = ({ pageURL, lang }: TranslateProps) => {
-    const [toggle, setToggle] = createSignal(false);
-    const click = () => {
-        setToggle(!toggle());
-    };
-
+    const { LL } = useI18nContext();
     const normalizeUrl = (value: string) => (value.endsWith("/") ? value : `${value}/`);
     const getSlugInfo = (url: string) => {
         const normalized = normalizeUrl(url);
@@ -41,51 +36,29 @@ const Translate = ({ pageURL, lang }: TranslateProps) => {
         if (!targetSlug || targetSlug === slug) return null;
 
         const targetUrl = isPost ? `/posts/${targetSlug}/` : `/${targetSlug}/`;
-        const dataBase = isPost ? "/_data/posts/" : "/_data/pages/";
-        const langMap: Record<string, { name: string; url: string }> = {
-            en: { name: "English", url: langShort === "zh" ? targetUrl : normalized },
-            "zh-CN": { name: "中文", url: langShort === "zh" ? normalized : targetUrl },
+        const targetLocale = langShort === "zh" ? "en" : "zh-CN";
+        const targetName = targetLocale === "en" ? "EN" : "中文";
+        return {
+            targetLocale,
+            targetName,
+            targetUrl,
         };
-        return { langMap };
     });
-
-    const onblur = () => {
-        setTimeout(() => {
-            setToggle(false)
-        }, 100)
-    }
 
     return (
         <Show when={derived()}>
             {(info) => (
-                <button
-                    onClick={click}
-                    onBlur={onblur}
-                    title="Translate"
-                    class="relative inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)]"
-                    aria-expanded={toggle()}
+                <a
+                    href={info().targetUrl}
+                    lang={info().targetLocale}
+                    link={true}
+                    title={LL().post.SWITCH_TO()}
+                    aria-label={LL().post.SWITCH_TO()}
+                    class="inline-flex items-center gap-1.5 rounded-full border border-[var(--c-border)] px-2.5 py-1 text-sm font-sans normal-case tracking-normal text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
                 >
-                    <IconTranslate class="block" height={24} width={24} />
-                    <div
-                        class="absolute left-0 top-full mt-2 min-w-[140px] rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] py-1 text-sm shadow-sm transition duration-150"
-                        classList={{
-                            "opacity-0 pointer-events-none translate-y-1": !toggle(),
-                            "opacity-100 translate-y-0": toggle(),
-                        }}
-                    >
-                        {Object.entries(info().langMap).map(([key, entry]) => (
-                            <a
-                                lang={key}
-                                href={entry.url}
-                                link={true}
-                                class="block px-3 py-1.5 text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)]"
-                                title={globalStore.locale == key ? `Current: ${entry.name}` : entry.name}
-                            >
-                                {entry.name}
-                            </a>
-                        ))}
-                    </div>
-                </button>
+                    <IconTranslate class="block" width={16} height={16} />
+                    {info().targetName}
+                </a>
             )}
         </Show>
     );

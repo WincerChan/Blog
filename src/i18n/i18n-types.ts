@@ -128,6 +128,10 @@ type RootTranslation = {
 		 * L​o​a​d​i​n​g​ ​D​i​s​q​u​s​ ​C​o​m​m​e​n​t​s
 		 */
 		DIS: string
+		/**
+		 * 切​换​到​中​文
+		 */
+		SWITCH_TO: string
 	}
 	sidebar: {
 		TOOLS: {
@@ -300,6 +304,10 @@ export type TranslationFunctions = {
 		 * Loading Disqus Comments
 		 */
 		DIS: () => LocalizedString
+		/**
+		 * 切换到中文
+		 */
+		SWITCH_TO: () => LocalizedString
 	}
 	sidebar: {
 		TOOLS: {
