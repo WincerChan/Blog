@@ -213,7 +213,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
     return (
         <div class="md:col-start-3 md:row-start-1 md:justify-self-start">
             <aside class="hidden md:block md:sticky md:top-24">
-                <div class="text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
+                <div class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                     <span>{LL().sidebar.TOC()}</span>
                 </div>
                 <div
@@ -238,7 +238,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
                     onClick={() => setVisible(false)}
                 />
                 <div class="md:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border border-[var(--c-border)] bg-[var(--c-surface)] shadow-lg">
-                    <div class="flex items-center justify-between px-4 pt-4 pb-2 text-xs uppercase tracking-wide text-[var(--c-text-subtle)]">
+                    <div class="flex items-center justify-between px-4 pt-4 pb-2 text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                         <span>{LL().sidebar.TOC()}</span>
                         <button
                             type="button"
