@@ -18,9 +18,9 @@ const ArticleLayout = (props: ArticleLayoutProps) => {
     return (
         <AppLayout lang={resolved().lang}>
             <HeadTag headParams={props.headParams} />
-            <div class="w-full max-w-5xl mx-auto px-4 md:px-0">
+            <div class="w-full max-w-5xl mx-auto px-4 md:px-0 md:grid md:grid-cols-[1fr_minmax(0,42rem)_1fr] md:gap-x-8">
                 <ToC toc={resolved().toc ?? ""} slug={resolved().pageURL} />
-                <article class="w-full max-w-2xl mx-auto">
+                <article class="w-full max-w-2xl mx-auto md:col-start-2 md:row-start-1">
                     {props.children}
                 </article>
             </div>

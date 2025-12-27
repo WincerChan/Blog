@@ -1,0 +1,147 @@
+#blog-article {
+  color: var(--c-text);
+  line-height: 1.8;
+}
+
+#blog-article > * + * {
+  margin-top: 1.2rem;
+}
+
+#blog-article h1,
+#blog-article h2,
+#blog-article h3,
+#blog-article h4,
+#blog-article h5,
+#blog-article h6 {
+  color: var(--c-text);
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+}
+
+#blog-article h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 2.4rem;
+}
+
+#blog-article h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.2rem;
+}
+
+#blog-article h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.8rem;
+}
+
+#blog-article h4 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+}
+
+#blog-article h5,
+#blog-article h6 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 1.2rem;
+}
+
+#blog-article p {
+  margin: 0;
+  color: var(--c-text);
+}
+
+#blog-article a {
+  color: var(--c-link);
+  text-decoration: underline;
+  text-decoration-color: var(--c-border-strong);
+  text-underline-offset: 0.2em;
+}
+
+#blog-article a:hover {
+  color: var(--c-link-hover);
+  text-decoration-color: var(--c-link);
+}
+
+#blog-article ul,
+#blog-article ol {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+#blog-article li + li {
+  margin-top: 0.35rem;
+}
+
+#blog-article blockquote {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--c-border-strong);
+  background: var(--c-surface-2);
+  color: var(--c-text-muted);
+}
+
+#blog-article blockquote p {
+  margin: 0;
+}
+
+#blog-article code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;
+  background: var(--c-code-bg);
+  border: 1px solid var(--c-border);
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+}
+
+#blog-article pre {
+  margin: 0;
+  padding: 1rem;
+  background: var(--c-code-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  overflow: auto;
+  line-height: 1.6;
+}
+
+#blog-article pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+#blog-article hr {
+  border: none;
+  border-top: 1px solid var(--c-border);
+  margin: 2rem 0;
+}
+
+#blog-article table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+}
+
+#blog-article th,
+#blog-article td {
+  border: 1px solid var(--c-border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+#blog-article th {
+  background: var(--c-surface-2);
+  font-weight: 600;
+}
+
+#blog-article img,
+#blog-article video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
