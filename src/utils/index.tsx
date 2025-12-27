@@ -25,12 +25,12 @@ const calculateDateDifference = (startDate: Date, lang: string): string => {
 
     if (years >= 1) {
         if (months === 0) {
-            result = ` ${years} ${lang.startsWith('zh') ? '年' : 'year(s)'}`;
+            result = `${years} ${lang.startsWith('zh') ? '年' : 'year(s)'}`;
         } else {
-            result = ` ${years} ${lang.startsWith('zh') ? '年' : 'year(s)'} ${months} ${lang.startsWith('zh') ? '个月' : 'month(s)'}`;
+            result = `${years} ${lang.startsWith('zh') ? '年' : 'year(s)'} ${months} ${lang.startsWith('zh') ? '个月' : 'month(s)'}`;
         }
     } else {
-        result = ` ${months} ${lang.startsWith('zh') ? '个月' : 'months'}`;
+        result = `${months} ${lang.startsWith('zh') ? '个月' : 'months'}`;
     }
 
     return result;

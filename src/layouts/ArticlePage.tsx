@@ -43,6 +43,26 @@ const PostMeta = ({
     const tags = () => (blog.tags ?? []).filter(Boolean);
     const hasWords = () => typeof blog.words === "number" && blog.words > 0;
     const hasTags = () => tags().length > 0;
+    const renderExpiredText = () => {
+        if (!LL) return null;
+        const dateText = calculateDateDifference(
+            new Date(blog.updated ?? blog.date),
+            lang() as string,
+        );
+        console.log("|", dateText, "|")
+        const fullText = LL().post.EXPIRED_NOTIFY({ date: dateText });
+        if (!dateText || !fullText.includes(dateText)) return fullText;
+        const [prefix, suffix] = fullText.split(dateText);
+        return (
+            <>
+                {prefix}
+                <span class="font-semibold underline underline-offset-4">
+                    {dateText}
+                </span>
+                {suffix}
+            </>
+        );
+    };
     return (
         <>
             <div class="pt-10 md:pt-14 mb-8 ">
@@ -95,15 +115,9 @@ const PostMeta = ({
                 </Show>
             </div>
             <Show when={blog.category && !isRecently}>
-                <div class="my-8 border-l-4 border-[var(--c-border-strong)] pl-5 py-4 text-lg text-[var(--c-text-muted)]">
+                <div class="my-8 rounded border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)]">
                     <p class="leading-relaxed">
-                        {LL &&
-                            LL().post.EXPIRED_NOTIFY({
-                                date: calculateDateDifference(
-                                    new Date(blog.updated ?? blog.date),
-                                    lang() as string,
-                                ),
-                            })}
+                        {renderExpiredText()}
                     </p>
                 </div>
             </Show>

@@ -41,7 +41,7 @@ type RootTranslation = {
 			 */
 			'1': string
 			/**
-			 * k​ ​W​o​r​d​s
+			 *  ​W​o​r​d​s
 			 */
 			'2': string
 			/**
@@ -214,7 +214,7 @@ export type TranslationFunctions = {
 			 */
 			'1': () => LocalizedString
 			/**
-			 * k Words
+			 *  Words
 			 */
 			'2': () => LocalizedString
 			/**
