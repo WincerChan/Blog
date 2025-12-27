@@ -25,7 +25,7 @@ const Home = () => {
                 <h3 class="text-base font-medium text-[var(--c-text-muted)]">近期文章</h3>
                 <a
                     link={true}
-                    class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+                    class="group inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] hover:text-[var(--c-link)] transition-colors"
                     href="/archives/"
                 >
                     查看更多文章

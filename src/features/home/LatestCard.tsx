@@ -31,7 +31,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         </Show>
                         <p class="text-[var(--c-text)] opacity-85 leading-relaxed" innerText={blog.summary} />
                         <div class="flex items-center gap-4">
-                            <span class="latest-readmore inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]">
+                            <span class="latest-readmore inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] transition-colors hover:text-[var(--c-link)]">
                                 继续阅读
                                 <IconArrowRight width={14} height={14} class="latest-readmore-arrow transition-transform" />
                             </span>
