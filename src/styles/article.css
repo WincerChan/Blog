@@ -1,5 +1,5 @@
 #blog-article {
-  @apply text-[var(--c-text)] leading-loose;
+  @apply text-[var(--c-text)] leading-[1.75];
 }
 
 #blog-article>*+* {
@@ -15,29 +15,25 @@
   @apply text-[var(--c-text)] leading-snug mb-2;
 }
 
-#blog-article h1 {
-  @apply text-4xl font-semibold mt-10;
-}
-
 #blog-article h2 {
   @apply text-2xl font-semibold mt-10 mb-6;
 }
 
 #blog-article h3 {
-  @apply text-xl font-semibold mt-10 mb-4;
+  @apply text-xl font-semibold mt-8 mb-4;
 }
 
 #blog-article h4 {
-  @apply text-lg font-medium mt-7 mb-3;
+  @apply text-lg font-medium mt-6 mb-3;
 }
 
 #blog-article h5,
 #blog-article h6 {
-  @apply text-base font-medium mt-5 mb-2;
+  @apply text-[1.05rem] font-medium mt-5 mb-2;
 }
 
 #blog-article p {
-  @apply m-0 mb-6 text-[var(--c-text)];
+  @apply mb-6 text-[var(--c-text)] text-[1.05rem];
 }
 
 #blog-article a {
@@ -50,7 +46,7 @@
 
 #blog-article ul,
 #blog-article ol {
-  @apply pl-5 m-0;
+  @apply pl-5 mb-6;
 }
 
 #blog-article li+li {
@@ -58,11 +54,11 @@
 }
 
 #blog-article blockquote {
-  @apply m-0 py-3 px-4 border-l-4 border-[var(--c-border-strong)] bg-[var(--c-surface-2)] text-[var(--c-text-muted)];
+  @apply my-8 border-l-4 italic border-[var(--c-border-strong)] pl-5 py-4 space-y-4 text-lg text-[var(--c-text-muted)];
 }
 
 #blog-article blockquote p {
-  @apply m-0;
+  @apply m-0 leading-relaxed;
 }
 
 #blog-article code {

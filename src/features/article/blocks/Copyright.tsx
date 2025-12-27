@@ -1,43 +1,35 @@
-import { Accessor, For, JSXElement } from "solid-js";
-import { Translations } from "~/i18n/i18n-types";
-import NotByAi from "~/ui/icons/not-by-ai";
 import { formatDate } from "~/utils";
 
-
 interface CopyrightProps {
-    title: string,
-    slug: string,
-    updated: Date,
-    LL: Accessor<Translations>
+    updated: Date
 }
 
-const Copyright = ({ title, slug, updated, LL }: CopyrightProps) => {
-    const elems: JSXElement[] = [
-        "Wincer",
-        formatDate(updated),
-        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="" target="_blank" rel="noopener">
-            CC BY-NC-ND 4.0
-        </a>
-    ];
+const Copyright = ({ updated }: CopyrightProps) => {
     return (
-        <div class="">
-            <div>
-                <p>{title}</p>
-                <p>{`${__SITE_CONF.baseURL}${slug}`}</p>
+        <div class="mt-12 p-5 border border-dashed border-[var(--c-border)] rounded text-sm font-mono ">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-2 font-bold text-sm">
+                        <span>Wincer</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <a
+                            href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh"
+                            class="underline decoration-[var(--c-border-strong)] underline-offset-4 transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            CC BY-NC-ND 4.0
+                        </a>
+                        <span class="text-[var(--c-text-subtle)]">/</span>
+                        <span>转载请注明出处</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="opacity-60">更新于：</div>
+                    <div class="tabular-nums text-[var(--c-text-subtle)]">2023-10-25 14:20:00</div>
+                </div>
             </div>
-            <div class="">
-                <For each={elems}>
-                    {(elem, idx) => (
-                        <div class="">
-                            <p>{LL && LL().post.COPYRIGHT[idx() as 0 | 1 | 2]}</p>
-                            {elem}
-                        </div>
-                    )}
-                </For>
-            </div>
-            <a href="https://notbyai.fyi/" aria-label="not-by-ai" target="_blank" class="">
-                <NotByAi />
-            </a>
         </div>
     )
 }

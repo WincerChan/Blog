@@ -45,7 +45,7 @@ const PostMeta = ({
     const hasTags = () => tags().length > 0;
     return (
         <>
-            <div class="pt-10 md:pt-14 pb-8 border-b border-[var(--c-border)]">
+            <div class="pt-10 md:pt-14 mb-8 ">
                 <div class="space-y-4">
                     <DateCat date={blog.date} category={blog.category} />
                     <div class="space-y-3">
@@ -95,7 +95,7 @@ const PostMeta = ({
                 </Show>
             </div>
             <Show when={blog.category && !isRecently}>
-                <div class="my-8 border-l-4 border-[var(--c-border-strong)] pl-3 py-1 text-base text-[var(--c-text-muted)]">
+                <div class="my-8 border-l-4 border-[var(--c-border-strong)] pl-5 py-4 text-lg text-[var(--c-text-muted)]">
                     <p class="leading-relaxed">
                         {LL &&
                             LL().post.EXPIRED_NOTIFY({
@@ -199,19 +199,17 @@ const ArticlePage = ({ children, rawBlog, relates, hideComment }: PostProps) => 
     if (blog.encrypted) wrapper = <ProtectBlog source={children} />;
     else wrapper = <div id="blog-article">{children}</div>;
 
-    let extra = (
-        <PostExtra
-            rawBlog={blog}
-            relates={relates}
-            hideComment={hideComment}
-            LL={LL}
-        />
-    );
     return (
-        <ArticleLayout headParams={headParams} extra={extra}>
+        <ArticleLayout headParams={headParams}>
             <PostMeta blog={blog} lang={locale} LL={LL} />
             {wrapper}
             <PostActions pageURL={blog.slug} />
+            <PostExtra
+                rawBlog={blog}
+                relates={relates}
+                hideComment={hideComment}
+                LL={LL}
+            />
         </ArticleLayout>
     );
 };
@@ -233,10 +231,7 @@ export const PostExtra = ({
         <>
             <Show when={rawBlog.category}>
                 <Copyright
-                    title={rawBlog.title}
-                    slug={rawBlog.slug}
                     updated={new Date(rawBlog.updated ?? rawBlog.date)}
-                    LL={LL}
                 />
                 <Relates relates={relates} LL={LL} />
                 <Neighbours neighbours={rawBlog.neighbours} />
