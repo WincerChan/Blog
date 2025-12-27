@@ -12,7 +12,7 @@ const Category = () => {
                 <For each={__CONTENT_TOTAL_CATEGORIES as any}>
                     {(cate) => (
                         <a
-                            class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+                            class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:underline hover:decoration-[var(--c-link)] decoration-1 underline-offset-4 transition-colors"
                             href={`/category/${cate.title}/`}
                         >
                             <p>{cate.title}（{cate.count}）</p>

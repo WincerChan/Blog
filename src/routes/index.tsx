@@ -3,6 +3,7 @@ import OtherBlogs from "~/features/post-listing/OtherCards";
 import PageLayout from "~/layouts/PageLayout";
 import { getLatestPosts, postUrl } from "~/content/velite";
 import { Show, createMemo, createResource } from "solid-js";
+import IconArrowRight from "~icons/tabler/arrow-right";
 
 
 
@@ -24,10 +25,11 @@ const Home = () => {
                 <h3 class="text-base font-medium text-[var(--c-text-muted)]">近期文章</h3>
                 <a
                     link={true}
-                    class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:decoration-[var(--c-link)] transition-colors"
+                    class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
                     href="/archives/"
                 >
                     查看更多文章
+                    <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
                 </a>
             </div>
             <OtherBlogs posts={() => recentPosts().slice(1) as any} description={null} />

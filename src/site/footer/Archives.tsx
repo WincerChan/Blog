@@ -13,7 +13,7 @@ const Archives = () => {
                     .sort(([a], [b]) => Number(b) - Number(a))
                     .map((val) => (
                         <a
-                            class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+                            class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] hover:underline hover:decoration-[var(--c-link)] decoration-1 underline-offset-4 transition-colors"
                             href={`/archives/#year-${val[0]}`}
                         >
                             {val[0]}（{val[1]}）

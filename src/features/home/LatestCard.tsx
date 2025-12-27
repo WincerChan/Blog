@@ -21,7 +21,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         <PostMeta date={blog.date} category={blog.category} />
                     </div>
                     <a link={true} href={blog.slug} class="group block space-y-3">
-                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)] group-hover:text-[var(--c-link)] transition-colors">
+                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)] transition-colors group-hover:underline group-hover:decoration-[var(--c-link)] decoration-2 underline-offset-6">
                             {blog.title}
                         </h2>
                         <Show when={blog.subtitle}>
@@ -31,7 +31,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         </Show>
                         <p class="text-[var(--c-text)] opacity-85 leading-relaxed" innerText={blog.summary} />
                         <div class="flex items-center gap-4">
-                            <span class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] group-hover:decoration-[var(--c-link)] transition-colors">
+                            <span class="inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] transition-colors group-hover:text-[var(--c-link)]">
                                 继续阅读
                                 <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
                             </span>

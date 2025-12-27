@@ -68,7 +68,7 @@ const FooterNav = () => {
             <span class="px-2 text-[var(--c-text-subtle)]">|</span>
             Designed and developed by{" "}
             <a
-              class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+              class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
               href="https://itswincer.com"
               target="_blank"
               rel="noopener"
@@ -79,7 +79,7 @@ const FooterNav = () => {
           </p>
           <div class="flex items-center gap-3">
             <a
-              class="text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+              class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
               href="https://github.com/WincerChan/Blog"
               target="_blank"
               rel="noopener"
