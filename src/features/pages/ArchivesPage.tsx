@@ -14,6 +14,8 @@ const Archives = ({ page }) => {
         .sort((a, b) => Number(b) - Number(a));
 
     const yearCount = (year: string) => (postsByYear?.[year]?.length ?? 0) as number;
+    const totalCount = () =>
+        allYears.reduce((sum, year) => sum + yearCount(year), 0);
 
     onMount(() => {
         const openDetails = (details: HTMLDetailsElement) => {
@@ -59,12 +61,15 @@ const Archives = ({ page }) => {
 
     return (
         <SimplePageLayout page={page} lang={page.lang}>
+            <p class="mt-2 mb-8 text-sm text-[var(--c-text-muted)]">
+                {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
+            </p>
             <div class="">
                 <For each={allYears}>
                     {(year) => (
                         <details
                             id={`year-${year}`}
-                            class=""
+                            class="group"
                             onToggle={(e) => {
                                 if (!(e as Event).isTrusted) return;
                                 const details = e.currentTarget as HTMLDetailsElement;
@@ -82,15 +87,13 @@ const Archives = ({ page }) => {
                                 }
                             }}
                         >
-                            <summary class="">
-                                <h2 class="">
-                                    <span class="">
-                                        <span class="">
-                                            <IconChevronRight width={18} height={18} class="" />
-                                        </span>
-                                        <span class="">{year}</span>
-                                    </span>
+                            <summary class="flex items-center justify-between gap-4">
+                                <h2 class="text-xl md:text-2xl font-semibold text-[var(--c-text)]">
+                                    {year}
                                 </h2>
+                                <span class="text-[var(--c-text-subtle)]">
+                                    <IconChevronRight width={18} height={18} class="" />
+                                </span>
                             </summary>
                             <div class="">
                                 <OtherBlogs

@@ -25,7 +25,11 @@ const SimplePageLayout = ({ children, page, lang }) => {
     const headParams = constructHeadParams(page);
     return (
         <PageLayout headParams={headParams} lang={lang}>
-            {page && <h1 class="">{page.title}</h1>}
+            {page && (
+                <h1 class="mt-10 md:mt-14 mb-6 text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)]">
+                    {page.title}
+                </h1>
+            )}
             {children}
         </PageLayout>
     )
