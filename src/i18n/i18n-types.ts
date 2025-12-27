@@ -184,6 +184,10 @@ type RootTranslation = {
 		 */
 		ARCHIVES_SUBTITLE: RequiredParams<'total'>
 		/**
+		 * p​o​s​t​s
+		 */
+		POSTS_UNIT: string
+		/**
 		 * C​a​t​e​g​o​r​y​:​ 
 		 */
 		CATE: string
@@ -358,6 +362,10 @@ export type TranslationFunctions = {
 		 * Total {total} article(s)
 		 */
 		ARCHIVES_SUBTITLE: (arg: { total: number }) => LocalizedString
+		/**
+		 * posts
+		 */
+		POSTS_UNIT: () => LocalizedString
 		/**
 		 * Category: 
 		 */

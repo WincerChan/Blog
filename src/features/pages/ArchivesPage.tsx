@@ -67,7 +67,7 @@ const Archives = ({ page }) => {
 
     return (
         <SimplePageLayout page={page} lang={page.lang}>
-            <p class="mt-2 mb-8 text-sm text-[var(--c-text-muted)]">
+            <p class="mt-2 mb-8 text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
                 {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
             </p>
             <div class="">
@@ -75,7 +75,7 @@ const Archives = ({ page }) => {
                     {(year) => (
                         <details
                             id={`year-${year}`}
-                            class="group"
+                            class="archives-year group"
                             onToggle={(e) => {
                                 if (!(e as Event).isTrusted) return;
                                 const details = e.currentTarget as HTMLDetailsElement;
@@ -93,15 +93,18 @@ const Archives = ({ page }) => {
                                 }
                             }}
                         >
-                            <summary class="flex items-center justify-between gap-4 my-4">
-                                <h2 class="text-3xl font-semibold text-[var(--c-text)] font-mono">
+                            <summary class="flex items-center justify-between gap-4 my-4 border-b border-transparent pb-2 cursor-pointer select-none transition-colors group-hover:border-[var(--c-border)]">
+                                <h2 class="text-3xl font-semibold text-[var(--c-text)] font-mono transition-colors group-hover:text-[var(--c-link)]">
                                     {year}
                                 </h2>
-                                <span class="text-[var(--c-text-subtle)]">
-                                    <IconChevronRight width={18} height={18} class="" />
-                                </span>
+                                <div class="flex items-center gap-3 text-[var(--c-text-subtle)]">
+                                    <span class="text-base font-medium tabular-nums text-[var(--c-text)]">
+                                        {yearCount(year)} {LL && LL().archive.POSTS_UNIT()}
+                                    </span>
+                                    <IconChevronRight width={18} height={18} class="archives-icon transition-transform" />
+                                </div>
                             </summary>
-                            <div class="mt-4">
+                            <div class="archives-content mt-4">
                                 <ol class="space-y-4">
                                     <For each={postsByYear[year] ?? []}>
                                         {(post) => (
@@ -110,7 +113,7 @@ const Archives = ({ page }) => {
                                                     href={post.slug}
                                                     class="flex items-center gap-x-8 text-[var(--c-text)]"
                                                 >
-                                                    <span class="text-sm font-mono tabular-nums text-[var(--c-text-subtle)]">
+                                                    <span class="text-sm pl-1 font-mono tabular-nums text-[var(--c-text-subtle)]">
                                                         {formatMonthDay(post.date)}
                                                     </span>
                                                     <span class="min-w-0 text-base md:text-lg font-medium transition-colors hover:text-[var(--c-link)]">
@@ -126,6 +129,11 @@ const Archives = ({ page }) => {
                     )}
                 </For>
             </div>
+            <style>{`
+                .archives-year[open] .archives-icon {
+                    transform: rotate(90deg);
+                }
+            `}</style>
         </SimplePageLayout >
     )
 }
