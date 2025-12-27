@@ -14,9 +14,17 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
             <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                 {LL && LL().footer.S}
             </label>
-            <div class="space-y-2 text-sm leading-relaxed text-[var(--c-text-muted)]">
+            <div class="space-y-2 text-sm leading-relaxed">
                 <For each={elems()}>
-                    {(item, idx) => <p>{item}{LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}</p>}
+                    {(item, idx) => (
+                        <p class="flex items-center gap-2">
+                            <span class="text-[var(--c-text-subtle)]">
+                                {LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}
+                            </span>
+                            <span class="text-[var(--c-text-subtle)]">·</span>
+                            <span class="text-[var(--c-text)] font-medium tabular-nums">{item}</span>
+                        </p>
+                    )}
                 </For>
             </div>
         </div>

@@ -23,7 +23,7 @@ const Archives = () => {
                                 {val[0]}
                             </span>
                             <span class="text-[var(--c-text-subtle)]">·</span>
-                            <span class="text-[var(--c-text-subtle)]">{val[1]}</span>
+                            <span class="text-[var(--c-text)] font-medium tabular-nums">{val[1]}</span>
                         </a>
                 ))}
                 <a

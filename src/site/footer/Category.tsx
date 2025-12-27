@@ -19,7 +19,7 @@ const Category = () => {
                                 {cate.title}
                             </span>
                             <span class="text-[var(--c-text-subtle)]">·</span>
-                            <span class="text-[var(--c-text-subtle)]">{cate.count}</span>
+                            <span class="text-[var(--c-text)] font-medium tabular-nums">{cate.count}</span>
                         </a>
                     )}
                 </For>
