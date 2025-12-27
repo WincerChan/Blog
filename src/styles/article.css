@@ -1,10 +1,9 @@
 #blog-article {
-  color: var(--c-text);
-  line-height: 1.8;
+  @apply text-[var(--c-text)] leading-[1.8];
 }
 
 #blog-article > * + * {
-  margin-top: 1.2rem;
+  @apply mt-[1.2rem];
 }
 
 #blog-article h1,
@@ -13,135 +12,89 @@
 #blog-article h4,
 #blog-article h5,
 #blog-article h6 {
-  color: var(--c-text);
-  line-height: 1.35;
-  margin-bottom: 0.5rem;
+  @apply text-[var(--c-text)] leading-[1.35] mb-2;
 }
 
 #blog-article h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-top: 2.4rem;
+  @apply text-[2rem] font-semibold mt-[2.4rem];
 }
 
 #blog-article h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2.2rem;
+  @apply text-[1.5rem] font-semibold mt-[2.2rem];
 }
 
 #blog-article h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1.8rem;
+  @apply text-[1.25rem] font-semibold mt-[1.8rem];
 }
 
 #blog-article h4 {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-top: 1.5rem;
+  @apply text-[1.1rem] font-medium mt-[1.5rem];
 }
 
 #blog-article h5,
 #blog-article h6 {
-  font-size: 1rem;
-  font-weight: 500;
-  margin-top: 1.2rem;
+  @apply text-base font-medium mt-[1.2rem];
 }
 
 #blog-article p {
-  margin: 0 0 1.5rem;
-  color: var(--c-text);
+  @apply m-0 mb-6 text-[var(--c-text)];
 }
 
 #blog-article a {
-  color: var(--c-link);
-  text-decoration: underline;
-  text-decoration-color: var(--c-border-strong);
-  text-underline-offset: 0.2em;
+  @apply text-[var(--c-link)] underline decoration-[var(--c-border-strong)] underline-offset-[0.2em];
 }
 
 #blog-article a:hover {
-  color: var(--c-link-hover);
-  text-decoration-color: var(--c-link);
+  @apply text-[var(--c-link-hover)] decoration-[var(--c-link)];
 }
 
 #blog-article ul,
 #blog-article ol {
-  padding-left: 1.25rem;
-  margin: 0;
+  @apply pl-5 m-0;
 }
 
 #blog-article li + li {
-  margin-top: 0.35rem;
+  @apply mt-[0.35rem];
 }
 
 #blog-article blockquote {
-  margin: 0;
-  padding: 0.75rem 1rem;
-  border-left: 3px solid var(--c-border-strong);
-  background: var(--c-surface-2);
-  color: var(--c-text-muted);
+  @apply m-0 py-3 px-4 border-l-[3px] border-[var(--c-border-strong)] bg-[var(--c-surface-2)] text-[var(--c-text-muted)];
 }
 
 #blog-article blockquote p {
-  margin: 0;
+  @apply m-0;
 }
 
 #blog-article code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.95em;
-  background: var(--c-code-bg);
-  border: 1px solid var(--c-border);
-  padding: 0.12em 0.35em;
-  border-radius: 4px;
+  @apply font-mono text-[0.95em] bg-[var(--c-code-bg)] border border-[var(--c-border)] px-[0.35em] py-[0.12em] rounded;
 }
 
 #blog-article pre {
-  margin: 0;
-  padding: 1rem;
-  background: var(--c-code-bg);
-  border: 1px solid var(--c-border);
-  border-radius: 6px;
-  overflow: auto;
-  line-height: 1.6;
+  @apply m-0 p-4 bg-[var(--c-code-bg)] border border-[var(--c-border)] rounded-[6px] overflow-auto leading-[1.6];
 }
 
 #blog-article pre code {
-  background: transparent;
-  border: none;
-  padding: 0;
+  @apply bg-transparent border-0 p-0;
 }
 
 #blog-article hr {
-  border: none;
-  border-top: 1px solid var(--c-border);
-  margin: 2rem 0;
+  @apply border-0 border-t border-[var(--c-border)] my-8;
 }
 
 #blog-article table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin: 0;
+  @apply w-full border-collapse border-spacing-0 m-0;
 }
 
 #blog-article th,
 #blog-article td {
-  border: 1px solid var(--c-border);
-  padding: 0.6rem 0.75rem;
-  text-align: left;
-  vertical-align: top;
+  @apply border border-[var(--c-border)] py-[0.6rem] px-[0.75rem] text-left align-top;
 }
 
 #blog-article th {
-  background: var(--c-surface-2);
-  font-weight: 600;
+  @apply bg-[var(--c-surface-2)] font-semibold;
 }
 
 #blog-article img,
 #blog-article video {
-  max-width: 100%;
-  height: auto;
-  display: block;
+  @apply max-w-full h-auto block;
 }
