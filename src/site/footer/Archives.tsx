@@ -1,4 +1,5 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
+import IconArrowRight from "~icons/tabler/arrow-right";
 
 const Archives = () => {
     const { LL } = useI18nContext();
@@ -15,17 +16,22 @@ const Archives = () => {
             <div class="flex flex-col gap-2 text-sm leading-relaxed">
                 {displayedYears.map((val) => (
                         <a
-                            class="text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:underline hover:decoration-[var(--c-text)] decoration-1 underline-offset-4 transition-colors"
+                            class="group inline-flex items-center gap-2 text-[var(--c-text-muted)] transition-colors"
                             href={`/archives/#year-${val[0]}`}
                         >
-                            {val[0]}（{val[1]}）
+                            <span class="group-hover:text-[var(--c-text)] group-hover:underline group-hover:decoration-[var(--c-text)] decoration-1 underline-offset-4">
+                                {val[0]}
+                            </span>
+                            <span class="text-[var(--c-text-subtle)]">·</span>
+                            <span class="text-[var(--c-text-subtle)]">{val[1]}</span>
                         </a>
                 ))}
                 <a
-                    class="text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:underline hover:decoration-[var(--c-text)] decoration-1 underline-offset-4 transition-colors"
+                    class="group inline-flex items-center gap-1 text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:underline hover:decoration-[var(--c-text)] decoration-1 underline-offset-4 transition-colors"
                     href={nextYear ? `/archives/#year-${nextYear}` : "/archives/"}
                 >
-                    更多年份 →
+                    更多年份
+                    <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
                 </a>
             </div>
         </div>
