@@ -14,14 +14,13 @@ import { calculateDateDifference } from "~/utils";
 import IconArrowLeft from "~icons/tabler/arrow-left";
 import IconArrowRight from "~icons/tabler/arrow-right";
 import IconPointFilled from "~icons/tabler/point-filled";
-import IconPig from "~icons/tabler/pig";
-import IconShare from "~icons/tabler/share";
+import IconBrandTwitter from "~icons/tabler/brand-twitter";
+import IconLink from "~icons/tabler/link";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
 import DateCat from "~/features/post-listing/PostMeta";
 import ArticleLayout from "~/layouts/ArticleLayout";
-import SocialButton from "~/features/article/sidebar/social/Button";
 import Like from "~/features/article/sidebar/social/Like";
 import Translate from "~/features/article/sidebar/social/Translate";
 import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/features/article/types";
@@ -205,26 +204,39 @@ export const Neighbours = ({
 };
 
 const PostActions = ({ pageURL }: { pageURL: string }) => {
+    const buildShareUrl = () =>
+        typeof window !== "undefined" ? window.location.href : pageURL;
+    const twitterShareUrl = () =>
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(buildShareUrl())}`;
+    const copyUrl = async () => {
+        if (typeof navigator === "undefined" || !navigator.clipboard) return;
+        try {
+            await navigator.clipboard.writeText(buildShareUrl());
+        } catch {
+            // ignore clipboard errors
+        }
+    };
     return (
-        <div class="mt-10 grid grid-cols-3 items-center gap-4">
-            <div class="flex items-center justify-start">
-                <Like pageURL={pageURL} />
-            </div>
-            <div class="flex items-center justify-center">
-                <SocialButton
-                    IconName={IconPig}
-                    text="Reward"
-                    kind="reward"
-                    hoverColor="hover:text-amber-500 focus:text-amber-500"
-                />
-            </div>
-            <div class="flex items-center justify-end">
-                <SocialButton
-                    IconName={IconShare}
-                    text="Share"
-                    kind="share"
-                    hoverColor="hover:text-sky-500 focus:text-sky-500"
-                />
+        <div class="mt-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-4">
+            <Like pageURL={pageURL} />
+            <div class="flex items-center gap-4">
+                <a
+                    href={twitterShareUrl()}
+                    title="Share on Twitter"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center justify-center text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]"
+                >
+                    <IconBrandTwitter width={26} height={26} class="block" stroke-width={1.5} />
+                </a>
+                <button
+                    type="button"
+                    title="Copy URL"
+                    onClick={copyUrl}
+                    class="inline-flex items-center justify-center text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]"
+                >
+                    <IconLink width={26} height={26} class="block" stroke-width={1.5} />
+                </button>
             </div>
         </div>
     );

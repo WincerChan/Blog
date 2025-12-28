@@ -1,8 +1,7 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
-import IconHeart from "~icons/tabler/heart";
-import IconHeartFilled from "~icons/tabler/heart-filled";
+import IconSparkles from "~icons/tabler/sparkles";
 
 
 const Like = ({ pageURL }) => {
@@ -75,11 +74,12 @@ const Like = ({ pageURL }) => {
             title={liked() ? `${likes()} 人已点赞` : "Like"}
             class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)] disabled:opacity-60 disabled:cursor-not-allowed"
         >
-            {liked() ?
-                <IconHeartFilled width={36} height={36} class="block" stroke-width={1.5} />
-                :
-                <IconHeart width={36} height={36} class="block" stroke-width={1.5} />
-            }
+            <IconSparkles
+                width={36}
+                height={36}
+                class="block transition-colors"
+                classList={{ "text-[var(--c-link)]": liked() }}
+            />
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
@@ -87,7 +87,7 @@ const Like = ({ pageURL }) => {
                     </Show>
                 </ErrorBoundary>
             </Suspense>
-        </button >
+        </button>
     )
 }
 
