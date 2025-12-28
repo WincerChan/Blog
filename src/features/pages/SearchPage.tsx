@@ -5,6 +5,7 @@ import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowLeft from "~icons/ph/arrow-left";
 import IconArrowRight from "~icons/ph/arrow-right";
 import IconReturn from "~icons/ph/arrow-elbow-down-left";
+import IconClear from "~icons/ph/backspace";
 import ArticlePage from "~/layouts/ArticlePage";
 
 const resultPerPage = 8
@@ -99,7 +100,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                             <a class="text-[var(--c-text)]! no-underline!" href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
                         <p class="mt-2 text-base text-[var(--c-text-muted)] leading-relaxed mb-3!">
-                            <span class="search-snippet" innerHTML={ret.content ? `${ret.content}...` : ""} />
+                            <span class="search-snippet" innerHTML={ret.content ? `...${ret.content}...` : ""} />
                         </p>
                         <div class="mt-3 flex flex-wrap items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
                             <time dateTime={formatDateISO(ret.published_at)}>
@@ -294,9 +295,9 @@ const Search = ({ page, children }) => {
                             <button
                                 type="button"
                                 onClick={clearInput}
-                                class="text-sm text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
+                                class="inline-flex items-center text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
                             >
-                                清除
+                                <IconClear width={16} height={16} class="block opacity-70" />
                             </button>
                         </Show>
                         <span class="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] px-2 py-0.5 text-sm font-mono text-[var(--c-text-subtle)]">
