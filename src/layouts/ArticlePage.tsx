@@ -87,7 +87,7 @@ const PostMeta = ({
                             </div>
                         </Show>
                     </Show>
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         <Show
                             when={showTranslateInTitleLine()}
                             fallback={(
@@ -115,7 +115,7 @@ const PostMeta = ({
                 <Show when={hasWords() || hasTags()}>
                     <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide">
                         <Show when={hasWords() || hasTags()}>
-                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                            <div class="flex flex-wrap items-center gap-x-3 mt-2">
                                 <Show when={hasWords()}>
                                     <span class="tabular-nums">
                                         {blog.words} {LL && LL().post.W}
@@ -152,7 +152,7 @@ const PostMeta = ({
                 </Show>
             </div>
             <Show when={blog.category && !isRecently}>
-                <div class="my-8 rounded border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)]">
+                <div class="my-6 rounded border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)]">
                     <p class="leading-relaxed">
                         {renderExpiredText()}
                     </p>
