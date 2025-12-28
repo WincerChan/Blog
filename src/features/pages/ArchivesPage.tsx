@@ -22,7 +22,7 @@ const Archives = ({ page }) => {
 
     return (
         <SimplePageLayout page={page} lang={page.lang}>
-            <p class="mt-2 mb-8 text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
+            <p class="mt-2 mb-8 text-xl font-serif md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
                 {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
             </p>
             <div class="">

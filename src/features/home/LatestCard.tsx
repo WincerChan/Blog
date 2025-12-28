@@ -21,11 +21,11 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         <PostMeta date={blog.date} category={blog.category} />
                     </div>
                     <a link={true} href={blog.slug} class="group block space-y-3">
-                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)] decoration-[color-mix(in_srgb,var(--c-link)_70%,transparent)] decoration-2 underline-offset-6 group-hover:underline">
+                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)] decoration-[color-mix(in_srgb,var(--c-link)_70%,transparent)] decoration-2 underline-offset-6 group-hover:underline">
                             {blog.title}
                         </h2>
                         <Show when={blog.subtitle}>
-                            <h3 title={blog.subtitle} class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
+                            <h3 title={blog.subtitle} class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed font-serif">
                                 {blog.subtitle}
                             </h3>
                         </Show>

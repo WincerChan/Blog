@@ -31,7 +31,9 @@ const CategoryPage = (props: TaxoLayoutProps) => {
     );
     return (
         <PageLayout headParams={headParams()} >
-            <h1 class="">{LL && LL().archive.CATE()}{headParams().title}</h1>
+            <h1 class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
+                {LL && LL().archive.CATE()}{headParams().title}
+            </h1>
             <OtherBlogs posts={() => blogsByTerm()} />
         </PageLayout>
     )

@@ -18,7 +18,7 @@ const Tools = () => {
                 href="/atom.xml"
                 target="_blank"
                 title="RSS"
-                class="inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
+                class="hidden md:inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
             >
                 <IconRSS width={22} height={22} class="block transition-colors" />
             </a>

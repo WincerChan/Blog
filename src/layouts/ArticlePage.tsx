@@ -91,13 +91,13 @@ const PostMeta = ({
                         <Show
                             when={showTranslateInTitleLine()}
                             fallback={(
-                                <h1 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)]">
+                                <h1 class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
                                     {blog.title}
                                 </h1>
                             )}
                         >
                             <div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-                                <h1 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[var(--c-text)]">
+                                <h1 class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
                                     {blog.title}
                                 </h1>
                                 <div class="md:ml-auto">
@@ -106,7 +106,7 @@ const PostMeta = ({
                             </div>
                         </Show>
                         <Show when={!!blog.subtitle}>
-                            <h2 class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
+                            <h2 class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed font-serif">
                                 {blog.subtitle}
                             </h2>
                         </Show>
