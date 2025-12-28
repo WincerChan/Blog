@@ -4,7 +4,7 @@ import { isBrowser, range } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowLeft from "~icons/ph/arrow-left";
 import IconArrowRight from "~icons/ph/arrow-right";
-import IconReturn from "~icons/ph/key-return";
+import IconReturn from "~icons/ph/arrow-elbow-down-left";
 import ArticlePage from "~/layouts/ArticlePage";
 
 const resultPerPage = 8
@@ -48,9 +48,13 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
     if (data().error) {
         return errorMsg(data().error);
     }
-    const formatDate = (dateStr: string) => {
-        const cleanDateStr = dateStr.split(" ")[0]
-        return new Date(cleanDateStr).toLocaleString("en-us", { year: "numeric", month: "short", day: "numeric" })
+    const formatDateISO = (value: string) => {
+        const dateObj = new Date(value);
+        if (!dateObj || Number.isNaN(dateObj.getTime())) return String(value ?? "");
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+        const day = String(dateObj.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
     }
     const getPathname = (postURL: string) => {
         const url = new URL(postURL)
@@ -90,35 +94,82 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
             </div>
             <For each={data().hits}>
                 {ret => (
-                    <div class="">
-                        <h3 class="">
-                            <a href={getPathname(ret.url)} innerHTML={ret.title}></a>
+                    <div class="mt-6 first:mt-4 border-b border-[var(--c-border)] pb-6 last:border-b-0">
+                        <h3 class="mt-3! mb-1! text-xl md:text-2xl font-medium font-sans">
+                            <a class="text-[var(--c-text)]! no-underline!" href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
-                        <p class="">
-                            <span class="">{formatDate(ret.published_at)} —</span>
-                            <span innerHTML={ret.content ? ret.content + '...' : ''} />
+                        <p class="mt-2 text-base text-[var(--c-text-muted)] leading-relaxed mb-3!">
+                            <span class="search-snippet" innerHTML={ret.content ? `${ret.content}...` : ""} />
                         </p>
+                        <div class="mt-3 flex flex-wrap items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
+                            <time dateTime={formatDateISO(ret.published_at)}>
+                                {formatDateISO(ret.published_at)}
+                            </time>
+                            {ret.category && <span class="text-[var(--c-text-subtle)]">/</span>}
+                            {ret.category && (
+                                <span
+                                    class="text-[var(--c-text-subtle)] transition-colors"
+                                    classList={{
+                                        "bg-[var(--c-selection)] rounded px-1 text-[var(--c-text)]": ret.matched?.category,
+                                    }}
+                                >
+                                    {ret.category}
+                                </span>
+                            )}
+                            {ret.tags?.length && <span class="text-[var(--c-text-subtle)]">/</span>}
+                            <For each={ret.tags ?? []}>
+                                {(tag) => (
+                                    <span
+                                        class="text-[var(--c-text-subtle)] transition-colors"
+                                        classList={{
+                                            "bg-[var(--c-selection)] rounded px-1 text-[var(--c-text)]": ret.matched?.tags?.includes(tag),
+                                        }}
+                                    >
+                                        #{tag}
+                                    </span>
+                                )}
+                            </For>
+                        </div>
                     </div>
                 )}
             </For>
-            <div class="">
-                {
-                    currentPage() != 1 && (
-                        <button title="Prev" class="" onClick={() => { updatePage(-1) }}>
-                            <IconArrowLeft />
-                            <span>Prev</span>
+            <div class="mt-8 grid grid-cols-3 items-center text-sm text-[var(--c-text-subtle)]">
+                <div class="justify-self-start">
+                    <Show when={currentPage() !== 1}>
+                        <button
+                            title="Prev"
+                            class="inline-flex items-center gap-2 transition-colors hover:text-[var(--c-text)]"
+                            onClick={() => { updatePage(-1) }}
+                        >
+                            <IconArrowLeft width={16} height={16} />
+                            <span>上一页</span>
                         </button>
-                    )
-                }
-                <div />
-                {
-                    data().total > resultPerPage * currentPage() &&
-                    <button title="Next" class="" onClick={() => { updatePage(1) }}>
-                        <span>Next</span>
-                        <IconArrowRight />
-                    </button>
-                }
+                    </Show>
+                </div>
+                <span class="justify-self-center tabular-nums">
+                    第 {currentPage()} 页 / 共 {Math.max(1, Math.ceil(data().total / resultPerPage))} 页
+                </span>
+                <div class="justify-self-end">
+                    <Show when={data().total > resultPerPage * currentPage()}>
+                        <button
+                            title="Next"
+                            class="inline-flex items-center gap-2 transition-colors hover:text-[var(--c-text)]"
+                            onClick={() => { updatePage(1) }}
+                        >
+                            <span>下一页</span>
+                            <IconArrowRight width={16} height={16} />
+                        </button>
+                    </Show>
+                </div>
             </div>
+            <style>{`
+                .search-snippet b {
+                    background: var(--c-selection);
+                    color: var(--c-text);
+                    padding: 0 0.2em;
+                    border-radius: 0.25rem;
+                }
+            `}</style>
         </>
     )
 }
@@ -234,26 +285,26 @@ const Search = ({ page, children }) => {
                         ref={inputRef}
                         onInput={(e) => setInput(e.target.value)}
                         type="text"
-                        class="w-full border-0 border-b border-[var(--c-border-strong)] bg-transparent pb-3 pr-20 text-3xl md:text-4xl font-mono tracking-tight text-[var(--c-text)] outline-none caret-[var(--c-link)] placeholder:text-[var(--c-text-subtle)]"
+                        class="w-full border-0 border-b border-[var(--c-border-strong)] bg-transparent pb-3 pr-32 text-2xl md:text-3xl font-mono tracking-tight text-[var(--c-text)] outline-none caret-[var(--c-link)] placeholder:text-[var(--c-text-subtle)]"
                         placeholder=""
                         aria-label="Search"
                     />
-                    <IconReturn
-                        width={20}
-                        height={20}
-                        class="pointer-events-none absolute right-0 bottom-3 text-[var(--c-text-subtle)]"
-                    />
-                    <Show when={input().trim().length > 0}>
-                        <button
-                            type="button"
-                            onClick={clearInput}
-                            class="absolute right-8 bottom-3 text-sm text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
-                        >
-                            清除
-                        </button>
-                    </Show>
+                    <div class="absolute right-0 bottom-3 flex items-center gap-3">
+                        <Show when={input().trim().length > 0}>
+                            <button
+                                type="button"
+                                onClick={clearInput}
+                                class="text-sm text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
+                            >
+                                清除
+                            </button>
+                        </Show>
+                        <span class="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] px-2 py-0.5 text-sm font-mono text-[var(--c-text-subtle)]">
+                            ENTER
+                            <IconReturn width={14} height={14} class="block" />
+                        </span>
+                    </div>
                 </form>
-                <p class="mt-3 text-sm text-[var(--c-text-subtle)]">Type to Search</p>
                 <div class="mt-4 flex flex-wrap items-center gap-2 text-sm text-[var(--c-text-subtle)]">
                     <span>支持语法</span>
                     <For each={syntaxItems}>
