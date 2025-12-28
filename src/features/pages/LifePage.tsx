@@ -85,7 +85,7 @@ const Life = ({ page, children }) => {
         setUrl(inkstoneApi("douban/marks"));
     });
     const [resource] = createResource(url, fetcher);
-    const items = createMemo(() => resource()?.items ?? []);
+    const getItems = () => resource()?.items ?? [];
     const { content, ...rest } = page;
     return (
         <ArticlePage rawBlog={rest} relates={[]}>
@@ -101,7 +101,7 @@ const Life = ({ page, children }) => {
                         )}
                     >
                         <Show when={resource()}>
-                            <For each={items()}>
+                            <For each={getItems()}>
                                 {(item) => <RealItem {...item} />}
                             </For>
                         </Show>
