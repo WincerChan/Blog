@@ -33,6 +33,7 @@ const Archives = ({ page }) => {
                             class="archives-year mt-10 first:mt-0"
                         >
                             <div class="sticky top-16 z-10 flex items-center justify-between gap-4 border-b border-[var(--c-border)] bg-[var(--c-bg)] py-3">
+                                {/* Sticky offset matches header height (h-16). */}
                                 <h2 class="text-3xl font-semibold text-[var(--c-text)] font-mono">
                                     {year}
                                 </h2>

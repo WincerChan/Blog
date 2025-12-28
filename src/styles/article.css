@@ -12,6 +12,7 @@
 #blog-article h4,
 #blog-article h5,
 #blog-article h6 {
+  /* Offset anchor scroll to avoid sticky header overlap. */
   @apply text-[var(--c-text)] leading-snug mb-2 scroll-mt-20;
 }
 
