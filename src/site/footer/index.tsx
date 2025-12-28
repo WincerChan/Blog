@@ -4,6 +4,7 @@ import IconGithub from "~icons/ph/github-logo";
 import IconTelegram from "~icons/ph/telegram-logo";
 import IconHome from "~icons/ph/house";
 import IconPhoto from "~icons/ph/images-square";
+import IconDotFill from "~icons/ph/dot-outline-fill";
 import Archives from "./Archives";
 import Category from "./Category";
 import Stats from "./Stats";
@@ -62,7 +63,7 @@ const FooterNav = () => {
             )}
           </For>
         </div>
-        <div class="mt-10 border-t border-[var(--c-border)] pt-4 flex flex-col gap-2 text-sm text-[var(--c-text-muted)] md:flex-row md:items-center md:justify-between">
+        <div class="mt-10 border-t border-[var(--c-border)] pt-4 flex flex-col gap-2 text-sm leading-loose text-[var(--c-text-muted)] md:flex-row md:items-center md:justify-between">
           <p>
             © {SINCE} - {year()} Wincer's Blog
             <span class="px-2 text-[var(--c-text-subtle)]">|</span>
@@ -75,9 +76,8 @@ const FooterNav = () => {
             >
               Wincer
             </a>
-            , powered by Velite + SolidStart
           </p>
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 self-center md:self-auto">
             <a
               class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
               href="https://github.com/WincerChan/Blog"
@@ -85,6 +85,20 @@ const FooterNav = () => {
               rel="noopener"
             >
               Source
+            </a>
+            <IconDotFill width={10} height={10} class="text-[var(--c-text-subtle)]" />
+            <a
+              class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
+              href="/support/"
+            >
+              Support
+            </a>
+            <IconDotFill width={10} height={10} class="text-[var(--c-text-subtle)]" />
+            <a
+              class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
+              href="/privacy/"
+            >
+              Privacy
             </a>
           </div>
         </div>

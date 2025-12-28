@@ -25,7 +25,7 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
             <div class="space-y-2 text-sm leading-relaxed">
                 <For each={elems()}>
                     {(item, idx) => (
-                        <p class="flex items-center gap-2">
+                        <p class="flex items-center gap-1">
                             <span class="text-[var(--c-text-subtle)]">
                                 {LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}
                             </span>
