@@ -89,13 +89,13 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
                     lang={LL && LL().post.S()}
                     loading="lazy"
                 />
+                <div class="flex items-center justify-between my-8">
+                    <h3 class="text-xl md:text-2xl font-medium">评论</h3>
+                </div>
                 <Show when={hasLegacy()}>
                     <Suspense fallback={<span class="">{LL && LL().post.DIS()}</span>}>
                         <ErrorBoundary fallback={<span></span>}>
                             <Show when={resource()}>
-                                {Object.keys(resource()).length && <p class="">
-                                    以下是旧时在 Disqus 上的评论，仅作展示用。
-                                </p>}
                                 <CommentList comments={resource()} />
                             </Show>
                         </ErrorBoundary>
