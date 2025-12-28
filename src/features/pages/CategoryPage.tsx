@@ -26,14 +26,18 @@ const CategoryPage = (props: TaxoLayoutProps) => {
     const { LL } = useI18nContext()
     const basePath = () => props.basePath ?? "/category";
     const blogsByTerm = createMemo(() => props.rawTaxo.pages);
+    const totalCount = () => blogsByTerm().length;
     const headParams = createMemo(() =>
         constructHeadParams(props.rawTaxo.term, basePath(), blogsByTerm()),
     );
     return (
         <PageLayout headParams={headParams()} >
-            <h1 class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
+            <h1 class="mt-10 md:mt-14 mb-4 text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
                 {LL && LL().archive.CATE()}{headParams().title}
             </h1>
+            <p class="mt-2 mb-8 text-xl font-serif md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
+                {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
+            </p>
             <OtherBlogs posts={() => blogsByTerm()} />
         </PageLayout>
     )
