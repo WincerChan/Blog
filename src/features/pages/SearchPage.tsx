@@ -13,13 +13,23 @@ const resultPerPage = 8
 const FakeResult = ({ limit }: { limit: number }) => {
     return (
         <>
-            <div class="" />
+            <div class="flex items-center justify-between gap-3 text-sm">
+                <div class="h-4 w-56 rounded bg-[var(--c-border)] opacity-60" />
+                <div class="h-4 w-32 rounded bg-[var(--c-border)] opacity-60" />
+            </div>
             <For each={range(limit)}>
                 {
                     x => (
-                        <div class="">
-                            <div class=""></div>
-                            <div class=""></div>
+                        <div class="mt-6 first:mt-4 border-b border-[var(--c-border)] pb-6 last:border-b-0 last:pb-0">
+                            <div class="h-4 w-40 rounded bg-[var(--c-border)] opacity-60" />
+                            <div class="mt-3 h-6 w-2/3 rounded bg-[var(--c-border)] opacity-70" />
+                            <div class="mt-2 h-4 w-full rounded bg-[var(--c-border)] opacity-60" />
+                            <div class="mt-2 h-4 w-5/6 rounded bg-[var(--c-border)] opacity-60" />
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <div class="h-4 w-16 rounded bg-[var(--c-border)] opacity-60" />
+                                <div class="h-4 w-20 rounded bg-[var(--c-border)] opacity-60" />
+                                <div class="h-4 w-14 rounded bg-[var(--c-border)] opacity-60" />
+                            </div>
                         </div>
                     )
                 }
@@ -325,7 +335,7 @@ const Search = ({ page, children }) => {
                 </div>
             </div>
             <div class="mt-10">
-                <Suspense fallback={<FakeResult limit={8} />}>
+                <Suspense fallback={<FakeResult limit={4} />}>
                     <ErrorBoundary fallback={err => errorMsg(err)}>
                         <Show when={resource()}>
                             <SearchResultComponent
