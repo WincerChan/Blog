@@ -14,8 +14,8 @@ const LatestBlog = ({ blog }: BlogProps) => {
             <div class="pt-10 md:pt-14 pb-12 border-b border-[var(--c-border)]">
                 <div class="space-y-4">
                     <div class="flex flex-wrap items-center gap-x-4">
-                        <span class="inline-flex items-center gap-1 text-sm uppercase tracking-wide font-mono text-[var(--c-accent)]">
-                            <IconPointFilled width={12} height={12} class="latest-pulse" />
+                        <span class="inline-flex items-center gap-1 overflow-visible text-sm uppercase tracking-wide font-mono text-[var(--c-accent)]">
+                            <IconPointFilled width={18} height={18} class="animate-pulse scale-200 origin-center" />
                             Latest
                         </span>
                         <PostMeta date={blog.date} category={blog.category} />
@@ -38,19 +38,6 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         </div>
                     </a>
                 </div>
-                <style>{`
-                    @keyframes latest-pulse {
-                        0% { transform: scale(1); opacity: 0.6; }
-                        50% { transform: scale(1.15); opacity: 1; }
-                        100% { transform: scale(1); opacity: 0.6; }
-                    }
-                    .latest-pulse {
-                        animation: latest-pulse 2.4s ease-in-out infinite;
-                    }
-                    .latest-readmore:hover .latest-readmore-arrow {
-                        transform: translateX(0.25rem);
-                    }
-                `}</style>
             </div>
         </>
     )
