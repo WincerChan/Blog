@@ -1,6 +1,6 @@
 import { useI18nContext } from "~/i18n/i18n-solid"
-import IconRSS from "~icons/tabler/rss"
-import IconSearch from "~icons/tabler/search"
+import IconRSS from "~icons/ph/rss"
+import IconSearch from "~icons/ph/magnifying-glass"
 import { ThemeSwitcher } from "~/features/theme"
 
 const Tools = () => {

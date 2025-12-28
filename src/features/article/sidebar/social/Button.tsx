@@ -32,7 +32,7 @@ const SocialButton = ({ IconName, hoverColor, text, kind }: ButtonProps) => {
                 title={text}
                 class={`inline-flex items-center justify-center text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)] ${hoverColor}`}
             >
-                <IconName width={36} height={36} class="block" stroke-width={1.5} />
+                <IconName width={36} height={36} class="block" />
             </button>
             <Show when={toggle()}>
                 <Suspense>

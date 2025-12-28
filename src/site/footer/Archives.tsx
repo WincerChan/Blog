@@ -1,6 +1,6 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconArrowRight from "~icons/tabler/arrow-right";
-import IconPointFilled from "~icons/tabler/point-filled";
+import IconArrowRight from "~icons/ph/arrow-right";
+import IconPointFilled from "~icons/ph/dot-outline-fill";
 
 const Archives = () => {
     const { LL } = useI18nContext();
@@ -16,16 +16,16 @@ const Archives = () => {
             </label>
             <div class="flex flex-col gap-2 text-sm leading-relaxed">
                 {displayedYears.map((val) => (
-                        <a
-                            class="group inline-flex items-center gap-2 text-[var(--c-text-muted)] transition-colors"
-                            href={`/archives/#year-${val[0]}`}
-                        >
-                            <span class="group-hover:text-[var(--c-text)] group-hover:underline group-hover:decoration-[var(--c-text)] decoration-1 underline-offset-4">
-                                {val[0]}
-                            </span>
-                            <IconPointFilled width={6} height={6} class="text-[var(--c-text-subtle)]" />
-                            <span class="text-[var(--c-text)] font-medium tabular-nums">{val[1]}</span>
-                        </a>
+                    <a
+                        class="group inline-flex items-center gap-1 text-[var(--c-text-muted)] transition-colors"
+                        href={`/archives/#year-${val[0]}`}
+                    >
+                        <span class="group-hover:text-[var(--c-text)] group-hover:underline group-hover:decoration-[var(--c-text)] decoration-1 underline-offset-4">
+                            {val[0]}
+                        </span>
+                        <IconPointFilled width={12} height={12} class="text-[var(--c-text-subtle)]" />
+                        <span class="text-[var(--c-text)] font-medium tabular-nums">{val[1]}</span>
+                    </a>
                 ))}
                 <a
                     class="group inline-flex items-center gap-1 text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:underline hover:decoration-[var(--c-text)] decoration-1 underline-offset-4 transition-colors"

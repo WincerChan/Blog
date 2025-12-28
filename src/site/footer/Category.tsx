@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import IconPointFilled from "~icons/tabler/point-filled";
+import IconPointFilled from "~icons/ph/dot-outline-fill";
 import { useI18nContext } from "~/i18n/i18n-solid";
 
 const Category = () => {
@@ -13,13 +13,13 @@ const Category = () => {
                 <For each={__CONTENT_TOTAL_CATEGORIES as any}>
                     {(cate) => (
                         <a
-                            class="group inline-flex items-center gap-2 text-[var(--c-text-muted)] transition-colors"
+                            class="group inline-flex items-center gap-1 text-[var(--c-text-muted)] transition-colors"
                             href={`/category/${cate.title}/`}
                         >
                             <span class="group-hover:text-[var(--c-text)] group-hover:underline group-hover:decoration-[var(--c-text)] decoration-1 underline-offset-4">
                                 {cate.title}
                             </span>
-                            <IconPointFilled width={6} height={6} class="text-[var(--c-text-subtle)]" />
+                            <IconPointFilled width={12} height={12} class="text-[var(--c-text-subtle)]" />
                             <span class="text-[var(--c-text)] font-medium tabular-nums">{cate.count}</span>
                         </a>
                     )}

@@ -11,11 +11,10 @@ import {
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
 import { calculateDateDifference } from "~/utils";
-import IconArrowLeft from "~icons/tabler/arrow-left";
-import IconArrowRight from "~icons/tabler/arrow-right";
-import IconPointFilled from "~icons/tabler/point-filled";
-import IconBrandTwitter from "~icons/tabler/brand-twitter";
-import IconLink from "~icons/tabler/link";
+import IconArrowLeft from "~icons/ph/arrow-left";
+import IconArrowRight from "~icons/ph/arrow-right";
+import IconPointFilled from "~icons/ph/dot-outline-fill";
+import IconBrandTwitter from "~icons/ph/twitter-logo";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
@@ -114,7 +113,7 @@ const PostMeta = ({
                 <Show when={hasWords() || hasTags()}>
                     <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide">
                         <Show when={hasWords() || hasTags()}>
-                            <div class="flex flex-wrap items-center gap-x-3 mt-2">
+                            <div class="flex flex-wrap items-center gap-x-2 mt-2">
                                 <Show when={hasWords()}>
                                     <span class="tabular-nums">
                                         {blog.words} {LL && LL().post.W}
@@ -122,8 +121,8 @@ const PostMeta = ({
                                 </Show>
                                 <Show when={hasWords() && hasTags()}>
                                     <IconPointFilled
-                                        width={6}
-                                        height={6}
+                                        width={12}
+                                        height={12}
                                         class="text-[var(--c-text-subtle)] opacity-70"
                                     />
                                 </Show>
@@ -132,7 +131,7 @@ const PostMeta = ({
                                         {(tag) => (
                                             <a
                                                 href={`/search/?q=tags:${tag}`}
-                                                class="group inline-flex items-center gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
+                                                class="group inline-flex items-center px-1 gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
                                             >
                                                 <span class="text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">#</span>
                                                 {tag}
@@ -208,14 +207,6 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
         typeof window !== "undefined" ? window.location.href : pageURL;
     const twitterShareUrl = () =>
         `https://twitter.com/intent/tweet?url=${encodeURIComponent(buildShareUrl())}`;
-    const copyUrl = async () => {
-        if (typeof navigator === "undefined" || !navigator.clipboard) return;
-        try {
-            await navigator.clipboard.writeText(buildShareUrl());
-        } catch {
-            // ignore clipboard errors
-        }
-    };
     return (
         <div class="mt-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-4">
             <Like pageURL={pageURL} />
@@ -227,16 +218,8 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
                     rel="noopener"
                     class="inline-flex items-center justify-center text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]"
                 >
-                    <IconBrandTwitter width={26} height={26} class="block" stroke-width={1.5} />
+                    <IconBrandTwitter width={26} height={26} class="block" />
                 </a>
-                <button
-                    type="button"
-                    title="Copy URL"
-                    onClick={copyUrl}
-                    class="inline-flex items-center justify-center text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]"
-                >
-                    <IconLink width={26} height={26} class="block" stroke-width={1.5} />
-                </button>
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import OtherBlogs from "~/features/post-listing/OtherCards";
 import PageLayout from "~/layouts/PageLayout";
 import { getLatestPosts, postUrl } from "~/content/velite";
 import { Show, createMemo, createResource } from "solid-js";
-import IconArrowRight from "~icons/tabler/arrow-right";
+import IconArrowRight from "~icons/ph/arrow-right";
 
 
 

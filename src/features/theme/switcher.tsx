@@ -1,9 +1,9 @@
 import { Accessor, For, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconSun from "~icons/tabler/sun";
-import IconMoon from "~icons/tabler/moon";
-import IconContrast from "~icons/tabler/contrast";
-import IconAutomation from "~icons/tabler/automation";
+import IconSun from "~icons/ph/sun";
+import IconMoon from "~icons/ph/moon";
+import IconContrast from "~icons/ph/circle-half";
+import IconAutomation from "~icons/ph/gear";
 
 import { setGlobalStore } from "./provider";
 import {

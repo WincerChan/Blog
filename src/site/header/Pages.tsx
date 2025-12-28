@@ -1,6 +1,6 @@
 import { For, createMemo } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconArrowRight from "~icons/tabler/arrow-right";
+import IconArrowRight from "~icons/ph/arrow-right";
 
 type PagesProps = {
     class?: string;

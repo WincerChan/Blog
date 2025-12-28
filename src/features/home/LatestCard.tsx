@@ -1,8 +1,8 @@
 import { Show } from "solid-js";
 import PostMeta from "~/features/post-listing/PostMeta";
 import type { PostListItem } from "~/features/post-listing/types";
-import IconPointFilled from "~icons/tabler/point-filled";
-import IconArrowRight from "~icons/tabler/arrow-right";
+import IconPointFilled from "~icons/ph/dot-duotone";
+import IconArrowRight from "~icons/ph/arrow-right";
 
 type BlogProps = {
     blog: PostListItem,

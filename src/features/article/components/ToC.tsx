@@ -1,7 +1,7 @@
 import { useLocation } from "@solidjs/router";
 import { Show, createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconList from "~icons/tabler/list";
+import IconList from "~icons/ph/list";
 
 interface ToCInterface {
     toc: string;

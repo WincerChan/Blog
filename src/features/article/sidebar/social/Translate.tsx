@@ -1,5 +1,5 @@
 import { Show, createMemo } from "solid-js";
-import IconTranslate from "~icons/tabler/language";
+import IconTranslate from "~icons/ph/translate";
 import { useI18nContext } from "~/i18n/i18n-solid";
 
 interface TranslateProps {

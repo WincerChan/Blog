@@ -1,5 +1,5 @@
 import { createSignal, onCleanup, onMount } from "solid-js"
-import IconArrowUp from "~icons/tabler/arrow-up"
+import IconArrowUp from "~icons/ph/arrow-up"
 
 const BackTop = () => {
     const [visible, setVisible] = createSignal(false)

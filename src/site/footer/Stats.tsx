@@ -1,6 +1,6 @@
 import { Accessor, For, createMemo } from "solid-js";
 import { Translations } from "~/i18n/i18n-types";
-import IconPointFilled from "~icons/tabler/point-filled";
+import IconPointFilled from "~icons/ph/dot-outline-fill";
 
 const formatWordCount = (value: unknown) => {
     const total = Number(value);
@@ -29,7 +29,7 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
                             <span class="text-[var(--c-text-subtle)]">
                                 {LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}
                             </span>
-                            <IconPointFilled width={6} height={6} class="text-[var(--c-text-subtle)]" />
+                            <IconPointFilled width={12} height={12} class="text-[var(--c-text-subtle)]" />
                             <span class="text-[var(--c-text)] font-medium tabular-nums">{item}</span>
                         </p>
                     )}

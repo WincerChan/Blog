@@ -1,8 +1,8 @@
 import { Show, createEffect, createSignal, onCleanup } from "solid-js";
 import { isBrowser } from "~/utils";
-import IconMenu2 from "~icons/tabler/menu-2";
-import IconX from "~icons/tabler/x";
-import IconRSS from "~icons/tabler/rss";
+import IconMenu2 from "~icons/ph/list";
+import IconX from "~icons/ph/x";
+import IconRSS from "~icons/ph/rss";
 import Logo from "./Logo";
 import Pages from "./Pages";
 import Tools from "./Tools";

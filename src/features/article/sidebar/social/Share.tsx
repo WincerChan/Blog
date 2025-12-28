@@ -1,10 +1,8 @@
 import { toCanvas } from "qrcode";
-import { Match, Switch, createEffect, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconTelegram from "~icons/tabler/brand-telegram";
-import IconTwitter from "~icons/tabler/brand-twitter";
-import IconClipboardCheck from "~icons/tabler/clipboard-check";
-import IconClipboard from "~icons/tabler/clipboard-copy";
+import IconTelegram from "~icons/ph/telegram-logo";
+import IconTwitter from "~icons/ph/twitter-logo";
 import Modal from "~/features/article/components/Modal";
 
 
@@ -18,8 +16,6 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
 
     const [twitterUrl, setTwitterUrl] = createSignal("")
     const [telegramUrl, setTelegramUrl] = createSignal("")
-    const [showCheck, setShowCheck] = createSignal(false)
-
     let canvas: HTMLCanvasElement | null = null;
     onMount(() => {
         const url = window.location.href, title = "Hey, I just found this fascinating article that's worth a read!"
@@ -35,15 +31,7 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
     })
 
     const clickJump = (idx) => {
-        if (idx == 2) {
-            const url = window.location.href
-            void navigator.clipboard.writeText(url).catch(() => undefined)
-            setShowCheck(true)
-            setTimeout(() => {
-                setShowCheck(false)
-            }, 2000)
-        } else
-            window.open(links[idx].url())
+        window.open(links[idx].url())
     }
     const links = [
         {
@@ -55,11 +43,6 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
             Icon: IconTelegram,
             "url": telegramUrl,
             "text": "Telegram"
-        },
-        {
-            Icon: IconClipboard,
-            "text": LL().sidebar.TOOLS.share.copy(),
-            "url": null
         }
     ]
     return (
@@ -74,27 +57,13 @@ const Share = ({ toggle, setToggle }: ShareProps) => {
                         </figure>
                         <div class="">
                             {
-                                links.slice(0, 2).map((value, idx) => (
+                                links.map((value, idx) => (
                                     <button onClick={() => clickJump(idx)} class="">
-                                        <value.Icon width={32} height={32} stroke-width={1.5} />
+                                        <value.Icon width={32} height={32} />
                                         <span innerText={value.text}></span>
                                     </button>
                                 ))
                             }
-                            <button onClick={() => clickJump(2)} class="">
-                                <Switch>
-                                    <Match when={showCheck()}>
-                                        <p class="">
-                                            <IconClipboardCheck width={32} height={32} />
-                                            <span>{LL().sidebar.TOOLS.share.copy_msg()}</span>
-                                        </p>
-                                    </Match>
-                                    <Match when={!showCheck()}>
-                                        <IconClipboard width={32} height={32} />
-                                        <span innerText={links[2].text}></span>
-                                    </Match>
-                                </Switch>
-                            </button>
                         </div>
                     </div>
                 </div>

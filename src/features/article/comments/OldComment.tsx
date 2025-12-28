@@ -1,5 +1,4 @@
 import { For, onMount, Show } from "solid-js";
-import ReplyIcon from "~icons/tabler/arrow-forward";
 
 interface CommentProps {
     author: string,
@@ -41,7 +40,6 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
             </div>
             <Show when={children?.length}>
                 <div class="">
-                    <ReplyIcon stroke-width={1} class="" color="var(--meta-bg)" />
                     <CommentList comments={children} />
                 </div>
             </Show>

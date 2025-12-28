@@ -2,11 +2,7 @@ import { toCanvas } from "qrcode";
 import { For, Match, Switch, createEffect, createSignal } from "solid-js";
 import Modal from "~/features/article/components/Modal";
 
-import IconWeChat from "~icons/tabler/brand-wechat";
-
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconEth from "~icons/tabler/currency-ethereum";
-import IconSol from "~icons/tabler/currency-solana";
 
 interface RewardProps {
     toggle: () => boolean;
@@ -20,20 +16,17 @@ const Reward = ({ toggle, setToggle }: RewardProps) => {
         {
             "key": "wechat",
             "val": "",
-            "fig": LL().sidebar.TOOLS.donate.wechat(),
-            Icon: IconWeChat
+            "fig": LL().sidebar.TOOLS.donate.wechat()
         },
         {
             "key": "eth",
             "val": "0x8108003004784434355758338583453734488488",
-            "fig": LL().sidebar.TOOLS.donate.eth(),
-            Icon: IconEth
+            "fig": LL().sidebar.TOOLS.donate.eth()
         },
         {
             "key": "sol",
             "val": "PRM3ZUA5N2PRLKVBCL3SR3JS934M9TZKUZ7XTLUS223",
-            "fig": LL().sidebar.TOOLS.donate.sol(),
-            Icon: IconSol
+            "fig": LL().sidebar.TOOLS.donate.sol()
         }
     ]
     const [addrIndex, setAddrIndex] = createSignal(0);
@@ -65,7 +58,11 @@ const Reward = ({ toggle, setToggle }: RewardProps) => {
                         <div class="">
                             <For each={addr}>
                                 {
-                                    (x, idx) => <button onClick={() => setAddrIndex(idx())} class=""><x.Icon width={32} height={32} stroke-width={1.5} /> <span>{x.fig}</span></button>
+                                    (x, idx) => (
+                                        <button onClick={() => setAddrIndex(idx())} class="">
+                                            <span>{x.fig}</span>
+                                        </button>
+                                    )
                                 }
                             </For>
                         </div>

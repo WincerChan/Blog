@@ -1,7 +1,7 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
-import IconSparkles from "~icons/tabler/sparkles";
+import IconSparkles from "~icons/ph/sparkle";
 
 
 const Like = ({ pageURL }) => {
@@ -75,8 +75,8 @@ const Like = ({ pageURL }) => {
             class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)] disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <IconSparkles
-                width={36}
-                height={36}
+                width={26}
+                height={26}
                 class="block transition-colors"
                 classList={{ "text-[var(--c-link)]": liked() }}
             />

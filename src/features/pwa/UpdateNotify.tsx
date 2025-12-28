@@ -1,6 +1,6 @@
 import { createSignal, onCleanup, onMount } from "solid-js";
 import { isBrowser } from "~/utils";
-import IconRefresh from "~icons/tabler/refresh";
+import IconRefresh from "~icons/ph/arrow-clockwise";
 
 const UpdateNotify = () => {
     const forcedRefresh = isBrowser ? window.location.reload.bind(window.location) : () => { }

@@ -1,9 +1,9 @@
 import { For, createMemo } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import IconGithub from "~icons/tabler/brand-github";
-import IconTelegram from "~icons/tabler/brand-telegram";
-import IconHome from "~icons/tabler/home-heart";
-import IconPhoto from "~icons/tabler/photo-heart";
+import IconGithub from "~icons/ph/github-logo";
+import IconTelegram from "~icons/ph/telegram-logo";
+import IconHome from "~icons/ph/house";
+import IconPhoto from "~icons/ph/images-square";
 import Archives from "./Archives";
 import Category from "./Category";
 import Stats from "./Stats";
