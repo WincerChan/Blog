@@ -225,7 +225,7 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
         }
     };
     return (
-        <div class="mt-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-6">
+        <div class="my-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-6">
             <Like pageURL={pageURL} />
             <div class="flex items-center gap-4">
                 <span class="text-sm text-[var(--c-text-subtle)]">
