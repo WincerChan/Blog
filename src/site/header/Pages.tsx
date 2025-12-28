@@ -1,9 +1,12 @@
 import { For, createMemo } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
+import IconArrowRight from "~icons/tabler/arrow-right";
 
 type PagesProps = {
     class?: string;
     onClick?: () => void;
+    showSuffixIcon?: boolean;
+    iconClass?: string;
 };
 
 const Pages = (props: PagesProps) => {
@@ -13,6 +16,8 @@ const Pages = (props: PagesProps) => {
     );
     const itemClass =
         props.class ?? "text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors";
+    const iconClass =
+        props.iconClass ?? "text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]";
     return (
         <For each={pages()}>
             {(pageEntry) => (
@@ -22,6 +27,9 @@ const Pages = (props: PagesProps) => {
                     onClick={() => props.onClick?.()}
                 >
                     {pageEntry.title}
+                    {props.showSuffixIcon && (
+                        <IconArrowRight width={18} height={18} class={iconClass} />
+                    )}
                 </a>
             )}
         </For>

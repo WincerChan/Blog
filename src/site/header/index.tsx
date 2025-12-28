@@ -51,13 +51,14 @@ const Header = () => {
                 <div class="fixed inset-x-0 bottom-0 top-16 z-50 bg-[var(--c-bg)] text-[var(--c-text)]">
                     <div class="w-full max-w-5xl mx-auto px-6">
                         <div class="py-10 flex flex-col gap-10">
-                            <nav class="flex flex-col gap-6 text-4xl font-serif text-[var(--c-text)]">
+                            <nav class="flex flex-col gap-5 text-2xl font-sans font-medium text-[var(--c-text)]">
                                 <Pages
-                                    class="transition-colors hover:text-[var(--c-link)]"
+                                    class="group flex items-center justify-between border-b border-[var(--c-border)] pb-3 text-[var(--c-text)] transition-colors hover:text-[var(--c-link)] last:border-b-0 last:pb-0"
                                     onClick={closeMenu}
+                                    showSuffixIcon={true}
                                 />
                             </nav>
-                            <div class="flex items-center gap-3 text-base text-[var(--c-text-muted)]">
+                            <div class="flex items-center gap-3 text-lg text-[var(--c-text-muted)]">
                                 <a
                                     href="/atom.xml"
                                     target="_blank"

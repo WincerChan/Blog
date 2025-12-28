@@ -206,20 +206,26 @@ export const Neighbours = ({
 
 const PostActions = ({ pageURL }: { pageURL: string }) => {
     return (
-        <div class="mt-10 flex flex-wrap items-center gap-4">
-            <Like pageURL={pageURL} />
-            <SocialButton
-                IconName={IconPig}
-                text="Reward"
-                kind="reward"
-                hoverColor="hover:text-amber-500 focus:text-amber-500"
-            />
-            <SocialButton
-                IconName={IconShare}
-                text="Share"
-                kind="share"
-                hoverColor="hover:text-sky-500 focus:text-sky-500"
-            />
+        <div class="mt-10 grid grid-cols-3 items-center gap-4">
+            <div class="flex items-center justify-start">
+                <Like pageURL={pageURL} />
+            </div>
+            <div class="flex items-center justify-center">
+                <SocialButton
+                    IconName={IconPig}
+                    text="Reward"
+                    kind="reward"
+                    hoverColor="hover:text-amber-500 focus:text-amber-500"
+                />
+            </div>
+            <div class="flex items-center justify-end">
+                <SocialButton
+                    IconName={IconShare}
+                    text="Share"
+                    kind="share"
+                    hoverColor="hover:text-sky-500 focus:text-sky-500"
+                />
+            </div>
         </div>
     );
 };
