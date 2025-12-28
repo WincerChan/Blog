@@ -97,7 +97,7 @@ const PostMeta = ({
                             )}
                         >
                             <div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-                                <h1 class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
+                                <h1 class="text-3xl md:text-4xl font-medium font-serif tracking-tight leading-tight text-[var(--c-text)]">
                                     {blog.title}
                                 </h1>
                                 <div class="md:ml-auto">
