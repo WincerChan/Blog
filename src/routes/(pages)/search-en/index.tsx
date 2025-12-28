@@ -8,8 +8,7 @@ export default function SearchEnRoute() {
         <PageRouteView
             slug={slug}
             view={SearchPage}
-            layout="article-no-comment"
-            withChildren={true}
+            layout="simple"
         />
     );
 }

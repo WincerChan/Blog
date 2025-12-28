@@ -215,7 +215,7 @@ const fetchSearchResult = async ({ q, page, sort }: { q: string; page: number; s
     }
 }
 
-const Search = ({ page, children }) => {
+const Search = ({ page }) => {
 
     const [input, setInput] = createSignal('')
     const [query, setQuery] = createSignal<{ q: string; page: number; sort: SortType }>()
