@@ -12,7 +12,7 @@
 #blog-article h4,
 #blog-article h5,
 #blog-article h6 {
-  @apply text-[var(--c-text)] leading-snug mb-2;
+  @apply text-[var(--c-text)] leading-snug mb-2 scroll-mt-20;
 }
 
 #blog-article h2 {
