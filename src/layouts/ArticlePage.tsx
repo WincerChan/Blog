@@ -5,6 +5,7 @@ import {
     JSXElement,
     Show,
     createMemo,
+    createSignal,
     lazy,
     onMount,
 } from "solid-js";
@@ -15,6 +16,8 @@ import IconArrowLeft from "~icons/ph/arrow-left";
 import IconArrowRight from "~icons/ph/arrow-right";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 import IconBrandTwitter from "~icons/ph/twitter-logo";
+import IconLink from "~icons/ph/link-simple";
+import IconCheck from "~icons/ph/check";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
@@ -203,14 +206,31 @@ export const Neighbours = ({
 };
 
 const PostActions = ({ pageURL }: { pageURL: string }) => {
+    const { LL } = useI18nContext();
     const buildShareUrl = () =>
         typeof window !== "undefined" ? window.location.href : pageURL;
     const twitterShareUrl = () =>
         `https://twitter.com/intent/tweet?url=${encodeURIComponent(buildShareUrl())}`;
+    const [copied, setCopied] = createSignal(false);
+    let resetTimer: number | undefined;
+    const copyUrl = async () => {
+        if (typeof navigator === "undefined" || !navigator.clipboard) return;
+        try {
+            await navigator.clipboard.writeText(buildShareUrl());
+            setCopied(true);
+            if (resetTimer) window.clearTimeout(resetTimer);
+            resetTimer = window.setTimeout(() => setCopied(false), 2000);
+        } catch {
+            // ignore clipboard errors
+        }
+    };
     return (
         <div class="mt-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-6">
             <Like pageURL={pageURL} />
             <div class="flex items-center gap-4">
+                <span class="text-sm text-[var(--c-text-subtle)]">
+                    {LL().sidebar.TOOLS.share.title()}
+                </span>
                 <a
                     href={twitterShareUrl()}
                     title="Share on Twitter"
@@ -220,6 +240,19 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
                 >
                     <IconBrandTwitter width={26} height={26} class="block" />
                 </a>
+                <button
+                    type="button"
+                    title="Copy URL"
+                    onClick={copyUrl}
+                    class="inline-flex items-center justify-center text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-link)]"
+                >
+                    <Show
+                        when={copied()}
+                        fallback={<IconLink width={26} height={26} class="block transition-opacity duration-200 ease-out" />}
+                    >
+                        <IconCheck width={26} height={26} class="block text-green-600 transition-opacity duration-200 ease-out" />
+                    </Show>
+                </button>
             </div>
         </div>
     );

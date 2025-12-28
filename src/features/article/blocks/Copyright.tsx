@@ -26,7 +26,7 @@ const Copyright = ({ updated }: CopyrightProps) => {
                     </div>
                 </div>
                 <div class="text-right">
-                    <div class="opacity-60">更新于：</div>
+                    <div class="opacity-60">更新于</div>
                     <div class="tabular-nums text-[var(--c-text-subtle)]">2023-10-25 14:20:00</div>
                 </div>
             </div>
