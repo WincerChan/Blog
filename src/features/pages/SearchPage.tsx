@@ -94,8 +94,11 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                 </div>
             </div>
             <For each={data().hits}>
-                {ret => (
-                    <div class="mt-6 first:mt-4 border-b border-[var(--c-border)] pb-6 last:border-b-0">
+                {(ret, idx) => (
+                    <div
+                        class="mt-6 first:mt-4 border-b border-[var(--c-border)] pb-6"
+                        classList={{ "border-b-0 pb-0": idx() === data().hits.length - 1 }}
+                    >
                         <h3 class="mt-3! mb-1! text-xl md:text-2xl font-medium font-sans">
                             <a class="text-[var(--c-text)]! no-underline!" href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
@@ -286,7 +289,7 @@ const Search = ({ page, children }) => {
                         ref={inputRef}
                         onInput={(e) => setInput(e.target.value)}
                         type="text"
-                        class="w-full border-0 border-b border-[var(--c-border-strong)] bg-transparent pb-3 pr-32 text-2xl md:text-3xl font-mono tracking-tight text-[var(--c-text)] outline-none caret-[var(--c-link)] placeholder:text-[var(--c-text-subtle)]"
+                        class="w-full border-0 border-b-2 border-[var(--c-border-strong)] bg-transparent pb-3 pr-32 text-2xl md:text-3xl font-mono tracking-tight text-[var(--c-text)] outline-none caret-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] focus:border-[var(--c-link)]"
                         placeholder=""
                         aria-label="Search"
                     />
@@ -322,7 +325,6 @@ const Search = ({ page, children }) => {
                 </div>
             </div>
             <div class="mt-10">
-                {!query() && children}
                 <Suspense fallback={<FakeResult limit={8} />}>
                     <ErrorBoundary fallback={err => errorMsg(err)}>
                         <Show when={resource()}>
