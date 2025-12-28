@@ -54,7 +54,7 @@ export default function App() {
     });
     return (
         <TypesafeI18n locale={globalStore.locale as Locale}>
-            <div class="">
+            <div class="min-h-screen flex flex-col">
                 <Header />
                 <Router root={(props) => preloadHook(props)}>
                     <FileRoutes />

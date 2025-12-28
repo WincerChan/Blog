@@ -288,7 +288,7 @@ const Search = ({ page, children }) => {
         setInput('')
         setCurrentPage(1)
         setQuery(undefined)
-        setSearchParams({})
+        setSearchParams({ q: undefined, sort: undefined } as Record<string, string | undefined>)
     }
     return (
         <ArticlePage rawBlog={page} relates={[]} hideComment={true} hideActions={true}>
@@ -335,19 +335,21 @@ const Search = ({ page, children }) => {
                 </div>
             </div>
             <div class="mt-10">
-                <Suspense fallback={<FakeResult limit={4} />}>
-                    <ErrorBoundary fallback={err => errorMsg(err)}>
-                        <Show when={resource()}>
-                            <SearchResultComponent
-                                data={resource}
-                                currentPage={currentPage}
-                                updatePage={handlePageChange}
-                                sort={sort}
-                                onSortChange={handleSortChange}
-                            />
-                        </Show>
-                    </ErrorBoundary>
-                </Suspense>
+                <Show when={query()}>
+                    <Suspense fallback={<FakeResult limit={4} />}>
+                        <ErrorBoundary fallback={err => errorMsg(err)}>
+                            <Show when={resource()}>
+                                <SearchResultComponent
+                                    data={resource}
+                                    currentPage={currentPage}
+                                    updatePage={handlePageChange}
+                                    sort={sort}
+                                    onSortChange={handleSortChange}
+                                />
+                            </Show>
+                        </ErrorBoundary>
+                    </Suspense>
+                </Show>
             </div>
         </ArticlePage >
     )
