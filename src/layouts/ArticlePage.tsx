@@ -208,7 +208,7 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
     const twitterShareUrl = () =>
         `https://twitter.com/intent/tweet?url=${encodeURIComponent(buildShareUrl())}`;
     return (
-        <div class="mt-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-4">
+        <div class="mt-10 flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-6">
             <Like pageURL={pageURL} />
             <div class="flex items-center gap-4">
                 <a

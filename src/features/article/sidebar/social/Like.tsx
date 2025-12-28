@@ -1,7 +1,8 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
-import IconSparkles from "~icons/ph/sparkle";
+import IconHeart from "~icons/ph/heart";
+import IconHeartFill from "~icons/ph/heart-fill";
 
 
 const Like = ({ pageURL }) => {
@@ -72,14 +73,15 @@ const Like = ({ pageURL }) => {
             disabled={disabled()}
             onClick={click}
             title={liked() ? `${likes()} 人已点赞` : "Like"}
-            class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)] disabled:opacity-60 disabled:cursor-not-allowed"
+            class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-red-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            classList={{ "text-red-600": liked() }}
         >
-            <IconSparkles
-                width={26}
-                height={26}
-                class="block transition-colors"
-                classList={{ "text-[var(--c-link)]": liked() }}
-            />
+            <Show
+                when={liked()}
+                fallback={<IconHeart width={26} height={26} class="block transition-colors" />}
+            >
+                <IconHeartFill width={26} height={26} class="block transition-colors" />
+            </Show>
             <Suspense fallback={fallback}>
                 <ErrorBoundary fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
