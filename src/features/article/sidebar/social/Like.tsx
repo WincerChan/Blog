@@ -73,7 +73,7 @@ const Like = ({ pageURL }) => {
             disabled={disabled()}
             onClick={click}
             title={liked() ? `${likes()} 人已点赞` : "Like"}
-            class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-red-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-red-600 disabled:cursor-not-allowed"
             classList={{ "text-red-600": liked() }}
         >
             <Show
