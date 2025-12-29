@@ -225,10 +225,34 @@ const Search = ({ page }) => {
     const scrollElem = isBrowser ? document.querySelector('main') : null
     let inputRef: HTMLInputElement | undefined;
     const syntaxItems = [
-        { label: "tag:{xxx}", token: "tag:" },
-        { label: "category:{xxx}", token: "category:" },
-        { label: "range:{yyyy-mm-dd}", token: "range:" },
+        { label: "tag:{name}", token: "tag:" },
+        { label: "category:{name}", token: "category:" },
+        { label: "range:{yyyy-mm-dd}~{yyyy-mm-dd}", token: "range:" },
     ];
+    const normalizeQuery = (raw: string) => {
+        const trimmed = raw.trim();
+        if (!trimmed) return "";
+        const tags: string[] = [];
+        const seen = new Set<string>();
+        const tagPattern = /(?:^|\s)(tag|tags):([^\s]+)/gi;
+        const stripped = trimmed
+            .replace(tagPattern, (_match, _token, value) => {
+                const parts = String(value ?? "").split(",");
+                parts.forEach((part) => {
+                    const cleaned = part.trim();
+                    if (!cleaned || seen.has(cleaned)) return;
+                    seen.add(cleaned);
+                    tags.push(cleaned);
+                });
+                return "";
+            })
+            .replace(/\s+/g, " ")
+            .trim();
+        if (!tags.length) return stripped;
+        const limited = tags.slice(0, 3);
+        const tagToken = `tags:${limited.join(",")}`;
+        return stripped ? `${stripped} ${tagToken}` : tagToken;
+    };
     onMount(() => {
         const q = serachParams.q
         const initialSort = serachParams.sort === "latest" ? "latest" : "relevance";
@@ -236,7 +260,9 @@ const Search = ({ page }) => {
         if (!q) return
         setInput(q)
         setCurrentPage(1)
-        setQuery({ q, page: 1, sort: initialSort })
+        const normalized = normalizeQuery(q);
+        if (!normalized) return;
+        setQuery({ q: normalized, page: 1, sort: initialSort })
     })
     createEffect(() => {
         setTimeout(() => scrollElem?.scrollIntoView({ behavior: 'smooth', block: 'start' }), currentPage() * 0)
@@ -247,11 +273,13 @@ const Search = ({ page }) => {
         e.preventDefault();
         const trimmed = input().trim()
         if (!trimmed) return
+        const normalized = normalizeQuery(trimmed);
+        if (!normalized) return;
         const params: Record<string, string> = { q: trimmed };
         if (sort() === "latest") params.sort = "latest";
         setSearchParams(params)
         setCurrentPage(1)
-        setQuery({ q: trimmed, page: 1, sort: sort() })
+        setQuery({ q: normalized, page: 1, sort: sort() })
     }
     const handlePageChange = (action: number) => {
         const currentQuery = query()?.q
@@ -265,24 +293,71 @@ const Search = ({ page }) => {
         setSort(nextSort)
         const trimmed = input().trim()
         if (!trimmed) return
+        const normalized = normalizeQuery(trimmed);
+        if (!normalized) return;
         const params: Record<string, string> = { q: trimmed };
         if (nextSort === "latest") params.sort = "latest";
         setSearchParams(params)
         setCurrentPage(1)
-        setQuery({ q: trimmed, page: 1, sort: nextSort })
+        setQuery({ q: normalized, page: 1, sort: nextSort })
     }
+    const escapeToken = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const countToken = (value: string, token: string) => {
+        if (!token) return 0;
+        const pattern = new RegExp(`(?:^|\\s)${escapeToken(token)}[^\\s]*`, "g");
+        return value.match(pattern)?.length ?? 0;
+    };
+    const findToken = (value: string, token: string) => {
+        if (!value || !token) return null;
+        const pattern = new RegExp(`(?:^|\\s)${escapeToken(token)}([^\\s]*)`, "i");
+        const match = pattern.exec(value);
+        if (!match) return null;
+        const tokenIndex = match.index + match[0].indexOf(token);
+        const valueStart = tokenIndex + token.length;
+        const valueEnd = valueStart + (match[1]?.length ?? 0);
+        return { valueStart, valueEnd };
+    };
+    const canAppendToken = (value: string, token: string) => {
+        const limits: Record<string, number> = {
+            "category:": 1,
+            "tag:": 3,
+        };
+        const limit = limits[token];
+        if (!limit) return true;
+        if (token === "tag:") {
+            const total = countToken(value, "tag:") + countToken(value, "tags:");
+            return total < limit;
+        }
+        return countToken(value, token) < limit;
+    };
     const appendSyntax = (token: string) => {
-        setInput((prev) => {
-            const base = prev.trimEnd();
-            const spacer = base.length ? " " : "";
-            return `${base}${spacer}${token}`;
-        })
-        requestAnimationFrame(() => {
-            if (!inputRef) return
-            inputRef.focus();
-            const length = inputRef.value.length;
-            inputRef.setSelectionRange(length, length);
-        })
+        const current = input();
+        const trimmed = current.trimEnd();
+        const focusInput = (start?: number, end?: number) => {
+            requestAnimationFrame(() => {
+                if (!inputRef) return;
+                inputRef.focus();
+                const length = inputRef.value.length;
+                const from = start ?? length;
+                const to = end ?? from;
+                inputRef.setSelectionRange(from, to);
+            });
+        };
+        if (token === "category:") {
+            const match = findToken(current, token);
+            if (match) {
+                focusInput(match.valueStart, match.valueEnd > match.valueStart ? match.valueEnd : match.valueStart);
+                return;
+            }
+        }
+        if (trimmed.endsWith(token)) {
+            focusInput();
+            return;
+        }
+        if (!canAppendToken(trimmed, token)) return;
+        const spacer = trimmed.length ? " " : "";
+        setInput(`${trimmed}${spacer}${token}`);
+        focusInput();
     }
     const clearInput = () => {
         setInput('')
@@ -300,7 +375,7 @@ const Search = ({ page }) => {
                         onInput={(e) => setInput(e.target.value)}
                         type="text"
                         class="w-full border-0 border-b-2 border-[var(--c-border-strong)] bg-transparent pb-3 pr-32 text-2xl md:text-3xl font-mono tracking-tight text-[var(--c-text)] outline-none caret-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] focus:border-[var(--c-link)]"
-                        placeholder=""
+                        placeholder="输入关键词"
                         aria-label="Search"
                     />
                     <div class="absolute right-0 bottom-3 flex items-center gap-3">
@@ -310,13 +385,16 @@ const Search = ({ page }) => {
                                 onClick={clearInput}
                                 class="inline-flex items-center text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
                             >
-                                <IconClear width={16} height={16} class="block opacity-70" />
+                                <IconClear width={20} height={20} class="block opacity-70" />
                             </button>
                         </Show>
-                        <span class="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] px-2 py-0.5 text-sm font-mono text-[var(--c-text-subtle)]">
-                            ENTER
-                            <IconReturn width={14} height={14} class="block" />
-                        </span>
+                        <button
+                            type="submit"
+                            class="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] px-2 py-0.5 text-sm font-mono text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
+                        >
+                            <span class="hidden md:inline">ENTER</span>
+                            <IconReturn width={16} height={16} class="block" />
+                        </button>
                     </div>
                 </form>
                 <div class="mt-4 flex flex-wrap items-center gap-2 text-sm text-[var(--c-text-subtle)]">
