@@ -2,15 +2,31 @@ import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createMemo, crea
 import CommentList from "./OldComment";
 import { Translations } from "~/i18n/i18n-types";
 import { globalStore } from "~/features/theme";
-import { safeEncode } from "~/content/velite-utils";
+import { inkstoneApi } from "~/utils/inkstone";
+import IconArrowUpRight from "~icons/ph/arrow-up-right";
 
 interface GiscusCommentProps {
     pageURL: string
     LL: Accessor<Translations>
-    hasLegacyComments?: boolean
 }
 
-export default function GiscusComment({ pageURL, LL, hasLegacyComments }: GiscusCommentProps) {
+type CommentItem = {
+    id: string;
+    author: string;
+    date: string;
+    message: string;
+    url?: string;
+    avatarUrl?: string;
+    children?: CommentItem[];
+};
+
+type CommentPayload = {
+    total: number;
+    discussionUrl: string | null;
+    comments: CommentItem[];
+};
+
+export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     const [visible, setVisible] = createSignal(false)
     const [url, setUrl] = createSignal<string | null>(null)
     const normalizePath = (input: string) => {
@@ -27,25 +43,34 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
         if (!pathname.endsWith("/")) pathname = `${pathname}/`;
         return pathname;
     };
-    const legacyPath = createMemo(() => normalizePath(pageURL));
-    const legacyUrl = createMemo(() => {
-        const path = legacyPath();
-        const parts = path.split("/").filter(Boolean);
-        if (parts.length === 0) return "";
-        const encoded = parts.map((part) => safeEncode(part)).join("/");
-        return `/_data/legacy-comments/${encoded}.json`;
-    });
-    const fetchLegacyComments = async (target: string | null) => {
-        if (!target) return [];
+    const targetPath = createMemo(() => normalizePath(pageURL));
+    const fetchLegacyComments = async (target: string | null): Promise<CommentPayload> => {
+        if (!target) return { total: 0, discussionUrl: null, comments: [] };
         try {
-            const resp = await fetch(target);
-            if (!resp.ok) return [];
-            return await resp.json();
+            const url = new URL(inkstoneApi("comments"));
+            url.searchParams.set("post_id", target);
+            const resp = await fetch(url);
+            if (!resp.ok) return { total: 0, discussionUrl: null, comments: [] };
+            const data = await resp.json();
+            const comments = Array.isArray(data?.comments) ? data.comments : [];
+            const toComment = (item: any): CommentItem => ({
+                id: String(item?.id ?? ""),
+                author: String(item?.author_login ?? ""),
+                date: String(item?.created_at ?? item?.updated_at ?? ""),
+                message: String(item?.body_html ?? ""),
+                url: item?.url ? String(item.url) : undefined,
+                avatarUrl: item?.author_avatar_url ? String(item.author_avatar_url) : undefined,
+                children: Array.isArray(item?.replies) ? item.replies.map(toComment) : [],
+            });
+            return {
+                total: Number.isFinite(data?.total) ? data.total : comments.length,
+                discussionUrl: data?.discussion_url ? String(data.discussion_url) : null,
+                comments: comments.map(toComment),
+            };
         } catch {
-            return [];
+            return { total: 0, discussionUrl: null, comments: [] };
         }
     };
-    const hasLegacy = createMemo(() => hasLegacyComments === true);
     const [resource] = createResource(url, fetchLegacyComments)
     let self;
     createEffect(() => {
@@ -67,7 +92,7 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
             setUrl(null);
             return;
         }
-        setUrl(hasLegacy() ? legacyUrl() : null);
+        setUrl(targetPath());
     })
 
     return (
@@ -91,16 +116,36 @@ export default function GiscusComment({ pageURL, LL, hasLegacyComments }: Giscus
                 />
                 <div class="flex items-center justify-between my-8">
                     <h3 class="text-xl md:text-2xl font-medium">评论</h3>
-                </div>
-                <Show when={hasLegacy()}>
-                    <Suspense fallback={<span class="">{LL && LL().post.DIS()}</span>}>
-                        <ErrorBoundary fallback={<span></span>}>
-                            <Show when={resource()}>
-                                <CommentList comments={resource()} />
+                    <Show when={resource()}>
+                        {(payload) => (
+                            <Show
+                                when={payload().discussionUrl}
+                                fallback={
+                                    <span class="text-sm text-[var(--c-text-subtle)]">
+                                        共 {payload().total} 条评论
+                                    </span>
+                                }
+                            >
+                                <a
+                                    href={payload().discussionUrl!}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
+                                >
+                                    共 {payload().total} 条评论
+                                    <IconArrowUpRight class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--c-link)]" />
+                                </a>
                             </Show>
-                        </ErrorBoundary>
-                    </Suspense>
-                </Show>
+                        )}
+                    </Show>
+                </div>
+                <Suspense fallback={<span class="">{LL && LL().post.DIS()}</span>}>
+                    <ErrorBoundary fallback={<span></span>}>
+                        <Show when={(resource()?.comments ?? []).length > 0}>
+                            <CommentList comments={resource()?.comments ?? []} />
+                        </Show>
+                    </ErrorBoundary>
+                </Suspense>
             </Show>
         </div>
     )

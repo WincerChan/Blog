@@ -1,4 +1,4 @@
-import IconArrowRight from "~icons/ph/arrow-right";
+import IconArrowUpRight from "~icons/ph/arrow-up-right";
 import LazyImg from "~/ui/media/Img";
 
 type LinkProps = {
@@ -31,7 +31,7 @@ const FriendLink = ({ name, url, avatar, inactive }: LinkProps) => {
                     <span class="text-sm text-[var(--c-text-subtle)]">已失联</span>
                 </div>
             </div>
-            <IconArrowRight class="h-4 w-4" />
+            <IconArrowUpRight class="h-4 w-4" />
         </div>
     ) : (
         <a
@@ -50,7 +50,7 @@ const FriendLink = ({ name, url, avatar, inactive }: LinkProps) => {
                     <span class="text-sm text-[var(--c-text-subtle)]">{domain}</span>
                 </div>
             </div>
-            <IconArrowRight class="h-4 w-4 text-[var(--c-link)] opacity-0 transition-opacity transition-transform group-hover:opacity-100 group-hover:translate-x-1" />
+            <IconArrowUpRight class="h-4 w-4 text-[var(--c-link)] opacity-0 transition-opacity transition-transform group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1" />
         </a>
     );
 };

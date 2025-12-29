@@ -348,7 +348,6 @@ export const PostExtra = ({
                 <Comment
                     pageURL={rawBlog.slug}
                     LL={LL}
-                    hasLegacyComments={rawBlog.hasLegacyComments}
                 />
             </Show>
         </>

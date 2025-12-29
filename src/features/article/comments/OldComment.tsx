@@ -1,18 +1,37 @@
-import { For, onMount, Show } from "solid-js";
+import { Accessor, For, createSignal, onMount, Show } from "solid-js";
 import { Properties } from "solid-js/web";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 import IconShieldCheck from "~icons/ph/shield-check";
+import IconReply from "~icons/ph/arrow-bend-up-left";
+import IconGithub from "~icons/ph/github-logo";
 
 interface CommentProps {
     author: string,
     date: string,
     message: string,
     id: string,
+    avatarUrl?: string,
+    url?: string,
     children?: CommentProps[]
     isChild?: boolean
 }
 
-const Comment = ({ author, date, message, children, id, isChild }: CommentProps) => {
+type ReplyState = {
+    activeId: Accessor<string | null>;
+    setActiveId: (id: string | null) => void;
+};
+
+const Comment = ({
+    author,
+    date,
+    message,
+    children,
+    id,
+    avatarUrl,
+    url,
+    isChild,
+    replyState,
+}: CommentProps & { replyState: ReplyState }) => {
     let self: HTMLDivElement | null = null;
     const initial = (value: string) => {
         const trimmed = String(value ?? "").trim();
@@ -26,6 +45,10 @@ const Comment = ({ author, date, message, children, id, isChild }: CommentProps)
         const month = String(dateObj.getMonth() + 1).padStart(2, "0");
         const day = String(dateObj.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
+    };
+    const isActive = () => replyState.activeId() === id;
+    const handleReplyClick = () => {
+        replyState.setActiveId(isActive() ? null : id);
     };
     onMount(() => {
         if (!self) return;
@@ -47,12 +70,20 @@ const Comment = ({ author, date, message, children, id, isChild }: CommentProps)
             <div ref={self!} class="flex flex-col gap-2"
                 classList={{ "mt-6": !isChild }}>
                 <div class="flex items-center gap-3">
-                    <div class="h-6 w-6 shrink-0 rounded-full border border-[var(--c-border)] bg-[var(--c-surface-2)] text-xs font-medium text-[var(--c-text)] flex items-center justify-center">
-                        {initial(author)}
+                    <div class="h-6 w-6 shrink-0 overflow-hidden rounded-full border border-[var(--c-border)] bg-[var(--c-surface-2)] text-xs font-medium text-[var(--c-text)] flex items-center justify-center">
+                        <Show when={avatarUrl} fallback={initial(author)}>
+                            <img
+                                src={avatarUrl}
+                                alt={author}
+                                class="h-full w-full object-cover"
+                                loading="lazy"
+                                referrerpolicy="no-referrer"
+                            />
+                        </Show>
                     </div>
                     <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2 text-sm text-[var(--c-text-subtle)]">
-                            <span class="text-[var(--c-text)] font-semibold">{author}</span>
+                            <span class="text-[var(--c-text)] font-sans font-semibold text-sm">{author}</span>
                             <Show when={author?.toLowerCase() === "wincerchan"}>
                                 <span class="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-mono text-[var(--c-link)] bg-[var(--c-selection)]">
                                     <IconShieldCheck class="h-3.5 w-3.5" />
@@ -66,10 +97,35 @@ const Comment = ({ author, date, message, children, id, isChild }: CommentProps)
                     </div>
                 </div>
                 <div class="text-sm leading-relaxed text-[var(--c-text-muted)]" innerHTML={message} />
+                <div class="flex items-center gap-2 text-xs text-[var(--c-text-subtle)]">
+                    <Show
+                        when={url && isActive()}
+                        fallback={
+                            <button
+                                type="button"
+                                onClick={handleReplyClick}
+                                class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)]"
+                            >
+                                <IconReply class="h-4 w-4 mr-1" />
+                                Reply
+                            </button>
+                        }
+                    >
+                        <a
+                            href={url}
+                            target="_blank"
+                            rel="noreferrer"
+                            class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)] hover:underline hover:decoration-1 hover:underline-offset-4"
+                        >
+                            <IconGithub class="h-4 w-4 mr-1" />
+                            Reply On Github
+                        </a>
+                    </Show>
+                </div>
             </div>
             <Show when={children?.length}>
                 <div class="mt-4 border-l border-[var(--c-border)] pl-4">
-                    <CommentList comments={children!} isChild={true} />
+                    <CommentList comments={children!} isChild={true} replyState={replyState} />
                 </div>
             </Show>
         </>
@@ -78,12 +134,18 @@ const Comment = ({ author, date, message, children, id, isChild }: CommentProps)
 
 
 
-const CommentList = (props: { comments: CommentProps[]; isChild?: boolean }) => {
+const CommentList = (props: {
+    comments: CommentProps[];
+    isChild?: boolean;
+    replyState?: ReplyState;
+}) => {
+    const [activeId, setActiveId] = createSignal<string | null>(null);
+    const replyState = props.replyState ?? { activeId, setActiveId };
     return (
         <div>
             <For each={props.comments}>
                 {comment => (
-                    <Comment {...comment} isChild={props.isChild} />
+                    <Comment {...comment} isChild={props.isChild} replyState={replyState} />
                 )}
             </For>
         </div>
