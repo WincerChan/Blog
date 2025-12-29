@@ -40,6 +40,9 @@ export const collections = {
       encrypt_pwd: s.string().optional(),
       mathrender: s.boolean().optional(),
       ...markdownFields,
+      rawContent: s
+        .raw()
+        .transform((_, ctx) => String(transforms.getMetaFromZodCtx(ctx)?.content ?? "")),
       words: s.raw().transform((_, ctx) => {
         const meta = transforms.getMetaFromZodCtx(ctx);
         return transforms.countWords(transforms.normalizeWhitespace(String(meta?.plain ?? "")));

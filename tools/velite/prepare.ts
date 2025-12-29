@@ -10,6 +10,7 @@ import {
 } from "./emit/legacyComments";
 import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
+import { emitSearchIndex } from "./emit/searchIndex";
 import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
 
@@ -72,6 +73,12 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     publicDir,
     publishedPosts,
     renderablePosts,
+  });
+  const searchPosts = renderablePosts.filter((p) => p.private !== true);
+  await emitSearchIndex({ publicDir, posts: searchPosts });
+
+  posts.forEach((post) => {
+    delete (post as { rawContent?: unknown }).rawContent;
   });
 
   await emitPublicAssets({ site, publicDir });

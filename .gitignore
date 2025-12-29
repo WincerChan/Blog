@@ -43,3 +43,5 @@ public/manifest.*
 public/sw.js
 public/_data
 public/valid_paths.txt
+public/search.json
+public/search-index.json
