@@ -15,7 +15,7 @@ const countWords = (input: string) => {
 };
 
 const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>) => {
-  if (!entries || entries.length === 0) return '<nav id="TableOfContents"></nav>';
+  if (!entries || entries.length === 0) return "";
   const render = (items: typeof entries) => {
     const lis = items
       .map((it) => {

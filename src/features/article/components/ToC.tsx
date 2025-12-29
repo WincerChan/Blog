@@ -8,7 +8,6 @@ interface ToCInterface {
     slug: string,
 }
 const ToC = ({ toc, slug }: ToCInterface) => {
-    if (toc === '<nav id="TableOfContents"></nav>') return <></>
     if (!toc) return <></>
 
     let desktopRef: HTMLDivElement;
