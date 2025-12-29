@@ -12,6 +12,7 @@ interface CommentProps {
     id: string,
     avatarUrl?: string,
     url?: string,
+    source?: string,
     children?: CommentProps[]
     isChild?: boolean
 }
@@ -29,6 +30,7 @@ const Comment = ({
     id,
     avatarUrl,
     url,
+    source,
     isChild,
     replyState,
 }: CommentProps & { replyState: ReplyState }) => {
@@ -50,6 +52,7 @@ const Comment = ({
     const handleReplyClick = () => {
         replyState.setActiveId(isActive() ? null : id);
     };
+    const shouldShowReply = () => source !== "legacy";
     onMount(() => {
         if (!self) return;
         // add all a tag with target="_blank", rel="noopener noreferrer"
@@ -97,31 +100,33 @@ const Comment = ({
                     </div>
                 </div>
                 <div class="text-sm leading-relaxed text-[var(--c-text-muted)]" innerHTML={message} />
-                <div class="flex items-center gap-2 text-xs text-[var(--c-text-subtle)]">
-                    <Show
-                        when={url && isActive()}
-                        fallback={
-                            <button
-                                type="button"
-                                onClick={handleReplyClick}
-                                class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)]"
-                            >
-                                <IconReply class="h-4 w-4 mr-1" />
-                                Reply
-                            </button>
-                        }
-                    >
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)] hover:underline hover:decoration-1 hover:underline-offset-4"
+                <Show when={shouldShowReply()}>
+                    <div class="flex items-center gap-2 text-xs text-[var(--c-text-subtle)]">
+                        <Show
+                            when={url && isActive()}
+                            fallback={
+                                <button
+                                    type="button"
+                                    onClick={handleReplyClick}
+                                    class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)]"
+                                >
+                                    <IconReply class="h-4 w-4 mr-1" />
+                                    Reply
+                                </button>
+                            }
                         >
-                            <IconGithub class="h-4 w-4 mr-1" />
-                            Reply On Github
-                        </a>
-                    </Show>
-                </div>
+                            <a
+                                href={url}
+                                target="_blank"
+                                rel="noreferrer"
+                                class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)] hover:underline hover:decoration-1 hover:underline-offset-4"
+                            >
+                                <IconGithub class="h-4 w-4 mr-1" />
+                                Reply On Github
+                            </a>
+                        </Show>
+                    </div>
+                </Show>
             </div>
             <Show when={children?.length}>
                 <div class="mt-4 border-l border-[var(--c-border)] pl-4">

@@ -17,6 +17,7 @@ type CommentItem = {
     message: string;
     url?: string;
     avatarUrl?: string;
+    source?: string;
     children?: CommentItem[];
 };
 
@@ -60,6 +61,7 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                 message: String(item?.body_html ?? ""),
                 url: item?.url ? String(item.url) : undefined,
                 avatarUrl: item?.author_avatar_url ? String(item.author_avatar_url) : undefined,
+                source: item?.source ? String(item.source) : undefined,
                 children: Array.isArray(item?.replies) ? item.replies.map(toComment) : [],
             });
             return {
