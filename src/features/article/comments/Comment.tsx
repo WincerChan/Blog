@@ -26,6 +26,34 @@ type CommentPayload = {
     comments: CommentItem[];
 };
 
+const CommentSkeleton = () => (
+    <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-3">
+                <div class="h-6 w-6 rounded-full bg-[var(--c-border)] opacity-60" />
+                <div class="flex-1">
+                    <div class="h-4 w-32 rounded bg-[var(--c-border)] opacity-60" />
+                </div>
+            </div>
+            <div class="h-4 w-5/6 rounded bg-[var(--c-border)] opacity-60" />
+            <div class="h-4 w-3/5 rounded bg-[var(--c-border)] opacity-60" />
+            <div class="h-3 w-20 rounded bg-[var(--c-border)] opacity-60" />
+        </div>
+        <div class="border-l border-[var(--c-border)] pl-4">
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-3">
+                    <div class="h-6 w-6 rounded-full bg-[var(--c-border)] opacity-60" />
+                    <div class="flex-1">
+                        <div class="h-4 w-28 rounded bg-[var(--c-border)] opacity-60" />
+                    </div>
+                </div>
+                <div class="h-4 w-4/6 rounded bg-[var(--c-border)] opacity-60" />
+                <div class="h-3 w-16 rounded bg-[var(--c-border)] opacity-60" />
+            </div>
+        </div>
+    </div>
+);
+
 export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     const [visible, setVisible] = createSignal(false)
     const [url, setUrl] = createSignal<string | null>(null)
@@ -93,9 +121,9 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     })
 
     return (
-        <div ref={self!} id="gisdus" class="">
+        <div ref={self!} id="gisdus" class="border-t border-dashed border-[var(--c-border)] pt-8">
             <Show when={visible()}>
-                <div class="flex items-center justify-between my-8">
+                <div class="flex items-center justify-between mb-8">
                     <h3 class="text-xl md:text-2xl font-medium">评论</h3>
                     <Show when={!resource.loading && resource()}>
                         {(payload) => (
@@ -121,6 +149,9 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                     </Show>
                 </div>
                 <ErrorBoundary fallback={<span></span>}>
+                    <Show when={resource.loading}>
+                        <CommentSkeleton />
+                    </Show>
                     <Show when={!resource.loading && (resource()?.comments ?? []).length > 0}>
                         <CommentList comments={resource()?.comments ?? []} />
                     </Show>
