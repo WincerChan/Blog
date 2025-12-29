@@ -1,4 +1,5 @@
 import { For, onMount, Show } from "solid-js";
+import { Properties } from "solid-js/web";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 import IconShieldCheck from "~icons/ph/shield-check";
 
@@ -8,9 +9,10 @@ interface CommentProps {
     message: string,
     id: string,
     children?: CommentProps[]
+    isChild?: boolean
 }
 
-const Comment = ({ author, date, message, children, id }: CommentProps) => {
+const Comment = ({ author, date, message, children, id, isChild }: CommentProps) => {
     let self: HTMLDivElement | null = null;
     const initial = (value: string) => {
         const trimmed = String(value ?? "").trim();
@@ -42,7 +44,8 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
     })
     return (
         <>
-            <div ref={self!} class="flex flex-col gap-2">
+            <div ref={self!} class="flex flex-col gap-2"
+                classList={{ "mt-6": !isChild }}>
                 <div class="flex items-center gap-3">
                     <div class="h-6 w-6 shrink-0 rounded-full border border-[var(--c-border)] bg-[var(--c-surface-2)] text-xs font-medium text-[var(--c-text)] flex items-center justify-center">
                         {initial(author)}
@@ -66,7 +69,7 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
             </div>
             <Show when={children?.length}>
                 <div class="mt-4 border-l border-[var(--c-border)] pl-4">
-                    <CommentList comments={children} />
+                    <CommentList comments={children!} isChild={true} />
                 </div>
             </Show>
         </>
@@ -75,12 +78,12 @@ const Comment = ({ author, date, message, children, id }: CommentProps) => {
 
 
 
-const CommentList = ({ comments }: { comments: CommentProps[] }) => {
+const CommentList = (props: { comments: CommentProps[]; isChild?: boolean }) => {
     return (
         <div>
-            <For each={comments}>
+            <For each={props.comments}>
                 {comment => (
-                    <Comment {...comment} />
+                    <Comment {...comment} isChild={props.isChild} />
                 )}
             </For>
         </div>
