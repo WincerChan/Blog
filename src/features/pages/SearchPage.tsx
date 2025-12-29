@@ -1,5 +1,5 @@
 import { useSearchParams } from "@solidjs/router";
-import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
+import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, on, untrack } from "solid-js";
 import { isBrowser, range } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowLeft from "~icons/ph/arrow-left";
@@ -49,12 +49,13 @@ const errorMsg = (err: string) => {
 
 type SortType = "relevance" | "latest";
 
-const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChange }: {
+const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChange, queryText }: {
     data: () => { total: number; hits: any[]; elapsed_ms: number | null; error?: string };
     currentPage: () => number;
     updatePage: (action: number) => void;
     sort: () => SortType;
     onSortChange: (nextSort: SortType) => void;
+    queryText: () => string | undefined;
 }) => {
     if (data().error) {
         return errorMsg(data().error);
@@ -71,6 +72,10 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
         const url = new URL(postURL)
         return url.pathname
     }
+    const isTagFilterActive = () => {
+        const value = queryText()?.toLowerCase() ?? "";
+        return /(?:^|\s)tags?:[^\s]+/.test(value);
+    };
     const elapsed = data().elapsed_ms ?? "--";
     return (
         <>
@@ -115,7 +120,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                         <p class="mt-2 text-base text-[var(--c-text-muted)] leading-relaxed mb-3!">
                             <span class="search-snippet" innerHTML={ret.content ? `...${ret.content}...` : ""} />
                         </p>
-                        <div class="mt-3 flex flex-wrap items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
+                        <div class="mt-3 flex items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)] whitespace-nowrap overflow-hidden">
                             <time dateTime={formatDateISO(ret.published_at)}>
                                 {formatDateISO(ret.published_at)}
                             </time>
@@ -130,19 +135,24 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                                     {ret.category}
                                 </span>
                             )}
-                            {ret.tags?.length && <span class="text-[var(--c-text-subtle)]">/</span>}
-                            <For each={ret.tags ?? []}>
-                                {(tag) => (
-                                    <span
-                                        class="text-[var(--c-text-subtle)] transition-colors"
-                                        classList={{
-                                            "bg-[var(--c-selection)] rounded px-1 text-[var(--c-text)]": ret.matched?.tags?.includes(tag),
-                                        }}
-                                    >
-                                        #{tag}
-                                    </span>
-                                )}
-                            </For>
+                            {(() => {
+                                const matchedTags = (ret.matched?.tags ?? []).filter((tag) =>
+                                    (ret.tags ?? []).includes(tag),
+                                );
+                                if (!matchedTags.length || isTagFilterActive()) return null;
+                                return (
+                                    <>
+                                        <span class="text-[var(--c-text-subtle)]">/</span>
+                                        <For each={matchedTags}>
+                                            {(tag) => (
+                                                <span class="text-[var(--c-text-subtle)] transition-colors bg-[var(--c-selection)] rounded px-1 text-[var(--c-text)]">
+                                                    #{tag}
+                                                </span>
+                                            )}
+                                        </For>
+                                    </>
+                                );
+                            })()}
                         </div>
                     </div>
                 )}
@@ -253,17 +263,25 @@ const Search = ({ page }) => {
         const tagToken = `tags:${limited.join(",")}`;
         return stripped ? `${stripped} ${tagToken}` : tagToken;
     };
-    onMount(() => {
-        const q = serachParams.q
-        const initialSort = serachParams.sort === "latest" ? "latest" : "relevance";
-        setSort(initialSort);
-        if (!q) return
-        setInput(q)
-        setCurrentPage(1)
+    createEffect(on([() => serachParams.q, () => serachParams.sort], () => {
+        const q = serachParams.q;
+        const nextSort = serachParams.sort === "latest" ? "latest" : "relevance";
+        setSort(nextSort);
+        if (!q) {
+            setInput("");
+            setCurrentPage(1);
+            setQuery(undefined);
+            return;
+        }
+        if (untrack(input) !== q) setInput(q);
+        setCurrentPage(1);
         const normalized = normalizeQuery(q);
-        if (!normalized) return;
-        setQuery({ q: normalized, page: 1, sort: initialSort })
-    })
+        if (!normalized) {
+            setQuery(undefined);
+            return;
+        }
+        setQuery({ q: normalized, page: 1, sort: nextSort });
+    }));
     createEffect(() => {
         setTimeout(() => scrollElem?.scrollIntoView({ behavior: 'smooth', block: 'start' }), currentPage() * 0)
     })
@@ -423,6 +441,7 @@ const Search = ({ page }) => {
                                     updatePage={handlePageChange}
                                     sort={sort}
                                     onSortChange={handleSortChange}
+                                    queryText={() => query()?.q}
                                 />
                             </Show>
                         </ErrorBoundary>
