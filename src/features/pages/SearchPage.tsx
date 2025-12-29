@@ -76,6 +76,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
         const value = queryText()?.toLowerCase() ?? "";
         return /(?:^|\s)tags?:[^\s]+/.test(value);
     };
+    const isSubtitleMatched = (matched: any) => matched?.subtitle === true;
     const elapsed = data().elapsed_ms ?? "--";
     return (
         <>
@@ -117,6 +118,9 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                         <h3 class="mt-3! mb-1! text-xl md:text-2xl font-medium font-sans">
                             <a class="text-[var(--c-text)]! no-underline!" href={getPathname(ret.url)} innerHTML={ret.title}></a>
                         </h3>
+                        <Show when={ret.subtitle && isSubtitleMatched(ret.matched)}>
+                            <span class="search-snippet text-lg text-[var(--c-text-muted)] " innerHTML={ret.subtitle}></span>
+                        </Show>
                         <p class="mt-2 text-base text-[var(--c-text-muted)] leading-relaxed mb-3!">
                             <span class="search-snippet" innerHTML={ret.content ? `...${ret.content}...` : ""} />
                         </p>
