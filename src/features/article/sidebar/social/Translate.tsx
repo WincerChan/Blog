@@ -54,7 +54,7 @@ const Translate = ({ pageURL, lang }: TranslateProps) => {
                     link={true}
                     title={LL().post.SWITCH_TO()}
                     aria-label={LL().post.SWITCH_TO()}
-                    class="inline-flex items-center gap-1.5 rounded-full border border-[var(--c-border)] px-2.5 py-1 text-sm font-sans normal-case tracking-normal text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
+                    class="inline-flex items-center gap-1.5 text-sm font-sans normal-case tracking-normal text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
                 >
                     <IconTranslate class="block" width={16} height={16} />
                     {info().targetName}

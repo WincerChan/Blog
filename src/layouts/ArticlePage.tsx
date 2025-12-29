@@ -82,7 +82,7 @@ const PostMeta = ({
                         >
                             <div class="flex flex-wrap items-center gap-3">
                                 <DateCat date={blog.date} category={blog.category} />
-                                <div class="md:ml-auto">
+                                <div class="ml-auto">
                                     <Translate pageURL={blog.slug} lang={blog.lang} />
                                 </div>
                             </div>
@@ -101,51 +101,49 @@ const PostMeta = ({
                                 <h1 class="text-3xl md:text-4xl font-medium font-serif tracking-tight leading-tight text-[var(--c-text)]">
                                     {blog.title}
                                 </h1>
-                                <div class="md:ml-auto">
+                                <div class="ml-auto">
                                     <Translate pageURL={blog.slug} lang={blog.lang} />
                                 </div>
                             </div>
                         </Show>
                         <Show when={!!blog.subtitle}>
-                            <h2 class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed font-serif">
+                            <h2 class="text-xl md:text-2xl font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
                                 {blog.subtitle}
                             </h2>
                         </Show>
                     </div>
                 </div>
                 <Show when={hasWords() || hasTags()}>
-                    <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide">
-                        <Show when={hasWords() || hasTags()}>
-                            <div class="flex flex-wrap items-center gap-x-2 mt-2">
-                                <Show when={hasWords()}>
-                                    <span class="tabular-nums">
-                                        {blog.words} {LL && LL().post.W}
-                                    </span>
-                                </Show>
-                                <Show when={hasWords() && hasTags()}>
-                                    <IconPointFilled
-                                        width={12}
-                                        height={12}
-                                        class="text-[var(--c-text-subtle)] opacity-70"
-                                    />
-                                </Show>
-                                <Show when={hasTags()}>
-                                    <For each={tags()}>
-                                        {(tag) => (
-                                            <a
-                                                href={`/search/?q=tags:${tag}`}
-                                                class="group inline-flex items-center px-1 gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
-                                            >
-                                                <span class="text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">#</span>
-                                                {tag}
-                                            </a>
-                                        )}
-                                    </For>
-                                </Show>
-                            </div>
-                        </Show>
+                    <div class="mt-3 flex items-start gap-3 text-sm text-[var(--c-text-subtle)] font-mono uppercase tracking-wide">
+                        <div class="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-2">
+                            <Show when={hasWords()}>
+                                <span class="tabular-nums">
+                                    {blog.words} {LL && LL().post.W}
+                                </span>
+                            </Show>
+                            <Show when={hasWords() && hasTags()}>
+                                <IconPointFilled
+                                    width={12}
+                                    height={12}
+                                    class="text-[var(--c-text-subtle)] opacity-70"
+                                />
+                            </Show>
+                            <Show when={hasTags()}>
+                                <For each={tags()}>
+                                    {(tag) => (
+                                        <a
+                                            href={`/search/?q=tags:${tag}`}
+                                            class="group inline-flex items-center px-1 gap-1 text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-link)]"
+                                        >
+                                            <span class="text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">#</span>
+                                            {tag}
+                                        </a>
+                                    )}
+                                </For>
+                            </Show>
+                        </div>
                         <Show when={showTranslateInMetaLine()}>
-                            <div class="w-full md:w-auto md:ml-auto">
+                            <div class="ml-auto shrink-0">
                                 <Translate pageURL={blog.slug} lang={blog.lang} />
                             </div>
                         </Show>

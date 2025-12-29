@@ -25,7 +25,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                             {blog.title}
                         </h2>
                         <Show when={blog.subtitle}>
-                            <h3 title={blog.subtitle} class="text-xl md:text-2xl text-[var(--c-text-muted)] leading-relaxed font-serif">
+                            <h3 title={blog.subtitle} class="text-xl md:text-2xl font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
                                 {blog.subtitle}
                             </h3>
                         </Show>

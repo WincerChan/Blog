@@ -9,7 +9,7 @@ html.light {
   --c-border: #e6e6e3;
   --c-border-strong: #d0d0cc;
   --c-text: #1a1a1a;
-  --c-text-muted: #6b6b6b;
+  --c-text-muted: #5a5a5a;
   --c-text-subtle: #8a8a8a;
   --c-accent: #2f6fed;
   --c-accent-weak: rgba(47, 111, 237, 0.12);
@@ -31,7 +31,7 @@ html.dark {
   --c-border: #2a2b31;
   --c-border-strong: #3a3b42;
   --c-text: #e8e8e6;
-  --c-text-muted: #b1b1ac;
+  --c-text-muted: #c0c0ba;
   --c-text-subtle: #8e8e88;
   --c-accent: #86a7ff;
   --c-accent-weak: rgba(134, 167, 255, 0.16);
