@@ -1,4 +1,4 @@
-import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createMemo, createResource, createSignal } from "solid-js";
+import { Accessor, ErrorBoundary, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
 import CommentList from "./OldComment";
 import { Translations } from "~/i18n/i18n-types";
 import { inkstoneApi } from "~/utils/inkstone";
@@ -97,7 +97,7 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
             <Show when={visible()}>
                 <div class="flex items-center justify-between my-8">
                     <h3 class="text-xl md:text-2xl font-medium">评论</h3>
-                    <Show when={resource()}>
+                    <Show when={!resource.loading && resource()}>
                         {(payload) => (
                             <Show
                                 when={payload().discussionUrl}
@@ -120,13 +120,11 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                         )}
                     </Show>
                 </div>
-                <Suspense fallback={<span class="">{LL && LL().post.DIS()}</span>}>
-                    <ErrorBoundary fallback={<span></span>}>
-                        <Show when={(resource()?.comments ?? []).length > 0}>
-                            <CommentList comments={resource()?.comments ?? []} />
-                        </Show>
-                    </ErrorBoundary>
-                </Suspense>
+                <ErrorBoundary fallback={<span></span>}>
+                    <Show when={!resource.loading && (resource()?.comments ?? []).length > 0}>
+                        <CommentList comments={resource()?.comments ?? []} />
+                    </Show>
+                </ErrorBoundary>
             </Show>
         </div>
     )
