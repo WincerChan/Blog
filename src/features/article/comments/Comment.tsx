@@ -1,7 +1,6 @@
 import { Accessor, ErrorBoundary, Show, Suspense, createEffect, createMemo, createResource, createSignal } from "solid-js";
 import CommentList from "./OldComment";
 import { Translations } from "~/i18n/i18n-types";
-import { globalStore } from "~/features/theme";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowUpRight from "~icons/ph/arrow-up-right";
 
@@ -86,10 +85,6 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     })
 
     createEffect(() => {
-        if (!visible()) return;
-        import('giscus').catch(() => undefined);
-    })
-    createEffect(() => {
         if (!visible()) {
             setUrl(null);
             return;
@@ -100,22 +95,6 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     return (
         <div ref={self!} id="gisdus" class="">
             <Show when={visible()}>
-                <giscus-widget
-                    id="comments"
-                    repo="WincerChan/blog-comments"
-                    repoId="R_kgDOKKgBSg"
-                    category="Announcements"
-                    categoryId="DIC_kwDOKKgBSs4CYzae"
-                    mapping="pathname"
-                    term="Welcome to Wincer's Blog!"
-                    strict="0"
-                    emitMetadata="0"
-                    reactionsEnabled="0"
-                    inputPosition="top"
-                    theme={`noborder_${globalStore.theme}`}
-                    lang={LL && LL().post.S()}
-                    loading="lazy"
-                />
                 <div class="flex items-center justify-between my-8">
                     <h3 class="text-xl md:text-2xl font-medium">评论</h3>
                     <Show when={resource()}>
