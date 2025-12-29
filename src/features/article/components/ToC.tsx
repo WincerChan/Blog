@@ -126,11 +126,11 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
     const styleList = (container?: HTMLDivElement) => {
         if (!container) return [] as HTMLAnchorElement[];
-        container.classList.add("space-y-1");
+        container.classList.add("space-y-2");
         container.querySelectorAll("ul").forEach((list) => {
-            list.classList.add("space-y-1");
+            list.classList.add("space-y-2");
             if (list.parentElement?.tagName === "LI") {
-                list.classList.add("pl-3", "border-l", "border-[var(--c-border)]");
+                list.classList.add("pl-4", "py-2", "border-l", "border-[var(--c-border)]");
             }
         });
         container.querySelectorAll("li").forEach((item) => {
@@ -212,7 +212,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
     }
     return (
         <div class="md:col-start-3 md:row-start-1 md:justify-self-start">
-            <aside class="hidden md:block md:sticky md:top-24">
+            <aside class="hidden md:block md:sticky md:top-30">
                 <div class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                     <span>{LL().sidebar.TOC()}</span>
                 </div>
