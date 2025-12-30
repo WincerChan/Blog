@@ -22,4 +22,8 @@ export const theme = {
             "monospace",
         ],
     },
+    fontSize: {
+        sm: "0.95rem",
+        base: "1.05rem"
+    },
 } as const;

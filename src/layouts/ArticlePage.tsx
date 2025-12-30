@@ -303,7 +303,12 @@ const ArticlePage = ({
 
     let wrapper: JSXElement;
     if (blog.encrypted) wrapper = <ProtectBlog source={children} />;
-    else wrapper = <div id="blog-article">{children}</div>;
+    else
+        wrapper = (
+            <div id="blog-article" class="prose dark:prose-invert text-[1.05rem] max-w-[42rem]">
+                {children}
+            </div>
+        );
 
     return (
         <ArticleLayout headParams={headParams}>

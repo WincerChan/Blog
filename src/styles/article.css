@@ -1,7 +1,3 @@
-#blog-article {
-  @apply prose dark:prose-invert !text-[1.05rem] !max-w-[42rem];
-}
-
 #blog-article a {
   @apply decoration-[var(--c-link)] underline-offset-4 decoration-1.2;
 }

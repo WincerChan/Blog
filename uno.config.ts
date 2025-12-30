@@ -1,4 +1,4 @@
-import { defineConfig, presetTypography, presetWind } from "unocss";
+import { defineConfig, presetTypography, presetWind3 as presetWind } from "unocss";
 import { rules } from "./src/styles/unocss/rules";
 import { shortcuts } from "./src/styles/unocss/shortcuts";
 import { theme } from "./src/styles/unocss/theme";
@@ -9,5 +9,31 @@ export default defineConfig({
     theme,
     rules,
     shortcuts,
+    preflights: [
+        {
+            getCSS: () => `
+.prose {
+  --un-prose-body: var(--c-text);
+  --un-prose-headings: var(--c-text);
+  --un-prose-links: var(--c-link);
+  --un-prose-lists: var(--c-text-muted);
+  --un-prose-hr: var(--c-border);
+  --un-prose-captions: var(--c-text-subtle);
+  --un-prose-code: var(--c-text);
+  --un-prose-borders: var(--c-border);
+  --un-prose-bg-soft: var(--c-surface-2);
+  --un-prose-invert-body: var(--c-text);
+  --un-prose-invert-headings: var(--c-text);
+  --un-prose-invert-links: var(--c-link);
+  --un-prose-invert-lists: var(--c-text-muted);
+  --un-prose-invert-hr: var(--c-border);
+  --un-prose-invert-captions: var(--c-text-subtle);
+  --un-prose-invert-code: var(--c-text);
+  --un-prose-invert-borders: var(--c-border);
+  --un-prose-invert-bg-soft: var(--c-surface-2);
+}
+`,
+        },
+    ],
     presets: [presetWind(), presetTypography()],
 });
