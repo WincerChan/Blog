@@ -1,4 +1,4 @@
-import rehypeHighlight from "rehype-highlight";
+import rehypeShiki from "@shikijs/rehype";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
@@ -162,7 +162,15 @@ export const md = {
   rehypePlugins: [
     rehypeSlug,
     rehypeBlogEnhancements,
-    [rehypeHighlight, { ignoreMissing: true }],
+    [
+      rehypeShiki,
+      {
+        themes: {
+          light: "vitesse-light",
+          dark: "vitesse-dark",
+        },
+      },
+    ],
     rehypeCodeLangAttr,
     [rehypeKatex, { strict: "warn" }],
   ] as any,
