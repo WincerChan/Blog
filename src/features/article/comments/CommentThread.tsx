@@ -130,7 +130,7 @@ const Comment = ({
             </div>
             <Show when={children?.length}>
                 <div class="mt-4 border-l border-[var(--c-border)] pl-4">
-                    <CommentList comments={children!} isChild={true} replyState={replyState} />
+                    <CommentThread comments={children!} isChild={true} replyState={replyState} />
                 </div>
             </Show>
         </>
@@ -139,7 +139,7 @@ const Comment = ({
 
 
 
-const CommentList = (props: {
+const CommentThread = (props: {
     comments: CommentProps[];
     isChild?: boolean;
     replyState?: ReplyState;
@@ -159,4 +159,4 @@ const CommentList = (props: {
 
 export { Comment };
 
-export default CommentList
+export default CommentThread
