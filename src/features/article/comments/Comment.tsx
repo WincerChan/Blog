@@ -121,7 +121,7 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
     })
 
     return (
-        <div ref={self!} id="comments" class="border-t border-dashed border-[var(--c-border)] pt-8">
+        <div ref={self!} id="comments" class="pt-8">
             <Show when={visible()}>
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-xl md:text-2xl font-medium">评论</h3>

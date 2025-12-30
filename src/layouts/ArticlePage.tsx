@@ -151,7 +151,7 @@ const PostMeta = ({
                 </Show>
             </div>
             <Show when={blog.category && !isRecently}>
-                <div class="my-6 rounded border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)]">
+                <div class="my-6 border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)]">
                     <p class="leading-relaxed">
                         {renderExpiredText()}
                     </p>
@@ -170,7 +170,7 @@ export const Neighbours = ({
 }) => {
     const { prev, next } = neighbours ?? {};
     return (
-        <div class="mt-10 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="mt-8 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             {next && (
                 <a
                     href={next.slug}

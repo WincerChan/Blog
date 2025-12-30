@@ -12,7 +12,7 @@ const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Transla
                 <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                     {LL && LL().post.RELATES}
                 </label>
-                <ol class="mt-3 space-y-4">
+                <ol class="mt-3 space-y-3">
                     <For each={visibleRelates()}>
                         {(post) => (
                             <li>
@@ -20,7 +20,7 @@ const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Transla
                                     class="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 text-[var(--c-text)]"
                                     href={post.slug}
                                 >
-                                    <span class="min-w-0 text-base md:text-lg font-medium leading-tight text-[var(--c-text)] transition-colors group-hover:text-[var(--c-link)]">
+                                    <span class="min-w-0 text-base md:text-lg font-medium leading-tight text-[var(--c-text)] transition-colors group-hover:text-[var(--c-link)] line-clamp-1 md:line-clamp-none">
                                         {post.title}
                                     </span>
                                     <span class="text-sm font-mono tabular-nums leading-tight text-[var(--c-text-subtle)]">
