@@ -10,5 +10,16 @@ export const theme = {
             "Apple Color Emoji",
             "Segoe UI Emoji",
         ],
+        mono: [
+            "Fira Code",
+            "ui-monospace",
+            "SFMono-Regular",
+            "Menlo",
+            "Monaco",
+            "Consolas",
+            "Liberation Mono",
+            "Courier New",
+            "monospace",
+        ],
     },
 } as const;
