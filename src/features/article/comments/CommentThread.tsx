@@ -60,10 +60,12 @@ const Comment = ({
         aTags.forEach(a => {
             a.target = "_blank"
             a.classList.add(
-                "hover:text-[var(--c-link)]",
-                "hover:underline",
-                "hover:decoration-1",
-                "hover:underline-offset-4",
+                "text-[var(--c-link)]",
+                "underline",
+                "decoration-[var(--c-border-strong)]",
+                "underline-offset-4",
+                "hover:text-[var(--c-link-hover)]",
+                "hover:decoration-[var(--c-link)]",
             )
             a.rel = "noopener noreferrer"
         })

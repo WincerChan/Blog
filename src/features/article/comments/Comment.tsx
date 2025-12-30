@@ -1,10 +1,10 @@
 import { Accessor, ErrorBoundary, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
-import CommentList from "./OldComment";
+import CommentThread from "./CommentThread";
 import { Translations } from "~/i18n/i18n-types";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowUpRight from "~icons/ph/arrow-up-right";
 
-interface GiscusCommentProps {
+interface CommentsProps {
     pageURL: string
     LL: Accessor<Translations>
 }
@@ -54,7 +54,7 @@ const CommentSkeleton = () => (
     </div>
 );
 
-export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
+export default function Comments({ pageURL, LL }: CommentsProps) {
     const [visible, setVisible] = createSignal(false)
     const [url, setUrl] = createSignal<string | null>(null)
     const normalizePath = (input: string) => {
@@ -69,7 +69,7 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
         pathname = pathname.split("?")[0].split("#")[0];
         if (!pathname.startsWith("/")) pathname = `/${pathname}`;
         if (!pathname.endsWith("/")) pathname = `${pathname}/`;
-        return pathname;
+        return pathname.toLowerCase();
     };
     const targetPath = createMemo(() => normalizePath(pageURL));
     const fetchLegacyComments = async (target: string | null): Promise<CommentPayload> => {
@@ -121,7 +121,7 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
     })
 
     return (
-        <div ref={self!} id="gisdus" class="border-t border-dashed border-[var(--c-border)] pt-8">
+        <div ref={self!} id="comments" class="border-t border-dashed border-[var(--c-border)] pt-8">
             <Show when={visible()}>
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-xl md:text-2xl font-medium">评论</h3>
@@ -153,7 +153,7 @@ export default function GiscusComment({ pageURL, LL }: GiscusCommentProps) {
                         <CommentSkeleton />
                     </Show>
                     <Show when={!resource.loading && (resource()?.comments ?? []).length > 0}>
-                        <CommentList comments={resource()?.comments ?? []} />
+                        <CommentThread comments={resource()?.comments ?? []} />
                     </Show>
                 </ErrorBoundary>
             </Show>
