@@ -412,7 +412,7 @@ const Search = ({ page }) => {
                         </Show>
                         <button
                             type="submit"
-                            class="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] px-2 py-0.5 text-sm font-mono text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
+                            class="inline-flex items-center gap-1 rounded-md border border-[var(--c-border)] px-3 py-1 text-sm font-mono text-[var(--c-text-subtle)] transition-colors hover:text-[var(--c-text)]"
                         >
                             <span class="hidden md:inline">ENTER</span>
                             <IconReturn width={16} height={16} class="block" />
@@ -425,7 +425,7 @@ const Search = ({ page }) => {
                         {(item) => (
                             <button
                                 type="button"
-                                class="rounded-full border border-[var(--c-border)] px-3 py-1 font-mono transition-colors hover:border-[var(--c-border-strong)] hover:text-[var(--c-text)]"
+                                class="rounded-md border border-[var(--c-border)] px-4 py-1.5 font-mono transition-colors hover:border-[var(--c-border-strong)] hover:text-[var(--c-text)]"
                                 onClick={() => appendSyntax(item.token)}
                             >
                                 {item.label}
