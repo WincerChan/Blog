@@ -1,4 +1,5 @@
 import { Show, createMemo } from "solid-js";
+import { useHead } from "@solidjs/meta";
 import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
@@ -59,24 +60,35 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
     const resolved = createMemo(() => resolveHeadParams(props.headParams));
     return (
         <Show keyed when={resolved()}>
-            {(params) => (
-                <>
+            {(params) => {
+                const jsonLd = () =>
+                    params.description !== __SITE_CONF.description
+                        ? postLDJSON(params)
+                        : blogLDJSON();
+
+                useHead({
+                    tag: "script",
+                    id: "json-ld",
+                    props: {
+                        type: "application/ld+json",
+                        get children() {
+                            return jsonLd();
+                        },
+                    },
+                    setting: { close: true, escape: false },
+                });
+
+                return (
+                    <>
                     <MainMeta params={params} />
                     {params.mathrender && (
                         <link rel="stylesheet" href={katexCssHref} />
                     )}
                     <ApplicationMeta />
                     <OpenGraph params={params} />
-                    <script
-                        type="application/ld+json"
-                        innerHTML={
-                            params.description !== __SITE_CONF.description
-                                ? postLDJSON(params)
-                                : blogLDJSON()
-                        }
-                    />
-                </>
-            )}
+                    </>
+                );
+            }}
         </Show>
     );
 };
