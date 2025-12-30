@@ -12,7 +12,7 @@ const CompactBlog = ({ blog }: BlogProps) => {
         <div class="py-4 md:py-5">
             <div class="flex flex-col gap-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-x-6 md:gap-y-2">
                 <a link={true} href={blog.slug} class="group block space-y-1">
-                    <h2 class="text-xl md:text-2xl font-medium text-[var(--c-text)] decoration-[color-mix(in_srgb,var(--c-link)_70%,transparent)] decoration-2 underline-offset-6 group-hover:underline">
+                    <h2 class="text-xl md:text-2xl font-medium text-[var(--c-text)] decoration-[var(--c-text)] decoration-1.5 underline-offset-6 group-hover:underline">
                         {blog.title}
                     </h2>
                     <Show when={blog.subtitle}>

@@ -88,7 +88,7 @@ const PostMeta = ({
                             </div>
                         </Show>
                     </Show>
-                    <div class="space-y-4">
+                    <div class="space-y-3">
                         <Show
                             when={showTranslateInTitleLine()}
                             fallback={(

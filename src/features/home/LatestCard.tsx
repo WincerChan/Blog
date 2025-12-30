@@ -20,8 +20,8 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         </span>
                         <PostMeta date={blog.date} category={blog.category} />
                     </div>
-                    <a link={true} href={blog.slug} class="group block space-y-4">
-                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)] decoration-[color-mix(in_srgb,var(--c-link)_70%,transparent)] decoration-2 underline-offset-6 group-hover:underline">
+                    <a link={true} href={blog.slug} class="group block space-y-3">
+                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)] decoration-[var(--c-text)] decoration-1.5 underline-offset-6 group-hover:underline">
                             {blog.title}
                         </h2>
                         <Show when={blog.subtitle}>
@@ -32,8 +32,12 @@ const LatestBlog = ({ blog }: BlogProps) => {
                         <p class="text-[var(--c-text)] opacity-85 leading-[1.75]" innerText={blog.summary} />
                         <div class="flex items-center gap-4">
                             <span class="latest-readmore inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] transition-colors hover:text-[var(--c-link)]">
-                                继续阅读
-                                <IconArrowRight width={14} height={14} class="latest-readmore-arrow transition-transform" />
+                                <span class="peer">继续阅读</span>
+                                <IconArrowRight
+                                    width={14}
+                                    height={14}
+                                    class="latest-readmore-arrow transition-transform hover:translate-x-1 peer-hover:translate-x-1"
+                                />
                             </span>
                         </div>
                     </a>
