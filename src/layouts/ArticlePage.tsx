@@ -151,7 +151,7 @@ const PostMeta = ({
                 </Show>
             </div>
             <Show when={blog.category && !isRecently}>
-                <div class="my-6 border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)]">
+                <div class="my-6 mx-[-1rem] border border-dashed border-[var(--c-border)] px-5 py-4 text-base font-mono text-[var(--c-text-muted)] md:mx-0">
                     <p class="leading-relaxed">
                         {renderExpiredText()}
                     </p>
