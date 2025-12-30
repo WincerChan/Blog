@@ -25,7 +25,7 @@ const Copyright = ({ updated }: CopyrightProps) => {
                         <span class="font-sans">转载请注明出处</span>
                     </div>
                 </div>
-                <div class="text-right">
+                <div class="ml-auto text-right">
                     <div class="opacity-60">更新于</div>
                     <div class="tabular-nums mt-1 font-mono text-[var(--c-text-subtle)]">2023-10-25 14:20:00</div>
                 </div>
