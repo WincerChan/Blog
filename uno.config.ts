@@ -1,4 +1,4 @@
-import { defineConfig, presetWind } from "unocss";
+import { defineConfig, presetTypography, presetWind } from "unocss";
 import { rules } from "./src/styles/unocss/rules";
 import { shortcuts } from "./src/styles/unocss/shortcuts";
 import { theme } from "./src/styles/unocss/theme";
@@ -9,5 +9,5 @@ export default defineConfig({
     theme,
     rules,
     shortcuts,
-    presets: [presetWind()],
+    presets: [presetWind(), presetTypography()],
 });
