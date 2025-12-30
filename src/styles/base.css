@@ -6,7 +6,7 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--c-border-strong) transparent;
+  scrollbar-color: var(--c-border) transparent;
 }
 
 *::-webkit-scrollbar {
