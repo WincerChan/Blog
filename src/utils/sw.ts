@@ -7,6 +7,9 @@ const registerServiceWorker = () => {
     navigator.serviceWorker
         .register(`/sw.js?v=${__SW_HASH}`, { scope: "/" })
         .then((reg) => {
+            if (reg.waiting && navigator.serviceWorker.controller) {
+                notifySwUpdateReady();
+            }
             reg.addEventListener("updatefound", () => {
                 const newWorker = reg.installing;
                 newWorker?.addEventListener("statechange", () => {

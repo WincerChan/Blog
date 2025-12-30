@@ -1,8 +1,15 @@
-import { clientsClaim, skipWaiting } from "workbox-core";
+import { skipWaiting } from "workbox-core";
 import { registerRoute } from 'workbox-routing';
 
-skipWaiting()
-clientsClaim()
+const shouldSkipWaiting = (data: unknown): data is { type: string } => {
+    if (typeof data !== "object" || data === null) return false;
+    return (data as { type?: string }).type === "SKIP_WAITING";
+};
+
+self.addEventListener("message", (event) => {
+    if (!shouldSkipWaiting(event.data)) return;
+    skipWaiting();
+});
 
 const ASSETS_PREFIXES = [
     `https://unpkg.com/wir@`,
