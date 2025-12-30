@@ -188,7 +188,7 @@ export const Neighbours = ({
             {prev && (
                 <a
                     href={prev.slug}
-                    class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)] md:ml-auto md:items-end md:text-right"
+                    class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)] ml-auto items-end text-right md:ml-auto md:items-end md:text-right"
                 >
                     <span class="inline-flex items-center gap-2 text-sm text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">
                         {LL && LL().post.OLDER}
