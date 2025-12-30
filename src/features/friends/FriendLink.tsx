@@ -25,7 +25,7 @@ const FriendLink = ({ name, url, avatar, inactive }: LinkProps) => {
             aria-disabled="true"
         >
             <div class="flex items-center gap-3">
-                <LazyImg class="h-16 w-16 rounded-full object-cover" src={avatar} />
+                <LazyImg class="h-16 w-16 rounded-full object-cover m-0!" src={avatar} />
                 <div class="flex flex-col gap-1">
                     <span class="text-base font-medium">{name}</span>
                     <span class="text-sm text-[var(--c-text-subtle)]">已失联</span>
@@ -43,7 +43,7 @@ const FriendLink = ({ name, url, avatar, inactive }: LinkProps) => {
         >
             <div class="flex items-center gap-3">
                 <span class="rounded-full ring-2 ring-transparent transition-colors group-hover:ring-[var(--c-link)]">
-                    <LazyImg class="h-16 w-16 rounded-full object-cover" src={avatar} />
+                    <LazyImg class="h-16 w-16 rounded-full object-cover m-0!" src={avatar} />
                 </span>
                 <div class="flex flex-col gap-1">
                     <span class="text-base font-medium">{name}</span>

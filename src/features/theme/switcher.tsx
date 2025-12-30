@@ -70,7 +70,7 @@ const ThemeMenu = ({ show, toggleShow }: ThemeMenuProps) => {
                         return (
                             <div
                                 onClick={(e) => handleClick(e, themeItem[0])}
-                                class="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-[var(--c-hover-bg)] transition-colors"
+                                class="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-[var(--c-hover-bg)] transition-colors"
                                 classList={{
                                     "text-[var(--c-text)]": selected() !== themeItem[0],
                                     "text-[var(--c-accent)] font-medium":

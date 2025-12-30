@@ -56,14 +56,14 @@ const action = (type: string) => {
 const RealItem = ({ poster, title, type, date, url }: Item) => {
     const cover = (
         <LazyImg
-            class="block w-full h-auto rounded"
+            class="block w-full h-auto rounded m-0!"
             src={poster}
             title={`${date} ${action(type)}`}
         />
     );
     return (
         <div class="flex flex-col gap-2">
-            <figure class="flex flex-col items-center gap-2">
+            <figure class="flex flex-col items-center gap-2 m-0!">
                 <Show
                     when={url}
                     fallback={<span class="">{cover}</span>}
