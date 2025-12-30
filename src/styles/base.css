@@ -1,4 +1,5 @@
 body {
+  @apply antialiased;
   background: var(--c-bg);
   color: var(--c-text);
 }

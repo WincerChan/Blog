@@ -1,2 +1,3 @@
-export const rules = [] as const;
-
+export const rules = [
+    ["text-pretty", { "text-wrap": "pretty" }],
+] as const;

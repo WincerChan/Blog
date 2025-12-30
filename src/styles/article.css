@@ -1,5 +1,5 @@
 #blog-article {
-  @apply text-[var(--c-text)] leading-[1.75];
+  @apply text-[var(--c-text)] leading-[1.75] break-words hyphens-auto text-pretty;
 }
 
 #blog-article>*+* {
@@ -80,7 +80,7 @@
 
 
 #blog-article blockquote {
-  @apply my-8 border-l-4 italic border-[var(--c-border-strong)] pl-5 py-4 space-y-4 text-lg text-[var(--c-text-muted)];
+  @apply my-8 border-l-4 italic border-[var(--c-border-strong)] pl-5 py-4 space-y-4 text-lg text-[var(--c-text-muted)] break-words;
 }
 
 #blog-article blockquote p {
