@@ -96,7 +96,18 @@
 }
 
 #blog-article pre code {
-  @apply bg-transparent border-0 p-4;
+  @apply bg-transparent border-0;
+  counter-reset: line;
+}
+
+#blog-article pre code .line {
+  counter-increment: line;
+}
+
+#blog-article pre code .line::before {
+  content: counter(line);
+  @apply inline-block w-10 mr-6 text-right text-sm text-[var(--c-text-subtle)] tabular-nums;
+  user-select: none;
 }
 
 #blog-article hr {
