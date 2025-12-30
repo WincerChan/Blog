@@ -54,10 +54,10 @@ const FooterNav = () => {
             <IconGithub fill="currentColor" width={28} height={28} />
           </a>
         </div>
-        <div class="mt-8 flex flex-col gap-8 md:flex-row md:justify-between md:gap-12">
+        <div class="mt-8 flex flex-wrap gap-8 md:flex-row md:justify-between md:gap-12">
           <For each={elems}>
             {(Elem) => (
-              <div class="w-full md:w-56">
+              <div class="md:w-[12rem] flex-1 md:flex-none md:w-56">
                 <Elem LL={LL} />
               </div>
             )}

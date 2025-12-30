@@ -25,12 +25,12 @@ const LatestBlog = ({ blog }: BlogProps) => {
                             {blog.title}
                         </h2>
                         <Show when={blog.subtitle}>
-                            <h3 title={blog.subtitle} class="text-xl md:text-2xl font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
+                            <h3 title={blog.subtitle} class="text-xl md:text-2xl mt-2 font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
                                 {blog.subtitle}
                             </h3>
                         </Show>
-                        <p class="text-[var(--c-text)] opacity-85 leading-[1.75]" innerText={blog.summary} />
-                        <div class="flex items-center gap-4">
+                        <p class="text-[var(--c-text)] mt-2 opacity-85 leading-[1.75]" innerText={blog.summary} />
+                        <div class="flex items-center mt-4">
                             <span class="latest-readmore inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] transition-colors hover:text-[var(--c-link)]">
                                 <span class="peer">继续阅读</span>
                                 <IconArrowRight

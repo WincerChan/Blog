@@ -31,7 +31,6 @@ export default defineConfig({
                 "--un-prose-invert-code": "var(--c-text)",
                 "--un-prose-invert-borders": "var(--c-border)",
                 "--un-prose-invert-bg-soft": "var(--c-surface-2)",
-                "--un-line-opacity": "1",
             },
         }),
     ],

@@ -18,11 +18,11 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
     ])
 
     return (
-        <div class="space-y-3">
+        <div>
             <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                 {LL && LL().footer.S}
             </label>
-            <div class="space-y-2 text-sm leading-relaxed">
+            <div class="space-y-2 mt-2 text-sm leading-relaxed">
                 <For each={elems()}>
                     {(item, idx) => (
                         <p class="flex items-center gap-1">

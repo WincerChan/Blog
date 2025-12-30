@@ -88,7 +88,7 @@ const PostMeta = ({
                             </div>
                         </Show>
                     </Show>
-                    <div class="space-y-3">
+                    <div class="">
                         <Show
                             when={showTranslateInTitleLine()}
                             fallback={(
@@ -107,7 +107,7 @@ const PostMeta = ({
                             </div>
                         </Show>
                         <Show when={!!blog.subtitle}>
-                            <h2 class="text-xl md:text-2xl font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
+                            <h2 class="text-xl md:text-2xl mt-2 font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
                                 {blog.subtitle}
                             </h2>
                         </Show>
