@@ -6,7 +6,7 @@ interface CopyrightProps {
 
 const Copyright = ({ updated }: CopyrightProps) => {
     return (
-        <div class="mt-12 p-5 border border-dashed border-[var(--c-border)] rounded text-sm ">
+        <div class="mt-12 mx-[-1rem] p-5 border border-dashed border-[var(--c-border)] rounded-none text-sm md:mx-0 md:rounded">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div class=" font-mono">
                     <div class=" font-bold text-sm">
