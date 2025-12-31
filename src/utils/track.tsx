@@ -1,6 +1,13 @@
 import { inkstoneApi } from "~/utils/inkstone";
 
 const isBrowser = typeof window !== "undefined";
+const siteName = (() => {
+    try {
+        return new URL(__SITE_CONF.baseURL).host;
+    } catch {
+        return "";
+    }
+})();
 
 const normalizePath = (pathname: string) =>
     pathname.endsWith("/") ? pathname : `${pathname}/`;
@@ -46,7 +53,11 @@ const pauseAndSend = (useBeacon = false) => {
     const now = Date.now();
     accumulatedMs += Math.max(0, now - startedAt);
     startedAt = 0;
-    sendPulse("pulse/engage", { page_instance_id: currentId, duration_ms: accumulatedMs }, useBeacon);
+    sendPulse(
+        "pulse/engage",
+        { page_instance_id: currentId, duration_ms: accumulatedMs, site: siteName },
+        useBeacon,
+    );
 };
 
 const trackEngage = (useBeacon = false) => {
@@ -75,7 +86,7 @@ const trackPage = (pathname?: string) => {
     currentPath = nextPath;
     accumulatedMs = 0;
     startedAt = document.visibilityState === "visible" ? Date.now() : 0;
-    sendPulse("pulse/pv", { page_instance_id: currentId, path: nextPath });
+    sendPulse("pulse/pv", { page_instance_id: currentId, path: nextPath, site: siteName });
 };
 
 export { trackEngage, trackPage };
