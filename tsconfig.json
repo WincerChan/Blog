@@ -27,7 +27,7 @@
     "dist",
     ".vinxi",
     ".output",
-    "_blogs",
-    "(hugo)"
+    ".velite",
+    "_blogs"
   ],
 }

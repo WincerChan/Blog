@@ -1,26 +1,15 @@
 const isBrowser = typeof window !== "undefined";
-const formatDate = (date: Date | string) => {
-    if (typeof date === 'string') {
-        date = new Date(date);
-    }
-    let options: Intl.DateTimeFormatOptions = {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        timeZone: 'Asia/Shanghai',
-    };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
+const formatDate = (value: Date | string) => {
+    const dateObj = typeof value === "string" ? new Date(value) : value;
+    if (!dateObj || Number.isNaN(dateObj.getTime())) return String(value ?? "");
+    const formatter = new Intl.DateTimeFormat("en-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "Asia/Shanghai",
+    });
+    return formatter.format(dateObj);
 }
-const padTo32 = (str: string) => {
-    if (str.length >= 32) {
-        return str.slice(0, 32);
-    }
-    const paddingLength = 32 - str.length;
-    const padding = '0'.repeat(paddingLength);
-    return str + padding;
-}
-
-
 const calculateDateDifference = (startDate: Date, lang: string): string => {
     const endDate = new Date();
 
@@ -36,12 +25,12 @@ const calculateDateDifference = (startDate: Date, lang: string): string => {
 
     if (years >= 1) {
         if (months === 0) {
-            result = ` ${years} ${lang.startsWith('zh') ? '年' : 'year(s)'}`;
+            result = `${years} ${lang.startsWith('zh') ? '年' : 'year(s)'}`;
         } else {
-            result = ` ${years} ${lang.startsWith('zh') ? '年' : 'year(s)'} ${months} ${lang.startsWith('zh') ? '个月' : 'month(s)'}`;
+            result = `${years} ${lang.startsWith('zh') ? '年' : 'year(s)'} ${months} ${lang.startsWith('zh') ? '个月' : 'month(s)'}`;
         }
     } else {
-        result = ` ${months} ${lang.startsWith('zh') ? '个月' : 'months'}`;
+        result = `${months} ${lang.startsWith('zh') ? '个月' : 'months'}`;
     }
 
     return result;
@@ -82,5 +71,4 @@ const range = (end: number, step = 1) =>
     Array.from({ length: end }, (_, i) => i * step);
 
 
-export { calculateDateDifference, fetcher, formatDate, isBrowser, padTo32, range, shuffle };
-
+export { calculateDateDifference, fetcher, formatDate, isBrowser, range, shuffle };

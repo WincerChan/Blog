@@ -1,27 +1,32 @@
 import { MetaProvider } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { createEffect, onMount, Suspense } from "solid-js";
-import Footer from "./components/core/footer";
-import Header from "./components/core/header";
+import { Suspense, createEffect, onMount } from "solid-js";
+import Footer from "./site/footer";
+import Header from "./site/header";
 import TypesafeI18n from "./i18n/i18n-solid";
 
 import { type RouteSectionProps } from "@solidjs/router";
 import {
     globalStore,
     setGlobalStore,
-} from "./components/core/header/ThemeSwitch/Provider";
+} from "./features/theme";
+import { applyTheme } from "./features/theme";
 import { Locale } from "./utils/locale";
 
-import Plausible from "plausible-tracker";
-import { isServer } from "solid-js/web";
+import { getRequestEvent, isServer } from "solid-js/web";
 import { loadLocale } from "./i18n/i18n-util.sync";
-let PlausibleTracker =
-    "default" in Plausible ? Plausible["default"] : Plausible;
-const { trackPageview, trackEvent } = PlausibleTracker({
-    domain: "blog.itswincer.com",
-    apiHost: "https://track.itswincer.com",
-});
+import { trackEngage, trackPage } from "./utils/track";
+
+const normalizePath = (pathname: string) =>
+    pathname.endsWith("/") ? pathname : `${pathname}/`;
+
+const detectLocaleFromPath = (pathname: string): Locale => {
+    const p = normalizePath(pathname);
+    if (p.endsWith("-en/")) return "en";
+    if ((__CONTENT_EN_POSTS as unknown as string[]).includes(p)) return "en";
+    return "zh-CN";
+};
 
 const preloadHook = (props: RouteSectionProps<unknown>) => {
     return (
@@ -34,20 +39,22 @@ const preloadHook = (props: RouteSectionProps<unknown>) => {
 export default function App() {
     let locale: Locale = "zh-CN";
     if (isServer) {
-        globalThis.renderCount ??= 0;
-        if (++globalThis.renderCount < __EN_POSTS.length) locale = "en";
+        const evt = getRequestEvent();
+        const url = evt?.request?.url;
+        const pathname = url ? new URL(url).pathname : "/";
+        locale = detectLocaleFromPath(pathname);
         setGlobalStore({ locale: locale });
         loadLocale(locale);
     }
     createEffect(() => {
-        document.documentElement.className = globalStore.theme;
+        applyTheme(globalStore.theme);
     });
     onMount(() => {
-        setGlobalStore({ trackEvent: trackEvent, trackPage: trackPageview });
+        setGlobalStore({ trackPage, trackEngage });
     });
     return (
         <TypesafeI18n locale={globalStore.locale as Locale}>
-            <div class=":: font-base antialiased bg-main text-main md:grid md:min-h-screen grid-rows-[auto_1fr_auto] ">
+            <div class="min-h-screen flex flex-col">
                 <Header />
                 <Router root={(props) => preloadHook(props)}>
                     <FileRoutes />

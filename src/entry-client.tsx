@@ -2,10 +2,17 @@
 import { mount, StartClient } from "@solidjs/start/client";
 
 import '@unocss/reset/tailwind.css';
-import "nprogress/nprogress.css";
-import "virtual:uno.css";
 import "~/styles/color.css";
-import "~/styles/photograph.css";
+import "~/styles/base.css";
+import "~/styles/article.css";
+import "virtual:uno.css";
+import { registerServiceWorker } from "~/utils/sw";
+import { onMount } from "solid-js";
 
 
-export default mount(() => <StartClient />, document.body);
+export default mount(() => {
+    onMount(() => {
+        if (import.meta.env.PROD) registerServiceWorker();
+    });
+    return <StartClient />;
+}, document.body);

@@ -1,18 +1,24 @@
-declare const __WORDS: number
-declare const __ALL_TAGS: number
-declare const __POSTS_BY_YEAR: {
+declare const __CONTENT_WORDS: number
+declare const __CONTENT_TAGS: number
+declare const __CONTENT_POSTS_BY_YEAR: {
     [key: string]: number
 }
-declare const __POSTS_BY_YEAR_DETAIL: {
+declare const __CONTENT_POSTS_BY_YEAR_DETAIL: {
     [key: string]: any[]
 }
-declare const __EN_POSTS: string[]
-declare const __TOTAL_POSTS: number
+declare const __CONTENT_EN_POSTS: string[]
+declare const __CONTENT_TOTAL_POSTS: number
 declare const __IS_PROD: boolean
-declare const __ASSET_VERSION: string
 declare const __SW_HASH: string
-declare const __EN_NAV: string[]
-declare const __ZH_NAV: string[]
+declare const __CONTENT_EN_NAV: Array<{ slug: string; title: string }>
+declare const __CONTENT_ZH_NAV: Array<{ slug: string; title: string }>
+declare const __CONTENT_TOTAL_CATEGORIES: Array<{ title: string; count: number }>
+declare const __CONTENT_FRIENDS: Array<{
+    name: string,
+    url: string,
+    avatar?: string,
+    inactive?: boolean,
+}>
 declare const __SITE_CONF: {
     title: string,
     avatar: string,

@@ -1,22 +1,19 @@
 {
-  "name": "example-basic",
+  "name": "wicer-blog",
   "type": "module",
   "scripts": {
-    "dev:hugo": "hugo --noBuildLock --buildFuture",
-    "dev:copy": "cp \\(hugo\\)/*.xml public/; cp -r \\(hugo\\) src/routes; rm -r src/routes/\\(hugo\\)/tags",
-    "dev": "pnpm dev:hugo;pnpm dev:copy;vinxi dev",
-    "build": "vinxi build --preset static",
+    "content:build": "velite build --clean",
+    "dev": " vinxi dev",
+    "build": "pnpm content:build && vinxi build --preset static",
     "start": "npx serve .output/public",
     "version": "vinxi version",
-    "clean": "rm -rf \\(hugo\\) node_modules/.vinxi src/routes/\\(hugo\\) .output",
+    "clean": "rm -rf .velite node_modules/.vinxi src/routes/\\(hugo\\) \\(hugo\\) .output public/_data public/sitemap.xml public/atom.xml public/manifest.webmanifest public/posts public/base public/category public/tags public/sass",
     "i18n": "typesafe-i18n"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.3",
     "@solidjs/start": "^1.1.4",
-    "@types/nprogress": "^0.2.3",
-    "plausible-tracker": "^0.3.9",
     "solid-js": "^1.9.6",
     "typesafe-i18n": "^5.26.2",
     "vinxi": "^0.5.6"
@@ -25,22 +22,25 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "@iconify-json/carbon": "^1.2.8",
+    "@iconify-json/ph": "^1.2.2",
     "@iconify-json/tabler": "^1.2.17",
+    "@shikijs/rehype": "3.20.0",
+    "@unocss/preset-typography": "^66.5.11",
+    "@unocss/preset-wind4": "^66.5.11",
     "@unocss/reset": "^66.1.2",
-    "cheerio": "1.0.0",
-    "crypto-js": "^4.2.0",
-    "giscus": "^1.6.0",
-    "he": "^1.2.0",
-    "highlight.js": "^11.11.1",
     "katex": "^0.16.22",
-    "nprogress": "^0.2.0",
     "qrcode": "^1.5.4",
+    "rehype-katex": "^7.0.1",
+    "rehype-slug": "^6.0.0",
+    "remark-math": "^6.0.0",
+    "tsx": "^4.19.2",
     "unocss": "^66.1.2",
     "unplugin-icons": "^22.1.0",
+    "velite": "^0.3.1",
     "vite": "^6.3.5",
     "workbox-core": "^7.3.0",
-    "workbox-routing": "^7.3.0"
+    "workbox-routing": "^7.3.0",
+    "yaml": "^2.8.2"
   },
   "pnpm": {
     "patchedDependencies": {

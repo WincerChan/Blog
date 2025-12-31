@@ -1,40 +1,47 @@
 :root {
-    --menu-hover-bg: #f0f0f4;
-    --ers-bg: #ffffff;
-    --copyright-bg: #f5f5f5;
-    --menu-hover-text: #065279;
-    --main-text: rgb(57, 47, 65);
-    --footer-text: #0a133a;
-    --title: rgb(57, 47, 65);
-    --head-border: #7a7374;
-    --subtitle: #343a40;
-    --main-bg: #FFFEFE;
-    --extra: #4a4040;
-    --meta-bg: rgb(15, 20, 35, 0.7);
-    --cc: #2d3a4a;
-    --notify: #815f25;
-    --blockquote-border: #e4e4e7;
-    --blockquote-text: #3f3f46;
-    --donate-border: #e2e8f0;
-    --donate-text: #334155;
+  color-scheme: light dark;
+}
+
+html.light {
+  --c-bg: #fdfdfc;
+  --c-surface: #ffffff;
+  --c-surface-2: #f7f7f5;
+  --c-border: #e6e6e3;
+  --c-border-strong: #d0d0cc;
+  --c-text: #1a1a1a;
+  --c-text-muted: #5a5a5a;
+  --c-text-subtle: #8a8a8a;
+  --c-accent: #1f6f6a;
+  --c-accent-weak: rgba(31, 111, 106, 0.12);
+  --c-link: #1f6f6a;
+  --c-link-hover: #195b57;
+  --c-focus: #2f6f6b;
+  --c-hover-bg: rgba(26, 26, 26, 0.04);
+  --c-active: #2f6f6b;
+  --c-shadow: rgba(0, 0, 0, 0.08);
+  --c-code-bg: #f5f5f2;
+  --c-selection: rgba(47, 111, 107, 0.2);
+  --c-bg-glass: rgba(253, 253, 252, 0.9);
 }
 
 html.dark {
-    --menu-hover-bg: #464646;
-    --ers-bg: #2e2e2e;
-    --copyright-bg: #2e3133;
-    --menu-hover-text: #ffa631;
-    --main-text: #f0f0f4;
-    --footer-text: #d4d4d4;
-    --subtitle: #f3f9f1;
-    --title: rgb(248, 249, 250);
-    --main-bg: #19191A;
-    --extra: #e9f1f6;
-    --meta-bg: rgb(226, 225, 228, 0.8);
-    --cc: #c0c5ca;
-    --notify: #f9f1db;
-    --blockquote-border: #52525b;
-    --blockquote-text: #e4e4e7;
-    --donate-border: #64748b;
-    --donate-text: #e2e8f0;
+  --c-bg: #141518;
+  --c-surface: #141519;
+  --c-surface-2: #17181c;
+  --c-border: #2a2b31;
+  --c-border-strong: #3a3b42;
+  --c-text: #e8e8e6;
+  --c-text-muted: #c0c0ba;
+  --c-text-subtle: #8e8e88;
+  --c-accent: #9fd2ca;
+  --c-accent-weak: rgba(159, 210, 202, 0.18);
+  --c-link: #9fd2ca;
+  --c-link-hover: #b5ddd7;
+  --c-focus: #8ec4bc;
+  --c-hover-bg: rgba(232, 232, 230, 0.06);
+  --c-active: #8ec4bc;
+  --c-shadow: rgba(0, 0, 0, 0.4);
+  --c-code-bg: #1f2026;
+  --c-selection: rgba(142, 196, 188, 0.28);
+  --c-bg-glass: rgba(20, 21, 24, 0.9);
 }

@@ -1,0 +1,44 @@
+body {
+  @apply antialiased;
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--c-link);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--c-link-hover);
+}
+
+a {
+  color: var(--c-link);
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--c-selection);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}

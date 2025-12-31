@@ -1,49 +1,62 @@
 import { defineConfig } from "@solidjs/start/config";
+import velite from "./tools/vite/velitePlugin";
+import fs from "fs";
 import path from "path";
 import UnoCSS from 'unocss/vite';
 import Icons from 'unplugin-icons/vite';
 import { fileURLToPath } from 'url';
-import JsonX from "./plugin/jsonx";
-import { en_nav_pages, en_posts, postsByYear, postsByYearDetail, totalCategories, totalPosts, totalTags, wordsCount, zh_nav_pages } from "./plugin/statsPreload";
-import SwBuild from "./plugin/swBuild";
-const isProd = process.env.NODE_ENV === "production";
-
-const BlogConf = {
-    title: "Wincer's Blog",
-    avatar: "https://ae02.alicdn.com/kf/Aeadf9a8f9b1246a580924fc003e514c8E.jpg",
-    extURL: "https://blog-exts.itswincer.com",
-    baseURL: "https://blog.itswincer.com",
-    cdnURL: "https://cdn.blog.itswincer.net",
-    description: "这里是 @Wincer,喜欢折腾新技术,却没多大耐心。个人博客会写得比较杂,包括日常吐槽、技术踩坑,偶尔会写正经一点的。欢迎订阅 RSS(•̀ᴗ•́)。",
-    keywords: "Blog, 博客, Web, 生活, Wincer, Linux, Dev, FreeBSD, Elixir, Python, JavaScript",
-    author: {
-        name: "Wincer",
-        url: "https://itswincer.com"
-    },
-}
-
-const definedVars = {
-    __WORDS: wordsCount,
-    __ALL_TAGS: totalTags,
-    __TOTAL_POSTS: totalPosts,
-    __POSTS_BY_YEAR: JSON.stringify(postsByYear),
-    __POSTS_BY_YEAR_DETAIL: JSON.stringify(postsByYearDetail),
-    __EN_POSTS: JSON.stringify(en_posts),
-    __EN_NAV: JSON.stringify(en_nav_pages),
-    __ZH_NAV: JSON.stringify(zh_nav_pages),
-    __TOTAL_CATEGORIES: totalCategories,
-    __SITE_CONF: BlogConf
-}
-
+import {
+    contentStatsEnNavPages,
+    contentStatsEnPosts,
+    contentStatsPostsByYear,
+    contentStatsPostsByYearDetail,
+    contentStatsTotalCategories,
+    contentStatsTotalPosts,
+    contentStatsTotalTags,
+    contentStatsWordsCount,
+    contentStatsZhNavPages,
+} from "./tools/velite/stats";
+import reloadPublicData from "./tools/vite/reloadPublicData";
+import ServiceWorkerBuild from "./tools/vite/serviceWorkerBuild";
+import computeSwHash from "./tools/build/swHash";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename);
+
+const siteConfigPath = fileURLToPath(new URL("./site.config.json", import.meta.url));
+const BlogConf = JSON.parse(fs.readFileSync(siteConfigPath, "utf8"));
+const friendsConfigPath = fileURLToPath(new URL("./_blogs/content/friends.json", import.meta.url));
+let friendsConfig: unknown[] = [];
+try {
+    const raw = fs.readFileSync(friendsConfigPath, "utf8");
+    const parsed = JSON.parse(raw);
+    friendsConfig = Array.isArray(parsed) ? parsed : [];
+} catch {
+    friendsConfig = [];
+}
+
+const swHash = computeSwHash();
+
+const definedVars = {
+    __CONTENT_WORDS: contentStatsWordsCount,
+    __CONTENT_TAGS: contentStatsTotalTags,
+    __CONTENT_TOTAL_POSTS: contentStatsTotalPosts,
+    __CONTENT_POSTS_BY_YEAR: JSON.stringify(contentStatsPostsByYear),
+    __CONTENT_POSTS_BY_YEAR_DETAIL: JSON.stringify(contentStatsPostsByYearDetail),
+    __CONTENT_EN_POSTS: JSON.stringify(contentStatsEnPosts),
+    __CONTENT_EN_NAV: JSON.stringify(contentStatsEnNavPages),
+    __CONTENT_ZH_NAV: JSON.stringify(contentStatsZhNavPages),
+    __CONTENT_TOTAL_CATEGORIES: JSON.stringify(contentStatsTotalCategories),
+    __SITE_CONF: BlogConf,
+    __CONTENT_FRIENDS: JSON.stringify(friendsConfig),
+    __SW_HASH: JSON.stringify(swHash),
+}
 export default defineConfig({
     extensions: ["ts", "tsx", "js", "jsx"],
     server: {
         prerender: {
             crawlLinks: true,
-            routes: [...en_posts, "/404/"]
+            routes: ["/", ...contentStatsEnPosts, "/404/"]
         },
     },
     vite: {
@@ -55,10 +68,11 @@ export default defineConfig({
         },
         define: definedVars,
         plugins: [
+            velite(),
             Icons({ autoInstall: true, compiler: 'solid' }),
-            JsonX(),
             UnoCSS(),
-            SwBuild(__dirname)
+            ServiceWorkerBuild(__dirname),
+            reloadPublicData(__dirname),
         ],
         build: {
             rollupOptions: {
@@ -67,11 +81,11 @@ export default defineConfig({
                     experimentalMinChunkSize: 102400,
                 }
             },
-            // minify: false,
-            // terserOptions: {
-            //     compress: false,
-            //     mangle: false,
-            // },
+            //minify: false,
+            //terserOptions: {
+            //    compress: false,
+            //    mangle: false,
+            //},
         }
     }
 });
