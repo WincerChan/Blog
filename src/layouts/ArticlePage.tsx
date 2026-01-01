@@ -305,7 +305,7 @@ const ArticlePage = ({
     if (blog.encrypted) wrapper = <ProtectBlog source={children} />;
     else
         wrapper = (
-            <div id="blog-article" class="prose dark:prose-invert text-[1.05rem] max-w-[42rem]">
+            <div id="blog-article" class="prose dark:prose-invert md:text-[1.05rem]  max-w-[42rem]">
                 {children}
             </div>
         );
