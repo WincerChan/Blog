@@ -16,7 +16,7 @@ const CompactBlog = ({ blog }: BlogProps) => {
                         {blog.title}
                     </h2>
                     <Show when={blog.subtitle}>
-                        <h3 class="text-base md:text-lg text-[var(--c-text-muted)] leading-relaxed">
+                        <h3 class="text-base md:text-lg text-[var(--c-text-muted)] mt-1 leading-relaxed">
                             {blog.subtitle}
                         </h3>
                     </Show>

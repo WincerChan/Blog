@@ -6,6 +6,12 @@
   @apply scroll-mt-20;
 }
 
+#blog-article p {
+  @apply break-words;
+}
+
+
+
 html.dark #blog-article .shiki,
 html.dark #blog-article .shiki span {
   color: var(--shiki-dark) !important;

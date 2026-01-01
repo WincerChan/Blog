@@ -29,10 +29,6 @@ export const theme = {
         sans,
         mono,
     },
-    text: {
-        sm: { fontSize: '0.95rem' },
-        base: { fontSize: '1.05rem' },
-    },
 
     // preset-typography 版本可能还在读 theme.fontFamily.mono，
     // 这里加一个兼容别名，避免 code block monospace 变 undefined 的坑
