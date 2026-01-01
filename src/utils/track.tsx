@@ -86,7 +86,13 @@ const trackPage = (pathname?: string) => {
     currentPath = nextPath;
     accumulatedMs = 0;
     startedAt = document.visibilityState === "visible" ? Date.now() : 0;
-    sendPulse("pulse/pv", { page_instance_id: currentId, path: nextPath, site: siteName });
+    const referrer = document.referrer;
+    sendPulse("pulse/pv", {
+        page_instance_id: currentId,
+        path: nextPath,
+        site: siteName,
+        ...(referrer ? { referrer } : {}),
+    });
 };
 
 export { trackEngage, trackPage };
