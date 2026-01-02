@@ -14,7 +14,8 @@ interface MainProps {
 const trackHook = () => {
     const location = useLocation();
 
-    useBeforeLeave(() => {
+    useBeforeLeave((event) => {
+        if (event.from?.pathname === event.to?.pathname) return;
         globalStore.trackEngage(true);
     });
 
