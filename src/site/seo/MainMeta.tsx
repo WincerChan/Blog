@@ -36,10 +36,6 @@ const MainMeta = ({ params }: { params: HeadParams }) => {
                 </>
             )}
             <Link rel="manifest" href="/manifest.webmanifest" />
-            <Link as='image' href={__SITE_CONF.avatar} rel='preload' />
-            <Show when={params.cover}>
-                <Link as='image' href={params.cover} rel='preload' />
-            </Show>
         </>
     );
 };
