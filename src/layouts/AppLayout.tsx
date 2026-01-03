@@ -1,5 +1,5 @@
 import { JSXElement, createEffect } from "solid-js";
-import { useBeforeLeave, useLocation } from "@solidjs/router";
+import { useLocation } from "@solidjs/router";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { loadLocaleAsync } from "~/i18n/i18n-util.async";
 import { globalStore, setGlobalStore } from "~/features/theme";
@@ -13,14 +13,16 @@ interface MainProps {
 
 const trackHook = () => {
     const location = useLocation();
-
-    useBeforeLeave((event) => {
-        if (event.from?.pathname === event.to?.pathname) return;
-        globalStore.trackEngage(true);
-    });
+    let prevPath: string | null = null;
 
     createEffect(() => {
-        if (location.pathname) globalStore.trackPage(location.pathname);
+        const nextPath = location.pathname;
+        if (!nextPath) return;
+        if (prevPath && prevPath !== nextPath) {
+            globalStore.trackEngage(true);
+        }
+        prevPath = nextPath;
+        globalStore.trackPage(nextPath);
     });
 };
 

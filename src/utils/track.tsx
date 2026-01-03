@@ -25,8 +25,27 @@ let startedAt = 0;
 let accumulatedMs = 0;
 let hooksReady = false;
 
+const isDev = typeof import.meta !== "undefined" && Boolean(import.meta.env?.DEV);
+
+const shouldSendPulse = () => {
+    if (!isBrowser) return { ok: false, reason: "not in browser" };
+    if (isDev) return { ok: true, reason: "" };
+    if (!siteName) return { ok: false, reason: "missing siteName" };
+    if (window.location.hostname !== siteName) {
+        return {
+            ok: false,
+            reason: `site mismatch (${siteName} !== ${window.location.hostname})`,
+        };
+    }
+    return { ok: true, reason: "" };
+};
+
 const sendPulse = (endpoint: string, payload: Record<string, unknown>, useBeacon = false) => {
-    if (!isBrowser) return;
+    const check = shouldSendPulse();
+    if (!check.ok) {
+        console.log(`[pulse] skip ${endpoint}: ${check.reason}`);
+        return;
+    }
     const url = inkstoneApi(endpoint);
     const body = JSON.stringify(payload);
     if (useBeacon && "sendBeacon" in navigator) {
