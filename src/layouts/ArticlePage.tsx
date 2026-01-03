@@ -293,8 +293,9 @@ const ArticlePage = ({
     const hash = createMemo(() => useLocation().hash);
     onMount(() => {
         if (!hash()) return;
-        const id = decodeURIComponent(hash());
-        document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+        const id = decodeURIComponent(hash()).replace(/^#/, "");
+        if (!id) return;
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     });
     const { LL, locale } = useI18nContext();
 
