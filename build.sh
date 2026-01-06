@@ -3,13 +3,13 @@ YELLOW='\033[0;33m'
 RESET='\033[0m'
 export LANG=en_US.UTF-8
 set -e
-if ! command -v pnpm >/dev/null 2>&1; then
-    echo -e "${YELLOW}Installing pnpm...${RESET}"
-    npm install -g pnpm@9.12.2
-fi
-pnpm clean
 echo -e "${YELLOW}Installing dependencies...${RESET}"
-pnpm install --no-frozen-lockfile
+if ! command -v bun >/dev/null 2>&1; then
+    echo -e "${YELLOW}bun not found, please install bun first.${RESET}"
+    exit 1
+fi
+bun install --frozen-lockfile
+bun run clean
 if [ ! -d "_blogs" ]; then
     echo -e "${YELLOW}Cloning Blogs...${RESET}"
     git clone https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
@@ -20,7 +20,7 @@ else
     cd ..
 fi
 echo -e "${YELLOW}Building site...${RESET}"
-pnpm build
+bun run build
 
 if [ "$1" == "--hitcache" ]; then
     echo -e "${YELLOW}String hit cache...${RESET}"
