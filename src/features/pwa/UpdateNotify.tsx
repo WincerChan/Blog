@@ -33,14 +33,14 @@ const UpdateNotify = () => {
             id="sw-notify"
             onClick={requestUpdate}
             type="button"
-            class="group fixed bottom-6 left-6 z-50 inline-flex items-center gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-surface)] px-5 py-4 text-sm leading-relaxed text-[var(--c-text)] transition-colors hover:border-[var(--c-border-strong)] hover:text-[var(--c-link)]"
-            classList={{ hidden: !visible() }}
+            class="group fixed bottom-5 left-16 right-16 md:left-6 md:right-auto z-50 inline-flex items-center gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-surface)] px-5 md:py-4 py-3 text-sm leading-relaxed text-[var(--c-text)] transition-colors hover:border-[var(--c-border-strong)] hover:text-[var(--c-link)]"
+            classList={{ hidden: false }}
         >
             <div class="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--c-link)] opacity-70"></span>
                 <span class="relative inline-flex h-2 w-2 rounded-full bg-[var(--c-link)]"></span>
             </div>
-            <span class="flex-1 font-sans text-[0.9rem] ml-1">更新已就绪，刷新页面以查看新内容。</span>
+            <span class="flex-1 font-sans text-[0.9rem] ml-1">新版本已就绪</span>
             <IconRefresh width={20} height={20} class="shrink-0 text-[var(--c-text-muted)] transition-colors group-hover:text-[var(--c-link)]" />
         </button>
     )

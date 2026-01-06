@@ -9,6 +9,7 @@ import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
 import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
+import { reportMarkdownTiming } from "./markdown";
 
 const normalizeDates = (value: { date?: string; updated?: string }) => {
   const dateObj = parseDateLikeHugo(value.date);
@@ -38,12 +39,15 @@ const normalizePage = (page: any) => {
 };
 
 export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
+  console.time("velite:prepare");
   const repoRoot = path.dirname(context.config.configPath);
   const site = await readSiteConf(repoRoot);
   const publicDir = path.join(repoRoot, "public");
 
+  console.time("velite:normalize");
   const posts = (data.posts as any[]).map(normalizePost);
   const pages = (data.pages as any[]).map(normalizePage);
+  console.timeEnd("velite:normalize");
 
   data.posts = posts;
   data.pages = pages;
@@ -56,6 +60,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   );
   const renderablePages = [...pages].filter((p) => p.draft !== true);
 
+  console.time("velite:emit:sitemaps");
   await emitSitemaps({
     site,
     publicDir,
@@ -63,25 +68,37 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     renderablePages,
     publishedPosts,
   });
+  console.timeEnd("velite:emit:sitemaps");
 
+  console.time("velite:emit:atom");
   await emitAtom({
     site,
     publicDir,
     publishedPosts,
     renderablePosts,
   });
+  console.timeEnd("velite:emit:atom");
   const searchPosts = renderablePosts.filter((p) => p.private !== true);
+  console.time("velite:emit:search-index");
   await emitSearchIndex({ publicDir, posts: searchPosts });
+  console.timeEnd("velite:emit:search-index");
 
+  console.time("velite:strip:raw");
   posts.forEach((post) => {
     delete (post as { rawContent?: unknown }).rawContent;
   });
+  console.timeEnd("velite:strip:raw");
 
+  console.time("velite:emit:public-assets");
   await emitPublicAssets({ site, publicDir });
+  console.timeEnd("velite:emit:public-assets");
+  console.time("velite:load:legacy-comments");
   const legacyCommentsMap = await loadLegacyCommentsMap(repoRoot);
+  console.timeEnd("velite:load:legacy-comments");
   const legacyCommentPaths = legacyCommentsMap
     ? collectLegacyCommentPaths(legacyCommentsMap)
     : undefined;
+  console.time("velite:emit:public-data");
   await emitPublicData({
     publicDir,
     posts,
@@ -89,10 +106,15 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     friends: (data as any).friends ?? [],
     legacyCommentPaths,
   });
+  console.timeEnd("velite:emit:public-data");
+  console.time("velite:emit:valid-paths");
   await emitValidPaths({
     publicDir,
     renderablePosts,
     renderablePages,
     publishedPosts,
   });
+  console.timeEnd("velite:emit:valid-paths");
+  reportMarkdownTiming();
+  console.timeEnd("velite:prepare");
 };

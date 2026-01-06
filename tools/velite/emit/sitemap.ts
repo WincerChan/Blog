@@ -85,6 +85,7 @@ export const emitSitemaps = async ({
   renderablePages: any[];
   publishedPosts: any[];
 }) => {
+  console.time("velite:emit:sitemaps:index:build");
   const sitemapIndex =
     `${sitemapHeader}\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     [
@@ -98,9 +99,13 @@ export const emitSitemaps = async ({
       )
       .join("\n") +
     `\n</sitemapindex>\n`;
+  console.timeEnd("velite:emit:sitemaps:index:build");
 
+  console.time("velite:emit:sitemaps:index:write");
   await writeFile(path.join(publicDir, "sitemap.xml"), sitemapIndex);
+  console.timeEnd("velite:emit:sitemaps:index:write");
 
+  console.time("velite:emit:sitemaps:posts:build");
   const postSitemap =
     urlsetStart('xmlns:xhtml="http://www.w3.org/1999/xhtml" ') +
     `  <url>\n    <loc>${site.baseURL}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1</priority>\n  </url>\n` +
@@ -135,9 +140,13 @@ export const emitSitemaps = async ({
       })
       .join("\n") +
     `\n${urlsetEnd}`;
+  console.timeEnd("velite:emit:sitemaps:posts:build");
 
+  console.time("velite:emit:sitemaps:posts:write");
   await writeFile(path.join(publicDir, "posts", "sitemap.xml"), postSitemap);
+  console.timeEnd("velite:emit:sitemaps:posts:write");
 
+  console.time("velite:emit:sitemaps:pages:build");
   const pagesSitemap =
     urlsetStart("") +
     `  <url>\n    <loc>${site.baseURL}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1</priority>\n  </url>\n` +
@@ -154,8 +163,12 @@ export const emitSitemaps = async ({
       })
       .join("\n") +
     `\n${urlsetEnd}`;
+  console.timeEnd("velite:emit:sitemaps:pages:build");
+  console.time("velite:emit:sitemaps:pages:write");
   await writeFile(path.join(publicDir, "pages", "sitemap.xml"), pagesSitemap);
+  console.timeEnd("velite:emit:sitemaps:pages:write");
 
+  console.time("velite:emit:sitemaps:category:build");
   const categoryToPosts = new Map<string, any[]>();
   for (const p of publishedPosts) {
     if (!p.category) continue;
@@ -174,5 +187,8 @@ export const emitSitemaps = async ({
       })
       .join("\n") +
     `\n${urlsetEnd}`;
+  console.timeEnd("velite:emit:sitemaps:category:build");
+  console.time("velite:emit:sitemaps:category:write");
   await writeFile(path.join(publicDir, "category", "sitemap.xml"), categorySitemap);
+  console.timeEnd("velite:emit:sitemaps:category:write");
 };

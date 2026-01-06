@@ -146,17 +146,26 @@ export const emitPublicData = async ({
   legacyCommentPaths,
 }: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
+  console.time("velite:emit:public-data:clear");
   await clearOutDir(outDir);
+  console.timeEnd("velite:emit:public-data:clear");
 
+  console.time("velite:emit:public-data:collect");
   const visPosts = visiblePosts(posts);
   const canon = byDateDesc(canonicalPosts(posts));
   const canonSlugSet = new Set(canon.map((p) => String(p.slug)));
   const slugToPost = new Map(visPosts.map((p) => [String(p.slug), p]));
+  console.timeEnd("velite:emit:public-data:collect");
 
+  console.time("velite:emit:public-data:latest");
   const latest = canon.slice(0, 5).map((p, idx) => postMeta(p, { includeSummary: idx === 0 }));
   await writeJson(path.join(outDir, "posts", "latest.json"), latest);
+  console.timeEnd("velite:emit:public-data:latest");
 
+  console.time("velite:emit:public-data:category");
   await buildCategoryOutputs({ canon, outDir });
+  console.timeEnd("velite:emit:public-data:category");
+  console.time("velite:emit:public-data:posts");
   await buildPostOutputs({
     visPosts,
     canon,
@@ -165,7 +174,12 @@ export const emitPublicData = async ({
     outDir,
     legacyCommentPaths,
   });
+  console.timeEnd("velite:emit:public-data:posts");
+  console.time("velite:emit:public-data:pages");
   await buildPageOutputs({ pages, outDir, legacyCommentPaths });
+  console.timeEnd("velite:emit:public-data:pages");
 
+  console.time("velite:emit:public-data:friends");
   await writeJson(path.join(outDir, "friends.json"), friends);
+  console.timeEnd("velite:emit:public-data:friends");
 };

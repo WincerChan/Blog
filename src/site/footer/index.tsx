@@ -80,14 +80,18 @@ const FooterNav = () => {
           <div class="flex items-center gap-2 self-center md:self-auto">
             <a
               class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
-              href="/privacy/"
+              href="https://itswincer.com/privacy/"
+              target="_blank"
+              rel="noopener"
             >
               Privacy
             </a>
             <IconDotFill width={10} height={10} class="text-[var(--c-text-subtle)]" />
             <a
               class="text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] hover:text-[var(--c-text)] hover:decoration-[var(--c-text)] transition-colors"
-              href="/support/"
+              href="https://itswincer.com/support/"
+              target="_blank"
+              rel="noopener"
             >
               Support
             </a>
