@@ -30,6 +30,7 @@
     "@unocss/preset-wind4": "^66.5.11",
     "@unocss/reset": "^66.1.2",
     "katex": "^0.16.22",
+    "gray-matter": "^4.0.3",
     "rehype-katex": "^7.0.1",
     "rehype-slug": "^6.0.0",
     "remark-math": "^6.0.0",
@@ -38,8 +39,7 @@
     "velite": "^0.3.1",
     "vite": "^6.3.5",
     "workbox-core": "^7.3.0",
-    "workbox-routing": "^7.3.0",
-    "yaml": "^2.8.2"
+    "workbox-routing": "^7.3.0"
   },
   "patchedDependencies": {
     "vinxi@0.5.10": "patches/vinxi@0.5.10.patch",
