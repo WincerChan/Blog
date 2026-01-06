@@ -3,11 +3,7 @@ import type { VeliteConfig } from "velite";
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
 import { emitAtom } from "./emit/atom";
-import {
-  collectLegacyCommentPaths,
-  emitLegacyComments,
-  loadLegacyCommentsMap,
-} from "./emit/legacyComments";
+import { collectLegacyCommentPaths, loadLegacyCommentsMap } from "./emit/legacyComments";
 import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
@@ -99,5 +95,4 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     renderablePages,
     publishedPosts,
   });
-  await emitLegacyComments({ repoRoot, publicDir, commentsMap: legacyCommentsMap });
 };
