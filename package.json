@@ -41,10 +41,8 @@
     "workbox-routing": "^7.3.0",
     "yaml": "^2.8.2"
   },
-  "pnpm": {
-    "patchedDependencies": {
-      "vinxi": "patches/vinxi.patch",
-      "@solidjs/start": "patches/@solidjs__start.patch"
-    }
+  "patchedDependencies": {
+    "vinxi": "patches/vinxi.patch",
+    "@solidjs/start": "patches/@solidjs__start.patch"
   }
 }

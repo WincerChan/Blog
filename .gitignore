@@ -16,6 +16,9 @@ dist
 # dependencies
 /node_modules
 
+# Bun
+.bun
+
 # IDEs and editors
 /.idea
 .project
@@ -32,7 +35,6 @@ Thumbs.db
 (hugo)/
 resources
 _blogs
-*.lock
 public/*.xml
 public/sass
 public/pages
