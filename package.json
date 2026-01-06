@@ -42,7 +42,7 @@
     "yaml": "^2.8.2"
   },
   "patchedDependencies": {
-    "vinxi": "patches/vinxi.patch",
-    "@solidjs/start": "patches/@solidjs__start.patch"
+    "vinxi@0.5.10": "patches/vinxi@0.5.10.patch",
+    "@solidjs/start@1.2.0": "patches/@solidjs%2Fstart@1.2.0.patch"
   }
 }
