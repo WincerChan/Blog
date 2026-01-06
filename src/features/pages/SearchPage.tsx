@@ -7,6 +7,7 @@ import IconArrowRight from "~icons/ph/arrow-right";
 import IconReturn from "~icons/ph/arrow-elbow-down-left";
 import IconClear from "~icons/ph/backspace";
 import ArticlePage from "~/layouts/ArticlePage";
+import { canAppendToken, findToken, normalizeQuery } from "./searchQuery";
 
 const resultPerPage = 8
 
@@ -243,29 +244,15 @@ const Search = ({ page }) => {
         { label: "category:{name}", token: "category:" },
         { label: "range:{yyyy-mm-dd}~{yyyy-mm-dd}", token: "range:" },
     ];
-    const normalizeQuery = (raw: string) => {
-        const trimmed = raw.trim();
-        if (!trimmed) return "";
-        const tags: string[] = [];
-        const seen = new Set<string>();
-        const tagPattern = /(?:^|\s)(tag|tags):([^\s]+)/gi;
-        const stripped = trimmed
-            .replace(tagPattern, (_match, _token, value) => {
-                const parts = String(value ?? "").split(",");
-                parts.forEach((part) => {
-                    const cleaned = part.trim();
-                    if (!cleaned || seen.has(cleaned)) return;
-                    seen.add(cleaned);
-                    tags.push(cleaned);
-                });
-                return "";
-            })
-            .replace(/\s+/g, " ")
-            .trim();
-        if (!tags.length) return stripped;
-        const limited = tags.slice(0, 3);
-        const tagToken = `tags:${limited.join(",")}`;
-        return stripped ? `${stripped} ${tagToken}` : tagToken;
+    const setQueryIfChanged = (next?: { q: string; page: number; sort: SortType }) => {
+        const current = query();
+        if (!next) {
+            if (current) setQuery(undefined);
+            return;
+        }
+        if (!current || current.q !== next.q || current.page !== next.page || current.sort !== next.sort) {
+            setQuery(next);
+        }
     };
     createEffect(on([() => serachParams.q, () => serachParams.sort], () => {
         const q = serachParams.q;
@@ -281,10 +268,10 @@ const Search = ({ page }) => {
         setCurrentPage(1);
         const normalized = normalizeQuery(q);
         if (!normalized) {
-            setQuery(undefined);
+            setQueryIfChanged(undefined);
             return;
         }
-        setQuery({ q: normalized, page: 1, sort: nextSort });
+        setQueryIfChanged({ q: normalized, page: 1, sort: nextSort });
     }));
     createEffect(() => {
         setTimeout(() => scrollElem?.scrollIntoView({ behavior: 'smooth', block: 'start' }), currentPage() * 0)
@@ -293,15 +280,19 @@ const Search = ({ page }) => {
     // 从 URL 读取
     const handleSubmit = (e) => {
         e.preventDefault();
-        const trimmed = input().trim()
-        if (!trimmed) return
+        const trimmed = input().trim();
+        if (!trimmed) return;
         const normalized = normalizeQuery(trimmed);
         if (!normalized) return;
+        const nextSort = sort();
         const params: Record<string, string> = { q: trimmed };
-        if (sort() === "latest") params.sort = "latest";
-        setSearchParams(params)
-        setCurrentPage(1)
-        setQuery({ q: normalized, page: 1, sort: sort() })
+        if (nextSort === "latest") params.sort = "latest";
+        if (serachParams.q === params.q && serachParams.sort === params.sort) {
+            setCurrentPage(1);
+            setQueryIfChanged({ q: normalized, page: 1, sort: nextSort });
+            return;
+        }
+        setSearchParams(params);
     }
     const handlePageChange = (action: number) => {
         const currentQuery = query()?.q
@@ -313,45 +304,19 @@ const Search = ({ page }) => {
     const handleSortChange = (nextSort: SortType) => {
         if (nextSort === sort()) return
         setSort(nextSort)
-        const trimmed = input().trim()
-        if (!trimmed) return
+        const trimmed = input().trim();
+        if (!trimmed) return;
         const normalized = normalizeQuery(trimmed);
         if (!normalized) return;
         const params: Record<string, string> = { q: trimmed };
         if (nextSort === "latest") params.sort = "latest";
-        setSearchParams(params)
-        setCurrentPage(1)
-        setQuery({ q: normalized, page: 1, sort: nextSort })
-    }
-    const escapeToken = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const countToken = (value: string, token: string) => {
-        if (!token) return 0;
-        const pattern = new RegExp(`(?:^|\\s)${escapeToken(token)}[^\\s]*`, "g");
-        return value.match(pattern)?.length ?? 0;
-    };
-    const findToken = (value: string, token: string) => {
-        if (!value || !token) return null;
-        const pattern = new RegExp(`(?:^|\\s)${escapeToken(token)}([^\\s]*)`, "i");
-        const match = pattern.exec(value);
-        if (!match) return null;
-        const tokenIndex = match.index + match[0].indexOf(token);
-        const valueStart = tokenIndex + token.length;
-        const valueEnd = valueStart + (match[1]?.length ?? 0);
-        return { valueStart, valueEnd };
-    };
-    const canAppendToken = (value: string, token: string) => {
-        const limits: Record<string, number> = {
-            "category:": 1,
-            "tag:": 3,
-        };
-        const limit = limits[token];
-        if (!limit) return true;
-        if (token === "tag:") {
-            const total = countToken(value, "tag:") + countToken(value, "tags:");
-            return total < limit;
+        if (serachParams.q === params.q && serachParams.sort === params.sort) {
+            setCurrentPage(1);
+            setQueryIfChanged({ q: normalized, page: 1, sort: nextSort });
+            return;
         }
-        return countToken(value, token) < limit;
-    };
+        setSearchParams(params);
+    }
     const appendSyntax = (token: string) => {
         const current = input();
         const trimmed = current.trimEnd();
