@@ -1,37 +1,32 @@
-import YAML from "yaml";
+import matter from "gray-matter";
 import { defineLoader } from "velite";
 
-const MATTER_RE =
-  /^---(?:\r?\n|\r)(?:([\s\S]*?)(?:\r?\n|\r))?---(?:\r?\n|\r|$)/;
+const BOM_RE = /^\uFEFF/;
 
-const dedupeFrontmatterScalars = (frontmatter: string) => {
-  const lines = frontmatter.split(/\r?\n/);
-  const lastIndex = new Map<string, number>();
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const match = /^([A-Za-z0-9_-]+):\s*(.+)\s*$/.exec(line);
-    if (!match) continue;
-    lastIndex.set(match[1], i);
+const normalizeFrontmatter = (value: unknown): unknown => {
+  if (value instanceof Date) return value.toISOString();
+  if (Array.isArray(value)) return value.map((item) => normalizeFrontmatter(item));
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, item] of Object.entries(value as Record<string, unknown>)) {
+      out[key] = normalizeFrontmatter(item);
+    }
+    return out;
   }
-  return lines
-    .filter((line, i) => {
-      const match = /^([A-Za-z0-9_-]+):\s*(.+)\s*$/.exec(line);
-      if (!match) return true;
-      return lastIndex.get(match[1]) === i;
-    })
-    .join("\n");
+  return value;
 };
 
 export const matterLoader = defineLoader({
   test: /\.(md|mdx)$/,
   load: async (file) => {
-    const value = file.toString().trim();
-    const match = value.match(MATTER_RE);
-    const matter = match == null ? null : match[1];
-    const cleaned = matter == null ? null : dedupeFrontmatterScalars(matter);
-    const data = cleaned == null ? {} : YAML.parse(cleaned) ?? {};
-    const content = match == null ? value : value.slice(match[0].length).trim();
-    return { data, content };
+    const value = file.toString().replace(BOM_RE, "").trim();
+    const parsed = matter(value, {
+      excerpt: true,
+      excerpt_separator: "<!--more-->",
+    });
+    return {
+      data: normalizeFrontmatter(parsed.data ?? {}),
+      content: String(parsed.content ?? "").trim(),
+    };
   },
 });
-
