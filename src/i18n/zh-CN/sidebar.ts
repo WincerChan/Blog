@@ -13,5 +13,9 @@ export default {
             "copy_msg": "已复制"
         }
     },
+    CODE: {
+        "copy": "复制代码",
+        "copied": "已复制"
+    },
     TOC: "目录"
 }

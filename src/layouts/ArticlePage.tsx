@@ -45,6 +45,7 @@ const ArticlePage = ({
     hideComment,
     hideActions,
 }: PostProps) => {
+    const { LL, locale } = useI18nContext();
     const hash = createMemo(() => useLocation().hash);
     onMount(() => {
         if (!hash()) return;
@@ -55,10 +56,12 @@ const ArticlePage = ({
     onMount(() => {
         const root = document.getElementById("blog-article");
         if (!root) return;
-        const disposeBlocks = setupCodeBlocks(root);
+        const disposeBlocks = setupCodeBlocks(root, {
+            copyLabel: LL().sidebar.CODE.copy(),
+            copiedLabel: LL().sidebar.CODE.copied(),
+        });
         onCleanup(() => disposeBlocks());
     });
-    const { LL, locale } = useI18nContext();
 
     const blog = rawBlog;
     const headParams = constructHeadParams(blog);

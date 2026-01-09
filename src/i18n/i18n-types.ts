@@ -129,9 +129,9 @@ type RootTranslation = {
 		 */
 		SWITCH_TO: string
 	}
-	sidebar: {
-		TOOLS: {
-			donate: {
+		sidebar: {
+			TOOLS: {
+				donate: {
 				/**
 				 * E​n​j​o​y​e​d​ ​t​h​i​s​?​ ​S​u​p​p​o​r​t​ ​m​e​ ​t​o​ ​k​e​e​p​ ​i​t​ ​g​o​i​n​g​!
 				 */
@@ -167,6 +167,16 @@ type RootTranslation = {
 				 */
 				copy_msg: string
 			}
+		}
+		CODE: {
+			/**
+			 * 复​制​代​码
+			 */
+			copy: string
+			/**
+			 * 已​复​制
+			 */
+			copied: string
 		}
 		/**
 		 * T​O​C
@@ -343,6 +353,16 @@ export type TranslationFunctions = {
 				 */
 				copy_msg: () => LocalizedString
 			}
+		}
+		CODE: {
+			/**
+			 * 复制代码
+			 */
+			copy: () => LocalizedString
+			/**
+			 * 已复制
+			 */
+			copied: () => LocalizedString
 		}
 		/**
 		 * TOC

@@ -50,6 +50,23 @@ const appendClasses = (node: HastNode, classes: string[]) => {
   node.properties.class = merged;
 };
 
+const appendInlineStyle = (node: HastNode, styleText: string) => {
+  if (!node) return;
+  node.properties ??= {};
+  const style = node.properties.style;
+  if (typeof style === "string") {
+    if (!style.includes("margin-top")) {
+      node.properties.style = `${style.replace(/\s*;?\s*$/, "")};${styleText}`;
+    }
+    return;
+  }
+  if (style && typeof style === "object") {
+    (style as Record<string, string>)["margin-top"] = "0";
+    node.properties.style = style;
+    return;
+  }
+  node.properties.style = styleText;
+};
 
 export const isCodeBlockWrapper = (node: HastNode) => {
   const tag = String(node?.tagName || "").toLowerCase();
@@ -65,13 +82,13 @@ export const wrapCodeBlock = (preNode: HastNode) => {
   );
   if (!codeNode) return null;
   const langLabel = normalizeLangLabel(inferCodeLang(preNode, codeNode));
-  appendClasses(preNode, ["m-0", "rounded-none"]);
+  appendInlineStyle(preNode, "margin-top:0");
 
   return {
     type: "element",
     tagName: "div",
     properties: {
-      class: ["code-block", "my-6", "overflow-hidden", "rounded-md"],
+      class: ["code-block"],
       "data-lang": langLabel,
     },
     children: [preNode],

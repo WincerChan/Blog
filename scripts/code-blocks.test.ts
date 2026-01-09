@@ -26,6 +26,7 @@ describe("wrapCodeBlock", () => {
     expect(wrapped?.children?.[0]?.properties?.class).toEqual(
       expect.arrayContaining(["m-0", "rounded-none"]),
     );
+    expect(wrapped?.children?.[0]?.properties?.style).toContain("margin-top:0");
   });
 
   test("falls back to text label when language missing", () => {
