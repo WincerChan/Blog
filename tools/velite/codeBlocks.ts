@@ -84,6 +84,16 @@ export const wrapCodeBlock = (preNode: HastNode) => {
   const langLabel = normalizeLangLabel(inferCodeLang(preNode, codeNode));
   appendInlineStyle(preNode, "margin-top:0");
 
+  const headerNode: HastNode = {
+    type: "element",
+    tagName: "div",
+    properties: {
+      class: ["code-header"],
+      style: "min-height:44px;",
+    },
+    children: [],
+  };
+
   return {
     type: "element",
     tagName: "div",
@@ -91,6 +101,6 @@ export const wrapCodeBlock = (preNode: HastNode) => {
       class: ["code-block"],
       "data-lang": langLabel,
     },
-    children: [preNode],
+    children: [headerNode, preNode],
   } as HastNode;
 };

@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { wrapCodeBlock } from "../tools/velite/codeBlocks";
 
 describe("wrapCodeBlock", () => {
-  test("wraps pre with code-block container only", () => {
+  test("wraps pre with code-block container", () => {
     const pre = {
       type: "element",
       tagName: "pre",
@@ -19,14 +19,14 @@ describe("wrapCodeBlock", () => {
     const wrapped = wrapCodeBlock(pre as any);
     expect(wrapped).not.toBeNull();
     expect(wrapped?.tagName).toBe("div");
-    expect(wrapped?.properties?.class).toEqual(
-      expect.arrayContaining(["code-block", "my-6", "overflow-hidden", "rounded-md"]),
-    );
-    expect(wrapped?.children?.[0]?.tagName).toBe("pre");
+    expect(wrapped?.properties?.class).toEqual(expect.arrayContaining(["code-block"]));
+    expect(wrapped?.children?.[0]?.tagName).toBe("div");
     expect(wrapped?.children?.[0]?.properties?.class).toEqual(
-      expect.arrayContaining(["m-0", "rounded-none"]),
+      expect.arrayContaining(["code-header"]),
     );
-    expect(wrapped?.children?.[0]?.properties?.style).toContain("margin-top:0");
+    expect(wrapped?.children?.[0]?.properties?.style).toBe("min-height:44px;");
+    expect(wrapped?.children?.[1]?.tagName).toBe("pre");
+    expect(wrapped?.children?.[1]?.properties?.style).toContain("margin-top:0");
   });
 
   test("falls back to text label when language missing", () => {

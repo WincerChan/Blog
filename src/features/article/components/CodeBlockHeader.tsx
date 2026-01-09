@@ -97,11 +97,12 @@ const mountCodeBlockHeaders = (
     const disposers: Array<() => void> = [];
     const codeBlocks = root.querySelectorAll<HTMLDivElement>(".code-block");
     codeBlocks.forEach((block) => {
-        if (block.querySelector(":scope > .code-header")) return;
-        const headerHost = document.createElement("div");
+        const existingHost = block.querySelector<HTMLDivElement>(":scope > .code-header");
+        if (existingHost?.hasChildNodes()) return;
+        const headerHost = existingHost ?? document.createElement("div");
         headerHost.className =
             "code-header flex items-center justify-between border-b border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-2 text-sm uppercase tracking-[0.06em] text-[var(--c-text-subtle)]";
-        block.prepend(headerHost);
+        if (!existingHost) block.prepend(headerHost);
         const langLabel = normalizeLangLabel(block.getAttribute("data-lang"));
         const getText = () =>
             block.querySelector("pre code")?.textContent ?? "";
