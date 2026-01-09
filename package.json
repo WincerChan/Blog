@@ -9,7 +9,8 @@
     "start": "npx serve .output/public",
     "version": "vinxi version",
     "clean": "rm -rf .velite node_modules/.vinxi src/routes/\\(hugo\\) \\(hugo\\) .output public/_data public/sitemap.xml public/atom.xml public/manifest.webmanifest public/posts public/base public/category public/tags public/sass",
-    "i18n": "typesafe-i18n"
+    "i18n": "typesafe-i18n",
+    "test": "bun test"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
