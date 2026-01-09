@@ -4,7 +4,7 @@ import { md, transforms } from "./markdown";
 const baseFields = {
   title: s.string(),
   date: s.string(),
-  updated: s.string().optional(),
+  updated: s.string(),
   slug: s.string(),
   draft: s.boolean().optional(),
   cover: s.string().optional(),

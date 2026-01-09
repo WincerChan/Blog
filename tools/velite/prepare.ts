@@ -10,9 +10,19 @@ import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
 import { reportMarkdownTiming } from "./markdown";
 
-const normalizeDates = (value: { date?: string; updated?: string }) => {
-  const dateObj = parseDateLikeHugo(value.date);
-  const updatedObj = parseDateLikeHugo(value.updated ?? value.date);
+const assertValidDate = (label: string, value: string | undefined, slug: string) => {
+  const parsed = parseDateLikeHugo(value);
+  if (!Number.isFinite(parsed.getTime())) {
+    const raw = value ?? "";
+    throw new Error(`[velite] Invalid ${label} for "${slug}": "${raw}"`);
+  }
+  return parsed;
+};
+
+const normalizeDates = (value: { date?: string; updated?: string; slug?: string }) => {
+  const slug = String(value.slug ?? "unknown");
+  const dateObj = assertValidDate("date", value.date, slug);
+  const updatedObj = assertValidDate("updated", value.updated, slug);
   return { dateObj, updatedObj };
 };
 

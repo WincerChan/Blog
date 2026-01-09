@@ -2,7 +2,7 @@ export type VelitePost = {
     title: string;
     subtitle?: string;
     date: string;
-    updated?: string;
+    updated: string;
     category?: string;
     tags?: string[];
     slug: string;
@@ -20,7 +20,7 @@ export type VelitePost = {
 export type VelitePage = {
     title: string;
     date: string;
-    updated?: string;
+    updated: string;
     slug: string;
     weight?: number;
     cover?: string;

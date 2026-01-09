@@ -20,7 +20,7 @@ export type ArticleMeta = {
     title: string;
     subtitle?: string;
     date: string;
-    updated?: string;
+    updated: string;
     cover?: string;
     tags: string[];
     summary?: string;
