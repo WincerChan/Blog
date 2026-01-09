@@ -10,6 +10,7 @@ import {
     onCleanup,
     onMount,
 } from "solid-js";
+import { render } from "solid-js/web";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { Locales, Translations } from "~/i18n/i18n-types";
 import { calculateDateDifference } from "~/utils";
@@ -19,6 +20,7 @@ import IconPointFilled from "~icons/ph/dot-outline-fill";
 import IconBrandTwitter from "~icons/ph/twitter-logo";
 import IconLink from "~icons/ph/link-simple";
 import IconCheck from "~icons/ph/check";
+import IconCopy from "~icons/ph/copy";
 import Relates from "~/features/article/blocks/Relates";
 import Comment from "~/features/article/comments/Comment";
 import Copyright from "~/features/article/blocks/Copyright";
@@ -29,6 +31,10 @@ import Translate from "~/features/article/sidebar/social/Translate";
 import type { ArticleMeta, ArticleNeighbours, RelatedPost } from "~/features/article/types";
 
 const ProtectBlog = lazy(() => import("~/features/article/blocks/EncryptBlock"));
+const normalizeLangLabel = (value: string | null) => {
+    const trimmed = String(value ?? "").trim();
+    return trimmed ? trimmed.toLowerCase() : "text";
+};
 
 const PostMeta = ({
     blog,
@@ -297,6 +303,47 @@ const ArticlePage = ({
         const id = decodeURIComponent(hash()).replace(/^#/, "");
         if (!id) return;
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    });
+    onMount(() => {
+        const root = document.getElementById("blog-article");
+        if (!root) return;
+        const disposers: Array<() => void> = [];
+        const codeBlocks = root.querySelectorAll<HTMLDivElement>(".code-block");
+        codeBlocks.forEach((block) => {
+            if (block.querySelector(":scope > .code-header")) return;
+            const headerHost = document.createElement("div");
+            headerHost.className = "code-header";
+            block.prepend(headerHost);
+            const langLabel = normalizeLangLabel(block.getAttribute("data-lang"));
+            const dispose = render(
+                () => (
+                    <>
+                        <span class="code-lang">
+                            <span class="code-lang-text">{langLabel}</span>
+                        </span>
+                        <button
+                            type="button"
+                            class="code-copy"
+                            data-code-copy="true"
+                            data-copy-label="Copy"
+                            data-copied-label="Copied"
+                            title="Copy"
+                        >
+                            <IconCopy class="code-copy-icon" />
+                            <span class="code-copy-text">Copy</span>
+                        </button>
+                    </>
+                ),
+                headerHost,
+            );
+            disposers.push(() => {
+                dispose();
+                if (headerHost.isConnected) headerHost.remove();
+            });
+        });
+        onCleanup(() => {
+            disposers.forEach((dispose) => dispose());
+        });
     });
     onMount(() => {
         const root = document.getElementById("blog-article");

@@ -42,29 +42,6 @@ const normalizeLangLabel = (lang: string) => {
   return trimmed ? trimmed.toLowerCase() : "text";
 };
 
-const phIcon = (classToken: string, pathData: string) => ({
-  type: "element",
-  tagName: "svg",
-  properties: {
-    class: [classToken],
-    viewBox: "0 0 256 256",
-    "aria-hidden": "true",
-  },
-  children: [
-    {
-      type: "element",
-      tagName: "path",
-      properties: {
-        d: pathData,
-        fill: "currentColor",
-      },
-      children: [],
-    },
-  ],
-});
-
-const PH_COPY_PATH =
-  "M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8m-56 176H48V96h112Zm48-48h-32V88a8 8 0 0 0-8-8H96V48h112Z";
 
 export const isCodeBlockWrapper = (node: HastNode) => {
   const tag = String(node?.tagName || "").toLowerCase();
@@ -81,52 +58,10 @@ export const wrapCodeBlock = (preNode: HastNode) => {
   if (!codeNode) return null;
   const langLabel = normalizeLangLabel(inferCodeLang(preNode, codeNode));
 
-  const header: HastNode = {
-    type: "element",
-    tagName: "div",
-    properties: { class: ["code-header"] },
-    children: [
-      {
-        type: "element",
-        tagName: "span",
-        properties: { class: ["code-lang"] },
-        children: [
-          {
-            type: "element",
-            tagName: "span",
-            properties: { class: ["code-lang-text"] },
-            children: [{ type: "text", value: langLabel }],
-          },
-        ],
-      },
-      {
-        type: "element",
-        tagName: "button",
-        properties: {
-          type: "button",
-          class: ["code-copy"],
-          "data-code-copy": "true",
-          "data-copy-label": "Copy",
-          "data-copied-label": "Copied",
-          title: "Copy",
-        },
-        children: [
-          phIcon("code-copy-icon", PH_COPY_PATH),
-          {
-            type: "element",
-            tagName: "span",
-            properties: { class: ["code-copy-text"] },
-            children: [{ type: "text", value: "Copy" }],
-          },
-        ],
-      },
-    ],
-  };
-
   return {
     type: "element",
     tagName: "div",
     properties: { class: ["code-block"], "data-lang": langLabel },
-    children: [header, preNode],
+    children: [preNode],
   } as HastNode;
 };

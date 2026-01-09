@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { wrapCodeBlock } from "../tools/velite/codeBlocks";
 
 describe("wrapCodeBlock", () => {
-  test("wraps pre with header and copy button", () => {
+  test("wraps pre with code-block container only", () => {
     const pre = {
       type: "element",
       tagName: "pre",
@@ -20,19 +20,7 @@ describe("wrapCodeBlock", () => {
     expect(wrapped).not.toBeNull();
     expect(wrapped?.tagName).toBe("div");
     expect(wrapped?.properties?.class).toEqual(["code-block"]);
-    expect(wrapped?.children?.[0]?.properties?.class).toEqual(["code-header"]);
-
-    const langBadge = wrapped?.children?.[0]?.children?.[0];
-    expect(langBadge?.tagName).toBe("span");
-    expect(langBadge?.children?.[0]?.tagName).toBe("span");
-    expect(langBadge?.children?.[0]?.properties?.class).toEqual(["code-lang-text"]);
-
-    const copyButton = wrapped?.children?.[0]?.children?.[1];
-    expect(copyButton?.tagName).toBe("button");
-    expect(copyButton?.properties?.["data-code-copy"]).toBe("true");
-    expect(copyButton?.children?.[0]?.tagName).toBe("svg");
-    expect(copyButton?.children?.[0]?.properties?.class).toEqual(["code-copy-icon"]);
-    expect(copyButton?.children?.[1]?.tagName).toBe("span");
+    expect(wrapped?.children?.[0]?.tagName).toBe("pre");
   });
 
   test("falls back to text label when language missing", () => {

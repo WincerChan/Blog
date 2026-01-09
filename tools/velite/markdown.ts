@@ -322,7 +322,7 @@ const rehypeCodeLangAttr = () => {
   };
 };
 
-const rehypeCodeBlockHeader = () => {
+const rehypeCodeBlockWrapper = () => {
   return (tree: any) => {
     const walk = (node: any) => {
       if (!node || !Array.isArray(node.children)) return;
@@ -384,7 +384,7 @@ export const md = {
       },
     ],
     withTiming("rehype:code-lang", rehypeCodeLangAttr),
-    withTiming("rehype:code-header", rehypeCodeBlockHeader),
+    withTiming("rehype:code-wrapper", rehypeCodeBlockWrapper),
     [withTiming("rehype:katex", rehypeKatex), { strict: "warn" }],
   ] as any,
 };
