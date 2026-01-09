@@ -42,6 +42,14 @@ const normalizeLangLabel = (lang: string) => {
   return trimmed ? trimmed.toLowerCase() : "text";
 };
 
+const appendClasses = (node: HastNode, classes: string[]) => {
+  if (!node) return;
+  const current = getClassList(node);
+  const merged = Array.from(new Set([...current, ...classes]));
+  node.properties ??= {};
+  node.properties.class = merged;
+};
+
 
 export const isCodeBlockWrapper = (node: HastNode) => {
   const tag = String(node?.tagName || "").toLowerCase();
@@ -57,11 +65,15 @@ export const wrapCodeBlock = (preNode: HastNode) => {
   );
   if (!codeNode) return null;
   const langLabel = normalizeLangLabel(inferCodeLang(preNode, codeNode));
+  appendClasses(preNode, ["m-0", "rounded-none"]);
 
   return {
     type: "element",
     tagName: "div",
-    properties: { class: ["code-block"], "data-lang": langLabel },
+    properties: {
+      class: ["code-block", "my-6", "overflow-hidden", "rounded-md"],
+      "data-lang": langLabel,
+    },
     children: [preNode],
   } as HastNode;
 };

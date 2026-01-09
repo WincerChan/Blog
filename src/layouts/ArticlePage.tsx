@@ -38,18 +38,18 @@ const normalizeLangLabel = (value: string | null) => {
 
 const CodeBlockHeader = (props: { lang: string }) => (
     <>
-        <span class="code-lang">
+        <span class="code-lang inline-flex items-center gap-2 font-mono text-sm">
             <span class="code-lang-text">{props.lang}</span>
         </span>
         <button
             type="button"
-            class="code-copy"
+            class="code-copy inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text)]"
             data-code-copy="true"
             data-copy-label="Copy"
             data-copied-label="Copied"
             title="Copy"
         >
-            <IconCopy class="code-copy-icon" />
+            <IconCopy class="code-copy-icon h-4 w-4 shrink-0" />
             <span class="code-copy-text">Copy</span>
         </button>
     </>
@@ -61,7 +61,8 @@ const mountCodeBlockHeaders = (root: HTMLElement) => {
     codeBlocks.forEach((block) => {
         if (block.querySelector(":scope > .code-header")) return;
         const headerHost = document.createElement("div");
-        headerHost.className = "code-header";
+        headerHost.className =
+            "code-header flex items-center justify-between border-b border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-2 text-sm uppercase tracking-[0.06em] text-[var(--c-text-subtle)]";
         block.prepend(headerHost);
         const langLabel = normalizeLangLabel(block.getAttribute("data-lang"));
         const dispose = render(() => <CodeBlockHeader lang={langLabel} />, headerHost);
@@ -302,6 +303,7 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
     );
 };
 
+
 const constructHeadParams = (blog: ArticleMeta) => {
     return {
         title: blog.title,
@@ -365,6 +367,8 @@ const ArticlePage = ({
             const label = button.getAttribute("data-copy-label") ?? "Copy";
             const copiedLabel = button.getAttribute("data-copied-label") ?? "Copied";
             const textNode = button.querySelector<HTMLElement>(".code-copy-text");
+            const copiedClass = "text-[var(--c-text)]";
+            const mutedClass = "text-[var(--c-text-muted)]";
 
             const writeText = async () => {
                 if (navigator?.clipboard?.writeText) {
@@ -386,11 +390,15 @@ const ArticlePage = ({
                 const ok = await writeText();
                 if (!ok) return;
                 button.setAttribute("data-copied", "true");
+                button.classList.add(copiedClass);
+                button.classList.remove(mutedClass);
                 if (textNode) textNode.textContent = copiedLabel;
                 else button.textContent = copiedLabel;
                 window.setTimeout(() => {
                     if (!button.isConnected) return;
                     button.removeAttribute("data-copied");
+                    button.classList.remove(copiedClass);
+                    button.classList.add(mutedClass);
                     if (textNode) textNode.textContent = label;
                     else button.textContent = label;
                 }, 1600);

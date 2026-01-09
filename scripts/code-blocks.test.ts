@@ -19,8 +19,13 @@ describe("wrapCodeBlock", () => {
     const wrapped = wrapCodeBlock(pre as any);
     expect(wrapped).not.toBeNull();
     expect(wrapped?.tagName).toBe("div");
-    expect(wrapped?.properties?.class).toEqual(["code-block"]);
+    expect(wrapped?.properties?.class).toEqual(
+      expect.arrayContaining(["code-block", "my-6", "overflow-hidden", "rounded-md"]),
+    );
     expect(wrapped?.children?.[0]?.tagName).toBe("pre");
+    expect(wrapped?.children?.[0]?.properties?.class).toEqual(
+      expect.arrayContaining(["m-0", "rounded-none"]),
+    );
   });
 
   test("falls back to text label when language missing", () => {
