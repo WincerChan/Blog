@@ -36,6 +36,45 @@ const normalizeLangLabel = (value: string | null) => {
     return trimmed ? trimmed.toLowerCase() : "text";
 };
 
+const CodeBlockHeader = (props: { lang: string }) => (
+    <>
+        <span class="code-lang">
+            <span class="code-lang-text">{props.lang}</span>
+        </span>
+        <button
+            type="button"
+            class="code-copy"
+            data-code-copy="true"
+            data-copy-label="Copy"
+            data-copied-label="Copied"
+            title="Copy"
+        >
+            <IconCopy class="code-copy-icon" />
+            <span class="code-copy-text">Copy</span>
+        </button>
+    </>
+);
+
+const mountCodeBlockHeaders = (root: HTMLElement) => {
+    const disposers: Array<() => void> = [];
+    const codeBlocks = root.querySelectorAll<HTMLDivElement>(".code-block");
+    codeBlocks.forEach((block) => {
+        if (block.querySelector(":scope > .code-header")) return;
+        const headerHost = document.createElement("div");
+        headerHost.className = "code-header";
+        block.prepend(headerHost);
+        const langLabel = normalizeLangLabel(block.getAttribute("data-lang"));
+        const dispose = render(() => <CodeBlockHeader lang={langLabel} />, headerHost);
+        disposers.push(() => {
+            dispose();
+            if (headerHost.isConnected) headerHost.remove();
+        });
+    });
+    return () => {
+        disposers.forEach((dispose) => dispose());
+    };
+};
+
 const PostMeta = ({
     blog,
     lang,
@@ -307,43 +346,8 @@ const ArticlePage = ({
     onMount(() => {
         const root = document.getElementById("blog-article");
         if (!root) return;
-        const disposers: Array<() => void> = [];
-        const codeBlocks = root.querySelectorAll<HTMLDivElement>(".code-block");
-        codeBlocks.forEach((block) => {
-            if (block.querySelector(":scope > .code-header")) return;
-            const headerHost = document.createElement("div");
-            headerHost.className = "code-header";
-            block.prepend(headerHost);
-            const langLabel = normalizeLangLabel(block.getAttribute("data-lang"));
-            const dispose = render(
-                () => (
-                    <>
-                        <span class="code-lang">
-                            <span class="code-lang-text">{langLabel}</span>
-                        </span>
-                        <button
-                            type="button"
-                            class="code-copy"
-                            data-code-copy="true"
-                            data-copy-label="Copy"
-                            data-copied-label="Copied"
-                            title="Copy"
-                        >
-                            <IconCopy class="code-copy-icon" />
-                            <span class="code-copy-text">Copy</span>
-                        </button>
-                    </>
-                ),
-                headerHost,
-            );
-            disposers.push(() => {
-                dispose();
-                if (headerHost.isConnected) headerHost.remove();
-            });
-        });
-        onCleanup(() => {
-            disposers.forEach((dispose) => dispose());
-        });
+        const disposeHeaders = mountCodeBlockHeaders(root);
+        onCleanup(() => disposeHeaders());
     });
     onMount(() => {
         const root = document.getElementById("blog-article");
