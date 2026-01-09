@@ -7,7 +7,6 @@ const baseFields = {
   updated: s.string().optional(),
   slug: s.string(),
   draft: s.boolean().optional(),
-  private: s.boolean().optional(),
   cover: s.string().optional(),
   isTranslation: s.boolean().optional(),
   lang: s.string().optional(),

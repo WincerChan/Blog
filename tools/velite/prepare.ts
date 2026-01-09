@@ -54,9 +54,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const renderablePosts = [...posts]
     .filter((p) => p.draft !== true)
     .sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
-  const publishedPosts = renderablePosts.filter(
-    (p) => p.private !== true && p.isTranslation !== true,
-  );
+  const publishedPosts = renderablePosts.filter((p) => p.isTranslation !== true);
   const renderablePages = [...pages].filter((p) => p.draft !== true);
 
   console.time("velite:emit:sitemaps");
@@ -77,7 +75,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     renderablePosts,
   });
   console.timeEnd("velite:emit:atom");
-  const searchPosts = renderablePosts.filter((p) => p.private !== true);
+  const searchPosts = renderablePosts;
   console.time("velite:emit:search-index");
   await emitSearchIndex({ publicDir, posts: searchPosts });
   console.timeEnd("velite:emit:search-index");

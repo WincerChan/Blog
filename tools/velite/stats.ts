@@ -19,12 +19,10 @@ const allPages = readJson<VelitePage[]>(pagesPath, []);
 
 const posts = allPosts
   .filter((p) => p.draft !== true)
-  .filter((p) => p.private !== true)
   .filter((p) => p.isTranslation !== true);
 
 const pages = allPages
   .filter((p) => p.draft !== true)
-  .filter((p) => p.private !== true)
   .filter((p) => p.isTranslation !== true)
   .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0));
 

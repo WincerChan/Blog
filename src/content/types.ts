@@ -8,7 +8,6 @@ export type VelitePost = {
     slug: string;
     cover?: string;
     draft?: boolean;
-    private?: boolean;
     isTranslation?: boolean;
     lang?: string;
     encrypted?: boolean;
@@ -27,7 +26,6 @@ export type VelitePage = {
     weight?: number;
     cover?: string;
     draft?: boolean;
-    private?: boolean;
     isTranslation?: boolean;
     lang?: string;
     html?: string;
