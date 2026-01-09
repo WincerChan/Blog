@@ -94,7 +94,7 @@ const buildPostOutputs = async ({
     const encryptPwd = String(p.encrypt_pwd ?? "");
     const encrypted = !!encryptPwd;
     const content = encrypted ? encryptHtml(encryptPwd, html) : html;
-    const hasMath = !!p.mathrender || html.includes("katex");
+    const hasMath = html.includes("katex");
     const { encrypt_pwd, ...rest } = p;
     const data = {
       ...rest,

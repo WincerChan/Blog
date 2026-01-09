@@ -81,7 +81,7 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
                 return (
                     <>
                     <MainMeta params={params} />
-                    {params.mathrender && (
+                    {params.hasMath && (
                         <link rel="stylesheet" href={katexCssHref} />
                     )}
                     <ApplicationMeta />

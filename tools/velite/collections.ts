@@ -37,7 +37,6 @@ export const collections = {
       category: s.string().optional(),
       tags: s.array(s.any()).optional(),
       encrypt_pwd: s.string().optional(),
-      mathrender: s.boolean().optional(),
       ...markdownFields,
       rawContent: s
         .raw()

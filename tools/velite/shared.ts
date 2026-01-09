@@ -13,7 +13,6 @@ type VelitePostBase = {
   summary?: string;
   words?: number;
   html?: string;
-  mathrender?: boolean;
   dateObj?: unknown;
 };
 

@@ -267,7 +267,7 @@ const constructHeadParams = (blog: ArticleMeta) => {
         subtitle: blog.subtitle || "",
         cover: blog.cover ?? "",
         updated: blog.updated ?? blog.date,
-        mathrender: !!blog.mathrender,
+        hasMath: !!blog.hasMath,
         lang: blog.lang,
         isTranslation: blog.isTranslation,
         toc: blog.toc,

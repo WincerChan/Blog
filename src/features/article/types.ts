@@ -27,7 +27,7 @@ export type ArticleMeta = {
     category?: string;
     words?: number;
     toc?: string;
-    mathrender?: boolean;
+    hasMath?: boolean;
     encrypted?: boolean;
     isTranslation?: boolean;
     lang?: string;

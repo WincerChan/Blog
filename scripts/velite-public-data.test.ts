@@ -16,6 +16,13 @@ test("emitPublicData omits legacy comments markers", async () => {
         html: "<p>hello</p>",
       },
       {
+        slug: "math",
+        title: "Math",
+        date: "2024-01-02",
+        updated: "2024-01-02",
+        html: "<span class=\"katex\">x</span>",
+      },
+      {
         slug: "secret",
         title: "Secret",
         date: "2024-01-03",
@@ -39,6 +46,11 @@ test("emitPublicData omits legacy comments markers", async () => {
     const postPath = path.join(tempDir, "_data", "posts", "demo.json");
     const postData = JSON.parse(await fs.readFile(postPath, "utf8"));
     expect("hasLegacyComments" in postData).toBe(false);
+    expect(postData.hasMath ?? false).toBe(false);
+
+    const mathPath = path.join(tempDir, "_data", "posts", "math.json");
+    const mathData = JSON.parse(await fs.readFile(mathPath, "utf8"));
+    expect(mathData.hasMath).toBe(true);
 
     const secretPath = path.join(tempDir, "_data", "posts", "secret.json");
     const secretData = JSON.parse(await fs.readFile(secretPath, "utf8"));

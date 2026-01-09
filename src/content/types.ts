@@ -11,7 +11,6 @@ export type VelitePost = {
     isTranslation?: boolean;
     lang?: string;
     encrypted?: boolean;
-    mathrender?: boolean;
     html?: string;
     toc?: string;
     summary?: string;
