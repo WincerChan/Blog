@@ -7,16 +7,12 @@ import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
 import { bundledLanguages, getSingletonHighlighter } from "shiki";
+import { shikiThemeList, shikiThemes } from "./shikiThemes";
 
 type TimingEntry = { total: number; count: number };
 
 const markdownTiming = new Map<string, TimingEntry>();
 
-const shikiThemes = {
-  light: "vitesse-light",
-  dark: "vitesse-dark",
-};
-const shikiThemeList = Object.values(shikiThemes);
 let shikiInitPromise: Promise<unknown> | null = null;
 
 const DRAFT_FRONTMATTER_RE = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)/;
