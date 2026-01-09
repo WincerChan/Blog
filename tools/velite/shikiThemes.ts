@@ -46,9 +46,9 @@ const semanticTokenColors = [
   },
 ];
 
-const createSemanticTheme = (type: "light" | "dark") => ({
-  name: `inkstone-semantic-${type}`,
-  type,
+const createSemanticTheme = () => ({
+  name: "inkstone-semantic",
+  type: "light",
   colors: {
     "editor.background": "var(--code-bg)",
     "editor.foreground": "var(--code-fg)",
@@ -56,9 +56,5 @@ const createSemanticTheme = (type: "light" | "dark") => ({
   tokenColors: semanticTokenColors,
 });
 
-export const shikiThemes = {
-  light: createSemanticTheme("light"),
-  dark: createSemanticTheme("dark"),
-} as const;
-
-export const shikiThemeList = [shikiThemes.light, shikiThemes.dark] as const;
+export const shikiTheme = createSemanticTheme();
+export const shikiThemeList = [shikiTheme] as const;

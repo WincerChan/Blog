@@ -1,22 +1,21 @@
 import { describe, expect, test } from "bun:test";
-import { shikiThemeList, shikiThemes } from "../tools/velite/shikiThemes";
+import { shikiTheme, shikiThemeList } from "../tools/velite/shikiThemes";
 
 describe("shikiThemes", () => {
-  test("uses the vitesse theme pair", () => {
-    expect(typeof shikiThemes.light).toBe("object");
-    expect(typeof shikiThemes.dark).toBe("object");
-    expect(shikiThemeList).toHaveLength(2);
+  test("exports a single semantic theme", () => {
+    expect(typeof shikiTheme).toBe("object");
+    expect(shikiThemeList).toHaveLength(1);
   });
 
   test("uses css variables for base colors", () => {
-    const lightTheme = shikiThemes.light as { colors?: Record<string, string> };
-    expect(lightTheme.colors?.["editor.background"]).toBe("var(--code-bg)");
-    expect(lightTheme.colors?.["editor.foreground"]).toBe("var(--code-fg)");
+    const theme = shikiTheme as { colors?: Record<string, string> };
+    expect(theme.colors?.["editor.background"]).toBe("var(--code-bg)");
+    expect(theme.colors?.["editor.foreground"]).toBe("var(--code-fg)");
   });
 
   test("token colors are mapped to code variables", () => {
-    const lightTheme = shikiThemes.light as { tokenColors?: Array<{ settings?: { foreground?: string } }> };
-    const vars = (lightTheme.tokenColors ?? [])
+    const theme = shikiTheme as { tokenColors?: Array<{ settings?: { foreground?: string } }> };
+    const vars = (theme.tokenColors ?? [])
       .map((item) => item.settings?.foreground)
       .filter(Boolean) as string[];
     expect(vars.length).toBeGreaterThan(0);
