@@ -168,6 +168,16 @@ type RootTranslation = {
 				copy_msg: string
 			}
 		}
+		CODE: {
+			/**
+			 * C​o​p​y​ ​C​o​d​e
+			 */
+			copy: string
+			/**
+			 * C​o​p​i​e​d
+			 */
+			copied: string
+		}
 		/**
 		 * T​O​C
 		 */
@@ -343,6 +353,16 @@ export type TranslationFunctions = {
 				 */
 				copy_msg: () => LocalizedString
 			}
+		}
+		CODE: {
+			/**
+			 * Copy Code
+			 */
+			copy: () => LocalizedString
+			/**
+			 * Copied
+			 */
+			copied: () => LocalizedString
 		}
 		/**
 		 * TOC

@@ -13,5 +13,9 @@ export default {
             "copy_msg": "Copied"
         }
     },
+    CODE: {
+        "copy": "Copy Code",
+        "copied": "Copied"
+    },
     TOC: "TOC"
 }

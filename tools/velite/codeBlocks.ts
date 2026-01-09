@@ -42,29 +42,31 @@ const normalizeLangLabel = (lang: string) => {
   return trimmed ? trimmed.toLowerCase() : "text";
 };
 
-const phIcon = (classToken: string, pathData: string) => ({
-  type: "element",
-  tagName: "svg",
-  properties: {
-    class: [classToken],
-    viewBox: "0 0 256 256",
-    "aria-hidden": "true",
-  },
-  children: [
-    {
-      type: "element",
-      tagName: "path",
-      properties: {
-        d: pathData,
-        fill: "currentColor",
-      },
-      children: [],
-    },
-  ],
-});
+const appendClasses = (node: HastNode, classes: string[]) => {
+  if (!node) return;
+  const current = getClassList(node);
+  const merged = Array.from(new Set([...current, ...classes]));
+  node.properties ??= {};
+  node.properties.class = merged;
+};
 
-const PH_COPY_PATH =
-  "M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8m-56 176H48V96h112Zm48-48h-32V88a8 8 0 0 0-8-8H96V48h112Z";
+const appendInlineStyle = (node: HastNode, styleText: string) => {
+  if (!node) return;
+  node.properties ??= {};
+  const style = node.properties.style;
+  if (typeof style === "string") {
+    if (!style.includes("margin-top")) {
+      node.properties.style = `${style.replace(/\s*;?\s*$/, "")};${styleText}`;
+    }
+    return;
+  }
+  if (style && typeof style === "object") {
+    (style as Record<string, string>)["margin-top"] = "0";
+    node.properties.style = style;
+    return;
+  }
+  node.properties.style = styleText;
+};
 
 export const isCodeBlockWrapper = (node: HastNode) => {
   const tag = String(node?.tagName || "").toLowerCase();
@@ -80,53 +82,25 @@ export const wrapCodeBlock = (preNode: HastNode) => {
   );
   if (!codeNode) return null;
   const langLabel = normalizeLangLabel(inferCodeLang(preNode, codeNode));
+  appendInlineStyle(preNode, "margin-top:0");
 
-  const header: HastNode = {
+  const headerNode: HastNode = {
     type: "element",
     tagName: "div",
-    properties: { class: ["code-header"] },
-    children: [
-      {
-        type: "element",
-        tagName: "span",
-        properties: { class: ["code-lang"] },
-        children: [
-          {
-            type: "element",
-            tagName: "span",
-            properties: { class: ["code-lang-text"] },
-            children: [{ type: "text", value: langLabel }],
-          },
-        ],
-      },
-      {
-        type: "element",
-        tagName: "button",
-        properties: {
-          type: "button",
-          class: ["code-copy"],
-          "data-code-copy": "true",
-          "data-copy-label": "Copy",
-          "data-copied-label": "Copied",
-          title: "Copy",
-        },
-        children: [
-          phIcon("code-copy-icon", PH_COPY_PATH),
-          {
-            type: "element",
-            tagName: "span",
-            properties: { class: ["code-copy-text"] },
-            children: [{ type: "text", value: "Copy" }],
-          },
-        ],
-      },
-    ],
+    properties: {
+      class: ["code-header"],
+      style: "min-height:44px;",
+    },
+    children: [],
   };
 
   return {
     type: "element",
     tagName: "div",
-    properties: { class: ["code-block"], "data-lang": langLabel },
-    children: [header, preNode],
+    properties: {
+      class: ["code-block"],
+      "data-lang": langLabel,
+    },
+    children: [headerNode, preNode],
   } as HastNode;
 };
