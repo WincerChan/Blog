@@ -1,16 +1,21 @@
-import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onMount } from "solid-js";
+import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onCleanup, onMount } from "solid-js";
 import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconHeart from "~icons/ph/heart";
 import IconHeartFill from "~icons/ph/heart-fill";
+import { normalizeKudosPath } from "./kudos";
 
+interface LikeProps {
+    pageURL: string;
+}
 
-const Like = ({ pageURL }) => {
+const Like = ({ pageURL }: LikeProps) => {
     const [liked, setLiked] = createSignal(false)
     const [likes, setLikes] = createSignal(0)
     const [disabled, setDisabled] = createSignal(false)
-    const [url, setUrl] = createSignal()
-    const fetchKudos = async (targetUrl: string) => {
+    const [visible, setVisible] = createSignal(false)
+    const [url, setUrl] = createSignal<string | null>(null)
+    const fetchKudos = async (targetUrl: string | null) => {
         if (!targetUrl) return null;
         try {
             const resp = await fetch(targetUrl, { credentials: "include" })
@@ -28,10 +33,31 @@ const Like = ({ pageURL }) => {
         target.searchParams.set("path", path)
         return target.toString()
     }
+    let buttonRef: HTMLButtonElement | undefined;
     onMount(() => {
-        let slug = pageURL;
-        if (pageURL.endsWith("-zh/")) slug = pageURL.replace("-zh/", "/")
-        if (pageURL.endsWith("-en/")) slug = pageURL.replace("-en/", "/")
+        if (!buttonRef || typeof IntersectionObserver === "undefined") {
+            setVisible(true);
+            return;
+        }
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0]?.isIntersecting) {
+                setVisible(true);
+                observer.disconnect();
+            }
+        })
+        observer.observe(buttonRef);
+        onCleanup(() => observer.disconnect());
+    })
+    createEffect(() => {
+        if (!visible()) {
+            setUrl(null);
+            return;
+        }
+        const slug = normalizeKudosPath(pageURL);
+        if (!slug) {
+            setUrl(null);
+            return;
+        }
         setUrl(buildKudosUrl(slug))
     })
     const click = async () => {
@@ -70,6 +96,7 @@ const Like = ({ pageURL }) => {
     const fallback = <span class="">-</span>
     return (
         <button
+            ref={buttonRef}
             disabled={disabled()}
             onClick={click}
             title={liked() ? `${likes()} 人已点赞` : "Like"}

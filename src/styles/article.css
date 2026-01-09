@@ -10,13 +10,34 @@
   @apply break-words;
 }
 
+#blog-article .code-block {
+  @apply my-6 overflow-hidden rounded-md;
+}
 
+#blog-article .code-header {
+  @apply flex items-center justify-between border-b border-[var(--c-border)] bg-[var(--c-surface-2)] px-4 py-2 text-sm uppercase tracking-wide text-[var(--c-text-subtle)];
+}
 
-html.dark #blog-article .shiki,
-html.dark #blog-article .shiki span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
+#blog-article .code-lang {
+  @apply inline-flex items-center gap-2 font-mono text-sm;
+}
+
+#blog-article .code-copy {
+  @apply inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors;
+}
+
+#blog-article .code-copy-icon {
+  @apply h-4 w-4 flex-shrink-0;
+}
+
+#blog-article .code-copy:hover {
+  color: var(--c-text);
+}
+
+#blog-article .code-copy[data-copied="true"] {
+  color: var(--c-text);
+}
+
+#blog-article .code-block pre {
+  @apply m-0 rounded-none;
 }

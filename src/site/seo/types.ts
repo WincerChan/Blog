@@ -9,7 +9,7 @@ export type HeadParams = {
     words: number;
     subtitle: string;
     genre: string;
-    mathrender: boolean;
+    hasMath: boolean;
     lang?: string;
     isTranslation?: boolean;
     toc?: string;
@@ -30,10 +30,9 @@ export const resolveHeadParams = (input: HeadParamsInput): HeadParams => {
         words: input.words ?? 0,
         subtitle: input.subtitle ?? "",
         genre: input.genre ?? "Technology",
-        mathrender: input.mathrender ?? false,
+        hasMath: input.hasMath ?? false,
         lang: input.lang,
         isTranslation: input.isTranslation,
         toc: input.toc,
     };
 };
-

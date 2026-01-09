@@ -7,14 +7,12 @@ type VelitePostBase = {
   tags?: string[];
   subtitle?: string;
   draft?: boolean;
-  private?: boolean;
   isTranslation?: boolean;
   lang?: string;
   cover?: string;
   summary?: string;
   words?: number;
   html?: string;
-  mathrender?: boolean;
   dateObj?: unknown;
 };
 
@@ -22,7 +20,6 @@ type VelitePageBase = {
   slug: string;
   weight?: number;
   draft?: boolean;
-  private?: boolean;
   isTranslation?: boolean;
 };
 
@@ -51,17 +48,16 @@ export const postUrl = (slug: string) => `/posts/${slug}/`;
 export const langShort = (post: { lang?: string; slug?: string }) =>
   String(post?.lang ?? "").split("-")[0] || "";
 
-export const visiblePosts = <T extends { draft?: boolean; private?: boolean }>(posts: T[]) =>
-  posts.filter((p) => p?.draft !== true).filter((p) => p?.private !== true);
+export const visiblePosts = <T extends { draft?: boolean }>(posts: T[]) =>
+  posts.filter((p) => p?.draft !== true);
 
-export const canonicalPosts = <T extends { isTranslation?: boolean; draft?: boolean; private?: boolean }>(
+export const canonicalPosts = <T extends { isTranslation?: boolean; draft?: boolean }>(
   posts: T[],
 ) => visiblePosts(posts).filter((p) => p?.isTranslation !== true);
 
-export const visiblePages = <T extends { draft?: boolean; private?: boolean; weight?: number }>(pages: T[]) =>
+export const visiblePages = <T extends { draft?: boolean; weight?: number }>(pages: T[]) =>
   pages
     .filter((p) => p?.draft !== true)
-    .filter((p) => p?.private !== true)
     .sort((a, b) => (b?.weight ?? 0) - (a?.weight ?? 0));
 
 export const postMeta = (p: VelitePostBase, { includeSummary = true } = {}) => ({

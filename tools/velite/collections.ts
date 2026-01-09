@@ -4,10 +4,9 @@ import { md, transforms } from "./markdown";
 const baseFields = {
   title: s.string(),
   date: s.string(),
-  updated: s.string().optional(),
+  updated: s.string(),
   slug: s.string(),
   draft: s.boolean().optional(),
-  private: s.boolean().optional(),
   cover: s.string().optional(),
   isTranslation: s.boolean().optional(),
   lang: s.string().optional(),
@@ -38,7 +37,6 @@ export const collections = {
       category: s.string().optional(),
       tags: s.array(s.any()).optional(),
       encrypt_pwd: s.string().optional(),
-      mathrender: s.boolean().optional(),
       ...markdownFields,
       rawContent: s
         .raw()

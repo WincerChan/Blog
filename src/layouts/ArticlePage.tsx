@@ -7,6 +7,7 @@ import {
     createMemo,
     createSignal,
     lazy,
+    onCleanup,
     onMount,
 } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
@@ -267,7 +268,7 @@ const constructHeadParams = (blog: ArticleMeta) => {
         subtitle: blog.subtitle || "",
         cover: blog.cover ?? "",
         updated: blog.updated ?? blog.date,
-        mathrender: !!blog.mathrender,
+        hasMath: !!blog.hasMath,
         lang: blog.lang,
         isTranslation: blog.isTranslation,
         toc: blog.toc,
@@ -296,6 +297,58 @@ const ArticlePage = ({
         const id = decodeURIComponent(hash()).replace(/^#/, "");
         if (!id) return;
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    });
+    onMount(() => {
+        const root = document.getElementById("blog-article");
+        if (!root) return;
+        const handleClick = async (event: MouseEvent) => {
+            const target = event.target as HTMLElement | null;
+            if (!target) return;
+            const button = target.closest<HTMLButtonElement>("button[data-code-copy]");
+            if (!button) return;
+            const pre = button.closest(".code-block")?.querySelector("pre");
+            const code = pre?.querySelector("code");
+            const text = code?.textContent ?? "";
+            if (!text.trim()) return;
+
+            const label = button.getAttribute("data-copy-label") ?? "Copy";
+            const copiedLabel = button.getAttribute("data-copied-label") ?? "Copied";
+            const textNode = button.querySelector<HTMLElement>(".code-copy-text");
+
+            const writeText = async () => {
+                if (navigator?.clipboard?.writeText) {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                }
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.select();
+                const ok = document.execCommand("copy");
+                textarea.remove();
+                return ok;
+            };
+
+            try {
+                const ok = await writeText();
+                if (!ok) return;
+                button.setAttribute("data-copied", "true");
+                if (textNode) textNode.textContent = copiedLabel;
+                else button.textContent = copiedLabel;
+                window.setTimeout(() => {
+                    if (!button.isConnected) return;
+                    button.removeAttribute("data-copied");
+                    if (textNode) textNode.textContent = label;
+                    else button.textContent = label;
+                }, 1600);
+            } catch {
+                // ignore copy errors
+            }
+        };
+        root.addEventListener("click", handleClick);
+        onCleanup(() => root.removeEventListener("click", handleClick));
     });
     const { LL, locale } = useI18nContext();
 

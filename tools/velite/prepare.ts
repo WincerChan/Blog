@@ -3,7 +3,6 @@ import type { VeliteConfig } from "velite";
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
 import { emitAtom } from "./emit/atom";
-import { collectLegacyCommentPaths, loadLegacyCommentsMap } from "./emit/legacyComments";
 import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
@@ -11,9 +10,19 @@ import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
 import { reportMarkdownTiming } from "./markdown";
 
-const normalizeDates = (value: { date?: string; updated?: string }) => {
-  const dateObj = parseDateLikeHugo(value.date);
-  const updatedObj = parseDateLikeHugo(value.updated ?? value.date);
+const assertValidDate = (label: string, value: string | undefined, slug: string) => {
+  const parsed = parseDateLikeHugo(value);
+  if (!Number.isFinite(parsed.getTime())) {
+    const raw = value ?? "";
+    throw new Error(`[velite] Invalid ${label} for "${slug}": "${raw}"`);
+  }
+  return parsed;
+};
+
+const normalizeDates = (value: { date?: string; updated?: string; slug?: string }) => {
+  const slug = String(value.slug ?? "unknown");
+  const dateObj = assertValidDate("date", value.date, slug);
+  const updatedObj = assertValidDate("updated", value.updated, slug);
   return { dateObj, updatedObj };
 };
 
@@ -55,9 +64,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const renderablePosts = [...posts]
     .filter((p) => p.draft !== true)
     .sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
-  const publishedPosts = renderablePosts.filter(
-    (p) => p.private !== true && p.isTranslation !== true,
-  );
+  const publishedPosts = renderablePosts.filter((p) => p.isTranslation !== true);
   const renderablePages = [...pages].filter((p) => p.draft !== true);
 
   console.time("velite:emit:sitemaps");
@@ -78,7 +85,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     renderablePosts,
   });
   console.timeEnd("velite:emit:atom");
-  const searchPosts = renderablePosts.filter((p) => p.private !== true);
+  const searchPosts = renderablePosts;
   console.time("velite:emit:search-index");
   await emitSearchIndex({ publicDir, posts: searchPosts });
   console.timeEnd("velite:emit:search-index");
@@ -92,19 +99,12 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   console.time("velite:emit:public-assets");
   await emitPublicAssets({ site, publicDir });
   console.timeEnd("velite:emit:public-assets");
-  console.time("velite:load:legacy-comments");
-  const legacyCommentsMap = await loadLegacyCommentsMap(repoRoot);
-  console.timeEnd("velite:load:legacy-comments");
-  const legacyCommentPaths = legacyCommentsMap
-    ? collectLegacyCommentPaths(legacyCommentsMap)
-    : undefined;
   console.time("velite:emit:public-data");
   await emitPublicData({
     publicDir,
     posts,
     pages,
     friends: (data as any).friends ?? [],
-    legacyCommentPaths,
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");

@@ -33,8 +33,7 @@ export default function PostRoute() {
                 const content = html;
                 const neighbours = p.neighbours;
                 const relates = (p.relates ?? []) as RelatedPost[];
-                const hasMath =
-                    !!p.hasMath || !!p.mathrender || String(p.html ?? "").includes("katex");
+                const hasMath = !!p.hasMath || String(p.html ?? "").includes("katex");
 
                 const rawBlog: any = {
                     slug: p.url ?? postUrl(p.slug),
@@ -49,12 +48,9 @@ export default function PostRoute() {
                     words: p.words ?? 0,
                     toc: p.toc ?? "",
                     neighbours,
-                    mathrender: hasMath,
+                    hasMath,
                 };
                 if (isEncrypted) rawBlog.encrypted = true;
-                if (p.hasLegacyComments !== undefined) {
-                    rawBlog.hasLegacyComments = p.hasLegacyComments;
-                }
                 if (p.lang) rawBlog.lang = p.lang;
                 if (p.isTranslation !== undefined) rawBlog.isTranslation = p.isTranslation;
 

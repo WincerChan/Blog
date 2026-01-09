@@ -125,10 +125,6 @@ type RootTranslation = {
 		 */
 		S: string
 		/**
-		 * L​o​a​d​i​n​g​ ​D​i​s​q​u​s​ ​C​o​m​m​e​n​t​s
-		 */
-		DIS: string
-		/**
 		 * 切​换​到​中​文
 		 */
 		SWITCH_TO: string
@@ -304,10 +300,6 @@ export type TranslationFunctions = {
 		 * en
 		 */
 		S: () => LocalizedString
-		/**
-		 * Loading Disqus Comments
-		 */
-		DIS: () => LocalizedString
 		/**
 		 * 切换到中文
 		 */

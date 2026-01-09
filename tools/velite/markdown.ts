@@ -7,16 +7,13 @@ import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
 import { bundledLanguages, getSingletonHighlighter } from "shiki";
+import { isCodeBlockWrapper, wrapCodeBlock } from "./codeBlocks";
+import { shikiTheme, shikiThemeList } from "./shikiThemes";
 
 type TimingEntry = { total: number; count: number };
 
 const markdownTiming = new Map<string, TimingEntry>();
 
-const shikiThemes = {
-  light: "vitesse-light",
-  dark: "vitesse-dark",
-};
-const shikiThemeList = Object.values(shikiThemes);
 let shikiInitPromise: Promise<unknown> | null = null;
 
 const DRAFT_FRONTMATTER_RE = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)/;
@@ -210,7 +207,13 @@ const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>)
 const MORE_MARKER_RE = /<!--\s*more\s*-->/i;
 
 const getClassList = (node: any) => {
-  const cn = node?.properties?.className;
+  const props = node?.properties;
+  if (props && props.className != null && props.class == null) {
+    const raw = props.className;
+    props.class = Array.isArray(raw) ? raw : String(raw);
+  }
+  if (props?.className != null) delete props.className;
+  const cn = props?.class;
   if (Array.isArray(cn)) return cn.map(String).filter(Boolean);
   if (typeof cn === "string") return cn.split(/\s+/).filter(Boolean);
   return [];
@@ -260,7 +263,7 @@ const rehypeBlogEnhancements = () => {
           const wrapper = {
             type: "element",
             tagName: "div",
-            properties: { className: ["table-wrapper"] },
+            properties: { class: ["table-wrapper"] },
             children: [child],
           };
           node.children.splice(i, 1, wrapper);
@@ -300,6 +303,14 @@ const rehypeCodeLangAttr = () => {
           const lang = inferLang(node);
           if (lang && !node.properties["data-lang"]) node.properties["data-lang"] = lang;
         }
+        if (tag === "pre") {
+          node.properties ??= {};
+          const codeChild = node.children?.find(
+            (child: any) => child?.type === "element" && String(child.tagName || "").toLowerCase() === "code",
+          );
+          const lang = codeChild ? inferLang(codeChild) : inferLang(node);
+          if (lang && !node.properties["data-lang"]) node.properties["data-lang"] = lang;
+        }
         if (Array.isArray(node.children)) {
           for (const child of node.children) walk(child, tag);
         }
@@ -308,6 +319,29 @@ const rehypeCodeLangAttr = () => {
       }
     };
     walk(tree, undefined);
+  };
+};
+
+const rehypeCodeBlockHeader = () => {
+  return (tree: any) => {
+    const walk = (node: any) => {
+      if (!node || !Array.isArray(node.children)) return;
+      for (let i = 0; i < node.children.length; i += 1) {
+        const child = node.children[i];
+        if (child?.type === "element") {
+          const tag = String(child.tagName || "").toLowerCase();
+          if (tag === "pre" && !isCodeBlockWrapper(node)) {
+            const wrapped = wrapCodeBlock(child);
+            if (wrapped) {
+              node.children[i] = wrapped;
+              continue;
+            }
+          }
+        }
+        walk(child);
+      }
+    };
+    walk(tree);
   };
 };
 
@@ -343,12 +377,14 @@ export const md = {
     [
       withTiming("rehype:shiki", rehypeShiki),
       {
-        themes: shikiThemes,
+        theme: shikiTheme,
         langs: shikiLangConfig.langs,
         langAlias: shikiLangConfig.alias,
+        addLanguageClass: true,
       },
     ],
     withTiming("rehype:code-lang", rehypeCodeLangAttr),
+    withTiming("rehype:code-header", rehypeCodeBlockHeader),
     [withTiming("rehype:katex", rehypeKatex), { strict: "warn" }],
   ] as any,
 };

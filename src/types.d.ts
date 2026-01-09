@@ -22,9 +22,7 @@ declare const __CONTENT_FRIENDS: Array<{
 declare const __SITE_CONF: {
     title: string,
     avatar: string,
-    extURL: string,
     baseURL: string,
-    cdnURL: string,
     description: string,
     keywords: string,
     author: {
