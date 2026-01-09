@@ -11,6 +11,5 @@ export default {
     EXPIRED_NOTIFY: "本文最近一次更新于 {date: string} 前，其中的内容很可能已经有所发展或是发生改变。",
     ARCHIVES_SUBTITLE: "共计 {total: number} 篇文章",
     S: "zh-CN",
-    DIS: "正在加载 Disqus 评论",
     SWITCH_TO: "Switch to English"
 }
