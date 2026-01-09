@@ -40,7 +40,6 @@ type EmitPublicDataOptions = {
   posts: any[];
   pages: any[];
   friends?: any[];
-  legacyCommentPaths?: Set<string>;
 };
 
 const writeJson = async (filepath: string, data: unknown) => {
@@ -80,20 +79,15 @@ const buildPostOutputs = async ({
   canonSlugSet,
   slugToPost,
   outDir,
-  legacyCommentPaths,
 }: {
   visPosts: any[];
   canon: any[];
   canonSlugSet: Set<string>;
   slugToPost: Map<string, any>;
   outDir: string;
-  legacyCommentPaths?: Set<string>;
 }) => {
   for (const p of visPosts) {
     const slug = String(p.slug);
-    const hasLegacyComments = legacyCommentPaths
-      ? legacyCommentPaths.has(postUrl(slug))
-      : false;
     const neighbours = computeNeighbours(p, { canon, canonSlugSet, slugToPost });
     const relates = computeRelated(p, canon);
     const html = String(p.html ?? "");
@@ -107,7 +101,6 @@ const buildPostOutputs = async ({
       url: postUrl(slug),
       html: content,
       encrypted,
-      hasLegacyComments,
       neighbours,
       relates,
       hasMath,
@@ -119,21 +112,17 @@ const buildPostOutputs = async ({
 const buildPageOutputs = async ({
   pages,
   outDir,
-  legacyCommentPaths,
 }: {
   pages: any[];
   outDir: string;
-  legacyCommentPaths?: Set<string>;
 }) => {
   const visPages = visiblePages(pages);
   for (const p of visPages) {
     const slug = String(p.slug);
     const pagePath = `/${slug}/`;
-    const hasLegacyComments = legacyCommentPaths ? legacyCommentPaths.has(pagePath) : false;
     await writeJson(path.join(outDir, "pages", `${safePathSegment(slug)}.json`), {
       ...p,
       url: pagePath,
-      hasLegacyComments,
     });
   }
 };
@@ -143,7 +132,6 @@ export const emitPublicData = async ({
   posts,
   pages,
   friends = [],
-  legacyCommentPaths,
 }: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
   console.time("velite:emit:public-data:clear");
@@ -172,11 +160,10 @@ export const emitPublicData = async ({
     canonSlugSet,
     slugToPost,
     outDir,
-    legacyCommentPaths,
   });
   console.timeEnd("velite:emit:public-data:posts");
   console.time("velite:emit:public-data:pages");
-  await buildPageOutputs({ pages, outDir, legacyCommentPaths });
+  await buildPageOutputs({ pages, outDir });
   console.timeEnd("velite:emit:public-data:pages");
 
   console.time("velite:emit:public-data:friends");

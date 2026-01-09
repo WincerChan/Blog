@@ -3,7 +3,6 @@ import type { VeliteConfig } from "velite";
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
 import { emitAtom } from "./emit/atom";
-import { collectLegacyCommentPaths, loadLegacyCommentsMap } from "./emit/legacyComments";
 import { emitPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
@@ -92,19 +91,12 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   console.time("velite:emit:public-assets");
   await emitPublicAssets({ site, publicDir });
   console.timeEnd("velite:emit:public-assets");
-  console.time("velite:load:legacy-comments");
-  const legacyCommentsMap = await loadLegacyCommentsMap(repoRoot);
-  console.timeEnd("velite:load:legacy-comments");
-  const legacyCommentPaths = legacyCommentsMap
-    ? collectLegacyCommentPaths(legacyCommentsMap)
-    : undefined;
   console.time("velite:emit:public-data");
   await emitPublicData({
     publicDir,
     posts,
     pages,
     friends: (data as any).friends ?? [],
-    legacyCommentPaths,
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");

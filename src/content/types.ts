@@ -17,7 +17,6 @@ export type VelitePost = {
     toc?: string;
     summary?: string;
     words?: number;
-    hasLegacyComments?: boolean;
 };
 
 export type VelitePage = {
@@ -34,7 +33,6 @@ export type VelitePage = {
     html?: string;
     toc?: string;
     summary?: string;
-    hasLegacyComments?: boolean;
 };
 
 export type FriendLink = {
