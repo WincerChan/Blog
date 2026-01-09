@@ -129,9 +129,9 @@ type RootTranslation = {
 		 */
 		SWITCH_TO: string
 	}
-		sidebar: {
-			TOOLS: {
-				donate: {
+	sidebar: {
+		TOOLS: {
+			donate: {
 				/**
 				 * E​n​j​o​y​e​d​ ​t​h​i​s​?​ ​S​u​p​p​o​r​t​ ​m​e​ ​t​o​ ​k​e​e​p​ ​i​t​ ​g​o​i​n​g​!
 				 */
@@ -170,11 +170,11 @@ type RootTranslation = {
 		}
 		CODE: {
 			/**
-			 * 复​制​代​码
+			 * C​o​p​y​ ​C​o​d​e
 			 */
 			copy: string
 			/**
-			 * 已​复​制
+			 * C​o​p​i​e​d
 			 */
 			copied: string
 		}
@@ -356,11 +356,11 @@ export type TranslationFunctions = {
 		}
 		CODE: {
 			/**
-			 * 复制代码
+			 * Copy Code
 			 */
 			copy: () => LocalizedString
 			/**
-			 * 已复制
+			 * Copied
 			 */
 			copied: () => LocalizedString
 		}

@@ -57,8 +57,8 @@ const ArticlePage = ({
         const root = document.getElementById("blog-article");
         if (!root) return;
         const disposeBlocks = setupCodeBlocks(root, {
-            copyLabel: LL().sidebar.CODE.copy(),
-            copiedLabel: LL().sidebar.CODE.copied(),
+            copyLabel: () => LL().sidebar.CODE.copy(),
+            copiedLabel: () => LL().sidebar.CODE.copied(),
         });
         onCleanup(() => disposeBlocks());
     });
