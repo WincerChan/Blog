@@ -8,6 +8,7 @@ import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
 import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
+import { emitOgImages } from "./emit/ogImages";
 import { reportMarkdownTiming } from "./markdown";
 
 const assertValidDate = (label: string, value: string | undefined, slug: string) => {
@@ -99,6 +100,14 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   console.time("velite:emit:public-assets");
   await emitPublicAssets({ site, publicDir });
   console.timeEnd("velite:emit:public-assets");
+  console.time("velite:emit:og-images");
+  await emitOgImages({
+    site,
+    publicDir,
+    posts: renderablePosts,
+    repoRoot,
+  });
+  console.timeEnd("velite:emit:og-images");
   console.time("velite:emit:public-data");
   await emitPublicData({
     publicDir,

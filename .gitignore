@@ -40,6 +40,7 @@ public/category
 public/manifest.*
 public/pages
 public/posts
+public/og
 public/sass
 public/search-index.json
 public/sw.js

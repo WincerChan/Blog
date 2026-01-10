@@ -4,6 +4,7 @@ import type { SiteConf } from "../site";
 import { writeFile } from "../io";
 import { formatUtc } from "../time";
 import { escapeXmlText, latestUpdated } from "./xml";
+import { resolveOgImageUrl } from "../og/paths";
 
 const uuidFromSha1 = (hex: string) =>
   `urn:uuid:${hex.slice(0, 8)}-${hex.slice(8, 12)}-5${hex.slice(13, 16)}-${hex.slice(16, 17)}9${hex.slice(17, 19)}-${hex.slice(21, 33)}`;
@@ -44,7 +45,10 @@ export const emitAtom = async ({
         ? "抱歉，本文已加密，请至网站输入密码后阅读。"
         : String(p.summary || "").trim() || String(p.title || "").trim();
 
-      const cover = String(p.cover ?? "").trim();
+      const cover = resolveOgImageUrl({
+        baseURL: site.baseURL,
+        slug: String(p.slug ?? ""),
+      });
       const coverHtml = cover ? `<p><img src="${escapeXmlText(cover)}" alt="cover" /></p>` : "";
 
       const bodyHtml = String(p.html ?? "");
