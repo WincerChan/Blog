@@ -4,6 +4,7 @@ import { calculateDateDifference } from "~/utils";
 import { Locales, Translations } from "~/i18n/i18n-types";
 import DateCat from "~/features/post-listing/PostMeta";
 import Translate from "~/features/article/sidebar/social/Translate";
+import { hasTranslationMeta } from "~/features/article/utils/translation";
 import type { ArticleMeta } from "~/features/article/types";
 
 const PostMeta = ({
@@ -21,7 +22,7 @@ const PostMeta = ({
     const tags = () => (blog.tags ?? []).filter(Boolean);
     const hasWords = () => typeof blog.words === "number" && blog.words > 0;
     const hasTags = () => tags().length > 0;
-    const hasTranslate = () => !!blog.lang;
+    const hasTranslate = () => hasTranslationMeta(blog);
     const isArticle = () => blog.slug?.startsWith("/posts/");
     const showDateCat = () => isArticle();
     const showTranslateInDateLine = () =>
