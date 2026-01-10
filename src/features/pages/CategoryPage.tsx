@@ -38,7 +38,7 @@ const CategoryPage = (props: TaxoLayoutProps) => {
             <p class="mt-0 mb-8 text-xl font-serif md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
                 {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
             </p>
-            <OtherBlogs posts={() => blogsByTerm()} />
+            <OtherBlogs posts={() => blogsByTerm()} description={null} />
         </PageLayout>
     )
 }
