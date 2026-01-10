@@ -10,8 +10,10 @@ const ApplicationMeta = () => {
             <Meta name="apple-mobile-web-app-capable" content="yes" />
             <Meta name="apple-mobile-web-app-title" content={__SITE_CONF.title} />
             <Meta name="apple-mobile-web-app-status-bar-style" content="black" />
-            <Link href="https://cdn.jsdelivr.net/npm/wir@1.0.2/android-chrome-192x192.png" rel="icon" type="image/ico" />
-            <Link rel="apple-touch-icon" href={`https://ae01.alicdn.com/kf/H3581d2df939f4c3182b1d4b9c2a47bdaO.png`} />
+            <Link rel="icon" type="image/svg+xml" href="/favicon/light.svg" media="(prefers-color-scheme: light)" />
+            <Link rel="icon" type="image/svg+xml" href="/favicon/dark.svg" media="(prefers-color-scheme: dark)" />
+            <Link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#1f6f6a" />
+            <Link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
         </>
     );
 };

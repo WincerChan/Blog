@@ -5,6 +5,7 @@ import { Suspense, createEffect, onMount } from "solid-js";
 import Footer from "./site/footer";
 import Header from "./site/header";
 import TypesafeI18n from "./i18n/i18n-solid";
+import ApplicationMeta from "./site/seo/ApplicationMeta";
 
 import { type RouteSectionProps } from "@solidjs/router";
 import {
@@ -31,6 +32,7 @@ const detectLocaleFromPath = (pathname: string): Locale => {
 const preloadHook = (props: RouteSectionProps<unknown>) => {
     return (
         <MetaProvider>
+            <ApplicationMeta />
             <Suspense>{props.children}</Suspense>
         </MetaProvider>
     );

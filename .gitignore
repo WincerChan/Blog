@@ -1,10 +1,10 @@
-
+# Build outputs
 dist
 .solid
 .output
+.vinxi
 .vercel
 .netlify
-.vinxi
 
 # Velite
 .velite
@@ -13,10 +13,8 @@ dist
 .env
 .env*.local
 
-# dependencies
+# Dependencies
 /node_modules
-
-# Bun
 .bun
 
 # IDEs and editors
@@ -26,24 +24,24 @@ dist
 *.launch
 .settings/
 
-# Temp
-gitignore
-
-# System Files
+# System files
 .DS_Store
 Thumbs.db
+
+# Legacy/static generators
 (hugo)/
 resources
 _blogs
+
+# Generated public assets (Velite/build)
 public/*.xml
-public/sass
+public/_data
+public/category
+public/manifest.*
 public/pages
 public/posts
-public/category
-public/tags
-public/manifest.*
-public/sw.js
-public/_data
-public/valid_paths.txt
-public/search.json
+public/sass
 public/search-index.json
+public/sw.js
+public/tags
+public/valid_paths.txt

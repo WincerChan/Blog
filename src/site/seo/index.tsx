@@ -1,6 +1,5 @@
 import { Show, createMemo } from "solid-js";
 import { useHead } from "@solidjs/meta";
-import ApplicationMeta from "./ApplicationMeta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
 import { HeadParams, HeadParamsInput, resolveHeadParams } from "./types";
@@ -84,7 +83,6 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
                     {params.hasMath && (
                         <link rel="stylesheet" href={katexCssHref} />
                     )}
-                    <ApplicationMeta />
                     <OpenGraph params={params} />
                     </>
                 );
