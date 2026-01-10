@@ -6,6 +6,9 @@ import DateCat from "~/features/post-listing/PostMeta";
 import Translate from "~/features/article/sidebar/social/Translate";
 import type { ArticleMeta } from "~/features/article/types";
 
+export const hasTranslationMeta = (blog: ArticleMeta) =>
+    !!blog.lang && blog.isTranslation !== undefined;
+
 const PostMeta = ({
     blog,
     lang,
@@ -21,7 +24,7 @@ const PostMeta = ({
     const tags = () => (blog.tags ?? []).filter(Boolean);
     const hasWords = () => typeof blog.words === "number" && blog.words > 0;
     const hasTags = () => tags().length > 0;
-    const hasTranslate = () => !!blog.lang;
+    const hasTranslate = () => hasTranslationMeta(blog);
     const isArticle = () => blog.slug?.startsWith("/posts/");
     const showDateCat = () => isArticle();
     const showTranslateInDateLine = () =>
