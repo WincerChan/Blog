@@ -34,22 +34,13 @@ type BlogCardsProps = {
     length?: number
 }
 
-export const resolveOtherBlogsDescription = (
-    description: string | null | undefined,
-    fallback?: string | null
-) => {
-    if (description === null) return null;
-    if (description !== undefined) return description;
-    return fallback ?? null;
-};
-
 const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
     const { LL } = useI18nContext()
-    const resolvedDescription = () =>
-        resolveOtherBlogsDescription(
-            description,
-            LL && LL().archive.ARCHIVES_SUBTITLE({ total: posts().length })
-        );
+    const resolvedDescription = () => {
+        if (description === null) return null;
+        if (description !== undefined) return description;
+        return LL && LL().archive.ARCHIVES_SUBTITLE({ total: posts().length });
+    };
     return (
         <>
             <Show when={resolvedDescription() !== null}>
