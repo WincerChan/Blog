@@ -3,6 +3,7 @@ import { render } from "solid-js/web";
 import IconCodeBlock from "~icons/ph/code-block";
 import IconCopy from "~icons/ph/copy";
 import IconCheck from "~icons/ph/check";
+import { writeClipboardText } from "~/utils/clipboard";
 
 export const normalizeLangLabel = (value: string | null) => {
     const trimmed = String(value ?? "").trim();
@@ -35,27 +36,11 @@ const CodeBlockHeader = (props: {
         if (resetTimer) window.clearTimeout(resetTimer);
     });
 
-    const writeText = async (text: string) => {
-        if (navigator?.clipboard?.writeText) {
-            await navigator.clipboard.writeText(text);
-            return true;
-        }
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.select();
-        const ok = document.execCommand("copy");
-        textarea.remove();
-        return ok;
-    };
-
     const copy = async () => {
         const text = props.getText();
         if (!text.trim()) return;
         try {
-            const ok = await writeText(text);
+            const ok = await writeClipboardText(text);
             if (!ok) return;
             setCopied(true);
             if (resetTimer) window.clearTimeout(resetTimer);

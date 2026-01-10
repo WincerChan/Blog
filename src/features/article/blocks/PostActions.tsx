@@ -4,6 +4,7 @@ import IconLink from "~icons/ph/link-simple";
 import IconCheck from "~icons/ph/check";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import Like from "~/features/article/sidebar/social/Like";
+import { writeClipboardText } from "~/utils/clipboard";
 
 const PostActions = ({ pageURL }: { pageURL: string }) => {
     const { LL } = useI18nContext();
@@ -14,9 +15,9 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
     const [copied, setCopied] = createSignal(false);
     let resetTimer: number | undefined;
     const copyUrl = async () => {
-        if (typeof navigator === "undefined" || !navigator.clipboard) return;
         try {
-            await navigator.clipboard.writeText(buildShareUrl());
+            const ok = await writeClipboardText(buildShareUrl());
+            if (!ok) return;
             setCopied(true);
             if (resetTimer) window.clearTimeout(resetTimer);
             resetTimer = window.setTimeout(() => setCopied(false), 2000);
