@@ -3,8 +3,8 @@ import {
   normalizeLabel,
   normalizeLangLabel,
   resolveCopyLabel,
-  writeClipboardText,
 } from "../src/features/article/components/CodeBlockHeader";
+import { writeClipboardText } from "../src/utils/clipboard";
 
 describe("normalizeLangLabel", () => {
   test("returns lowercase language when present", () => {

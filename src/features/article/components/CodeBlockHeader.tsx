@@ -3,6 +3,7 @@ import { render } from "solid-js/web";
 import IconCodeBlock from "~icons/ph/code-block";
 import IconCopy from "~icons/ph/copy";
 import IconCheck from "~icons/ph/check";
+import { writeClipboardText } from "~/utils/clipboard";
 
 export const normalizeLangLabel = (value: string | null) => {
     const trimmed = String(value ?? "").trim();
@@ -18,17 +19,6 @@ export const resolveCopyLabel = (
 export const normalizeLabel = (value: string, fallback: string) => {
     const trimmed = String(value ?? "").trim();
     return trimmed ? trimmed : fallback;
-};
-
-export const writeClipboardText = async (
-    text: string,
-    clipboard: { writeText?: (value: string) => Promise<void> } | null = null
-) => {
-    const target =
-        clipboard ?? (typeof navigator !== "undefined" ? navigator.clipboard : null);
-    if (!target?.writeText) return false;
-    await target.writeText(text);
-    return true;
 };
 
 const CodeBlockHeader = (props: {
