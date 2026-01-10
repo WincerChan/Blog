@@ -36,11 +36,11 @@ type BlogCardsProps = {
 
 const OtherBlogs = ({ posts, description, length }: BlogCardsProps) => {
     const { LL } = useI18nContext()
-    const resolvedDescription = () => {
-        if (description === null) return null;
-        if (description !== undefined) return description;
-        return LL && LL().archive.ARCHIVES_SUBTITLE({ total: posts().length });
-    };
+    const resolvedDescription = () =>
+        resolveOtherBlogsDescription(
+            description,
+            LL && LL().archive.ARCHIVES_SUBTITLE({ total: posts().length })
+        );
     return (
         <>
             <Show when={resolvedDescription() !== null}>
