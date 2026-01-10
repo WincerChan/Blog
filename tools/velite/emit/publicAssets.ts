@@ -17,26 +17,26 @@ export const emitPublicAssets = async ({
 }) => {
   const manifest = {
     name: site.title,
-    short_name: "Wincer",
+    short_name: site.author || site.title,
     description: site.description,
     lang: "zh-CN",
     start_url: "/",
     display: "fullscreen",
     orientation: "natural",
-    theme_color: "#065279",
-    background_color: "#065279",
+    theme_color: "#fdfdfc",
+    background_color: "#fdfdfc",
     icons: [
       {
-        src: "https://cdn.jsdelivr.net/npm/wir@1.0.2/android-chrome-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "any maskable",
+        src: "/favicon/light.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        purpose: "any",
       },
       {
-        src: "https://cdn.jsdelivr.net/npm/wir@1.0.2/android-chrome-512x512.png",
-        sizes: "512x512",
+        src: "/favicon/apple-touch-icon.png",
+        sizes: "180x180",
         type: "image/png",
-        purpose: "any maskable",
+        purpose: "any",
       },
     ],
   };
@@ -49,4 +49,3 @@ export const emitPublicAssets = async ({
   await writeFile(path.join(publicDir, "sass", "atom.css"), ATOM_CSS);
   await writeFile(path.join(publicDir, "sass", "sitemap.css"), SITEMAP_CSS);
 };
-
