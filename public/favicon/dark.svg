@@ -1,0 +1,7 @@
+<!-- /public/favicon/dark.svg -->
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="88"  y="64"  width="80" height="240" rx="40" fill="#E5E7EB"/>
+  <rect x="208" y="152" width="80" height="240" rx="40" fill="#E5E7EB"/>
+  <rect x="328" y="64"  width="80" height="240" rx="40" fill="#E5E7EB"/>
+  <circle cx="368" cy="392" r="56" fill="#1f6f6a"/>
+</svg>
