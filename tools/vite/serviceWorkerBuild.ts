@@ -15,6 +15,7 @@ const ServiceWorkerBuild = (dirname: string) => {
       built = true;
       await build({
         configFile: false,
+        publicDir: false,
         build: {
           outDir: resolve(dirname, "public"),
           emptyOutDir: false,
