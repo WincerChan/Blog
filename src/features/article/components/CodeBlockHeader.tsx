@@ -20,6 +20,17 @@ export const normalizeLabel = (value: string, fallback: string) => {
     return trimmed ? trimmed : fallback;
 };
 
+export const writeClipboardText = async (
+    text: string,
+    clipboard: { writeText?: (value: string) => Promise<void> } | null = null
+) => {
+    const target =
+        clipboard ?? (typeof navigator !== "undefined" ? navigator.clipboard : null);
+    if (!target?.writeText) return false;
+    await target.writeText(text);
+    return true;
+};
+
 const CodeBlockHeader = (props: {
     lang: string;
     copyLabel: () => string;
@@ -35,27 +46,11 @@ const CodeBlockHeader = (props: {
         if (resetTimer) window.clearTimeout(resetTimer);
     });
 
-    const writeText = async (text: string) => {
-        if (navigator?.clipboard?.writeText) {
-            await navigator.clipboard.writeText(text);
-            return true;
-        }
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.select();
-        const ok = document.execCommand("copy");
-        textarea.remove();
-        return ok;
-    };
-
     const copy = async () => {
         const text = props.getText();
         if (!text.trim()) return;
         try {
-            const ok = await writeText(text);
+            const ok = await writeClipboardText(text);
             if (!ok) return;
             setCopied(true);
             if (resetTimer) window.clearTimeout(resetTimer);

@@ -1,5 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { normalizeLabel, normalizeLangLabel, resolveCopyLabel } from "../src/features/article/components/CodeBlockHeader";
+import {
+  normalizeLabel,
+  normalizeLangLabel,
+  resolveCopyLabel,
+  writeClipboardText,
+} from "../src/features/article/components/CodeBlockHeader";
 
 describe("normalizeLangLabel", () => {
   test("returns lowercase language when present", () => {
@@ -29,5 +34,22 @@ describe("normalizeLabel", () => {
 
   test("keeps label when present", () => {
     expect(normalizeLabel("复制代码", "Copy")).toBe("复制代码");
+  });
+});
+
+describe("writeClipboardText", () => {
+  test("returns false when clipboard is missing", async () => {
+    expect(await writeClipboardText("hi", null)).toBe(false);
+  });
+
+  test("writes text when clipboard is provided", async () => {
+    let stored = "";
+    const clipboard = {
+      writeText: async (value: string) => {
+        stored = value;
+      },
+    };
+    expect(await writeClipboardText("hello", clipboard)).toBe(true);
+    expect(stored).toBe("hello");
   });
 });
