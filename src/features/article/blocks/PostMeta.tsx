@@ -4,10 +4,8 @@ import { calculateDateDifference } from "~/utils";
 import { Locales, Translations } from "~/i18n/i18n-types";
 import DateCat from "~/features/post-listing/PostMeta";
 import Translate from "~/features/article/sidebar/social/Translate";
+import { hasTranslationMeta } from "~/features/article/utils/translation";
 import type { ArticleMeta } from "~/features/article/types";
-
-export const hasTranslationMeta = (blog: ArticleMeta) =>
-    !!blog.lang && blog.isTranslation !== undefined;
 
 const PostMeta = ({
     blog,

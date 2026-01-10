@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { hasTranslationMeta } from "../src/features/article/blocks/PostMeta";
+import { hasTranslationMeta } from "../src/features/article/utils/translation";
 import type { ArticleMeta } from "../src/features/article/types";
 
 describe("hasTranslationMeta", () => {
