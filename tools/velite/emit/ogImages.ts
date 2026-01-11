@@ -208,8 +208,8 @@ export const emitOgImages = async ({
     pushTarget({
       label: pageUrl,
       slug,
-      title: `Category · ${category}`,
-      subtitle: `Total ${stats.count} posts`,
+      title: `分类 · ${category}`,
+      subtitle: `共 ${stats.count} 篇文章`,
       date: stats.latest,
       showDate: false,
     });
