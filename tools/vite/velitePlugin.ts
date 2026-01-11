@@ -16,12 +16,9 @@ const velitePlugin = (options: Options = {}): Plugin => {
     return {
         name: "@velite/plugin-vite",
         apply: "serve",
-        configureServer: async () => {
+        configureServer: async (server) => {
             if (started) return;
             started = true;
-            if (!process.env.VELITE_WATCH) {
-                process.env.VELITE_WATCH = "1";
-            }
             await build({ config: options.config, watch: true });
         },
     };

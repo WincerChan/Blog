@@ -141,7 +141,7 @@ export const emitPublicData = async ({
     await clearOutDir(outDir);
     console.timeEnd("velite:emit:public-data:clear");
   } else {
-    console.log("[velite] skip public-data clear (watch mode)");
+    console.log("[velite] skip public-data clear (clean disabled)");
   }
 
   console.time("velite:emit:public-data:collect");

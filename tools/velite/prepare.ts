@@ -11,32 +11,6 @@ import { emitValidPaths } from "./emit/validPaths";
 import { emitOgImages } from "./emit/ogImages";
 import { reportMarkdownTiming } from "./markdown";
 
-const parseEnvFlag = (value?: string) => {
-  if (!value) return undefined;
-  const normalized = value.trim().toLowerCase();
-  if (["1", "true", "yes", "on"].includes(normalized)) return true;
-  if (["0", "false", "no", "off"].includes(normalized)) return false;
-  return undefined;
-};
-
-const shouldEmitOgImages = () => {
-  const override = parseEnvFlag(process.env.OG_RENDER_ENABLED);
-  if (override !== undefined) return override;
-  return process.env.VELITE_WATCH !== "1";
-};
-
-const shouldEmitSitemaps = () => {
-  const override = parseEnvFlag(process.env.SITEMAP_ENABLED);
-  if (override !== undefined) return override;
-  return process.env.VELITE_WATCH !== "1";
-};
-
-const shouldClearPublicData = () => {
-  const override = parseEnvFlag(process.env.PUBLIC_DATA_CLEAR);
-  if (override !== undefined) return override;
-  return process.env.VELITE_WATCH !== "1";
-};
-
 const assertValidDate = (label: string, value: string | undefined, slug: string) => {
   const parsed = parseDateLikeHugo(value);
   if (!Number.isFinite(parsed.getTime())) {
@@ -79,12 +53,12 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const repoRoot = path.dirname(context.config.configPath);
   const site = await readSiteConf(repoRoot);
   const publicDir = path.join(repoRoot, "public");
+  const isCleanBuild = Boolean(context.config.output?.clean);
 
   console.time("velite:normalize");
   const posts = (data.posts as any[]).map(normalizePost);
   const pages = (data.pages as any[]).map(normalizePage);
   console.timeEnd("velite:normalize");
-
   data.posts = posts;
   data.pages = pages;
 
@@ -95,7 +69,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const renderablePages = [...pages].filter((p) => p.draft !== true);
 
   console.time("velite:emit:sitemaps");
-  if (shouldEmitSitemaps()) {
+  if (isCleanBuild) {
     await emitSitemaps({
       site,
       publicDir,
@@ -104,7 +78,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
       publishedPosts,
     });
   } else {
-    console.log("[velite] skip sitemaps generation (watch mode)");
+    console.log("[velite] skip sitemaps generation (clean disabled)");
   }
   console.timeEnd("velite:emit:sitemaps");
 
@@ -131,7 +105,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   await emitPublicAssets({ site, publicDir });
   console.timeEnd("velite:emit:public-assets");
   console.time("velite:emit:og-images");
-  if (shouldEmitOgImages()) {
+  if (isCleanBuild) {
     await emitOgImages({
       site,
       publicDir,
@@ -141,7 +115,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
       repoRoot,
     });
   } else {
-    console.log("[velite] skip og-images generation (watch mode)");
+    console.log("[velite] skip og-images generation (clean disabled)");
   }
   console.timeEnd("velite:emit:og-images");
   console.time("velite:emit:public-data");
@@ -150,7 +124,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     posts,
     pages,
     friends: (data as any).friends ?? [],
-    clear: shouldClearPublicData(),
+    clear: isCleanBuild,
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");
