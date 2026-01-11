@@ -8,7 +8,7 @@ import { ogImageFilename } from "../og/paths";
 import { renderPng } from "../og/resvg";
 import { renderOgSvg } from "../og/template";
 
-export const OG_PNG_SCALE = 1;
+export const OG_PNG_SCALE = 1.5;
 
 const formatDate = (value?: Date | string) => {
   if (value instanceof Date && Number.isFinite(value.getTime())) {
@@ -97,22 +97,32 @@ export const emitOgImages = async ({
     const subtitleFontFamily = resolveSubtitleFontFamily(post, subtitle);
 
     try {
-      const svgStart = performance.now();
-      const svg = await renderOgSvg({
-        title,
-        subtitle,
-        date,
-        siteName,
-        siteHost,
-        showDate: true,
-        titleFontFamily,
-        subtitleFontFamily,
-        fonts,
-      });
-      const svgDuration = performance.now() - svgStart;
-      const pngStart = performance.now();
-      const png = await renderPng(svg, { scale: OG_PNG_SCALE });
-      const pngDuration = performance.now() - pngStart;
+      const renderSvg = async () => {
+        const svgStart = performance.now();
+        const svg = await renderOgSvg({
+          title,
+          subtitle,
+          date,
+          siteName,
+          siteHost,
+          showDate: true,
+          titleFontFamily,
+          subtitleFontFamily,
+          fonts,
+        });
+        const svgDuration = performance.now() - svgStart;
+        return { svg, svgDuration };
+      };
+
+      const renderPngWithTiming = async (svg: string) => {
+        const pngStart = performance.now();
+        const png = await renderPng(svg, { scale: OG_PNG_SCALE });
+        const pngDuration = performance.now() - pngStart;
+        return { png, pngDuration };
+      };
+
+      const { svg, svgDuration } = await renderSvg();
+      const { png, pngDuration } = await renderPngWithTiming(svg);
       await fs.writeFile(path.join(outDir, ogImageFilename(slug)), png);
       console.log(
         `[velite] og-image ${slug}: satori ${svgDuration.toFixed(1)}ms resvg ${pngDuration.toFixed(1)}ms`
