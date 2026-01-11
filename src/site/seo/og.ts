@@ -21,6 +21,14 @@ const safeUrl = (value: string) => {
     }
 };
 
+const decodePathname = (value: string) => {
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return value;
+    }
+};
+
 const resolvePageOgSlug = (pathname: string) => {
     if (pathname === "/") return "page/index";
     const trimmed = pathname.replace(/^\/+|\/+$/g, "");
@@ -29,7 +37,8 @@ const resolvePageOgSlug = (pathname: string) => {
 
 export const resolveOgImagePath = (pageURL: string, cover?: string) => {
     const url = safeUrl(pageURL || "/");
-    const normalized = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+    const pathname = decodePathname(url.pathname);
+    const normalized = pathname.endsWith("/") ? pathname : `${pathname}/`;
     const match = normalized.match(/^\/posts\/(.+?)\/$/);
     if (match) {
         const slug = sanitizeOgSlug(match[1]);

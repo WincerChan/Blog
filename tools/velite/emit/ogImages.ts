@@ -68,10 +68,19 @@ const clearOutDir = async (targetDir: string) => {
   await fs.mkdir(targetDir, { recursive: true });
 };
 
+const decodePathname = (value: string) => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
 const resolveOgSlugForPath = (value: string, baseURL: string) => {
   try {
     const url = new URL(value || "/", baseURL);
-    const normalized = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+    const pathname = decodePathname(url.pathname);
+    const normalized = pathname.endsWith("/") ? pathname : `${pathname}/`;
     if (normalized === "/") return "page/index";
     const trimmed = normalized.replace(/^\/+|\/+$/g, "");
     return trimmed ? `page/${trimmed}` : "page/index";
