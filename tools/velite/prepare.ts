@@ -53,12 +53,12 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const repoRoot = path.dirname(context.config.configPath);
   const site = await readSiteConf(repoRoot);
   const publicDir = path.join(repoRoot, "public");
+  const isCleanBuild = Boolean(context.config.output?.clean);
 
   console.time("velite:normalize");
   const posts = (data.posts as any[]).map(normalizePost);
   const pages = (data.pages as any[]).map(normalizePage);
   console.timeEnd("velite:normalize");
-
   data.posts = posts;
   data.pages = pages;
 
@@ -69,13 +69,17 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const renderablePages = [...pages].filter((p) => p.draft !== true);
 
   console.time("velite:emit:sitemaps");
-  await emitSitemaps({
-    site,
-    publicDir,
-    renderablePosts,
-    renderablePages,
-    publishedPosts,
-  });
+  if (isCleanBuild) {
+    await emitSitemaps({
+      site,
+      publicDir,
+      renderablePosts,
+      renderablePages,
+      publishedPosts,
+    });
+  } else {
+    console.log("[velite] skip sitemaps generation (clean disabled)");
+  }
   console.timeEnd("velite:emit:sitemaps");
 
   console.time("velite:emit:atom");
@@ -101,14 +105,18 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   await emitPublicAssets({ site, publicDir });
   console.timeEnd("velite:emit:public-assets");
   console.time("velite:emit:og-images");
-  await emitOgImages({
-    site,
-    publicDir,
-    posts: renderablePosts,
-    pages: renderablePages,
-    publishedPosts,
-    repoRoot,
-  });
+  if (isCleanBuild) {
+    await emitOgImages({
+      site,
+      publicDir,
+      posts: renderablePosts,
+      pages: renderablePages,
+      publishedPosts,
+      repoRoot,
+    });
+  } else {
+    console.log("[velite] skip og-images generation (clean disabled)");
+  }
   console.timeEnd("velite:emit:og-images");
   console.time("velite:emit:public-data");
   await emitPublicData({
@@ -116,6 +124,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     posts,
     pages,
     friends: (data as any).friends ?? [],
+    clear: isCleanBuild,
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");

@@ -9,8 +9,7 @@ export default defineConfig({
   collections,
   output: {
     data: ".velite",
-    clean: true,
+    clean: false,
   },
   prepare: prepareVelite,
 });
-

@@ -40,11 +40,24 @@ type EmitPublicDataOptions = {
   posts: any[];
   pages: any[];
   friends?: any[];
+  clear?: boolean;
+};
+
+const readFileIfExists = async (filepath: string) => {
+  try {
+    return await fs.readFile(filepath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException)?.code === "ENOENT") return null;
+    throw error;
+  }
 };
 
 const writeJson = async (filepath: string, data: unknown) => {
+  const next = JSON.stringify(data);
+  const prev = await readFileIfExists(filepath);
+  if (prev === next) return;
   await fs.mkdir(path.dirname(filepath), { recursive: true });
-  await fs.writeFile(filepath, JSON.stringify(data), "utf8");
+  await fs.writeFile(filepath, next, "utf8");
 };
 
 const clearOutDir = async (targetDir: string) => {
@@ -132,11 +145,16 @@ export const emitPublicData = async ({
   posts,
   pages,
   friends = [],
+  clear = true,
 }: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
-  console.time("velite:emit:public-data:clear");
-  await clearOutDir(outDir);
-  console.timeEnd("velite:emit:public-data:clear");
+  if (clear) {
+    console.time("velite:emit:public-data:clear");
+    await clearOutDir(outDir);
+    console.timeEnd("velite:emit:public-data:clear");
+  } else {
+    console.log("[velite] skip public-data clear (clean disabled)");
+  }
 
   console.time("velite:emit:public-data:collect");
   const visPosts = visiblePosts(posts);
