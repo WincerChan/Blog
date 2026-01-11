@@ -1,4 +1,4 @@
-import { Resvg } from "@resvg/resvg-js";
+import { renderAsync } from "@resvg/resvg-js";
 import type { ResvgRenderOptions } from "@resvg/resvg-js";
 
 type RenderPngOptions = {
@@ -14,12 +14,11 @@ export const renderPng = async (svg: string, opts: RenderPngOptions = {}) => {
   const resvgOptions = opts.resvgOptions;
   const svgHasText = /<text[\s>]/i.test(svg);
   const font = resvgOptions?.font ?? { loadSystemFonts: svgHasText };
-
-  const resvg = new Resvg(svg, {
+  const rendered = await renderAsync(svg, {
     ...resvgOptions,
     fitTo: resvgOptions?.fitTo ?? { mode: "width", value: targetWidth },
     font,
   });
 
-  return resvg.render().asPng();
+  return rendered.asPng();
 };

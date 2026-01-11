@@ -9,6 +9,7 @@ import { renderPng } from "../og/resvg";
 import { renderOgSvg } from "../og/template";
 
 export const OG_PNG_SCALE = 1.5;
+const DEFAULT_OG_RENDER_CONCURRENCY = 2;
 
 const formatDate = (value?: Date | string) => {
   if (value instanceof Date && Number.isFinite(value.getTime())) {
@@ -67,6 +68,36 @@ const clearOutDir = async (targetDir: string) => {
   await fs.mkdir(targetDir, { recursive: true });
 };
 
+const resolveConcurrency = () => {
+  const raw = Number.parseInt(
+    process.env.OG_RENDER_CONCURRENCY ?? String(DEFAULT_OG_RENDER_CONCURRENCY),
+    10
+  );
+  if (!Number.isFinite(raw) || raw < 1) return 1;
+  return raw;
+};
+
+const runWithConcurrency = async <T,>(
+  items: T[],
+  limit: number,
+  worker: (item: T) => Promise<void>
+) => {
+  const executing = new Set<Promise<void>>();
+
+  for (const item of items) {
+    const task = worker(item);
+    executing.add(task);
+    task.finally(() => {
+      executing.delete(task);
+    });
+    if (executing.size >= limit) {
+      await Promise.race(executing);
+    }
+  }
+
+  await Promise.all(executing);
+};
+
 export const emitOgImages = async ({
   site,
   publicDir,
@@ -81,15 +112,16 @@ export const emitOgImages = async ({
   const outDir = path.join(publicDir, "og");
   await clearOutDir(outDir);
 
+  const concurrency = resolveConcurrency();
   const fonts = await loadOgFonts(repoRoot);
   const siteName = resolveSiteName(site);
   const siteHost = resolveSiteHost(site);
 
-  for (const post of posts) {
-    if (post?.draft === true) continue;
-    const slug = String(post.slug ?? "").trim();
-    if (!slug) continue;
+  const ogPosts = posts.filter((post) => post?.draft !== true);
 
+  await runWithConcurrency(ogPosts, concurrency, async (post) => {
+    const slug = String(post.slug ?? "").trim();
+    if (!slug) return;
     const title = String(post.title ?? "").trim() || "Untitled";
     const subtitle = resolveSubtitle(post);
     const date = formatDate(post.dateObj ?? post.date);
@@ -131,5 +163,5 @@ export const emitOgImages = async ({
       const message = error instanceof Error ? error.message : String(error);
       throw new Error(`[velite] OG image failed for "${slug}": ${message}`);
     }
-  }
+  });
 };
