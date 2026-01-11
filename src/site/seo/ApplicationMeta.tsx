@@ -13,7 +13,7 @@ const ApplicationMeta = () => {
             <Link rel="icon" type="image/svg+xml" href="/favicon/light.svg" media="(prefers-color-scheme: light)" />
             <Link rel="icon" type="image/svg+xml" href="/favicon/dark.svg" media="(prefers-color-scheme: dark)" />
             <Link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#1f6f6a" />
-            <Link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+            <Link rel="apple-touch-icon" href="/favicon/generated/apple-touch-icon.png" />
         </>
     );
 };

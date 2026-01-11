@@ -35,6 +35,7 @@
     "@unocss/reset": "^66.1.2",
     "gray-matter": "^4.0.3",
     "katex": "^0.16.22",
+    "png2icons": "^2.0.1",
     "rehype-katex": "^7.0.1",
     "rehype-slug": "^6.0.0",
     "remark-math": "^6.0.0",

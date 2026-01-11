@@ -37,8 +37,10 @@ export const renderPng = async (svg: string, opts: RenderPngOptions = {}) => {
 
   const resvg = new Resvg(svg, {
     fitTo: { mode: "width", value: targetWidth },
-    fontFiles,
-    loadSystemFonts: false,
+    font: {
+      fontFiles,
+      loadSystemFonts: false
+    },
   });
 
   return resvg.render().asPng();

@@ -1,7 +1,6 @@
 import type { HeadParams } from "./types";
 
-export const DEFAULT_OG_IMAGE =
-    "https://ae01.alicdn.com/kf/H3581d2df939f4c3182b1d4b9c2a47bdaO.png";
+export const DEFAULT_OG_IMAGE = "/favicon/generated/logo-512.png";
 
 const sanitizeOgSlug = (slug: string) =>
     String(slug ?? "")

@@ -8,6 +8,8 @@ import { ogImageFilename } from "../og/paths";
 import { renderPng } from "../og/resvg";
 import { renderOgSvg } from "../og/template";
 
+export const OG_PNG_SCALE = 1;
+
 const formatDate = (value?: Date | string) => {
   if (value instanceof Date && Number.isFinite(value.getTime())) {
     return value.toISOString().slice(0, 10);
@@ -109,7 +111,7 @@ export const emitOgImages = async ({
       });
       const svgDuration = performance.now() - svgStart;
       const pngStart = performance.now();
-      const png = await renderPng(svg, { scale: 1.5 });
+      const png = await renderPng(svg, { scale: OG_PNG_SCALE });
       const pngDuration = performance.now() - pngStart;
       await fs.writeFile(path.join(outDir, ogImageFilename(slug)), png);
       console.log(

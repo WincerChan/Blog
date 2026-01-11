@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { DEFAULT_OG_IMAGE, resolveOgImagePath } from "../src/site/seo/og";
+import { OG_PNG_SCALE } from "../tools/velite/emit/ogImages";
 
 describe("resolveOgImagePath", () => {
   test("ignores cover for post pages", () => {
@@ -24,5 +25,9 @@ describe("resolveOgImagePath", () => {
 
   test("falls back for non-post pages without cover", () => {
     expect(resolveOgImagePath("/about/", "")).toBe(DEFAULT_OG_IMAGE);
+  });
+
+  test("uses 1x scale for og png generation", () => {
+    expect(OG_PNG_SCALE).toBe(1.5);
   });
 });
