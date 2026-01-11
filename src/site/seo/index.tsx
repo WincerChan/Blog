@@ -35,7 +35,7 @@ const postLDJSON = (params: HeadParams) => {
             "name": __SITE_CONF.title,
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://ae01.alicdn.com/kf/H3581d2df939f4c3182b1d4b9c2a47bdaO.png"
+                "url": new URL("/favicon/generated/logo-512.png", __SITE_CONF.baseURL).toString()
             }
         },
         "headline": params.title,
