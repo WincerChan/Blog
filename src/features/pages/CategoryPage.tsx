@@ -14,11 +14,13 @@ type TaxoLayoutProps = {
 }
 
 const constructHeadParams = (term: string, basePath: string, pages: PostListItem[]) => {
+    const totalCount = pages.length;
     return {
         title: `${term}`,
         date: pages[0]?.date ?? new Date().toDateString(),
         keywords: [term],
         pageURL: `${basePath}/${term}/`,
+        description: `分类 · ${term}，共 ${totalCount} 篇文章`,
     }
 }
 
