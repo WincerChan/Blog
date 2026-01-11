@@ -3,6 +3,7 @@ import { useHead } from "@solidjs/meta";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
 import { HeadParams, HeadParamsInput, resolveHeadParams } from "./types";
+import { resolveOgImageUrl } from "./og";
 
 import katexCssHref from "katex/dist/katex.min.css?url";
 
@@ -28,13 +29,13 @@ const postLDJSON = (params: HeadParams) => {
         },
         "datePublished": params.date,
         "dateModified": params.updated,
-        "image": params.cover,
+        "image": resolveOgImageUrl(params),
         "publisher": {
             "@type": "Organization",
             "name": __SITE_CONF.title,
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://ae01.alicdn.com/kf/H3581d2df939f4c3182b1d4b9c2a47bdaO.png"
+                "url": new URL("/favicon/generated/logo-512.png", __SITE_CONF.baseURL).toString()
             }
         },
         "headline": params.title,
