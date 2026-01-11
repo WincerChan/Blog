@@ -105,6 +105,8 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     site,
     publicDir,
     posts: renderablePosts,
+    pages: renderablePages,
+    publishedPosts,
     repoRoot,
   });
   console.timeEnd("velite:emit:og-images");

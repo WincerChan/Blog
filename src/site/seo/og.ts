@@ -21,6 +21,12 @@ const safeUrl = (value: string) => {
     }
 };
 
+const resolvePageOgSlug = (pathname: string) => {
+    if (pathname === "/") return "page/index";
+    const trimmed = pathname.replace(/^\/+|\/+$/g, "");
+    return trimmed ? `page/${trimmed}` : "page/index";
+};
+
 export const resolveOgImagePath = (pageURL: string, cover?: string) => {
     const url = safeUrl(pageURL || "/");
     const normalized = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
@@ -29,8 +35,8 @@ export const resolveOgImagePath = (pageURL: string, cover?: string) => {
         const slug = sanitizeOgSlug(match[1]);
         return slug ? `/og/${slug}.png` : DEFAULT_OG_IMAGE;
     }
-    const coverValue = String(cover ?? "").trim();
-    return coverValue || DEFAULT_OG_IMAGE;
+    const pageSlug = sanitizeOgSlug(resolvePageOgSlug(normalized));
+    return pageSlug ? `/og/${pageSlug}.png` : DEFAULT_OG_IMAGE;
 };
 
 export const resolveOgImageUrl = (params: Pick<HeadParams, "pageURL" | "cover">) =>

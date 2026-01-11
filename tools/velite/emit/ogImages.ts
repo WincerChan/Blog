@@ -68,6 +68,18 @@ const clearOutDir = async (targetDir: string) => {
   await fs.mkdir(targetDir, { recursive: true });
 };
 
+const resolveOgSlugForPath = (value: string, baseURL: string) => {
+  try {
+    const url = new URL(value || "/", baseURL);
+    const normalized = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+    if (normalized === "/") return "page/index";
+    const trimmed = normalized.replace(/^\/+|\/+$/g, "");
+    return trimmed ? `page/${trimmed}` : "page/index";
+  } catch {
+    return "page/index";
+  }
+};
+
 const resolveConcurrency = () => {
   const raw = Number.parseInt(
     process.env.OG_RENDER_CONCURRENCY ?? String(DEFAULT_OG_RENDER_CONCURRENCY),
@@ -98,15 +110,29 @@ const runWithConcurrency = async <T,>(
   await Promise.all(executing);
 };
 
+type OgTarget = {
+  label: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  date?: Date | string;
+  lang?: string;
+  showDate?: boolean;
+};
+
 export const emitOgImages = async ({
   site,
   publicDir,
   posts,
+  pages,
+  publishedPosts,
   repoRoot,
 }: {
   site: SiteConf;
   publicDir: string;
   posts: any[];
+  pages: any[];
+  publishedPosts: any[];
   repoRoot: string;
 }) => {
   const outDir = path.join(publicDir, "og");
@@ -117,27 +143,112 @@ export const emitOgImages = async ({
   const siteName = resolveSiteName(site);
   const siteHost = resolveSiteHost(site);
 
-  const ogPosts = posts.filter((post) => post?.draft !== true);
+  const targets: OgTarget[] = [];
+  const slugSet = new Set<string>();
+  const baseURL = site.baseURL || "https://example.com";
 
-  await runWithConcurrency(ogPosts, concurrency, async (post) => {
+  const pushTarget = (target: OgTarget) => {
+    if (!target.slug || slugSet.has(target.slug)) return;
+    slugSet.add(target.slug);
+    targets.push(target);
+  };
+
+  for (const post of posts.filter((post) => post?.draft !== true)) {
     const slug = String(post.slug ?? "").trim();
-    if (!slug) return;
+    if (!slug) continue;
     const title = String(post.title ?? "").trim() || "Untitled";
     const subtitle = resolveSubtitle(post);
-    const date = formatDate(post.dateObj ?? post.date);
-    const titleFontFamily = resolveTitleFontFamily(post, title);
-    const subtitleFontFamily = resolveSubtitleFontFamily(post, subtitle);
+    pushTarget({
+      label: slug,
+      slug,
+      title,
+      subtitle,
+      date: post.dateObj ?? post.date,
+      lang: post.lang,
+      showDate: true,
+    });
+  }
+
+  for (const page of pages.filter((page) => page?.draft !== true)) {
+    const pageUrl = String(page.url ?? `/${String(page.slug ?? "").trim()}/`);
+    const slug = resolveOgSlugForPath(pageUrl, baseURL);
+    const title = String(page.title ?? "").trim() || "Untitled";
+    const subtitle = resolveSubtitle(page);
+    pushTarget({
+      label: pageUrl,
+      slug,
+      title,
+      subtitle,
+      date: page.dateObj ?? page.date,
+      lang: page.lang,
+      showDate: true,
+    });
+  }
+
+  const categoryStats = new Map<string, { count: number; latest?: Date }>();
+  for (const post of publishedPosts) {
+    const category = String(post?.category ?? "").trim();
+    if (!category) continue;
+    const current = categoryStats.get(category) ?? { count: 0, latest: undefined };
+    current.count += 1;
+    const dateValue = post?.dateObj ?? post?.date;
+    const dateObj =
+      dateValue instanceof Date ? dateValue : parseDateLikeHugo(String(dateValue ?? ""));
+    if (Number.isFinite(dateObj.getTime())) {
+      if (!current.latest || dateObj.getTime() > current.latest.getTime()) {
+        current.latest = dateObj;
+      }
+    }
+    categoryStats.set(category, current);
+  }
+
+  for (const [category, stats] of categoryStats.entries()) {
+    const pageUrl = `/category/${category}/`;
+    const slug = resolveOgSlugForPath(pageUrl, baseURL);
+    pushTarget({
+      label: pageUrl,
+      slug,
+      title: `Category · ${category}`,
+      subtitle: `Total ${stats.count} posts`,
+      date: stats.latest,
+      showDate: false,
+    });
+  }
+
+  pushTarget({
+    label: "/",
+    slug: resolveOgSlugForPath("/", baseURL),
+    title: String(site.title ?? "").trim() || "Blog",
+    subtitle: String(site.description ?? "").trim(),
+    showDate: false,
+  });
+
+  pushTarget({
+    label: "/404/",
+    slug: resolveOgSlugForPath("/404/", baseURL),
+    title: "404 Not Found",
+    subtitle: "",
+    showDate: false,
+  });
+
+  await runWithConcurrency(targets, concurrency, async (target) => {
+    const date = formatDate(target.date);
+    const titleFontFamily = resolveTitleFontFamily({ lang: target.lang }, target.title);
+    const subtitleFontFamily = resolveSubtitleFontFamily(
+      { lang: target.lang },
+      target.subtitle
+    );
 
     try {
       const renderSvg = async () => {
         const svgStart = performance.now();
         const svg = await renderOgSvg({
-          title,
-          subtitle,
+          title: target.title,
+          subtitle: target.subtitle,
           date,
           siteName,
           siteHost,
-          showDate: true,
+          showDate: target.showDate ?? true,
           titleFontFamily,
           subtitleFontFamily,
           fonts,
@@ -155,13 +266,13 @@ export const emitOgImages = async ({
 
       const { svg, svgDuration } = await renderSvg();
       const { png, pngDuration } = await renderPngWithTiming(svg);
-      await fs.writeFile(path.join(outDir, ogImageFilename(slug)), png);
+      await fs.writeFile(path.join(outDir, ogImageFilename(target.slug)), png);
       console.log(
-        `[velite] og-image ${slug}: satori ${svgDuration.toFixed(1)}ms resvg ${pngDuration.toFixed(1)}ms`
+        `[velite] og-image ${target.label}: satori ${svgDuration.toFixed(1)}ms resvg ${pngDuration.toFixed(1)}ms`
       );
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      throw new Error(`[velite] OG image failed for "${slug}": ${message}`);
+      throw new Error(`[velite] OG image failed for "${target.label}": ${message}`);
     }
   });
 };
