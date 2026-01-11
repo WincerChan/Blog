@@ -43,9 +43,21 @@ type EmitPublicDataOptions = {
   clear?: boolean;
 };
 
+const readFileIfExists = async (filepath: string) => {
+  try {
+    return await fs.readFile(filepath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException)?.code === "ENOENT") return null;
+    throw error;
+  }
+};
+
 const writeJson = async (filepath: string, data: unknown) => {
+  const next = JSON.stringify(data);
+  const prev = await readFileIfExists(filepath);
+  if (prev === next) return;
   await fs.mkdir(path.dirname(filepath), { recursive: true });
-  await fs.writeFile(filepath, JSON.stringify(data), "utf8");
+  await fs.writeFile(filepath, next, "utf8");
 };
 
 const clearOutDir = async (targetDir: string) => {
