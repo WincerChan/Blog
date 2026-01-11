@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { DEFAULT_OG_IMAGE, resolveOgImagePath } from "../src/site/seo/og";
+import { resolveOgImagePath } from "../src/site/seo/og";
 import { OG_PNG_SCALE } from "../tools/velite/emit/ogImages";
 
 describe("resolveOgImagePath", () => {
@@ -17,17 +17,21 @@ describe("resolveOgImagePath", () => {
     expect(resolveOgImagePath("/posts/foo/bar/", "")).toBe("/og/foo_bar.png");
   });
 
-  test("uses cover for non-post pages", () => {
+  test("ignores cover for non-post pages", () => {
     expect(resolveOgImagePath("/about/", "https://example.com/cover.png")).toBe(
-      "https://example.com/cover.png",
+      "/og/page_about.png",
     );
   });
 
-  test("falls back for non-post pages without cover", () => {
-    expect(resolveOgImagePath("/about/", "")).toBe(DEFAULT_OG_IMAGE);
+  test("builds og path for non-post pages", () => {
+    expect(resolveOgImagePath("/about/", "")).toBe("/og/page_about.png");
   });
 
-  test("uses 1x scale for og png generation", () => {
+  test("builds og path for home page", () => {
+    expect(resolveOgImagePath("/", "")).toBe("/og/page_index.png");
+  });
+
+  test("uses configured scale for og png generation", () => {
     expect(OG_PNG_SCALE).toBe(1.5);
   });
 });
