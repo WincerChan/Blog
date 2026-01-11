@@ -11,6 +11,32 @@ import { emitValidPaths } from "./emit/validPaths";
 import { emitOgImages } from "./emit/ogImages";
 import { reportMarkdownTiming } from "./markdown";
 
+const parseEnvFlag = (value?: string) => {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (["1", "true", "yes", "on"].includes(normalized)) return true;
+  if (["0", "false", "no", "off"].includes(normalized)) return false;
+  return undefined;
+};
+
+const shouldEmitOgImages = () => {
+  const override = parseEnvFlag(process.env.OG_RENDER_ENABLED);
+  if (override !== undefined) return override;
+  return process.env.VELITE_WATCH !== "1";
+};
+
+const shouldEmitSitemaps = () => {
+  const override = parseEnvFlag(process.env.SITEMAP_ENABLED);
+  if (override !== undefined) return override;
+  return process.env.VELITE_WATCH !== "1";
+};
+
+const shouldClearPublicData = () => {
+  const override = parseEnvFlag(process.env.PUBLIC_DATA_CLEAR);
+  if (override !== undefined) return override;
+  return process.env.VELITE_WATCH !== "1";
+};
+
 const assertValidDate = (label: string, value: string | undefined, slug: string) => {
   const parsed = parseDateLikeHugo(value);
   if (!Number.isFinite(parsed.getTime())) {
@@ -69,13 +95,17 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const renderablePages = [...pages].filter((p) => p.draft !== true);
 
   console.time("velite:emit:sitemaps");
-  await emitSitemaps({
-    site,
-    publicDir,
-    renderablePosts,
-    renderablePages,
-    publishedPosts,
-  });
+  if (shouldEmitSitemaps()) {
+    await emitSitemaps({
+      site,
+      publicDir,
+      renderablePosts,
+      renderablePages,
+      publishedPosts,
+    });
+  } else {
+    console.log("[velite] skip sitemaps generation (watch mode)");
+  }
   console.timeEnd("velite:emit:sitemaps");
 
   console.time("velite:emit:atom");
@@ -101,14 +131,18 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   await emitPublicAssets({ site, publicDir });
   console.timeEnd("velite:emit:public-assets");
   console.time("velite:emit:og-images");
-  await emitOgImages({
-    site,
-    publicDir,
-    posts: renderablePosts,
-    pages: renderablePages,
-    publishedPosts,
-    repoRoot,
-  });
+  if (shouldEmitOgImages()) {
+    await emitOgImages({
+      site,
+      publicDir,
+      posts: renderablePosts,
+      pages: renderablePages,
+      publishedPosts,
+      repoRoot,
+    });
+  } else {
+    console.log("[velite] skip og-images generation (watch mode)");
+  }
   console.timeEnd("velite:emit:og-images");
   console.time("velite:emit:public-data");
   await emitPublicData({
@@ -116,6 +150,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     posts,
     pages,
     friends: (data as any).friends ?? [],
+    clear: shouldClearPublicData(),
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");

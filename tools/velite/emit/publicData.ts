@@ -40,6 +40,7 @@ type EmitPublicDataOptions = {
   posts: any[];
   pages: any[];
   friends?: any[];
+  clear?: boolean;
 };
 
 const writeJson = async (filepath: string, data: unknown) => {
@@ -132,11 +133,16 @@ export const emitPublicData = async ({
   posts,
   pages,
   friends = [],
+  clear = true,
 }: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
-  console.time("velite:emit:public-data:clear");
-  await clearOutDir(outDir);
-  console.timeEnd("velite:emit:public-data:clear");
+  if (clear) {
+    console.time("velite:emit:public-data:clear");
+    await clearOutDir(outDir);
+    console.timeEnd("velite:emit:public-data:clear");
+  } else {
+    console.log("[velite] skip public-data clear (watch mode)");
+  }
 
   console.time("velite:emit:public-data:collect");
   const visPosts = visiblePosts(posts);
