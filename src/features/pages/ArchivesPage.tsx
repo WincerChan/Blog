@@ -30,10 +30,10 @@ const Archives = ({ page }) => {
                     {(year) => (
                         <section
                             id={`year-${year}`}
-                            class="archives-year mt-10 first:mt-0 scroll-mt-16"
+                            class="archives-year mt-10 first:mt-0 scroll-mt-14 md:scroll-mt-16"
                         >
-                            <div class="sticky top-16 z-10 flex items-center justify-between gap-4 border-b border-[var(--c-border)] bg-[var(--c-bg)] py-3">
-                                {/* Sticky offset matches header height (h-16). */}
+                            <div class="sticky top-14 md:top-16 z-10 flex items-center justify-between gap-4 border-b border-[var(--c-border)] bg-[var(--c-bg)] py-3">
+                                {/* Sticky offset matches header height (h-14 mobile, h-16 desktop). */}
                                 <h2 class="text-3xl font-semibold text-[var(--c-text)] font-mono">
                                     {year}
                                 </h2>

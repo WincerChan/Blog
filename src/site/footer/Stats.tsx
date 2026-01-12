@@ -19,19 +19,19 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
 
     return (
         <div>
-            <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
+            <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)] font-semibold">
                 {LL && LL().footer.S}
             </label>
-            <div class="space-y-2 mt-2 text-sm leading-relaxed">
+            <div class="flex flex-col mt-3 gap-2 text-sm leading-relaxed text-[var(--c-text-muted)]">
                 <For each={elems()}>
                     {(item, idx) => (
-                        <p class="flex items-center gap-1">
-                            <span class="text-[var(--c-text-subtle)]">
+                        <div class="inline-flex items-center gap-1">
+                            <span class="text-[var(--c-text-muted)]">
                                 {LL && LL().footer.STATS[idx() as 0 | 1 | 2 | 3]()}
                             </span>
                             <IconPointFilled width={12} height={12} class="text-[var(--c-text-subtle)]" />
                             <span class="text-[var(--c-text)] font-medium tabular-nums">{item}</span>
-                        </p>
+                        </div>
                     )}
                 </For>
             </div>

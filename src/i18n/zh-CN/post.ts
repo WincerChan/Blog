@@ -6,6 +6,7 @@ export default {
         "许可协议"
     ],
     RELATES: "相关文章",
+    COMMENTS: "评论",
     NEWER: "较新",
     OLDER: "更早",
     EXPIRED_NOTIFY: "本文最近一次更新于 {date: string} 前，其中的内容很可能已经有所发展或是发生改变。",

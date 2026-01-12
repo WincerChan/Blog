@@ -34,9 +34,7 @@ const LatestBlog = ({ blog }: BlogProps) => {
                             <span class="latest-readmore inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] transition-colors hover:text-[var(--c-link)]">
                                 <span class="peer">继续阅读</span>
                                 <IconArrowRight
-                                    width={14}
-                                    height={14}
-                                    class="latest-readmore-arrow transition-transform hover:translate-x-1 peer-hover:translate-x-1"
+                                    class="latest-readmore-arrow h-4 w-4 transition-transform hover:translate-x-1 peer-hover:translate-x-1"
                                 />
                             </span>
                         </div>

@@ -124,7 +124,9 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
         <div ref={self!} id="comments" class="pt-8">
             <Show when={visible()}>
                 <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-xl md:text-2xl font-medium">评论</h3>
+                    <h3 class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">
+                        {LL && LL().post.COMMENTS}
+                    </h3>
                     <Show when={!resource.loading && resource()}>
                         {(payload) => (
                             <Show

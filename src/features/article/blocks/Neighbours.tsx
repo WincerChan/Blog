@@ -13,14 +13,14 @@ const Neighbours = ({
 }) => {
     const { prev, next } = neighbours ?? {};
     return (
-        <div class="mt-8 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="mt-12 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             {next && (
                 <a
                     href={next.slug}
                     class="group inline-flex flex-col items-start gap-1 text-[var(--c-text)]"
                 >
                     <span class="inline-flex items-center gap-2 text-sm text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">
-                        <IconArrowLeft class="shrink-0 transition-transform group-hover:-translate-x-1" />
+                        <IconArrowLeft class="h-4 w-4 shrink-0 transition-transform group-hover:-translate-x-1" />
                         {LL && LL().post.NEWER}
                     </span>
                     <span class="text-base md:text-lg font-medium">
@@ -35,7 +35,7 @@ const Neighbours = ({
                 >
                     <span class="inline-flex items-center gap-2 text-sm text-[var(--c-text-subtle)] transition-colors group-hover:text-[var(--c-link)]">
                         {LL && LL().post.OLDER}
-                        <IconArrowRight class="shrink-0 transition-transform group-hover:translate-x-1" />
+                        <IconArrowRight class="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
                     </span>
                     <span class="text-base md:text-lg font-medium">
                         {prev.title}
