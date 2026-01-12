@@ -108,6 +108,10 @@ type RootTranslation = {
 		 */
 		RELATES: string
 		/**
+		 * C​o​m​m​e​n​t​s
+		 */
+		COMMENTS: string
+		/**
 		 * N​e​w​e​r
 		 */
 		NEWER: string
@@ -294,6 +298,10 @@ export type TranslationFunctions = {
 		 * Relates
 		 */
 		RELATES: () => LocalizedString
+		/**
+		 * Comments
+		 */
+		COMMENTS: () => LocalizedString
 		/**
 		 * Newer
 		 */

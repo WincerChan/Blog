@@ -9,10 +9,10 @@ const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Transla
     return (
         <Show when={visibleRelates().length}>
             <div class="mt-8">
-                <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
+                <label class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">
                     {LL && LL().post.RELATES}
                 </label>
-                <ol class="mt-3 space-y-3">
+                <ol class="mt-4 space-y-4">
                     <For each={visibleRelates()}>
                         {(post) => (
                             <li>

@@ -13,7 +13,7 @@ const Neighbours = ({
 }) => {
     const { prev, next } = neighbours ?? {};
     return (
-        <div class="mt-8 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="mt-12 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             {next && (
                 <a
                     href={next.slug}
