@@ -22,14 +22,14 @@ const Home = () => {
                 {(first) => <LatestBlog blog={first() as any} />}
             </Show>
             <div class="mt-8 mb-4 flex items-end justify-between gap-4">
-                <h3 class="text-base font-medium text-[var(--c-text-muted)]">近期文章</h3>
+                <h3 class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">近期文章</h3>
                 <a
                     link={true}
                     class="group inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] hover:text-[var(--c-link)] transition-colors"
                     href="/archives/"
                 >
                     查看更多文章
-                    <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
+                    <IconArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
             </div>
             <OtherBlogs posts={() => recentPosts().slice(1) as any} description={null} />

@@ -32,7 +32,7 @@ const Archives = () => {
                     href={nextYear ? `/archives/#year-${nextYear}` : "/archives/"}
                 >
                     更多年份
-                    <IconArrowRight width={14} height={14} class="transition-transform group-hover:translate-x-1" />
+                    <IconArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
             </div>
         </div>
