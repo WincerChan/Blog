@@ -6,10 +6,10 @@ const Category = () => {
     const { LL } = useI18nContext()
     return (
         <div>
-            <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
+            <label class="text-sm uppercase tracking-wide text-[var(--c-text)] font-medium">
                 {LL && LL().footer.C()}
             </label>
-            <div class="flex flex-col mt-2 gap-2 text-sm leading-relaxed">
+            <div class="flex flex-col mt-3 gap-2 text-sm leading-relaxed">
                 <For each={__CONTENT_TOTAL_CATEGORIES as any}>
                     {(cate) => (
                         <a

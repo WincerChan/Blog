@@ -11,10 +11,10 @@ const Archives = () => {
     const nextYear = years[5]?.[0];
     return (
         <div>
-            <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
+            <label class="text-sm uppercase tracking-wide text-[var(--c-text)] font-medium">
                 {LL && LL().footer.A()}
             </label>
-            <div class="flex flex-col mt-2 gap-2 text-sm leading-relaxed">
+            <div class="flex flex-col mt-3 gap-2 text-sm leading-relaxed">
                 {displayedYears.map((val) => (
                     <a
                         class="group inline-flex items-center gap-1 text-[var(--c-text-muted)] transition-colors"
