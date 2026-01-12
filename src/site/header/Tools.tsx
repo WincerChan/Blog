@@ -6,7 +6,7 @@ import { ThemeSwitcher } from "~/features/theme"
 const Tools = () => {
     const { locale } = useI18nContext()
     return (
-        <div class="flex items-center gap-6 border-l border-[var(--c-border)] pl-4">
+        <div class="flex items-center gap-7 border-l border-[var(--c-border)] pl-4">
             <a
                 href={`/search${locale() == "zh-CN" ? "" : "-en"}/`}
                 title="Search"
