@@ -6,7 +6,9 @@ import rehypeShiki from "@shikijs/rehype";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
+import remarkParse from "remark-parse";
 import { bundledLanguages, getSingletonHighlighter } from "shiki";
+import { unified } from "unified";
 import { isCodeBlockWrapper, wrapCodeBlock } from "./codeBlocks";
 import { shikiTheme, shikiThemeList } from "./shikiThemes";
 
@@ -181,6 +183,30 @@ export const reportMarkdownTiming = () => {
 const normalizeWhitespace = (value: string) =>
   String(value ?? "").replace(/\s+/g, " ").trim();
 
+const stripHtmlTags = (value: string) => String(value ?? "").replace(/<[^>]*>/g, " ");
+
+type PlainOptions = {
+  stopAtMore?: boolean;
+};
+
+const joinPlainParts = (parts: string[]) => {
+  let out = "";
+  for (const raw of parts) {
+    const part = String(raw ?? "").trim();
+    if (!part) continue;
+    if (!out) {
+      out = part;
+      continue;
+    }
+    if (/^[.,;:!?)]/.test(part)) {
+      out += part;
+      continue;
+    }
+    out += ` ${part}`;
+  }
+  return out;
+};
+
 const countWords = (input: string) => {
   const text = input.normalize("NFKC");
   const han = (text.match(/\p{Script=Han}/gu) || []).length;
@@ -347,26 +373,57 @@ const rehypeCodeBlockWrapper = () => {
 
 const getMetaFromZodCtx = (ctx: unknown) => (ctx as any)?.meta as any;
 
+const plainFromMdast = (mdast: any, options: PlainOptions = {}) => {
+  if (!mdast) return "";
+  const stopAtMore = Boolean(options.stopAtMore);
+  const parts: string[] = [];
+  let done = false;
+  const walk = (node: any) => {
+    if (!node || done) return;
+    if (node.type === "html") {
+      const raw = String(node.value ?? "");
+      if (MORE_MARKER_RE.test(raw)) {
+        if (stopAtMore) done = true;
+        return;
+      }
+      const stripped = stripHtmlTags(raw);
+      if (stripped) parts.push(stripped);
+    }
+    if (node.type === "text" || node.type === "inlineCode" || node.type === "code") {
+      parts.push(String(node.value ?? ""));
+    }
+    if (node.type === "image" && node.alt) {
+      parts.push(String(node.alt ?? ""));
+    }
+    const children = node.children;
+    if (Array.isArray(children)) {
+      for (const child of children) walk(child);
+    }
+  };
+  walk(mdast);
+  return normalizeWhitespace(joinPlainParts(parts));
+};
+
 const summaryFromMeta = (meta: any, maxLen: number) => {
   const mdast = meta?.mdast;
   if (mdast) {
-    const state = { parts: [] as string[], done: false };
-    const collect = (node: any) => {
-      if (!node || state.done) return;
-      if (node.type === "html" && MORE_MARKER_RE.test(String(node.value ?? ""))) {
-        state.done = true;
-        return;
-      }
-      if (node.type === "text") state.parts.push(String(node.value ?? ""));
-      if (node.type === "inlineCode") state.parts.push(String(node.value ?? ""));
-      if (node.type === "code") state.parts.push(String(node.value ?? ""));
-      const children = node.children;
-      if (Array.isArray(children)) for (const c of children) collect(c);
-    };
-    collect(mdast);
-    if (state.done) return normalizeWhitespace(state.parts.join(" ")).slice(0, maxLen);
+    const summary = plainFromMdast(mdast, { stopAtMore: true });
+    if (summary) return summary.slice(0, maxLen);
   }
-  return normalizeWhitespace(String(meta?.plain ?? "")).slice(0, maxLen);
+  const source = String(meta?.content ?? meta?.plain ?? "");
+  if (source) return plainFromMarkdown(source, { stopAtMore: true }).slice(0, maxLen);
+  return "";
+};
+
+const plainFromMarkdown = (content: string, options: PlainOptions = {}) => {
+  const source = String(content ?? "");
+  if (!source.trim()) return "";
+  try {
+    const tree = unified().use(remarkParse).parse(source);
+    return plainFromMdast(tree, options);
+  } catch {
+    return normalizeWhitespace(source);
+  }
 };
 
 export const md = {
@@ -394,6 +451,7 @@ prewarmShiki();
 export const transforms = {
   tocToHtml,
   summaryFromMeta,
+  plainFromMarkdown,
   getMetaFromZodCtx,
   countWords,
   normalizeWhitespace,
