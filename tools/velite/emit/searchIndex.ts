@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { postUrl } from "../shared";
+import { transforms } from "../markdown";
 
 const toIsoString = (value: unknown) => {
   if (value instanceof Date) return value.toISOString();
@@ -22,6 +23,7 @@ export const emitSearchIndex = async ({
     const slug = String(post.slug ?? "");
     const isEncrypted = !!post.encrypt_pwd;
     const rawContent = String(post.rawContent ?? "");
+    const plainContent = transforms.plainFromMarkdown(rawContent);
     const encryptedNotice = "抱歉，本文已加密，请至网站输入密码后阅读。";
     return {
       title: String(post.title ?? ""),
@@ -31,7 +33,7 @@ export const emitSearchIndex = async ({
       updated: toIsoString(post.updatedObj ?? post.updated ?? post.date),
       category: String(post.category ?? ""),
       tags: normalizeTags(post.tags),
-      content: isEncrypted ? encryptedNotice : rawContent,
+      content: isEncrypted ? encryptedNotice : plainContent,
     };
   });
 

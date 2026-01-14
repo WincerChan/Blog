@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { transforms } from "../tools/velite/markdown";
 
-const { summaryFromMeta } = transforms;
+const { summaryFromMeta, plainFromMarkdown } = transforms;
 
 describe("summaryFromMeta", () => {
   test("stops at <!-- more --> marker with spaces", () => {
@@ -22,5 +22,30 @@ describe("summaryFromMeta", () => {
   test("falls back to plain when mdast is missing", () => {
     const meta = { plain: "Plain summary" };
     expect(summaryFromMeta(meta, 200)).toBe("Plain summary");
+  });
+});
+
+describe("plainFromMarkdown", () => {
+  test("strips markdown and keeps readable text", () => {
+    const input = [
+      "# Title",
+      "",
+      "Hello **world** and `code`.",
+      "",
+      "![Alt text](https://example.com/img.png)",
+      "",
+      "<span>Raw <b>HTML</b></span>",
+      "",
+      "<!-- more -->",
+      "",
+      "Next line.",
+      "",
+      "```js",
+      "const x = 1;",
+      "```",
+    ].join("\n");
+    expect(plainFromMarkdown(input)).toBe(
+      "Title Hello world and code. Alt text Raw HTML Next line. const x = 1;",
+    );
   });
 });

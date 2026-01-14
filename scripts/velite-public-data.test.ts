@@ -41,7 +41,13 @@ test("emitPublicData omits legacy comments markers", async () => {
       },
     ];
 
-    await emitPublicData({ publicDir: tempDir, posts, pages, friends: [] });
+    await emitPublicData({
+      publicDir: tempDir,
+      posts,
+      pages,
+      friends: [],
+      tokenSecret: "test-secret",
+    });
 
     const postPath = path.join(tempDir, "_data", "posts", "demo.json");
     const postData = JSON.parse(await fs.readFile(postPath, "utf8"));
