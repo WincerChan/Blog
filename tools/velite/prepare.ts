@@ -96,7 +96,11 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   console.timeEnd("velite:emit:atom");
   const searchPosts = renderablePosts;
   console.time("velite:emit:search-index");
-  await emitSearchIndex({ publicDir, posts: searchPosts });
+  if (isCleanBuild) {
+    await emitSearchIndex({ publicDir, posts: searchPosts });
+  } else {
+    console.log("[velite] skip search-index generation (clean disabled)");
+  }
   console.timeEnd("velite:emit:search-index");
 
   console.time("velite:strip:raw");
