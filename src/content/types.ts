@@ -15,6 +15,7 @@ export type VelitePost = {
     toc?: string;
     summary?: string;
     words?: number;
+    inkstoneToken?: string;
 };
 
 export type VelitePage = {
@@ -30,6 +31,7 @@ export type VelitePage = {
     html?: string;
     toc?: string;
     summary?: string;
+    inkstoneToken?: string;
 };
 
 export type FriendLink = {

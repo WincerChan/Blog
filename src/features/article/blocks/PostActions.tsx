@@ -6,7 +6,7 @@ import { useI18nContext } from "~/i18n/i18n-solid";
 import Like from "~/features/article/sidebar/social/Like";
 import { writeClipboardText } from "~/utils/clipboard";
 
-const PostActions = ({ pageURL }: { pageURL: string }) => {
+const PostActions = ({ pageURL, inkstoneToken }: { pageURL: string; inkstoneToken?: string }) => {
     const { LL } = useI18nContext();
     const buildShareUrl = () =>
         typeof window !== "undefined" ? window.location.href : pageURL;
@@ -27,7 +27,7 @@ const PostActions = ({ pageURL }: { pageURL: string }) => {
     };
     return (
         <div class="mt-10 mb-0 mx-[-1rem] flex items-center justify-between border-y border-dashed border-[var(--c-border)] py-6 px-4 md:mx-0 md:px-0">
-            <Like pageURL={pageURL} />
+            <Like pageURL={pageURL} inkstoneToken={inkstoneToken} />
             <div class="flex items-center gap-4">
                 <span class="text-sm text-[var(--c-text-subtle)]">
                     {LL().sidebar.TOOLS.share.title()}

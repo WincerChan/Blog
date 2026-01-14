@@ -6,6 +6,7 @@ type SimplePage = {
     summary: string;
     slug: string;
     lang?: string;
+    inkstoneToken?: string;
 };
 
 type PageLayoutProps = {
@@ -18,6 +19,7 @@ const constructHeadParams = (page: SimplePage) => {
         title: page.title,
         description: page.summary,
         pageURL: page.slug,
+        inkstoneToken: page.inkstoneToken,
     }
 }
 

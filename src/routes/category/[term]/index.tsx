@@ -16,8 +16,9 @@ export default function CategoryPage() {
     const params = useParams();
     const term = createMemo(() => decodeTerm(params.term));
     const [resource] = createResource(term, getPostsByCategory);
+    const payload = createMemo(() => resource() ?? { items: [], inkstoneToken: "" });
     const posts = createMemo(() =>
-        (resource() ?? []).map((p) => ({
+        payload().items.map((p) => ({
             ...p,
             slug: (p as any).url ?? postUrl(String((p as any).slug)),
         })),
@@ -27,6 +28,7 @@ export default function CategoryPage() {
             rawTaxo={{ term: term(), pages: posts() as any }}
             type="分类"
             basePath="/category"
+            inkstoneToken={payload().inkstoneToken}
         />
     );
 }

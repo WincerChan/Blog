@@ -23,6 +23,7 @@ const constructHeadParams = (blog: ArticleMeta) => {
         cover: blog.cover ?? "",
         updated: blog.updated ?? blog.date,
         hasMath: !!blog.hasMath,
+        inkstoneToken: blog.inkstoneToken,
         lang: blog.lang,
         isTranslation: blog.isTranslation,
         toc: blog.toc,
@@ -80,7 +81,7 @@ const ArticlePage = ({
             <PostMeta blog={blog} lang={locale} LL={LL} />
             {wrapper}
             <Show when={!hideActions}>
-                <PostActions pageURL={blog.slug} />
+                <PostActions pageURL={blog.slug} inkstoneToken={blog.inkstoneToken} />
             </Show>
             <PostExtra
                 rawBlog={blog}

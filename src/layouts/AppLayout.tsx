@@ -9,20 +9,23 @@ interface MainProps {
     children: JSXElement;
     className?: string;
     lang?: Locale;
+    inkstoneToken?: string;
 }
 
-const trackHook = () => {
+const trackHook = (token: () => string | undefined) => {
     const location = useLocation();
-    let prevPath: string | null = null;
+    let lastPath: string | null = null;
+    let lastTrackedPath: string | null = null;
 
     createEffect(() => {
         const nextPath = location.pathname;
+        const nextToken = token();
         if (!nextPath) return;
-        if (prevPath && prevPath !== nextPath) {
-            globalStore.trackEngage(true);
-        }
-        prevPath = nextPath;
-        globalStore.trackPage(nextPath);
+        if (lastPath && lastPath !== nextPath) globalStore.trackEngage(true);
+        lastPath = nextPath;
+        if (!nextToken || lastTrackedPath === nextPath) return;
+        globalStore.trackPage(nextPath, nextToken);
+        lastTrackedPath = nextPath;
     });
 };
 
@@ -39,7 +42,7 @@ const localeHook = (lang: () => Locale | undefined) => {
 
 
 const AppLayout = (props: MainProps) => {
-    trackHook();
+    trackHook(() => props.inkstoneToken);
     localeHook(() => props.lang);
 
     return (

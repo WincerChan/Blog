@@ -5,7 +5,7 @@ import { getInitialTheme, type ThemeValue } from "./theme";
 type GlobalStore = {
     theme: ThemeValue;
     locale: string;
-    trackPage: (pathname?: string) => void;
+    trackPage: (pathname?: string, token?: string) => void;
     trackEngage: (useBeacon?: boolean) => void;
 };
 

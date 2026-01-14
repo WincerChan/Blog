@@ -14,6 +14,7 @@ const formatDateISO = (value: Date | string) => {
 
 const PostMeta = ({ date, category }: PostMetaProps) => {
     const formattedDate = formatDateISO(date);
+    const encodedCategory = category ? encodeURIComponent(category) : "";
     return (
         <div class="flex items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
             <time dateTime={formattedDate}>{formattedDate}</time>
@@ -21,7 +22,7 @@ const PostMeta = ({ date, category }: PostMetaProps) => {
             {category && (
                 <a
                     class="text-[var(--c-text-subtle)] hover:text-[var(--c-link)] hover:underline hover:decoration-[var(--c-link)] hover:decoration-dashed decoration-1 underline-offset-4 transition-colors"
-                    href={`/category/${category}/`}
+                    href={`/category/${encodedCategory}/`}
                 >
                     {category}
                 </a>

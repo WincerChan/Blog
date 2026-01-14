@@ -9,15 +9,21 @@ import IconArrowRight from "~icons/ph/arrow-right";
 
 const Home = () => {
     const [latest] = createResource(() => 5, () => getLatestPosts(5));
+    const latestPayload = createMemo(() => latest() ?? { items: [], inkstoneToken: "" });
     const recentPosts = createMemo(() =>
-        (latest() ?? []).map((p) => ({
+        latestPayload().items.map((p) => ({
             ...p,
             slug: p.url ?? postUrl(String(p.slug)),
         })),
     );
     const date = () => recentPosts()[0]?.date;
+    const headParams = createMemo(() => ({
+        date: date(),
+        pageURL: "/",
+        inkstoneToken: latestPayload().inkstoneToken,
+    }));
     return (
-        <PageLayout headParams={{ date: date() }}>
+        <PageLayout headParams={headParams()}>
             <Show when={recentPosts()[0]}>
                 {(first) => <LatestBlog blog={first() as any} />}
             </Show>

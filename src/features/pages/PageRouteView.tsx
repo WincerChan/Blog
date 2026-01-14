@@ -29,6 +29,7 @@ const toPageProps = (page: any) => ({
     lang: page.lang,
     isTranslation: page.isTranslation,
     content: page.html ?? "",
+    inkstoneToken: page.inkstoneToken,
 });
 
 const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement) => {

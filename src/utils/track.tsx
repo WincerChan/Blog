@@ -21,6 +21,7 @@ const createPageInstanceId = () => {
 
 let currentId: string | null = null;
 let currentPath: string | null = null;
+let currentToken: string | null = null;
 let startedAt = 0;
 let accumulatedMs = 0;
 let hooksReady = false;
@@ -40,26 +41,38 @@ const shouldSendPulse = () => {
     return { ok: true, reason: "" };
 };
 
-const sendPulse = (endpoint: string, payload: Record<string, unknown>, useBeacon = false) => {
+const sendPulse = async (
+    endpoint: string,
+    payload: Record<string, unknown>,
+    options: { useBeacon?: boolean; token: string },
+) => {
     const check = shouldSendPulse();
     if (!check.ok) {
         console.log(`[pulse] skip ${endpoint}: ${check.reason}`);
         return;
     }
-    const url = inkstoneApi(endpoint);
+    const tokenValue = options.token;
+    if (!tokenValue) return;
+    const url = new URL(inkstoneApi(endpoint));
+    url.searchParams.set("inkstone_token", tokenValue);
     const body = JSON.stringify(payload);
+    const useBeacon = Boolean(options.useBeacon);
     if (useBeacon && "sendBeacon" in navigator) {
         const blob = new Blob([body], { type: "text/plain;charset=UTF-8" });
-        const ok = navigator.sendBeacon(url, blob);
+        const ok = navigator.sendBeacon(url.toString(), blob);
         if (ok) return;
     }
-    fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body,
-        credentials: "include",
-        keepalive: true,
-    }).catch(() => undefined);
+    try {
+        await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=UTF-8" },
+            body,
+            credentials: "include",
+            keepalive: true,
+        });
+    } catch {
+        // ignore network errors
+    }
 };
 
 const startTiming = () => {
@@ -72,11 +85,9 @@ const pauseAndSend = (useBeacon = false) => {
     const now = Date.now();
     accumulatedMs += Math.max(0, now - startedAt);
     startedAt = 0;
-    sendPulse(
-        "pulse/engage",
-        { page_instance_id: currentId, duration_ms: accumulatedMs, site: siteName },
-        useBeacon,
-    );
+    const payload = { page_instance_id: currentId, duration_ms: accumulatedMs, site: siteName };
+    if (!currentPath || !currentToken) return;
+    void sendPulse("pulse/engage", payload, { useBeacon, token: currentToken });
 };
 
 const trackEngage = (useBeacon = false) => {
@@ -95,23 +106,24 @@ const ensureHooks = () => {
     });
 };
 
-const trackPage = (pathname?: string) => {
+const trackPage = (pathname?: string, token?: string) => {
     if (!isBrowser) return;
+    if (!token) return;
     ensureHooks();
     const nextPath = normalizePath((pathname ?? window.location.pathname) || "/");
     if (currentPath === nextPath && currentId) return;
     pauseAndSend();
     currentId = createPageInstanceId();
     currentPath = nextPath;
+    currentToken = token;
     accumulatedMs = 0;
     startedAt = document.visibilityState === "visible" ? Date.now() : 0;
     const referrer = document.referrer;
-    sendPulse("pulse/pv", {
+    void sendPulse("pulse/pv", {
         page_instance_id: currentId,
-        path: nextPath,
         site: siteName,
         ...(referrer ? { referrer } : {}),
-    });
+    }, { token });
 };
 
 export { trackEngage, trackPage };

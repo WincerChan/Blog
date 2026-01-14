@@ -49,6 +49,7 @@ export default function PostRoute() {
                     toc: p.toc ?? "",
                     neighbours,
                     hasMath,
+                    inkstoneToken: p.inkstoneToken,
                 };
                 if (isEncrypted) rawBlog.encrypted = true;
                 if (p.lang) rawBlog.lang = p.lang;
