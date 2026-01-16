@@ -208,11 +208,23 @@ const joinPlainParts = (parts: string[]) => {
 };
 
 const countWords = (input: string) => {
-  const text = input.normalize("NFKC");
-  const han = (text.match(/\p{Script=Han}/gu) || []).length;
-  const latinWords = (text.match(/[A-Za-z0-9]+(?:[’'-][A-Za-z0-9]+)*/g) || []).length;
+  const { cjk, latin } = countCjkAndLatin(input);
+  return cjk + latin;
+};
 
-  return han + latinWords;
+const countCjkAndLatin = (input: string) => {
+  const text = String(input ?? "").normalize("NFKC");
+  const cjk = (text.match(/\p{Script=Han}/gu) || []).length;
+  const latin = (text.match(/[A-Za-z0-9]+(?:[’'-][A-Za-z0-9]+)*/g) || []).length;
+  return { cjk, latin };
+};
+
+const splitCjkLatinText = (input: string) => {
+  const text = String(input ?? "").normalize("NFKC");
+  const cjk = (text.match(/\p{Script=Han}/gu) || []).join("");
+  const latinTokens = text.match(/[A-Za-z0-9]+(?:[’'-][A-Za-z0-9]+)*/g) || [];
+  const latin = latinTokens.join(" ");
+  return { cjk, latin };
 };
 
 const tocToHtml = (entries: Array<{ title: string; url: string; items: any[] }>) => {
@@ -453,6 +465,8 @@ export const transforms = {
   summaryFromMeta,
   plainFromMarkdown,
   getMetaFromZodCtx,
+  splitCjkLatinText,
+  countCjkAndLatin,
   countWords,
   normalizeWhitespace,
 };

@@ -23,17 +23,29 @@ export const emitSearchIndex = async ({
     const slug = String(post.slug ?? "");
     const isEncrypted = !!post.encrypt_pwd;
     const rawContent = String(post.rawContent ?? "");
+    const plainTitle = transforms.plainFromMarkdown(String(post.title ?? ""));
+    const plainSubtitle = transforms.plainFromMarkdown(String(post.subtitle ?? ""));
     const plainContent = transforms.plainFromMarkdown(rawContent);
     const encryptedNotice = "抱歉，本文已加密，请至网站输入密码后阅读。";
+    const contentText = isEncrypted ? encryptedNotice : plainContent;
+    const titleSplit = transforms.splitCjkLatinText(plainTitle);
+    const subtitleSplit = transforms.splitCjkLatinText(plainSubtitle);
+    const contentSplit = transforms.splitCjkLatinText(contentText);
     return {
-      title: String(post.title ?? ""),
-      subtitle: String(post.subtitle ?? ""),
+      title: plainTitle,
+      subtitle: plainSubtitle,
       url: postUrl(slug),
       date: toIsoString(post.dateObj ?? post.date),
       updated: toIsoString(post.updatedObj ?? post.updated ?? post.date),
       category: String(post.category ?? ""),
       tags: normalizeTags(post.tags),
-      content: isEncrypted ? encryptedNotice : plainContent,
+      content: contentText,
+      title_cjk: titleSplit.cjk,
+      title_latin: titleSplit.latin,
+      subtitle_cjk: subtitleSplit.cjk,
+      subtitle_latin: subtitleSplit.latin,
+      content_cjk: contentSplit.cjk,
+      content_latin: contentSplit.latin,
     };
   });
 

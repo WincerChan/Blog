@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { transforms } from "../tools/velite/markdown";
 
-const { summaryFromMeta, plainFromMarkdown } = transforms;
+const { summaryFromMeta, plainFromMarkdown, countCjkAndLatin } = transforms;
 
 describe("summaryFromMeta", () => {
   test("stops at <!-- more --> marker with spaces", () => {
@@ -47,5 +47,12 @@ describe("plainFromMarkdown", () => {
     expect(plainFromMarkdown(input)).toBe(
       "Title Hello world and code. Alt text Raw HTML Next line. const x = 1;",
     );
+  });
+});
+
+describe("countCjkAndLatin", () => {
+  test("counts cjk and latin separately", () => {
+    const input = "你好 world 123 朋友";
+    expect(countCjkAndLatin(input)).toEqual({ cjk: 4, latin: 2 });
   });
 });
