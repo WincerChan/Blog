@@ -61,6 +61,13 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
     return (
         <Show keyed when={resolved()}>
             {(params) => {
+                const inkstonePath = (() => {
+                    try {
+                        return new URL(params.pageURL, __SITE_CONF.baseURL).pathname;
+                    } catch {
+                        return String(params.pageURL ?? "");
+                    }
+                })();
                 const jsonLd = () =>
                     params.description !== __SITE_CONF.description
                         ? postLDJSON(params)
@@ -76,6 +83,22 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
                         },
                     },
                     setting: { close: true, escape: false },
+                });
+                useHead({
+                    tag: "meta",
+                    id: "inkstone-token",
+                    props: {
+                        name: "inkstone:token",
+                        content: params.inkstoneToken ?? "",
+                    },
+                });
+                useHead({
+                    tag: "meta",
+                    id: "inkstone-path",
+                    props: {
+                        name: "inkstone:path",
+                        content: inkstonePath,
+                    },
                 });
 
                 return (

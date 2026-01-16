@@ -95,7 +95,11 @@ const contentStatsTotalCategories = categoryCounts;
 const contentStatsPostsByYear = groupByYear(posts);
 const contentStatsPostsByYearDetail = groupByYearDetail(posts);
 
-const navBasePages = pages.filter((x) => !String(x.slug ?? "").includes("search"));
+const navBasePages = pages.filter((x) => {
+  const slug = String(x.slug ?? "");
+  if (slug.includes("search")) return false;
+  return true;
+});
 const pageBySlug = new Map(allPages.map((p) => [String(p.slug ?? ""), p]));
 
 const toLangSlug = (slug: string, target: "en" | "zh") => {

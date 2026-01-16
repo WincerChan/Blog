@@ -16,7 +16,7 @@ type ArticleLayoutProps = {
 const ArticleLayout = (props: ArticleLayoutProps) => {
     const resolved = createMemo(() => resolveHeadParams(props.headParams));
     return (
-        <AppLayout lang={resolved().lang}>
+        <AppLayout lang={resolved().lang} inkstoneToken={resolved().inkstoneToken}>
             <HeadTag headParams={props.headParams} />
             <div class="w-full max-w-7xl mx-auto px-4 md:px-0 md:grid md:grid-cols-[1fr_minmax(0,42rem)_1fr] md:gap-x-8">
                 <ToC toc={resolved().toc ?? ""} slug={resolved().pageURL} />

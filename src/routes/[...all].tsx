@@ -1,7 +1,7 @@
 import { Meta } from "@solidjs/meta";
 import ArticlePage from "~/layouts/ArticlePage";
 
-const page = {
+const fallbackPage = {
     title: "404 Not Found",
     date: new Date().toDateString(),
     updated: new Date().toDateString(),
@@ -20,9 +20,9 @@ export default function NotFoundRoute() {
     return (
         <>
             <Meta charset="utf-8" />
-            <ArticlePage rawBlog={page} relates={[]} hideComment={true}>
+            <ArticlePage rawBlog={fallbackPage} relates={[]} hideComment={true}>
                 <section class="">
-                    <p class="">{page.content}</p>
+                    <p class="">{fallbackPage.content}</p>
                 </section>
             </ArticlePage>
         </>

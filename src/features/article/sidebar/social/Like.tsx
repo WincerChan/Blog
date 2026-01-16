@@ -1,5 +1,4 @@
 import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onCleanup, onMount } from "solid-js";
-import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconHeart from "~icons/ph/heart";
 import IconHeartFill from "~icons/ph/heart-fill";
@@ -7,9 +6,10 @@ import { normalizeKudosPath } from "./kudos";
 
 interface LikeProps {
     pageURL: string;
+    inkstoneToken?: string;
 }
 
-const Like = ({ pageURL }: LikeProps) => {
+const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
     const [liked, setLiked] = createSignal(false)
     const [likes, setLikes] = createSignal(0)
     const [disabled, setDisabled] = createSignal(false)
@@ -18,7 +18,7 @@ const Like = ({ pageURL }: LikeProps) => {
     const fetchKudos = async (targetUrl: string | null) => {
         if (!targetUrl) return null;
         try {
-            const resp = await fetch(targetUrl, { credentials: "include" })
+            const resp = await fetch(targetUrl, { credentials: "include" });
             if (!resp.ok) return null;
             return await resp.json();
         } catch {
@@ -27,12 +27,11 @@ const Like = ({ pageURL }: LikeProps) => {
     }
     const [resource] = createResource(url, fetchKudos)
     const [animate, setAnimate] = createSignal(false)
-    const buildKudosUrl = (path: string) => {
-        const base = inkstoneApi("kudos")
-        const target = new URL(base)
-        target.searchParams.set("path", path)
-        return target.toString()
-    }
+    const buildKudosUrl = (token: string) => {
+        const url = new URL(inkstoneApi("kudos"));
+        url.searchParams.set("inkstone_token", token);
+        return url.toString();
+    };
     let buttonRef: HTMLButtonElement | undefined;
     onMount(() => {
         if (!buttonRef || typeof IntersectionObserver === "undefined") {
@@ -53,18 +52,22 @@ const Like = ({ pageURL }: LikeProps) => {
             setUrl(null);
             return;
         }
+        if (!inkstoneToken) {
+            setUrl(null);
+            return;
+        }
         const slug = normalizeKudosPath(pageURL);
         if (!slug) {
             setUrl(null);
             return;
         }
-        setUrl(buildKudosUrl(slug))
+        setUrl(buildKudosUrl(inkstoneToken));
     })
     const click = async () => {
-        if (!url()) return
+        if (!url() || !inkstoneToken) return
         setDisabled(true)
         try {
-            const resp = await fetch(url(), { method: "PUT", credentials: "include" })
+            const resp = await fetch(url(), { method: "POST", credentials: "include" })
             if (!resp.ok) {
                 setDisabled(false)
                 return

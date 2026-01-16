@@ -11,6 +11,7 @@ export type VelitePostPublic = VelitePost & {
     neighbours?: PostNeighbours;
     relates?: RelatedPost[];
     hasMath?: boolean;
+    inkstoneToken?: string;
 };
 
 type CategoryIndexItem = { title: string; count: number; url?: string };
@@ -39,13 +40,27 @@ const isPromiseLike = (value: unknown): value is PromiseLike<unknown> =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     typeof (value as any).then === "function";
 
+type LatestPostsPayload = {
+    items: VelitePostPublic[];
+    inkstoneToken?: string;
+};
+
+const normalizeLatestPayload = (data: unknown, limit: number): LatestPostsPayload => {
+    if (Array.isArray(data)) return { items: data.slice(0, limit), inkstoneToken: "" };
+    if (!data || typeof data !== "object") return { items: [], inkstoneToken: "" };
+    const raw = data as { items?: unknown; inkstoneToken?: string };
+    const items = Array.isArray(raw.items) ? raw.items.slice(0, limit) : [];
+    return { items, inkstoneToken: raw.inkstoneToken ?? "" };
+};
+
 const getLatestPosts = (limit = 5) => {
-    const data = readPublicJson<VelitePostPublic[]>("/_data/posts/latest.json", []);
+    const data = readPublicJson<LatestPostsPayload | VelitePostPublic[]>(
+        "/_data/posts/latest.json",
+        [],
+    );
     if (isPromiseLike(data))
-        return data.then((d) =>
-            Array.isArray(d) ? d.slice(0, limit) : ([] as VelitePostPublic[]),
-        ) as Promise<VelitePostPublic[]>;
-    return Array.isArray(data) ? data.slice(0, limit) : [];
+        return data.then((d) => normalizeLatestPayload(d, limit)) as Promise<LatestPostsPayload>;
+    return normalizeLatestPayload(data, limit);
 };
 
 const getPostBySlug = (slug: string) => {
@@ -66,15 +81,28 @@ const getPageBySlug = (slug: string) => {
     );
 };
 
+type CategoryPostsPayload = {
+    items: VelitePostPublic[];
+    inkstoneToken?: string;
+};
+
+const normalizeCategoryPayload = (data: unknown): CategoryPostsPayload => {
+    if (Array.isArray(data)) return { items: data, inkstoneToken: "" };
+    if (!data || typeof data !== "object") return { items: [], inkstoneToken: "" };
+    const raw = data as { items?: unknown; inkstoneToken?: string };
+    const items = Array.isArray(raw.items) ? raw.items : [];
+    return { items, inkstoneToken: raw.inkstoneToken ?? "" };
+};
+
 const getPostsByCategory = (category: string) => {
-    if (!category) return [] as VelitePostPublic[];
-    const data = readPublicJson<VelitePostPublic[]>(
+    if (!category) return { items: [], inkstoneToken: "" } as CategoryPostsPayload;
+    const data = readPublicJson<CategoryPostsPayload | VelitePostPublic[]>(
         `/_data/category/${safeEncode(category)}.json`,
         [],
     );
     if (isPromiseLike(data))
-        return data.then((d) => (Array.isArray(d) ? d : [])) as Promise<VelitePostPublic[]>;
-    return Array.isArray(data) ? data : [];
+        return data.then((d) => normalizeCategoryPayload(d)) as Promise<CategoryPostsPayload>;
+    return normalizeCategoryPayload(data);
 };
 
 const getCategoryIndex = async () =>

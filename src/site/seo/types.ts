@@ -10,6 +10,7 @@ export type HeadParams = {
     subtitle: string;
     genre: string;
     hasMath: boolean;
+    inkstoneToken?: string;
     lang?: string;
     isTranslation?: boolean;
     toc?: string;
@@ -31,6 +32,7 @@ export const resolveHeadParams = (input: HeadParamsInput): HeadParams => {
         subtitle: input.subtitle ?? "",
         genre: input.genre ?? "Technology",
         hasMath: input.hasMath ?? false,
+        inkstoneToken: input.inkstoneToken,
         lang: input.lang,
         isTranslation: input.isTranslation,
         toc: input.toc,

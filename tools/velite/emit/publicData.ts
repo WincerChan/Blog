@@ -12,6 +12,7 @@ import {
   visiblePages,
   visiblePosts,
 } from "../shared";
+import { buildInkstoneToken } from "../inkstoneToken";
 
 const ENCRYPTION_VERSION = "v1";
 const PBKDF2_ITERATIONS = 120000;
@@ -41,6 +42,7 @@ type EmitPublicDataOptions = {
   pages: any[];
   friends?: any[];
   clear?: boolean;
+  tokenSecret: string;
 };
 
 const readFileIfExists = async (filepath: string) => {
@@ -65,7 +67,15 @@ const clearOutDir = async (targetDir: string) => {
   await fs.mkdir(targetDir, { recursive: true });
 };
 
-const buildCategoryOutputs = async ({ canon, outDir }: { canon: any[]; outDir: string }) => {
+const buildCategoryOutputs = async ({
+  canon,
+  outDir,
+  tokenSecret,
+}: {
+  canon: any[];
+  outDir: string;
+  tokenSecret: string;
+}) => {
   const categoryIndex: Array<{ title: string; count: number; url: string }> = [];
   const byCategory = new Map<string, any[]>();
   for (const p of canon) {
@@ -79,9 +89,13 @@ const buildCategoryOutputs = async ({ canon, outDir }: { canon: any[]; outDir: s
   for (const [title, list] of Array.from(byCategory.entries()).sort(([a], [b]) =>
     a.localeCompare(b),
   )) {
-    const data = byDateDesc(list).map((p) => postMeta(p, { includeSummary: true }));
+    const categoryPath = `/category/${encodeURIComponent(title)}/`;
+    const data = {
+      inkstoneToken: buildInkstoneToken(categoryPath, tokenSecret),
+      items: byDateDesc(list).map((p) => postMeta(p, { includeSummary: true })),
+    };
     await writeJson(path.join(outDir, "category", `${safePathSegment(title)}.json`), data);
-    categoryIndex.push({ title, count: list.length, url: `/category/${encodeURIComponent(title)}/` });
+    categoryIndex.push({ title, count: list.length, url: categoryPath });
   }
   await writeJson(path.join(outDir, "category", "index.json"), categoryIndex);
 };
@@ -92,15 +106,18 @@ const buildPostOutputs = async ({
   canonSlugSet,
   slugToPost,
   outDir,
+  tokenSecret,
 }: {
   visPosts: any[];
   canon: any[];
   canonSlugSet: Set<string>;
   slugToPost: Map<string, any>;
   outDir: string;
+  tokenSecret: string;
 }) => {
   for (const p of visPosts) {
     const slug = String(p.slug);
+    const postPath = postUrl(slug);
     const neighbours = computeNeighbours(p, { canon, canonSlugSet, slugToPost });
     const relates = computeRelated(p, canon);
     const html = String(p.html ?? "");
@@ -111,7 +128,8 @@ const buildPostOutputs = async ({
     const { encrypt_pwd, ...rest } = p;
     const data = {
       ...rest,
-      url: postUrl(slug),
+      url: postPath,
+      inkstoneToken: buildInkstoneToken(postPath, tokenSecret),
       html: content,
       encrypted,
       neighbours,
@@ -125,9 +143,11 @@ const buildPostOutputs = async ({
 const buildPageOutputs = async ({
   pages,
   outDir,
+  tokenSecret,
 }: {
   pages: any[];
   outDir: string;
+  tokenSecret: string;
 }) => {
   const visPages = visiblePages(pages);
   for (const p of visPages) {
@@ -136,6 +156,7 @@ const buildPageOutputs = async ({
     await writeJson(path.join(outDir, "pages", `${safePathSegment(slug)}.json`), {
       ...p,
       url: pagePath,
+      inkstoneToken: buildInkstoneToken(pagePath, tokenSecret),
     });
   }
 };
@@ -146,6 +167,7 @@ export const emitPublicData = async ({
   pages,
   friends = [],
   clear = true,
+  tokenSecret,
 }: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
   if (clear) {
@@ -164,12 +186,15 @@ export const emitPublicData = async ({
   console.timeEnd("velite:emit:public-data:collect");
 
   console.time("velite:emit:public-data:latest");
-  const latest = canon.slice(0, 5).map((p, idx) => postMeta(p, { includeSummary: idx === 0 }));
+  const latest = {
+    inkstoneToken: buildInkstoneToken("/", tokenSecret),
+    items: canon.slice(0, 5).map((p, idx) => postMeta(p, { includeSummary: idx === 0 })),
+  };
   await writeJson(path.join(outDir, "posts", "latest.json"), latest);
   console.timeEnd("velite:emit:public-data:latest");
 
   console.time("velite:emit:public-data:category");
-  await buildCategoryOutputs({ canon, outDir });
+  await buildCategoryOutputs({ canon, outDir, tokenSecret });
   console.timeEnd("velite:emit:public-data:category");
   console.time("velite:emit:public-data:posts");
   await buildPostOutputs({
@@ -178,10 +203,11 @@ export const emitPublicData = async ({
     canonSlugSet,
     slugToPost,
     outDir,
+    tokenSecret,
   });
   console.timeEnd("velite:emit:public-data:posts");
   console.time("velite:emit:public-data:pages");
-  await buildPageOutputs({ pages, outDir });
+  await buildPageOutputs({ pages, outDir, tokenSecret });
   console.timeEnd("velite:emit:public-data:pages");
 
   console.time("velite:emit:public-data:friends");

@@ -14,7 +14,7 @@ const Category = () => {
                     {(cate) => (
                         <a
                             class="group inline-flex items-center gap-1 text-[var(--c-text-muted)] transition-colors"
-                            href={`/category/${cate.title}/`}
+                            href={`/category/${encodeURIComponent(String(cate.title ?? ""))}/`}
                         >
                             <span class="group-hover:text-[var(--c-text)] group-hover:underline group-hover:decoration-[var(--c-text)] decoration-1 underline-offset-4">
                                 {cate.title}

@@ -54,6 +54,10 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   const site = await readSiteConf(repoRoot);
   const publicDir = path.join(repoRoot, "public");
   const isCleanBuild = Boolean(context.config.output?.clean);
+  const tokenSecret = String(process.env.INKSTONE_PUBLIC_TOKEN_SECRET ?? "").trim();
+  if (!tokenSecret) {
+    throw new Error("[velite] Missing INKSTONE_PUBLIC_TOKEN_SECRET");
+  }
 
   console.time("velite:normalize");
   const posts = (data.posts as any[]).map(normalizePost);
@@ -92,7 +96,11 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   console.timeEnd("velite:emit:atom");
   const searchPosts = renderablePosts;
   console.time("velite:emit:search-index");
-  await emitSearchIndex({ publicDir, posts: searchPosts });
+  if (isCleanBuild) {
+    await emitSearchIndex({ publicDir, posts: searchPosts });
+  } else {
+    console.log("[velite] skip search-index generation (clean disabled)");
+  }
   console.timeEnd("velite:emit:search-index");
 
   console.time("velite:strip:raw");
@@ -125,6 +133,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     pages,
     friends: (data as any).friends ?? [],
     clear: isCleanBuild,
+    tokenSecret,
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");
