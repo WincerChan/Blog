@@ -24,6 +24,7 @@ type CommentPayload = {
     total: number;
     discussionUrl: string | null;
     comments: CommentItem[];
+    totalKnown: boolean;
 };
 
 const CommentSkeleton = () => (
@@ -57,6 +58,12 @@ const CommentSkeleton = () => (
 export default function Comments({ pageURL, LL }: CommentsProps) {
     const [visible, setVisible] = createSignal(false)
     const [url, setUrl] = createSignal<string | null>(null)
+    const getDiscussionUrlFromMeta = () => {
+        if (typeof document === "undefined") return null;
+        const el = document.querySelector('meta[name="inkstone:discussion"]');
+        const content = el?.getAttribute("content")?.trim() ?? "";
+        return content || null;
+    };
     const normalizePath = (input: string) => {
         let pathname = String(input || "");
         if (/^https?:\/\//.test(pathname)) {
@@ -73,32 +80,40 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
     };
     const targetPath = createMemo(() => normalizePath(pageURL));
     const fetchLegacyComments = async (target: string | null): Promise<CommentPayload> => {
-        if (!target) return { total: 0, discussionUrl: null, comments: [] };
+        if (!target) return { total: 0, discussionUrl: null, comments: [], totalKnown: false };
+        let total = 0;
+        let discussionUrl: string | null = null;
+        let comments: CommentItem[] = [];
+        let totalKnown = false;
         try {
             const url = new URL(inkstoneApi("comments"));
             url.searchParams.set("post_id", target);
             const resp = await fetch(url);
-            if (!resp.ok) return { total: 0, discussionUrl: null, comments: [] };
-            const data = await resp.json();
-            const comments = Array.isArray(data?.comments) ? data.comments : [];
-            const toComment = (item: any): CommentItem => ({
-                id: String(item?.id ?? ""),
-                author: String(item?.author_login ?? ""),
-                date: String(item?.created_at ?? item?.updated_at ?? ""),
-                message: String(item?.body_html ?? ""),
-                url: item?.url ? String(item.url) : undefined,
-                avatarUrl: item?.author_avatar_url ? String(item.author_avatar_url) : undefined,
-                source: item?.source ? String(item.source) : undefined,
-                children: Array.isArray(item?.replies) ? item.replies.map(toComment) : [],
-            });
-            return {
-                total: Number.isFinite(data?.total) ? data.total : comments.length,
-                discussionUrl: data?.discussion_url ? String(data.discussion_url) : null,
-                comments: comments.map(toComment),
-            };
+            if (resp.ok) {
+                const data = await resp.json();
+                const rawComments = Array.isArray(data?.comments) ? data.comments : [];
+                const toComment = (item: any): CommentItem => ({
+                    id: String(item?.id ?? ""),
+                    author: String(item?.author_login ?? ""),
+                    date: String(item?.created_at ?? item?.updated_at ?? ""),
+                    message: String(item?.body_html ?? ""),
+                    url: item?.url ? String(item.url) : undefined,
+                    avatarUrl: item?.author_avatar_url ? String(item.author_avatar_url) : undefined,
+                    source: item?.source ? String(item.source) : undefined,
+                    children: Array.isArray(item?.replies) ? item.replies.map(toComment) : [],
+                });
+                total = Number.isFinite(data?.total) ? data.total : rawComments.length;
+                discussionUrl = data?.discussion_url ? String(data.discussion_url) : null;
+                comments = rawComments.map(toComment);
+                totalKnown = true;
+            }
         } catch {
-            return { total: 0, discussionUrl: null, comments: [] };
+            // ignore network errors
         }
+        if (!discussionUrl) {
+            discussionUrl = getDiscussionUrlFromMeta();
+        }
+        return { total, discussionUrl, comments, totalKnown };
     };
     const [resource] = createResource(url, fetchLegacyComments)
     let self;
@@ -133,7 +148,7 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
                                 when={payload().discussionUrl}
                                 fallback={
                                     <span class="text-sm text-[var(--c-text-subtle)]">
-                                        共 {payload().total} 条评论
+                                        {payload().totalKnown ? "尚未创建讨论" : "评论暂不可用"}
                                     </span>
                                 }
                             >
@@ -143,7 +158,12 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
                                     rel="noreferrer"
                                     class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
                                 >
-                                    共 {payload().total} 条评论
+                                    <Show
+                                        when={payload().totalKnown}
+                                        fallback={<span>前往 GitHub 讨论</span>}
+                                    >
+                                        共 {payload().total} 条评论
+                                    </Show>
                                     <IconArrowUpRight class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--c-link)]" />
                                 </a>
                             </Show>

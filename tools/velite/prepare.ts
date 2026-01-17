@@ -10,6 +10,7 @@ import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
 import { emitOgImages } from "./emit/ogImages";
 import { reportMarkdownTiming } from "./markdown";
+import { fetchCommentsMapping, resolveInkstoneBase } from "./commentsMapping";
 
 const assertValidDate = (label: string, value: string | undefined, slug: string) => {
   const parsed = parseDateLikeHugo(value);
@@ -71,6 +72,15 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     .sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
   const publishedPosts = renderablePosts.filter((p) => p.isTranslation !== true);
   const renderablePages = [...pages].filter((p) => p.draft !== true);
+  const { map: discussionMapping, total: discussionTotal } = await fetchCommentsMapping({
+    tokenSecret,
+    baseUrl: resolveInkstoneBase(),
+  });
+  if (discussionTotal !== renderablePosts.length) {
+    console.warn(
+      `[velite] comments-mapping count (${discussionTotal}) does not match posts (${renderablePosts.length})`,
+    );
+  }
 
   console.time("velite:emit:sitemaps");
   if (isCleanBuild) {
@@ -134,6 +144,7 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     friends: (data as any).friends ?? [],
     clear: isCleanBuild,
     tokenSecret,
+    discussionMapping,
   });
   console.timeEnd("velite:emit:public-data");
   console.time("velite:emit:valid-paths");

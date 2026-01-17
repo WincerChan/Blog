@@ -13,6 +13,7 @@ import {
   visiblePosts,
 } from "../shared";
 import { buildInkstoneToken } from "../inkstoneToken";
+import { normalizeCommentPath } from "../commentsMapping";
 
 const ENCRYPTION_VERSION = "v1";
 const PBKDF2_ITERATIONS = 120000;
@@ -43,6 +44,7 @@ type EmitPublicDataOptions = {
   friends?: any[];
   clear?: boolean;
   tokenSecret: string;
+  discussionMapping?: Map<string, string>;
 };
 
 const readFileIfExists = async (filepath: string) => {
@@ -107,6 +109,7 @@ const buildPostOutputs = async ({
   slugToPost,
   outDir,
   tokenSecret,
+  discussionMapping,
 }: {
   visPosts: any[];
   canon: any[];
@@ -114,6 +117,7 @@ const buildPostOutputs = async ({
   slugToPost: Map<string, any>;
   outDir: string;
   tokenSecret: string;
+  discussionMapping?: Map<string, string>;
 }) => {
   for (const p of visPosts) {
     const slug = String(p.slug);
@@ -126,6 +130,8 @@ const buildPostOutputs = async ({
     const content = encrypted ? encryptHtml(encryptPwd, html) : html;
     const hasMath = html.includes("katex");
     const { encrypt_pwd, ...rest } = p;
+    const discussionUrl =
+      discussionMapping?.get(normalizeCommentPath(postPath)) ?? undefined;
     const data = {
       ...rest,
       url: postPath,
@@ -135,6 +141,7 @@ const buildPostOutputs = async ({
       neighbours,
       relates,
       hasMath,
+      ...(discussionUrl ? { discussionUrl } : {}),
     };
     await writeJson(path.join(outDir, "posts", `${safePathSegment(slug)}.json`), data);
   }
@@ -168,6 +175,7 @@ export const emitPublicData = async ({
   friends = [],
   clear = true,
   tokenSecret,
+  discussionMapping,
 }: EmitPublicDataOptions) => {
   const outDir = path.join(publicDir, "_data");
   if (clear) {
@@ -204,6 +212,7 @@ export const emitPublicData = async ({
     slugToPost,
     outDir,
     tokenSecret,
+    discussionMapping,
   });
   console.timeEnd("velite:emit:public-data:posts");
   console.time("velite:emit:public-data:pages");

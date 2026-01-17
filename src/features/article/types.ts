@@ -33,4 +33,5 @@ export type ArticleMeta = {
     lang?: string;
     neighbours?: ArticleNeighbours;
     inkstoneToken?: string;
+    discussionUrl?: string;
 };

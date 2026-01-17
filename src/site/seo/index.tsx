@@ -100,6 +100,14 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
                         content: inkstonePath,
                     },
                 });
+                useHead({
+                    tag: "meta",
+                    id: "inkstone-discussion",
+                    props: {
+                        name: "inkstone:discussion",
+                        content: params.discussionUrl ?? "",
+                    },
+                });
 
                 return (
                     <>

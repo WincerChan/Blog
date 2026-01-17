@@ -16,6 +16,7 @@ export type VelitePost = {
     summary?: string;
     words?: number;
     inkstoneToken?: string;
+    discussionUrl?: string;
 };
 
 export type VelitePage = {

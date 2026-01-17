@@ -50,6 +50,7 @@ export default function PostRoute() {
                     neighbours,
                     hasMath,
                     inkstoneToken: p.inkstoneToken,
+                    discussionUrl: p.discussionUrl,
                 };
                 if (isEncrypted) rawBlog.encrypted = true;
                 if (p.lang) rawBlog.lang = p.lang;

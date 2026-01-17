@@ -24,6 +24,7 @@ const constructHeadParams = (blog: ArticleMeta) => {
         updated: blog.updated ?? blog.date,
         hasMath: !!blog.hasMath,
         inkstoneToken: blog.inkstoneToken,
+        discussionUrl: blog.discussionUrl,
         lang: blog.lang,
         isTranslation: blog.isTranslation,
         toc: blog.toc,

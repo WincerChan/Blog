@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { expect, test } from "bun:test";
 import { emitPublicData } from "../tools/velite/emit/publicData";
+import { normalizeCommentPath } from "../tools/velite/commentsMapping";
 
 test("emitPublicData omits legacy comments markers", async () => {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "velite-public-data-"));
@@ -47,16 +48,21 @@ test("emitPublicData omits legacy comments markers", async () => {
       pages,
       friends: [],
       tokenSecret: "test-secret",
+      discussionMapping: new Map([
+        [normalizeCommentPath("/posts/demo/"), "https://github.com/org/repo/discussions/1"],
+      ]),
     });
 
     const postPath = path.join(tempDir, "_data", "posts", "demo.json");
     const postData = JSON.parse(await fs.readFile(postPath, "utf8"));
     expect("hasLegacyComments" in postData).toBe(false);
     expect(postData.hasMath ?? false).toBe(false);
+    expect(postData.discussionUrl).toBe("https://github.com/org/repo/discussions/1");
 
     const mathPath = path.join(tempDir, "_data", "posts", "math.json");
     const mathData = JSON.parse(await fs.readFile(mathPath, "utf8"));
     expect(mathData.hasMath).toBe(true);
+    expect(mathData.discussionUrl ?? null).toBeNull();
 
     const secretPath = path.join(tempDir, "_data", "posts", "secret.json");
     const secretData = JSON.parse(await fs.readFile(secretPath, "utf8"));
