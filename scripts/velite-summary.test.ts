@@ -48,6 +48,10 @@ describe("plainFromMarkdown", () => {
       "Title Hello world and code. Alt text Raw HTML Next line. const x = 1;",
     );
   });
+
+  test("removes emphasis markers", () => {
+    expect(plainFromMarkdown("**bold** _italic_")).toBe("bold italic");
+  });
 });
 
 describe("countCjkAndLatin", () => {

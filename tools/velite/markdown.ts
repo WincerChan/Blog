@@ -10,7 +10,7 @@ import remarkParse from "remark-parse";
 import { bundledLanguages, getSingletonHighlighter } from "shiki";
 import { unified } from "unified";
 import { isCodeBlockWrapper, wrapCodeBlock } from "./codeBlocks";
-import { shikiTheme, shikiThemeList } from "./shikiThemes";
+import { createSemanticTheme } from "./shikiThemes";
 
 type TimingEntry = { total: number; count: number };
 
@@ -112,6 +112,8 @@ const buildShikiLangConfig = () => {
 };
 
 const shikiLangConfig = buildShikiLangConfig();
+const shikiTheme = createSemanticTheme();
+const shikiThemeList = [createSemanticTheme()] as const;
 
 const recordTiming = (name: string, durationMs: number) => {
   const prev = markdownTiming.get(name) ?? { total: 0, count: 0 };

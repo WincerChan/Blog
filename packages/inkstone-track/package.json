@@ -1,0 +1,24 @@
+{
+  "name": "@wincer/inkstone-track",
+  "version": "0.1.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --format esm",
+    "build:types": "tsc -p tsconfig.json",
+    "prepublishOnly": "bun run build && bun run build:types"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

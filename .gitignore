@@ -32,6 +32,7 @@ Thumbs.db
 (hugo)/
 resources
 _blogs
+docs/
 
 # Generated public assets (Velite/build)
 public/*.xml

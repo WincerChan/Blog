@@ -1,11 +1,16 @@
 {
   "name": "wicer-blog",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "content:build": "velite build --clean",
     "dev": " vinxi dev",
     "build": "vinxi build --preset static",
     "prebuild": "bun content:build",
+    "packages:build": "cd packages/inkstone-track && bun run build && bun run build:types",
+    "postinstall": "bun run packages:build",
     "start": "npx serve .output/public",
     "version": "vinxi version",
     "clean": "rm -rf .velite node_modules/.vinxi src/routes/\\(hugo\\) \\(hugo\\) .output public/_data public/sitemap.xml public/atom.xml public/manifest.webmanifest public/posts public/base public/category public/tags public/sass",
@@ -13,6 +18,7 @@
     "test": "bun test"
   },
   "dependencies": {
+    "@wincer/inkstone-track": "workspace:*",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.4",
     "@solidjs/start": "1.2.0",
@@ -39,8 +45,11 @@
     "rehype-katex": "^7.0.1",
     "rehype-slug": "^6.0.0",
     "remark-math": "^6.0.0",
+    "remark-parse": "^11.0.0",
     "satori": "^0.18.3",
     "shiki": "3.20.0",
+    "typescript": "^5.9.2",
+    "unified": "^11.0.5",
     "unocss": "^66.1.2",
     "unplugin-icons": "^22.1.0",
     "velite": "^0.3.1",

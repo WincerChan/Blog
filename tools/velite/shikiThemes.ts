@@ -58,3 +58,4 @@ const createSemanticTheme = () => ({
 
 export const shikiTheme = createSemanticTheme();
 export const shikiThemeList = [shikiTheme] as const;
+export { createSemanticTheme };

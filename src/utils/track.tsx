@@ -1,7 +1,7 @@
-import { inkstoneApi } from "~/utils/inkstone";
+import { createTracker } from "@wincer/inkstone-track";
+import { INKSTONE_BASE } from "~/utils/inkstone";
 
-const isBrowser = typeof window !== "undefined";
-const siteName = (() => {
+const siteHost = (() => {
     try {
         return new URL(__SITE_CONF.baseURL).host;
     } catch {
@@ -9,121 +9,13 @@ const siteName = (() => {
     }
 })();
 
-const normalizePath = (pathname: string) =>
-    pathname.endsWith("/") ? pathname : `${pathname}/`;
+const tracker = createTracker({
+    baseUrl: INKSTONE_BASE,
+    siteHost,
+    isDev: Boolean(import.meta.env?.DEV),
+});
 
-const createPageInstanceId = () => {
-    if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-        return crypto.randomUUID();
-    }
-    return `pv_${Math.random().toString(36).slice(2)}_${Date.now().toString(36)}`;
-};
-
-let currentId: string | null = null;
-let currentPath: string | null = null;
-let currentToken: string | null = null;
-let startedAt = 0;
-let accumulatedMs = 0;
-let hooksReady = false;
-
-const isDev = typeof import.meta !== "undefined" && Boolean(import.meta.env?.DEV);
-
-const shouldSendPulse = () => {
-    if (!isBrowser) return { ok: false, reason: "not in browser" };
-    if (isDev) return { ok: true, reason: "" };
-    if (!siteName) return { ok: false, reason: "missing siteName" };
-    if (window.location.hostname !== siteName) {
-        return {
-            ok: false,
-            reason: `site mismatch (${siteName} !== ${window.location.hostname})`,
-        };
-    }
-    return { ok: true, reason: "" };
-};
-
-const sendPulse = async (
-    endpoint: string,
-    payload: Record<string, unknown>,
-    options: { useBeacon?: boolean; token: string },
-) => {
-    const check = shouldSendPulse();
-    if (!check.ok) {
-        console.log(`[pulse] skip ${endpoint}: ${check.reason}`);
-        return;
-    }
-    const tokenValue = options.token;
-    if (!tokenValue) return;
-    const url = new URL(inkstoneApi(endpoint));
-    url.searchParams.set("inkstone_token", tokenValue);
-    const body = JSON.stringify(payload);
-    const useBeacon = Boolean(options.useBeacon);
-    if (useBeacon && "sendBeacon" in navigator) {
-        const blob = new Blob([body], { type: "text/plain;charset=UTF-8" });
-        const ok = navigator.sendBeacon(url.toString(), blob);
-        if (ok) return;
-    }
-    try {
-        await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=UTF-8" },
-            body,
-            credentials: "include",
-            keepalive: true,
-        });
-    } catch {
-        // ignore network errors
-    }
-};
-
-const startTiming = () => {
-    if (!currentId || startedAt) return;
-    startedAt = Date.now();
-};
-
-const pauseAndSend = (useBeacon = false) => {
-    if (!currentId || !startedAt) return;
-    const now = Date.now();
-    accumulatedMs += Math.max(0, now - startedAt);
-    startedAt = 0;
-    const payload = { page_instance_id: currentId, duration_ms: accumulatedMs, site: siteName };
-    if (!currentPath || !currentToken) return;
-    void sendPulse("pulse/engage", payload, { useBeacon, token: currentToken });
-};
-
-const trackEngage = (useBeacon = false) => {
-    pauseAndSend(useBeacon);
-};
-
-const ensureHooks = () => {
-    if (!isBrowser || hooksReady) return;
-    hooksReady = true;
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "hidden") {
-            pauseAndSend(true);
-        } else if (document.visibilityState === "visible") {
-            startTiming();
-        }
-    });
-};
-
-const trackPage = (pathname?: string, token?: string) => {
-    if (!isBrowser) return;
-    if (!token) return;
-    ensureHooks();
-    const nextPath = normalizePath((pathname ?? window.location.pathname) || "/");
-    if (currentPath === nextPath && currentId) return;
-    pauseAndSend();
-    currentId = createPageInstanceId();
-    currentPath = nextPath;
-    currentToken = token;
-    accumulatedMs = 0;
-    startedAt = document.visibilityState === "visible" ? Date.now() : 0;
-    const referrer = document.referrer;
-    void sendPulse("pulse/pv", {
-        page_instance_id: currentId,
-        site: siteName,
-        ...(referrer ? { referrer } : {}),
-    }, { token });
-};
+const trackEngage = (useBeacon = false) => tracker.trackEngage(useBeacon);
+const trackPage = (pathname?: string, token?: string) => tracker.trackPage(pathname, token);
 
 export { trackEngage, trackPage };
