@@ -49,15 +49,50 @@ const normalizePage = (page: any) => {
   };
 };
 
+const isLocalPreview = (env = process.env) =>
+  String(env.NODE_ENV ?? "").toLowerCase() === "development";
+
+const LOCAL_PREVIEW_TOKEN_SECRET = "__local_preview__";
+const WARN_BADGE = "\x1b[30;43m WARN \x1b[0m";
+
+const formatWarningLog = (message: string) => `${WARN_BADGE} \x1b[1;33m${message}\x1b[0m`;
+
+const resolveInkstoneTokenSecret = (env = process.env) => {
+  const explicit = String(env.INKSTONE_PUBLIC_TOKEN_SECRET ?? "").trim();
+  if (explicit) {
+    return {
+      tokenSecret: explicit,
+      hasExplicitSecret: true,
+    };
+  }
+  if (isLocalPreview(env)) {
+    return {
+      tokenSecret: LOCAL_PREVIEW_TOKEN_SECRET,
+      hasExplicitSecret: false,
+    };
+  }
+  return {
+    tokenSecret: "",
+    hasExplicitSecret: false,
+  };
+};
+
 export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   console.time("velite:prepare");
   const repoRoot = path.dirname(context.config.configPath);
   const site = await readSiteConf(repoRoot);
   const publicDir = path.join(repoRoot, "public");
   const isCleanBuild = Boolean(context.config.output?.clean);
-  const tokenSecret = String(process.env.INKSTONE_PUBLIC_TOKEN_SECRET ?? "").trim();
+  const { tokenSecret, hasExplicitSecret } = resolveInkstoneTokenSecret();
   if (!tokenSecret) {
     throw new Error("[velite] Missing INKSTONE_PUBLIC_TOKEN_SECRET");
+  }
+  if (!hasExplicitSecret && isLocalPreview()) {
+    console.warn(
+      formatWarningLog(
+        "[velite] Missing INKSTONE_PUBLIC_TOKEN_SECRET in local preview. Inkstone data is disabled; continuing with markdown-only content.",
+      ),
+    );
   }
 
   console.time("velite:normalize");
@@ -72,13 +107,39 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
     .sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
   const publishedPosts = renderablePosts.filter((p) => p.isTranslation !== true);
   const renderablePages = [...pages].filter((p) => p.draft !== true);
-  const { map: discussionMapping, total: discussionTotal } = await fetchCommentsMapping({
-    tokenSecret,
-    baseUrl: resolveInkstoneBase(),
-  });
-  if (discussionTotal !== renderablePosts.length) {
+  let discussionMapping = new Map<string, string>();
+  let discussionTotal = 0;
+  let loadedDiscussionMapping = false;
+  if (!hasExplicitSecret && isLocalPreview()) {
     console.warn(
-      `[velite] comments-mapping count (${discussionTotal}) does not match posts (${renderablePosts.length})`,
+      formatWarningLog(
+        "[velite] skip comments-mapping in local preview because INKSTONE_PUBLIC_TOKEN_SECRET is missing.",
+      ),
+    );
+  } else {
+    try {
+      const mapping = await fetchCommentsMapping({
+        tokenSecret,
+        baseUrl: resolveInkstoneBase(),
+      });
+      discussionMapping = mapping.map;
+      discussionTotal = mapping.total;
+      loadedDiscussionMapping = true;
+    } catch (error) {
+      if (!isLocalPreview()) throw error;
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(
+        formatWarningLog(
+          `[velite] Inkstone API unavailable in local preview. Continue with markdown-only content.\n${message}`,
+        ),
+      );
+    }
+  }
+  if (loadedDiscussionMapping && discussionTotal !== renderablePosts.length) {
+    console.warn(
+      formatWarningLog(
+        `[velite] comments-mapping count (${discussionTotal}) does not match posts (${renderablePosts.length})`,
+      ),
     );
   }
 
@@ -158,3 +219,5 @@ export const prepareVelite: VeliteConfig["prepare"] = async (data, context) => {
   reportMarkdownTiming();
   console.timeEnd("velite:prepare");
 };
+
+export { formatWarningLog, isLocalPreview, resolveInkstoneTokenSecret };

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
   buildCommentsMapping,
+  formatCommentsMappingFetchError,
   normalizeCommentPath,
 } from "../tools/velite/commentsMapping";
 
@@ -23,5 +24,21 @@ describe("buildCommentsMapping", () => {
     ]);
     expect(map.size).toBe(1);
     expect(map.get("/posts/hello/")).toBe("https://github.com/x/1");
+  });
+});
+
+describe("formatCommentsMappingFetchError", () => {
+  test("expands timeout errors with actionable detail", () => {
+    const error = Object.assign(new Error("The operation was aborted."), {
+      name: "AbortError",
+    });
+    const message = formatCommentsMappingFetchError({
+      error,
+      url: "http://localhost:8080/v2/comments/mapping?inkstone_token=test",
+      timeoutMs: 5000,
+    });
+    expect(message).toContain("timed out after 5000ms");
+    expect(message).toContain("http://localhost:8080/v2/comments/mapping");
+    expect(message).toContain("Local Inkstone API may be unavailable");
   });
 });

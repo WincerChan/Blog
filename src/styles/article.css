@@ -9,3 +9,7 @@
 #blog-article p {
   @apply break-words;
 }
+
+#blog-article sup {
+  @apply mx-2px;
+}
