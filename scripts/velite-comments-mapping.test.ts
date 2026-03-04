@@ -40,5 +40,7 @@ describe("formatCommentsMappingFetchError", () => {
     expect(message).toContain("timed out after 5000ms");
     expect(message).toContain("http://localhost:8080/v2/comments/mapping");
     expect(message).toContain("Local Inkstone API may be unavailable");
+    expect(message).not.toContain("inkstone_token");
+    expect(message).not.toContain("test");
   });
 });

@@ -14,6 +14,18 @@ type RawMappingItem = {
   discussion_url?: unknown;
 };
 
+const sanitizeUrlForLog = (input: string) => {
+  const raw = String(input ?? "");
+  try {
+    const url = new URL(raw);
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return raw.split("?")[0].split("#")[0];
+  }
+};
+
 const normalizeCommentPath = (input: string) => {
   let pathname = String(input ?? "").trim();
   if (!pathname) return "";
@@ -52,12 +64,13 @@ const formatCommentsMappingFetchError = ({
   url: string;
   timeoutMs: number;
 }) => {
+  const safeUrl = sanitizeUrlForLog(url);
   const aborted = error instanceof Error && error.name === "AbortError";
   if (aborted) {
-    return `[velite] comments-mapping fetch timed out after ${timeoutMs}ms: ${url}. Local Inkstone API may be unavailable.`;
+    return `[velite] comments-mapping fetch timed out after ${timeoutMs}ms: ${safeUrl}. Local Inkstone API may be unavailable.`;
   }
   const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
-  return `[velite] comments-mapping fetch failed: ${url}. ${detail}`;
+  return `[velite] comments-mapping fetch failed: ${safeUrl}. ${detail}`;
 };
 
 const fetchCommentsMapping = async ({
@@ -71,6 +84,7 @@ const fetchCommentsMapping = async ({
   const token = buildInkstoneToken(COMMENTS_MAPPING_PATH, tokenSecret);
   const url = new URL(COMMENTS_MAPPING_PATH, baseUrl);
   url.searchParams.set("inkstone_token", token);
+  const logUrl = sanitizeUrlForLog(url.toString());
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -81,7 +95,7 @@ const fetchCommentsMapping = async ({
     throw new Error(
       formatCommentsMappingFetchError({
         error,
-        url: url.toString(),
+        url: logUrl,
         timeoutMs,
       }),
     );
@@ -91,7 +105,7 @@ const fetchCommentsMapping = async ({
 
   if (!response.ok) {
     throw new Error(
-      `[velite] comments-mapping fetch failed: ${response.status} ${response.statusText} (${url.toString()})`,
+      `[velite] comments-mapping fetch failed: ${response.status} ${response.statusText} (${logUrl})`,
     );
   }
 
@@ -99,7 +113,7 @@ const fetchCommentsMapping = async ({
   try {
     payload = await response.json();
   } catch (error) {
-    throw new Error(`[velite] comments-mapping parse failed: ${url.toString()}: ${String(error)}`);
+    throw new Error(`[velite] comments-mapping parse failed: ${logUrl}: ${String(error)}`);
   }
 
   const map = buildCommentsMapping(payload?.items ?? []);
