@@ -6,6 +6,19 @@
   @apply scroll-mt-20;
 }
 
+#blog-article :is(
+    [id^="user-content-fn-"],
+    [id^="user-content-fnref-"],
+    [id^="fn-"],
+    [id^="fnref-"]
+  ) {
+  @apply scroll-mt-20;
+}
+
 #blog-article p {
   @apply break-words;
+}
+
+#blog-article sup {
+  @apply mx-2px;
 }
