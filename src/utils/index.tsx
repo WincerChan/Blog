@@ -10,6 +10,28 @@ const formatDate = (value: Date | string) => {
     });
     return formatter.format(dateObj);
 }
+
+const formatDateTime = (value: Date | string | null | undefined) => {
+    const dateObj = typeof value === "string" ? new Date(value) : value;
+    if (!dateObj || Number.isNaN(dateObj.getTime())) return String(value ?? "");
+
+    const formatter = new Intl.DateTimeFormat("en-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        hourCycle: "h23",
+        timeZone: "Asia/Shanghai",
+    });
+    const parts = Object.fromEntries(
+        formatter.formatToParts(dateObj).map((part) => [part.type, part.value]),
+    );
+
+    return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}:${parts.second}`;
+}
 const calculateDateDifference = (startDate: Date, lang: string): string => {
     const endDate = new Date();
 
@@ -71,4 +93,4 @@ const range = (end: number, step = 1) =>
     Array.from({ length: end }, (_, i) => i * step);
 
 
-export { calculateDateDifference, fetcher, formatDate, isBrowser, range, shuffle };
+export { calculateDateDifference, fetcher, formatDate, formatDateTime, isBrowser, range, shuffle };

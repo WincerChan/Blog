@@ -1,4 +1,4 @@
-import { formatDate } from "~/utils";
+import { formatDateTime } from "~/utils";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconArrowUpRight from "~icons/ph/arrow-up-right";
 
@@ -9,6 +9,7 @@ interface CopyrightProps {
 const Copyright = ({ updated }: CopyrightProps) => {
     const { LL } = useI18nContext();
     const labels = () => LL && LL().post.COPYRIGHT;
+    const updatedISO = () => Number.isNaN(updated.getTime()) ? undefined : updated.toISOString();
     return (
         <div class="mt-0 mx-[-1rem] border-b border-dashed border-[var(--c-border)] py-6 px-4 text-sm md:mx-0 md:px-0">
             <div class="flex flex-wrap items-center gap-3 md:flex-nowrap md:justify-between md:gap-6">
@@ -23,7 +24,9 @@ const Copyright = ({ updated }: CopyrightProps) => {
                         <span class="text-[var(--c-text-subtle)]">
                             {labels()?.[1]?.()}
                         </span>
-                        <span class="font-mono tabular-nums text-[var(--c-text)]">2023-10-25 14:20:00</span>
+                        <time dateTime={updatedISO()} class="font-mono tabular-nums text-[var(--c-text)]">
+                            {formatDateTime(updated)}
+                        </time>
                     </div>
                 </div>
                 <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1 md:flex-nowrap md:whitespace-nowrap">
