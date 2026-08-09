@@ -39,6 +39,14 @@ try {
 
 const swHash = computeSwHash();
 
+const appSharedModulePattern = new RegExp(
+    [
+        /src[\\/](?:content[\\/]velite|utils[\\/]inkstone|features[\\/]post-listing[\\/]OtherCards|layouts[\\/]PageLayout)\.tsx?$/.source,
+        /arrow-right|github-logo|dot-outline-fill|icons[\\/]ph[\\/]list/.source,
+        /vite[\\/]preload-helper/.source,
+    ].join("|"),
+);
+
 const definedVars = {
     __CONTENT_WORDS: contentStatsWordsCount,
     __CONTENT_TAGS: contentStatsTotalTags,
@@ -96,7 +104,7 @@ export default defineConfig(({ command }) => ({
                                 // small app-shell modules that those entries commonly preload.
                                 {
                                     name: "app-shared",
-                                    test: /src[\\/](?:content[\\/]velite|utils[\\/]inkstone|features[\\/]post-listing[\\/]OtherCards|layouts[\\/]PageLayout)\.tsx?$|arrow-right/,
+                                    test: appSharedModulePattern,
                                     priority: 10,
                                 },
                             ],

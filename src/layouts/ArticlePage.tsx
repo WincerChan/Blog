@@ -1,4 +1,5 @@
 import { useLocation } from "@solidjs/router";
+import { Meta } from "@solidjs/meta";
 import { JSXElement, Show, createMemo, lazy, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import ArticleLayout from "~/layouts/ArticleLayout";
@@ -93,5 +94,31 @@ const ArticlePage = ({
         </ArticleLayout>
     );
 };
+
+const notFoundContent = "您访问的页面已经消失得无影无踪，就像我的前任一样。";
+const notFoundPage: ArticleMeta = {
+    title: "404 Not Found",
+    date: new Date().toDateString(),
+    updated: new Date().toDateString(),
+    cover: "",
+    tags: [],
+    category: "",
+    words: 0,
+    toc: "",
+    neighbours: {},
+    slug: "404",
+    summary: notFoundContent,
+};
+
+export const ArticleNotFound = () => (
+    <>
+        <Meta charset="utf-8" />
+        <ArticlePage rawBlog={notFoundPage} relates={[]} hideComment={true}>
+            <section class="">
+                <p class="">{notFoundContent}</p>
+            </section>
+        </ArticlePage>
+    </>
+);
 
 export default ArticlePage;

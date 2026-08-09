@@ -1,8 +1,7 @@
 import { Accessor, JSXElement, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
-import ArticlePage from "~/layouts/ArticlePage";
+import ArticlePage, { ArticleNotFound } from "~/layouts/ArticlePage";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
 import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
-import NotFound from "~/routes/[...all]";
 
 type LayoutKind = "simple" | "article" | "article-no-comment";
 type PageView = (props: { page: any; children?: JSXElement }) => JSXElement;
@@ -70,7 +69,7 @@ const PageRouteView = ({ slug, view, layout = "article", withChildren }: PageRou
     return (
         <Show keyed when={displayed()} fallback={<section class="" />}>
             {(p) => {
-                if (p === VELITE_NOT_FOUND) return <NotFound />;
+                if (p === VELITE_NOT_FOUND) return <ArticleNotFound />;
 
                 const pageProps = toPageProps(p);
                 const body = () => <section class="" innerHTML={p.html ?? ""} />;

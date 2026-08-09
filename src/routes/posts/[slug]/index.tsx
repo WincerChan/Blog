@@ -1,10 +1,9 @@
 import { useParams } from "@solidjs/router";
 import { Show, createEffect, createResource, createSignal } from "solid-js";
-import ArticlePage from "~/layouts/ArticlePage";
+import ArticlePage, { ArticleNotFound } from "~/layouts/ArticlePage";
 import { VELITE_NOT_FOUND, getPostBySlug, postUrl } from "~/content/velite";
 import type { VelitePostPublic } from "~/content/velite";
 import type { RelatedPost } from "~/features/article/types";
-import NotFound from "~/routes/[...all]";
 
 type PostPayload = VelitePostPublic | typeof VELITE_NOT_FOUND | null | undefined;
 
@@ -26,7 +25,7 @@ export default function PostRoute() {
     return (
         <Show keyed when={displayed()} fallback={<section class="" />}>
             {(p) => {
-                if (p === VELITE_NOT_FOUND) return <NotFound />;
+                if (p === VELITE_NOT_FOUND) return <ArticleNotFound />;
 
                 const html = p.html ?? "";
                 const isEncrypted = p.encrypted === true;
