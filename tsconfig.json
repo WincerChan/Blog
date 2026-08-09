@@ -3,6 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "preserve",
@@ -11,7 +12,8 @@
     "strict": true,
     "noEmit": true,
     "types": [
-      "vinxi/types/client",
+      "@solidjs/start/env",
+      "node",
       "unplugin-icons/types/solid",
     ],
     "isolatedModules": true,
@@ -25,7 +27,7 @@
     "node_modules",
     ".git",
     "dist",
-    ".vinxi",
+    ".nitro",
     ".output",
     ".velite",
     "_blogs"

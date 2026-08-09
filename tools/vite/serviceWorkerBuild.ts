@@ -19,7 +19,7 @@ const ServiceWorkerBuild = (dirname: string) => {
         build: {
           outDir: resolve(dirname, "public"),
           emptyOutDir: false,
-          rollupOptions: {
+          rolldownOptions: {
             input: resolve(dirname, "src/site/service-worker.ts"),
             output: {
               entryFileNames: "sw.js",

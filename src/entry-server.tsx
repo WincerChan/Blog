@@ -8,11 +8,10 @@ export default createHandler((context) => (
     <StartServer
         document={({ assets, children, scripts }) => {
             let locale: Locale = "zh-CN";
-            __CONTENT_EN_POSTS.forEach(
-                (post) =>
-                    context.nativeEvent._path?.includes(post) &&
-                    (locale = "en"),
-            );
+            const requestPath = new URL(context.request.url).pathname;
+            if (__CONTENT_EN_POSTS.some((post) => requestPath.includes(post))) {
+                locale = "en";
+            }
             return (
                 <html lang={locale}>
                     <head>

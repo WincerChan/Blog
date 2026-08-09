@@ -1,7 +1,7 @@
 import { JSXElement, createEffect } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import { loadLocaleAsync } from "~/i18n/i18n-util.async";
+import { loadLocale } from "~/i18n/i18n-util.sync";
 import { globalStore, setGlobalStore } from "~/features/theme";
 import { Locale } from "~/utils/locale";
 
@@ -36,7 +36,8 @@ const localeHook = (lang: () => Locale | undefined) => {
         const next = lang() || "zh-CN";
         document.documentElement.lang = next;
         if (globalStore.locale !== next) setGlobalStore({ locale: next });
-        loadLocaleAsync(next).then(() => setLocale(next));
+        loadLocale(next);
+        setLocale(next);
     });
 };
 
