@@ -1,6 +1,6 @@
 import { solidStart } from "@solidjs/start/config";
 import { nitro } from "nitro/vite";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import velite from "./tools/vite/velitePlugin.ts";
 import fs from "node:fs";
 import path from "node:path";
@@ -24,6 +24,30 @@ import computeSwHash from "./tools/build/swHash.ts";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename);
+
+const veliteModulePath = path.resolve(__dirname, "src/content/velite.ts");
+const veliteServerModulePath = path.resolve(__dirname, "src/content/velite.server.ts");
+const veliteClientModulePath = path.resolve(__dirname, "src/content/velite.client.ts");
+
+const veliteClientBoundary: Plugin = {
+    name: "velite:client-server-module-boundary",
+    enforce: "pre" as const,
+    applyToEnvironment: (environment: { name?: string }) => environment.name === "client",
+    resolveId(id: string, importer?: string) {
+        const importerPath = importer?.split("?", 1)[0];
+        if (!importerPath || path.resolve(importerPath) !== veliteModulePath) return;
+
+        const importPath = id.split("?", 1)[0];
+        const resolvedImportPath = path.resolve(path.dirname(importerPath), importPath);
+        if (
+            importPath === veliteServerModulePath ||
+            resolvedImportPath === veliteServerModulePath ||
+            `${resolvedImportPath}.ts` === veliteServerModulePath
+        ) {
+            return veliteClientModulePath;
+        }
+    },
+};
 
 const siteConfigPath = fileURLToPath(new URL("./site.config.json", import.meta.url));
 const BlogConf = JSON.parse(fs.readFileSync(siteConfigPath, "utf8"));
@@ -63,6 +87,7 @@ const definedVars = {
 };
 export default defineConfig(({ command }) => ({
     plugins: [
+        veliteClientBoundary,
         // SolidStart's dev manifest re-imports virtual styles with `?inline`.
         // Mark UnoCSS's root-relative ID as virtual so Vite 8 does not apply
         // filesystem access checks before UnoCSS can load it.
