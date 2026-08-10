@@ -1,15 +1,16 @@
 import fs from "node:fs/promises";
+import { availableParallelism } from "node:os";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import type { SiteConf } from "../site";
 import { parseDateLikeHugo } from "../time";
 import { loadOgFonts } from "../og/fonts";
 import { ogImageFilename } from "../og/paths";
-import { renderPng } from "../og/resvg";
+import { createOgPngRenderer } from "../og/resvg";
 import { renderOgSvg } from "../og/template";
 
 export const OG_PNG_SCALE = 1.5;
-const DEFAULT_OG_RENDER_CONCURRENCY = 2;
+const DEFAULT_OG_RENDER_CONCURRENCY = Math.min(8, Math.max(2, availableParallelism()));
 
 const formatDate = (value?: Date | string) => {
   if (value instanceof Date && Number.isFinite(value.getTime())) {
@@ -108,9 +109,10 @@ const runWithConcurrency = async <T,>(
   for (const item of items) {
     const task = worker(item);
     executing.add(task);
-    task.finally(() => {
-      executing.delete(task);
-    });
+    void task.then(
+      () => executing.delete(task),
+      () => executing.delete(task),
+    );
     if (executing.size >= limit) {
       await Promise.race(executing);
     }
@@ -148,6 +150,11 @@ export const emitOgImages = async ({
   await clearOutDir(outDir);
 
   const concurrency = resolveConcurrency();
+  let ogPngRendererPromise: Promise<(svg: string) => Promise<Buffer>> | undefined;
+  const renderOgPng = (svg: string) => {
+    ogPngRendererPromise ??= createOgPngRenderer(svg, { scale: OG_PNG_SCALE });
+    return ogPngRendererPromise.then((renderer) => renderer(svg));
+  };
   const fonts = await loadOgFonts(repoRoot);
   const siteName = resolveSiteName(site);
   const siteHost = resolveSiteHost(site);
@@ -240,40 +247,51 @@ export const emitOgImages = async ({
     showDate: false,
   });
 
-  await runWithConcurrency(targets, concurrency, async (target) => {
+  console.log(`[velite] og-images: ${targets.length} targets, concurrency ${concurrency}`);
+
+  const renderTargetSvg = async (target: OgTarget) => {
     const date = formatDate(target.date);
     const titleFontFamily = resolveTitleFontFamily({ lang: target.lang }, target.title);
     const subtitleFontFamily = resolveSubtitleFontFamily(
       { lang: target.lang },
-      target.subtitle
+      target.subtitle,
     );
+    const svgStart = performance.now();
+    const svg = await renderOgSvg({
+      title: target.title,
+      subtitle: target.subtitle,
+      date,
+      siteName,
+      siteHost,
+      showDate: target.showDate ?? true,
+      titleFontFamily,
+      subtitleFontFamily,
+      fonts,
+    });
+    return { svg, svgDuration: performance.now() - svgStart };
+  };
 
+  const firstTarget = targets[0];
+  const firstTargetSvgPromise = firstTarget ? renderTargetSvg(firstTarget) : undefined;
+  if (firstTargetSvgPromise) {
+    const { svg } = await firstTargetSvgPromise;
+    ogPngRendererPromise ??= createOgPngRenderer(svg, { scale: OG_PNG_SCALE });
+    await ogPngRendererPromise;
+  }
+
+  await runWithConcurrency(targets, concurrency, async (target) => {
     try {
-      const renderSvg = async () => {
-        const svgStart = performance.now();
-        const svg = await renderOgSvg({
-          title: target.title,
-          subtitle: target.subtitle,
-          date,
-          siteName,
-          siteHost,
-          showDate: target.showDate ?? true,
-          titleFontFamily,
-          subtitleFontFamily,
-          fonts,
-        });
-        const svgDuration = performance.now() - svgStart;
-        return { svg, svgDuration };
-      };
-
       const renderPngWithTiming = async (svg: string) => {
         const pngStart = performance.now();
-        const png = await renderPng(svg, { scale: OG_PNG_SCALE });
+        const png = await renderOgPng(svg);
         const pngDuration = performance.now() - pngStart;
         return { png, pngDuration };
       };
 
-      const { svg, svgDuration } = await renderSvg();
+      const { svg, svgDuration } =
+        target === firstTarget && firstTargetSvgPromise
+          ? await firstTargetSvgPromise
+          : await renderTargetSvg(target);
       const { png, pngDuration } = await renderPngWithTiming(svg);
       await fs.writeFile(path.join(outDir, ogImageFilename(target.slug)), png);
       console.log(
