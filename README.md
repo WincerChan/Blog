@@ -80,6 +80,7 @@ pnpm build
 
 - `GH_TOKEN`（可选）：`build.sh` 用于拉取私有内容仓库
 - `CF_PAGES_BUILD_ID` / `CF_PAGES_COMMIT_SHA`：用于生成 SW 版本哈希
+- `INKSTONE_API_BASE`（可选）：Inkstone API 地址，同时用于 Velite 构建和浏览器 bundle；未设置时 dev 使用 `http://localhost:8080`，prod 使用 `https://inkstone.itswincer.com`
 
 ## 备注
 

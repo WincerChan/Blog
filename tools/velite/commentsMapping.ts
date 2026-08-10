@@ -2,6 +2,8 @@ import { buildInkstoneToken } from "./inkstoneToken";
 
 const COMMENTS_MAPPING_PATH = "/v2/comments/mapping";
 const DEFAULT_TIMEOUT_MS = 5000;
+const DEV_INKSTONE_BASE = "http://localhost:8080";
+const PROD_INKSTONE_BASE = "https://inkstone.itswincer.com";
 
 type FetchCommentsMappingOptions = {
   tokenSecret: string;
@@ -67,7 +69,7 @@ const formatCommentsMappingFetchError = ({
   const safeUrl = sanitizeUrlForLog(url);
   const aborted = error instanceof Error && error.name === "AbortError";
   if (aborted) {
-    return `[velite] comments-mapping fetch timed out after ${timeoutMs}ms: ${safeUrl}. Local Inkstone API may be unavailable.`;
+    return `[velite] comments-mapping fetch timed out after ${timeoutMs}ms: ${safeUrl}. Inkstone API may be unavailable.`;
   }
   const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
   return `[velite] comments-mapping fetch failed: ${safeUrl}. ${detail}`;
@@ -124,10 +126,12 @@ const fetchCommentsMapping = async ({
   };
 };
 
-const resolveInkstoneBase = () => {
-  const env = String(process.env.NODE_ENV ?? "").toLowerCase();
-  if (env === "development") return "http://localhost:8080";
-  return "https://inkstone.itswincer.com";
+const resolveInkstoneBase = (env = process.env) => {
+  const configured = String(env.INKSTONE_API_BASE ?? "").trim();
+  if (configured) return configured.replace(/\/+$/, "");
+  return String(env.NODE_ENV ?? "").toLowerCase() === "development"
+    ? DEV_INKSTONE_BASE
+    : PROD_INKSTONE_BASE;
 };
 
 export {

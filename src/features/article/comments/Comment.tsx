@@ -27,6 +27,27 @@ type CommentPayload = {
     totalKnown: boolean;
 };
 
+const sortCommentTree = (comments: CommentItem[]) =>
+    comments
+        .map((comment, index) => ({
+            comment: {
+                ...comment,
+                children: sortCommentTree(comment.children ?? []),
+            },
+            index,
+            timestamp: Date.parse(comment.date),
+        }))
+        .sort((left, right) => {
+            const leftTime = Number.isFinite(left.timestamp)
+                ? left.timestamp
+                : Number.POSITIVE_INFINITY;
+            const rightTime = Number.isFinite(right.timestamp)
+                ? right.timestamp
+                : Number.POSITIVE_INFINITY;
+            return leftTime - rightTime || left.index - right.index;
+        })
+        .map(({ comment }) => comment);
+
 const CommentSkeleton = () => (
     <div class="flex flex-col gap-6">
         <div class="flex flex-col gap-2">
@@ -104,7 +125,7 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
                 });
                 total = Number.isFinite(data?.total) ? data.total : rawComments.length;
                 discussionUrl = data?.discussion_url ? String(data.discussion_url) : null;
-                comments = rawComments.map(toComment);
+                comments = sortCommentTree(rawComments.map(toComment));
                 totalKnown = true;
             }
         } catch {

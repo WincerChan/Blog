@@ -72,8 +72,7 @@ const Comment = ({
     })
     return (
         <>
-            <div ref={self!} class="flex flex-col gap-2"
-                classList={{ "mt-6": !isChild }}>
+            <div ref={self!} class="group flex flex-col gap-2">
                 <div class="flex items-center gap-3">
                     <div class="h-6 w-6 shrink-0 overflow-hidden rounded-full border border-[var(--c-border)] bg-[var(--c-surface-2)] text-xs font-medium text-[var(--c-text)] flex items-center justify-center">
                         <Show when={avatarUrl} fallback={initial(author)}>
@@ -101,7 +100,7 @@ const Comment = ({
                         </div>
                     </div>
                 </div>
-                <div class="text-sm leading-relaxed text-[var(--c-text-muted)]" innerHTML={message} />
+                <div class="comment-body text-sm leading-relaxed text-[var(--c-text-muted)]" innerHTML={message} />
                 <Show when={shouldShowReply()}>
                     <div class="flex items-center gap-2 text-xs text-[var(--c-text-subtle)]">
                         <Show
@@ -131,7 +130,7 @@ const Comment = ({
                 </Show>
             </div>
             <Show when={children?.length}>
-                <div class="mt-4 border-l border-[var(--c-border)] pl-4">
+                <div class="mt-5 border-l-2 border-[var(--c-border)] pl-4">
                     <CommentThread comments={children!} isChild={true} replyState={replyState} />
                 </div>
             </Show>
@@ -149,7 +148,7 @@ const CommentThread = (props: {
     const [activeId, setActiveId] = createSignal<string | null>(null);
     const replyState = props.replyState ?? { activeId, setActiveId };
     return (
-        <div>
+        <div classList={{ "space-y-6": !props.isChild, "space-y-5": props.isChild }}>
             <For each={props.comments}>
                 {comment => (
                     <Comment {...comment} isChild={props.isChild} replyState={replyState} />

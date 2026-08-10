@@ -3,6 +3,7 @@ import {
   buildCommentsMapping,
   formatCommentsMappingFetchError,
   normalizeCommentPath,
+  resolveInkstoneBase,
 } from "../tools/velite/commentsMapping";
 
 describe("normalizeCommentPath", () => {
@@ -34,13 +35,34 @@ describe("formatCommentsMappingFetchError", () => {
     });
     const message = formatCommentsMappingFetchError({
       error,
-      url: "http://localhost:8080/v2/comments/mapping?inkstone_token=test",
+      url: "https://inkstone.itswincer.com/v2/comments/mapping?inkstone_token=test",
       timeoutMs: 5000,
     });
     expect(message).toContain("timed out after 5000ms");
-    expect(message).toContain("http://localhost:8080/v2/comments/mapping");
-    expect(message).toContain("Local Inkstone API may be unavailable");
+    expect(message).toContain("https://inkstone.itswincer.com/v2/comments/mapping");
+    expect(message).toContain("Inkstone API may be unavailable");
     expect(message).not.toContain("inkstone_token");
     expect(message).not.toContain("test");
+  });
+});
+
+describe("resolveInkstoneBase", () => {
+  test("defaults to the local API in development", () => {
+    expect(resolveInkstoneBase({ NODE_ENV: "development" })).toBe("http://localhost:8080");
+  });
+
+  test("defaults to the public API outside development", () => {
+    expect(resolveInkstoneBase({ NODE_ENV: "production" })).toBe(
+      "https://inkstone.itswincer.com",
+    );
+  });
+
+  test("prefers an explicit API base from env", () => {
+    expect(
+      resolveInkstoneBase({
+        NODE_ENV: "production",
+        INKSTONE_API_BASE: "http://inkstone.internal:8080/",
+      }),
+    ).toBe("http://inkstone.internal:8080");
   });
 });

@@ -22,3 +22,62 @@
 #blog-article sup {
   @apply mx-2px;
 }
+
+#comments .comment-body {
+  @apply break-words;
+}
+
+#comments .comment-body :is(p, ul, ol, blockquote, pre) {
+  margin-block: 0.75rem;
+}
+
+#comments .comment-body > :first-child {
+  margin-top: 0;
+}
+
+#comments .comment-body > :last-child {
+  margin-bottom: 0;
+}
+
+#comments .comment-body blockquote {
+  border-left: 2px solid var(--c-border-strong);
+  color: var(--c-text-subtle);
+  font-style: italic;
+  padding-left: 0.875rem;
+}
+
+#comments .comment-body blockquote p {
+  margin-block: 0;
+}
+
+#comments .comment-body :is(ul, ol) {
+  padding-left: 1.25rem;
+}
+
+#comments .comment-body a {
+  color: var(--c-link);
+  text-decoration-line: underline;
+  text-decoration-color: var(--c-border-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25rem;
+  transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+#comments .comment-body a:hover {
+  color: var(--c-link-hover);
+  text-decoration-color: var(--c-link);
+}
+
+#comments .comment-body img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+}
+
+#comments .comment-body pre {
+  overflow-x: auto;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  background: var(--c-surface-2);
+}

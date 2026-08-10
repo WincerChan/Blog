@@ -1,6 +1,8 @@
-const INKSTONE_BASE = import.meta.env.DEV
+const DEFAULT_INKSTONE_BASE = import.meta.env.DEV
     ? "http://localhost:8080"
     : "https://inkstone.itswincer.com";
+const configuredInkstoneBase = String(import.meta.env.INKSTONE_API_BASE ?? "").trim();
+const INKSTONE_BASE = (configuredInkstoneBase || DEFAULT_INKSTONE_BASE).replace(/\/+$/, "");
 
 const joinBase = (path: string) => {
     const safePath = String(path ?? "").trim();

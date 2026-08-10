@@ -108,6 +108,9 @@ export default defineConfig(({ command }) => ({
         ServiceWorkerBuild(__dirname),
         reloadPublicData(__dirname),
     ],
+    // Expose only the non-sensitive API host to the browser bundle. Keep the
+    // token secret out of client-side import.meta.env.
+    envPrefix: ["VITE_", "INKSTONE_API_"],
     // UnoCSS 66 locates Vite's CSS post-plugin through the root build dir.
     // Keep this build-only: Nitro dev otherwise serves stale production files.
     build: command === "build" ? { outDir: ".output/public" } : undefined,
