@@ -1,5 +1,5 @@
 import { Accessor, For, createMemo } from "solid-js";
-import { Translations } from "~/i18n/i18n-types";
+import { TranslationFunctions } from "~/i18n/i18n-types";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 
 const formatWordCount = (value: unknown) => {
@@ -9,7 +9,7 @@ const formatWordCount = (value: unknown) => {
     return `${Math.max(1, Math.round(total / 1000))}k`;
 };
 
-const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
+const Stats = ({ LL }: { LL: Accessor<TranslationFunctions> }) => {
     const elems = createMemo(() => [
         __CONTENT_TOTAL_POSTS,
         __CONTENT_TOTAL_CATEGORIES.length,
@@ -20,7 +20,7 @@ const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
     return (
         <div>
             <label class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)] font-semibold">
-                {LL && LL().footer.S}
+                {LL && LL().footer.S()}
             </label>
             <div class="flex flex-col mt-3 gap-2 text-sm leading-relaxed text-[var(--c-text-muted)]">
                 <For each={elems()}>

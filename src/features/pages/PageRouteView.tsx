@@ -1,10 +1,10 @@
-import { Accessor, JSXElement, Show, Suspense, createEffect, createResource, createSignal } from "solid-js";
+import { Accessor, Element, Show, Loading, createMemo } from "solid-js";
 import ArticlePage, { ArticleNotFound } from "~/layouts/ArticlePage";
 import SimplePageLayout from "~/layouts/SimplePageLayout";
-import { VELITE_NOT_FOUND, getPageBySlug, pageUrl } from "~/content/velite";
+import { getPageBySlug, pageUrl } from "~/content/velite";
 
 type LayoutKind = "simple" | "article" | "article-no-comment";
-type PageView = (props: { page: any; children?: JSXElement }) => JSXElement;
+type PageView = (props: { page: any; children?: Element }) => Element;
 
 type PageRouteViewProps = {
     slug: Accessor<string>;
@@ -31,7 +31,7 @@ const toPageProps = (page: any) => ({
     inkstoneToken: page.inkstoneToken,
 });
 
-const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement) => {
+const renderLayout = (layout: LayoutKind, pageProps: any, body: () => Element) => {
     if (layout === "simple") {
         return (
             <SimplePageLayout page={pageProps} lang={pageProps.lang}>
@@ -54,22 +54,14 @@ const renderLayout = (layout: LayoutKind, pageProps: any, body: () => JSXElement
 };
 
 const PageRouteView = ({ slug, view, layout = "article", withChildren }: PageRouteViewProps) => {
-    const [page] = createResource(slug, getPageBySlug);
+    const page = createMemo(async () => getPageBySlug(slug()));
     const resolved = () => page() as any;
-    const [stale, setStale] = createSignal<any>();
-
-    createEffect(() => {
-        const v = resolved();
-        if (!v || v === VELITE_NOT_FOUND) return;
-        setStale(v);
-    });
-
-    const displayed = () => resolved() ?? stale();
+    const displayed = resolved;
 
     return (
         <Show keyed when={displayed()} fallback={<section class="" />}>
             {(p) => {
-                if (p === VELITE_NOT_FOUND) return <ArticleNotFound />;
+                if ("__veliteNotFound" in p) return <ArticleNotFound />;
 
                 const pageProps = toPageProps(p);
                 const body = () => <section class="" innerHTML={p.html ?? ""} />;
@@ -81,7 +73,7 @@ const PageRouteView = ({ slug, view, layout = "article", withChildren }: PageRou
                 ) : (
                     <View page={pageProps} />
                 );
-                return <Suspense fallback={renderLayout(layout, pageProps, body)}>{content}</Suspense>;
+                return <Loading fallback={renderLayout(layout, pageProps, body)}>{content}</Loading>;
             }}
         </Show>
     );

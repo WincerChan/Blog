@@ -1,6 +1,5 @@
 import { useLocation } from "@solidjs/router";
-import { Meta } from "@solidjs/meta";
-import { JSXElement, Show, createMemo, lazy, onCleanup, onMount } from "solid-js";
+import { Element, Show, createEffect, createMemo, lazy, onSettled } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import ArticleLayout from "~/layouts/ArticleLayout";
 import PostMeta from "~/features/article/blocks/PostMeta";
@@ -34,7 +33,7 @@ const constructHeadParams = (blog: ArticleMeta) => {
 };
 
 type PostProps = {
-    children: JSXElement;
+    children: Element;
     rawBlog: ArticleMeta;
     relates: RelatedPost[];
     hideComment?: boolean;
@@ -50,26 +49,27 @@ const ArticlePage = ({
 }: PostProps) => {
     const { LL, locale } = useI18nContext();
     const hash = createMemo(() => useLocation().hash);
-    onMount(() => {
+    onSettled(() => {
         if (!hash()) return;
         const id = decodeURIComponent(hash()).replace(/^#/, "");
         if (!id) return;
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     });
-    onMount(() => {
+    // Code block headers create their own render roots; onSettled forbids nested primitives.
+    createEffect(() => true, () => {
         const root = document.getElementById("blog-article");
         if (!root) return;
         const disposeBlocks = setupCodeBlocks(root, {
             copyLabel: () => LL().sidebar.CODE.copy(),
             copiedLabel: () => LL().sidebar.CODE.copied(),
         });
-        onCleanup(() => disposeBlocks());
+        return disposeBlocks;
     });
 
     const blog = rawBlog;
     const headParams = constructHeadParams(blog);
 
-    let wrapper: JSXElement;
+    let wrapper: Element;
     if (blog.encrypted) wrapper = <ProtectBlog source={children} />;
     else
         wrapper = (
@@ -112,7 +112,6 @@ const notFoundPage: ArticleMeta = {
 
 export const ArticleNotFound = () => (
     <>
-        <Meta charset="utf-8" />
         <ArticlePage rawBlog={notFoundPage} relates={[]} hideComment={true}>
             <section class="">
                 <p class="">{notFoundContent}</p>

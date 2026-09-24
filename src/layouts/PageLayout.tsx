@@ -1,4 +1,5 @@
-import { JSX, createMemo } from "solid-js";
+import type { JSX } from "@solidjs/web";
+import { createMemo } from "solid-js";
 import { Locale } from "~/utils/locale";
 import HeadTag from "~/site/seo";
 import AppLayout from "./AppLayout";

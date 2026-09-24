@@ -1,7 +1,7 @@
 import { Accessor, For, Show } from "solid-js";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 import { calculateDateDifference } from "~/utils";
-import { Locales, Translations } from "~/i18n/i18n-types";
+import { Locales, TranslationFunctions } from "~/i18n/i18n-types";
 import DateCat from "~/features/post-listing/PostMeta";
 import Translate from "~/features/article/sidebar/social/Translate";
 import { hasTranslationMeta } from "~/features/article/utils/translation";
@@ -14,7 +14,7 @@ const PostMeta = ({
 }: {
     blog: ArticleMeta;
     lang: Accessor<Locales>;
-    LL: Accessor<Translations>;
+    LL: Accessor<TranslationFunctions>;
 }) => {
     const updatedDate = new Date(blog.updated ?? blog.date);
     const isRecently =
@@ -96,7 +96,7 @@ const PostMeta = ({
                         <div class="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-2">
                             <Show when={hasWords()}>
                                 <span class="tabular-nums">
-                                    {blog.words} {LL && LL().post.W}
+                                    {blog.words} {LL && LL().post.W()}
                                 </span>
                             </Show>
                             <Show when={hasWords() && hasTags()}>

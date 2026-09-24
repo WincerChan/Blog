@@ -1,5 +1,5 @@
 import { Show, createSignal, onCleanup } from "solid-js";
-import { render } from "solid-js/web";
+import { render } from "@solidjs/web";
 import IconCodeBlock from "~icons/ph/code-block";
 import IconCopy from "~icons/ph/copy";
 import IconCheck from "~icons/ph/check";

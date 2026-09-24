@@ -1,12 +1,12 @@
-import { JSXElement, createEffect } from "solid-js";
+import { Element, createEffect } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import { loadLocale } from "~/i18n/i18n-util.sync";
-import { globalStore, setGlobalStore } from "~/features/theme";
+import { trackPage, trackEngage } from "~/utils/track";
 import { Locale } from "~/utils/locale";
 
 interface MainProps {
-    children: JSXElement;
+    children: Element;
     className?: string;
     lang?: Locale;
     inkstoneToken?: string;
@@ -17,25 +17,23 @@ const trackHook = (token: () => string | undefined) => {
     let lastPath: string | null = null;
     let lastTrackedPath: string | null = null;
 
-    createEffect(() => {
-        const nextPath = location.pathname;
-        const nextToken = token();
-        if (!nextPath) return;
-        if (lastPath && lastPath !== nextPath) globalStore.trackEngage(true);
-        lastPath = nextPath;
-        if (!nextToken || lastTrackedPath === nextPath) return;
-        globalStore.trackPage(nextPath, nextToken);
-        lastTrackedPath = nextPath;
+    createEffect(
+        () => ({ nextPath: location.pathname, nextToken: token() }),
+        ({ nextPath, nextToken }) => {
+            if (!nextPath) return;
+            if (lastPath && lastPath !== nextPath) trackEngage(true);
+            lastPath = nextPath;
+            if (!nextToken || lastTrackedPath === nextPath) return;
+            trackPage(nextPath, nextToken);
+            lastTrackedPath = nextPath;
     });
 };
 
 const localeHook = (lang: () => Locale | undefined) => {
     const { setLocale } = useI18nContext();
 
-    createEffect(() => {
-        const next = lang() || "zh-CN";
+    createEffect(() => lang() || "zh-CN", (next) => {
         document.documentElement.lang = next;
-        if (globalStore.locale !== next) setGlobalStore({ locale: next });
         loadLocale(next);
         setLocale(next);
     });

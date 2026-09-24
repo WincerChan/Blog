@@ -1,5 +1,5 @@
 import { useLocation } from "@solidjs/router";
-import { Show, createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
+import { Show, createEffect, createMemo, createSignal, onSettled } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconList from "~icons/ph/list";
 
@@ -7,11 +7,10 @@ interface ToCInterface {
     toc: string;
     slug: string,
 }
-const ToC = ({ toc, slug }: ToCInterface) => {
-    if (!toc) return <></>
+const ToC = (props: ToCInterface) => {
 
-    let desktopRef: HTMLDivElement;
-    let mobileRef: HTMLDivElement;
+    let desktopRef: HTMLDivElement | undefined;
+    let mobileRef: HTMLDivElement | undefined;
     const { LL } = useI18nContext()
     const [visible, setVisible] = createSignal(false);
 
@@ -62,15 +61,15 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         }, 140);
     };
 
-    createEffect(() => {
-        if (!hash()) return
+    createEffect(hash, (fragment) => {
+        if (!fragment) return
 
-        const id = decodeFragment(hash().slice(1))
+        const id = decodeFragment(fragment.slice(1))
         if (!id) return
         setActiveId(id)
     })
 
-    const handleIntersect = (entries) => {
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !isScrolling()) {
                 setActiveId(entry.target.id);
@@ -80,8 +79,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
 
 
     // add event listener for toc
-    createEffect(() => {
-        const anchors = hrefs();
+    createEffect(hrefs, (anchors) => {
         if (!anchors.length) return;
 
         const observer = new IntersectionObserver(handleIntersect, {
@@ -103,10 +101,10 @@ const ToC = ({ toc, slug }: ToCInterface) => {
             heading && observer.observe(heading);
         });
 
-        onCleanup(() => {
+        return () => {
             observer.disconnect();
             cleanup.forEach((fn) => fn());
-        });
+        };
     })
 
     const baseAnchorClasses = [
@@ -154,39 +152,42 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         return mobileRef;
     };
 
-    createEffect(() => {
-        const anchors = hrefs();
-        const container = getActiveContainer();
-        if (!container) return;
-        if (activeId() === "") {
-            container.scrollTop = 0;
-        }
-        anchors.forEach((anchor) => {
-            const hrefLink = decodeFragment(anchor.href.split("#")[1] ?? "");
-            if (!hrefLink) return;
-            const isActive = hrefLink === activeId();
-            activeAnchorClasses.forEach((cls) => {
-                anchor.classList.toggle(cls, isActive);
+    createEffect(
+        () => ({ anchors: hrefs(), container: getActiveContainer(), id: activeId() }),
+        ({ anchors, container, id }) => {
+            if (!container) return;
+            if (id === "") {
+                container.scrollTop = 0;
+            }
+            anchors.forEach((anchor) => {
+                const hrefLink = decodeFragment(anchor.href.split("#")[1] ?? "");
+                if (!hrefLink) return;
+                const isActive = hrefLink === id;
+                activeAnchorClasses.forEach((cls) => {
+                    anchor.classList.toggle(cls, isActive);
+                });
             });
-        });
-        if (activeId() === "") return;
-        const activeAnchor = Array.from(container.querySelectorAll("a")).find((anchor) => {
-            const hrefLink = decodeFragment(anchor.href.split("#")[1] ?? "");
-            return hrefLink === activeId();
-        });
-        if (activeAnchor) {
-            container.scrollTo({ top: activeAnchor.offsetTop - 48 });
-        }
+            if (id === "") return;
+            const activeAnchor = Array.from(container.querySelectorAll("a")).find((anchor) => {
+                const hrefLink = decodeFragment(anchor.href.split("#")[1] ?? "");
+                return hrefLink === id;
+            });
+            if (activeAnchor) {
+                container.scrollTo({ top: activeAnchor.offsetTop - 48 });
+            }
     });
 
-    onMount(() => {
+    onSettled(() => {
         window.addEventListener('scroll', handleScroll)
-        onCleanup(() => window.removeEventListener("scroll", handleScroll));
         syncAnchors();
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (scrollEndTimer) clearTimeout(scrollEndTimer);
+        };
     })
 
-    createEffect(() => {
-        if (!visible()) {
+    createEffect(visible, (open) => {
+        if (!open) {
             document.body.style.overflow = "";
             return;
         }
@@ -210,6 +211,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         if (visible()) setVisible(false);
     }
     return (
+        <Show when={props.toc}>
         <div class="md:col-start-3 md:row-start-1 md:justify-self-start">
             <aside class="hidden md:block md:sticky md:top-30">
                 <div class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
@@ -220,7 +222,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
                     ref={desktopRef!}
                     onClick={ClickToC}
                     class="mt-3 max-h-[calc(100vh-12rem)] overflow-auto pr-2"
-                    innerHTML={toc}
+                    innerHTML={props.toc}
                 />
             </aside>
             <button
@@ -251,11 +253,12 @@ const ToC = ({ toc, slug }: ToCInterface) => {
                         ref={mobileRef!}
                         onClick={ClickToC}
                         class="max-h-[60vh] overflow-auto px-4 pb-6"
-                        innerHTML={toc}
+                        innerHTML={props.toc}
                     />
                 </div>
             </Show>
         </div>
+        </Show>
     )
 }
 

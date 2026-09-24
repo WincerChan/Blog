@@ -1,5 +1,5 @@
-import { solidStart } from "@solidjs/start/config";
-import { nitro } from "nitro/vite";
+import solid from "@solidjs/vite-plugin";
+import { fileRoutes } from "filesystem-routing/vite";
 import { defineConfig, type Plugin } from "vite";
 import velite from "./tools/vite/velitePlugin.ts";
 import fs from "node:fs";
@@ -68,6 +68,8 @@ const appSharedModulePattern = new RegExp(
         /src[\\/](?:content[\\/]velite|utils[\\/]inkstone|features[\\/]post-listing[\\/]OtherCards|layouts[\\/]PageLayout)\.tsx?$/.source,
         /arrow-right|github-logo|dot-outline-fill|icons[\\/]ph[\\/]list/.source,
         /vite[\\/]preload-helper/.source,
+        /src[\\/]utils[\\/]index\.tsx$/.source,
+        /@solidjs[\\/]router[\\/]dist[\\/]data[\\/]events\.js$/.source,
     ].join("|"),
 );
 
@@ -82,27 +84,17 @@ const definedVars = {
     __CONTENT_ZH_NAV: JSON.stringify(contentStatsZhNavPages),
     __CONTENT_TOTAL_CATEGORIES: JSON.stringify(contentStatsTotalCategories),
     __SITE_CONF: BlogConf,
+    // Inline individual fields so each property read does not embed the full config object.
+    ...Object.fromEntries(Object.entries(BlogConf).map(([key, value]) => [`__SITE_CONF.${key}`, JSON.stringify(value)])),
     __CONTENT_FRIENDS: JSON.stringify(friendsConfig),
     __SW_HASH: JSON.stringify(swHash),
 };
-export default defineConfig(({ command }) => ({
+export default defineConfig({
     plugins: [
         veliteClientBoundary,
-        // SolidStart's dev manifest re-imports virtual styles with `?inline`.
-        // Mark UnoCSS's root-relative ID as virtual so Vite 8 does not apply
-        // filesystem access checks before UnoCSS can load it.
-        {
-            name: "unocss:ssr-inline-virtual-module",
-            enforce: "pre",
-            resolveId(id) {
-                if (id === "/__uno.css?inline") {
-                    return `\0${id}`;
-                }
-            },
-        },
         UnoCSS(),
-        solidStart({ extensions: ["ts", "tsx", "js", "jsx"] }),
-        nitro(),
+        solid({ start: { renderMode: "async" }, ssr: true, extensions: [".jsx", ".tsx"] }),
+        fileRoutes(),
         velite(),
         Icons({ autoInstall: true, compiler: "solid" }),
         ServiceWorkerBuild(__dirname),
@@ -111,24 +103,19 @@ export default defineConfig(({ command }) => ({
     // Expose only the non-sensitive API host to the browser bundle. Keep the
     // token secret out of client-side import.meta.env.
     envPrefix: ["VITE_", "INKSTONE_API_"],
-    // UnoCSS 66 locates Vite's CSS post-plugin through the root build dir.
-    // Keep this build-only: Nitro dev otherwise serves stale production files.
-    build: command === "build" ? { outDir: ".output/public" } : undefined,
-    nitro: {
-        preset: "static",
-        prerender: {
-            crawlLinks: true,
-            routes: ["/", ...contentStatsEnPosts, "/404/"],
-        },
+    optimizeDeps: {
+        include: ["typesafe-i18n", "typesafe-i18n/detectors", "typesafe-i18n/utils"],
     },
+    build: { assetsDir: "_build/assets" },
     environments: {
         client: {
             build: {
+                assetsDir: "_build/assets",
                 rolldownOptions: {
                     output: {
                         codeSplitting: {
                             groups: [
-                                // SolidStart exposes route modules as separate entries. Merge the
+                                // File routes expose separate entries. Merge the
                                 // small app-shell modules that those entries commonly preload.
                                 {
                                     name: "app-shared",
@@ -141,15 +128,6 @@ export default defineConfig(({ command }) => ({
                 },
             },
         },
-        // Nitro's Vite builder currently requires an input for the final
-        // environment even though the static preset only deploys public files.
-        nitro: {
-            build: {
-                rolldownOptions: {
-                    input: "./tools/nitro/static-entry.ts",
-                },
-            },
-        },
     },
     resolve: {
         alias: {
@@ -158,4 +136,4 @@ export default defineConfig(({ command }) => ({
         },
     },
     define: definedVars,
-}));
+});

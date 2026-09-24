@@ -1,5 +1,5 @@
 import { useParams } from "@solidjs/router";
-import { Show, createEffect, createResource, createSignal } from "solid-js";
+import { Show, createMemo } from "solid-js";
 import ArticlePage, { ArticleNotFound } from "~/layouts/ArticlePage";
 import { VELITE_NOT_FOUND, getPostBySlug, postUrl } from "~/content/velite";
 import type { VelitePostPublic } from "~/content/velite";
@@ -10,22 +10,14 @@ type PostPayload = VelitePostPublic | typeof VELITE_NOT_FOUND | null | undefined
 export default function PostRoute() {
     const params = useParams();
     const slug = () => String(params.slug || "");
-    const [post] = createResource(slug, getPostBySlug);
+    const post = createMemo(async () => getPostBySlug(slug()));
     const resolved = () => post() as PostPayload;
-    const [stale, setStale] = createSignal<PostPayload>();
-
-    createEffect(() => {
-        const v = resolved();
-        if (!v || v === VELITE_NOT_FOUND) return;
-        setStale(v);
-    });
-
-    const displayed = () => resolved() ?? stale();
+    const displayed = resolved;
 
     return (
         <Show keyed when={displayed()} fallback={<section class="" />}>
             {(p) => {
-                if (p === VELITE_NOT_FOUND) return <ArticleNotFound />;
+                if ("__veliteNotFound" in p) return <ArticleNotFound />;
 
                 const html = p.html ?? "";
                 const isEncrypted = p.encrypted === true;

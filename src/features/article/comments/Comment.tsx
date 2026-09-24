@@ -1,12 +1,12 @@
-import { Accessor, ErrorBoundary, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
+import { Accessor, Errored, Show, Loading, createMemo, createSignal, onSettled } from "solid-js";
 import CommentThread from "./CommentThread";
-import { Translations } from "~/i18n/i18n-types";
+import { TranslationFunctions } from "~/i18n/i18n-types";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowUpRight from "~icons/ph/arrow-up-right";
 
 interface CommentsProps {
     pageURL: string
-    LL: Accessor<Translations>
+    LL: Accessor<TranslationFunctions>
 }
 
 type CommentItem = {
@@ -27,7 +27,7 @@ type CommentPayload = {
     totalKnown: boolean;
 };
 
-const sortCommentTree = (comments: CommentItem[]) =>
+const sortCommentTree = (comments: CommentItem[]): CommentItem[] =>
     comments
         .map((comment, index) => ({
             comment: {
@@ -78,7 +78,6 @@ const CommentSkeleton = () => (
 
 export default function Comments({ pageURL, LL }: CommentsProps) {
     const [visible, setVisible] = createSignal(false)
-    const [url, setUrl] = createSignal<string | null>(null)
     const getDiscussionUrlFromMeta = () => {
         if (typeof document === "undefined") return null;
         const el = document.querySelector('meta[name="inkstone:discussion"]');
@@ -136,9 +135,9 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
         }
         return { total, discussionUrl, comments, totalKnown };
     };
-    const [resource] = createResource(url, fetchLegacyComments)
-    let self;
-    createEffect(() => {
+    const resource = createMemo(() => visible() ? fetchLegacyComments(targetPath()) : undefined)
+    let self: HTMLDivElement | undefined;
+    onSettled(() => {
         const observer = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
                 setVisible(true)
@@ -146,59 +145,52 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
             }
         })
         observer.observe(self as HTMLDivElement)
+        return () => observer.disconnect();
     })
 
-    createEffect(() => {
-        if (!visible()) {
-            setUrl(null);
-            return;
-        }
-        setUrl(targetPath());
-    })
 
     return (
         <div ref={self!} id="comments" class="pt-8">
             <Show when={visible()}>
-                <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">
-                        {LL && LL().post.COMMENTS}
-                    </h3>
-                    <Show when={!resource.loading && resource()}>
-                        {(payload) => (
-                            <Show
-                                when={payload().discussionUrl}
-                                fallback={
-                                    <span class="text-sm text-[var(--c-text-subtle)]">
-                                        {payload().totalKnown ? "尚未创建讨论" : "评论暂不可用"}
-                                    </span>
-                                }
-                            >
-                                <a
-                                    href={payload().discussionUrl!}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
-                                >
+                <Loading fallback={<CommentSkeleton />}>
+                    <Errored fallback={<span></span>}>
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">
+                                {LL && LL().post.COMMENTS()}
+                            </h3>
+                            <Show when={resource()}>
+                                {(payload) => (
                                     <Show
-                                        when={payload().totalKnown}
-                                        fallback={<span>前往 GitHub 讨论</span>}
+                                        when={payload().discussionUrl}
+                                        fallback={
+                                            <span class="text-sm text-[var(--c-text-subtle)]">
+                                                {payload().totalKnown ? "尚未创建讨论" : "评论暂不可用"}
+                                            </span>
+                                        }
                                     >
-                                        共 {payload().total} 条评论
+                                        <a
+                                            href={payload().discussionUrl!}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
+                                        >
+                                            <Show
+                                                when={payload().totalKnown}
+                                                fallback={<span>前往 GitHub 讨论</span>}
+                                            >
+                                                共 {payload().total} 条评论
+                                            </Show>
+                                            <IconArrowUpRight class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--c-link)]" />
+                                        </a>
                                     </Show>
-                                    <IconArrowUpRight class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--c-link)]" />
-                                </a>
+                                )}
                             </Show>
-                        )}
-                    </Show>
-                </div>
-                <ErrorBoundary fallback={<span></span>}>
-                    <Show when={resource.loading}>
-                        <CommentSkeleton />
-                    </Show>
-                    <Show when={!resource.loading && (resource()?.comments ?? []).length > 0}>
-                        <CommentThread comments={resource()?.comments ?? []} />
-                    </Show>
-                </ErrorBoundary>
+                        </div>
+                        <Show when={(resource()?.comments ?? []).length > 0}>
+                            <CommentThread comments={resource()?.comments ?? []} />
+                        </Show>
+                    </Errored>
+                </Loading>
             </Show>
         </div>
     )

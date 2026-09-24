@@ -8,7 +8,7 @@ type BlogProps = {
     blog: PostListItem,
 }
 
-const LatestBlog = ({ blog }: BlogProps) => {
+const LatestBlog = (props: BlogProps) => {
     return (
         <>
             <div class="pt-10 md:pt-14 pb-12 border-b border-[var(--c-border)]">
@@ -18,18 +18,18 @@ const LatestBlog = ({ blog }: BlogProps) => {
                             <IconPointFilled width={18} height={18} class="animate-pulse scale-200 origin-center" />
                             Latest
                         </span>
-                        <PostMeta date={blog.date} category={blog.category} />
+                        <PostMeta date={props.blog.date} category={props.blog.category} />
                     </div>
-                    <a link={true} href={blog.slug} class="group block space-y-3">
-                        <h2 title={blog.title} class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)] decoration-[var(--c-text)] decoration-1.5 underline-offset-6 group-hover:underline">
-                            {blog.title}
+                    <a link={true} href={props.blog.slug} class="group block space-y-3">
+                        <h2 title={props.blog.title} class="text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)] decoration-[var(--c-text)] decoration-1.5 underline-offset-6 group-hover:underline">
+                            {props.blog.title}
                         </h2>
-                        <Show when={blog.subtitle}>
-                            <h3 title={blog.subtitle} class="text-xl md:text-2xl mt-2 font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
-                                {blog.subtitle}
+                        <Show when={props.blog.subtitle}>
+                            <h3 title={props.blog.subtitle} class="text-xl md:text-2xl mt-2 font-semibold text-[var(--c-text-muted)] leading-relaxed font-serif">
+                                {props.blog.subtitle}
                             </h3>
                         </Show>
-                        <p class="text-[var(--c-text)] mt-2 opacity-85 leading-[1.75]" innerText={blog.summary} />
+                        <p class="text-[var(--c-text)] mt-2 opacity-85 leading-[1.75]" innerText={props.blog.summary} />
                         <div class="flex items-center mt-4">
                             <span class="latest-readmore inline-flex items-center gap-1 text-sm font-medium text-[var(--c-text)] transition-colors hover:text-[var(--c-link)]">
                                 <span class="peer">继续阅读</span>

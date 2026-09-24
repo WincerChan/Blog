@@ -1,68 +1,37 @@
-import { MetaProvider } from "@solidjs/meta";
-import { Router } from "@solidjs/router";
-import { FileRoutes } from "@solidjs/start/router";
-import { Suspense, createEffect, onMount } from "solid-js";
+import { Loading, createEffect, onSettled } from "solid-js";
+import { getRequestEvent, isServer } from "@solidjs/web";
+import { Router } from "./router";
 import Footer from "./site/footer";
 import Header from "./site/header";
 import TypesafeI18n from "./i18n/i18n-solid";
 import ApplicationMeta from "./site/seo/ApplicationMeta";
-
-import { type RouteSectionProps } from "@solidjs/router";
-import {
-    globalStore,
-    setGlobalStore,
-} from "./features/theme";
-import { applyTheme } from "./features/theme";
-import { Locale } from "./utils/locale";
-
-import { getRequestEvent, isServer } from "solid-js/web";
-import { loadLocale } from "./i18n/i18n-util.sync";
-import { trackEngage, trackPage } from "./utils/track";
-
-const normalizePath = (pathname: string) =>
-    pathname.endsWith("/") ? pathname : `${pathname}/`;
-
-const detectLocaleFromPath = (pathname: string): Locale => {
-    const p = normalizePath(pathname);
-    if (p.endsWith("-en/")) return "en";
-    if ((__CONTENT_EN_POSTS as unknown as string[]).includes(p)) return "en";
-    return "zh-CN";
-};
-
-const preloadHook = (props: RouteSectionProps<unknown>) => {
-    return (
-        <MetaProvider>
-            <ApplicationMeta />
-            <Suspense>{props.children}</Suspense>
-        </MetaProvider>
-    );
-};
+import { theme, applyTheme } from "./features/theme";
+import { detectLocaleFromPath } from "./utils/locale";
+import { registerServiceWorker } from "./utils/sw";
+import '@unocss/reset/tailwind.css';
+import "~/styles/color.css";
+import "~/styles/base.css";
+import "~/styles/article.css";
+import "virtual:uno.css";
 
 export default function App() {
-    let locale: Locale = "zh-CN";
-    if (isServer) {
-        const evt = getRequestEvent();
-        const url = evt?.request?.url;
-        const pathname = url ? new URL(url).pathname : "/";
-        locale = detectLocaleFromPath(pathname);
-        setGlobalStore({ locale: locale });
-        loadLocale(locale);
-    }
-    createEffect(() => {
-        applyTheme(globalStore.theme);
-    });
-    onMount(() => {
-        setGlobalStore({ trackPage, trackEngage });
+    const pathname = isServer
+        ? new URL(getRequestEvent()!.request.url).pathname
+        : window.location.pathname;
+    createEffect(theme, applyTheme);
+    onSettled(() => {
+        if (import.meta.env.PROD) registerServiceWorker();
     });
     return (
-        <TypesafeI18n locale={globalStore.locale as Locale}>
-            <div class="min-h-screen flex flex-col">
-                <Header />
-                <Router root={(props) => preloadHook(props)}>
-                    <FileRoutes />
-                </Router>
-                <Footer />
-            </div>
+        <TypesafeI18n locale={detectLocaleFromPath(pathname)}>
+            <ApplicationMeta />
+            <Router>{(props) => (
+                <div class="min-h-screen flex flex-col">
+                    <Header />
+                    <Loading>{props.children}</Loading>
+                    <Footer />
+                </div>
+            )}</Router>
         </TypesafeI18n>
     );
 }

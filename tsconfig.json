@@ -7,14 +7,14 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "preserve",
-    "jsxImportSource": "solid-js",
+    "jsxImportSource": "@solidjs/web",
     "allowJs": true,
     "strict": true,
     "noEmit": true,
     "types": [
-      "@solidjs/start/env",
-      "node",
-      "unplugin-icons/types/solid",
+      "vite/client",
+      "filesystem-routing/types",
+      "node"
     ],
     "isolatedModules": true,
     "paths": {

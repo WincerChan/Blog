@@ -1,12 +1,11 @@
 import {
-    ErrorBoundary,
+    Errored,
     For,
     Show,
-    Suspense,
+    Loading,
     createMemo,
-    createResource,
     createSignal,
-    onMount,
+    onSettled,
 } from "solid-js";
 import LazyImg from "~/ui/media/Img";
 import { fetcher } from "~/utils";
@@ -79,12 +78,15 @@ const RealItem = ({ poster, title, type, date, url }: Item) => {
 };
 
 const Life = ({ page, children }) => {
-    const [url, setUrl] = createSignal();
+    const [url, setUrl] = createSignal<string>();
     const year = createMemo(() => new Date().getFullYear());
-    onMount(() => {
+    onSettled(() => {
         setUrl(inkstoneApi("douban/marks"));
     });
-    const [resource] = createResource(url, fetcher);
+    const resource = createMemo(() => {
+        const target = url();
+        return target ? fetcher(target) : undefined;
+    });
     const getItems = () => resource()?.items ?? [];
     const { content, ...rest } = page;
     return (
@@ -94,10 +96,10 @@ const Life = ({ page, children }) => {
                 文字、光影与沉浸的梦（{year()}）
             </h3>
             <div class="mt-6 grid grid-cols-3 gap-4 md:grid-cols-5 md:gap-5">
-                <Suspense fallback={<FakeItems limit={8} />}>
-                    <ErrorBoundary
+                <Loading fallback={<FakeItems limit={8} />}>
+                    <Errored
                         fallback={(err) => (
-                            <b class="">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err}`}</b>
+                            <b class="">{`获取数据时出现了一些问题，控制台或许有详细的原因。${err()}`}</b>
                         )}
                     >
                         <Show when={resource()}>
@@ -105,8 +107,8 @@ const Life = ({ page, children }) => {
                                 {(item) => <RealItem {...item} />}
                             </For>
                         </Show>
-                    </ErrorBoundary>
-                </Suspense>
+                    </Errored>
+                </Loading>
             </div>
         </ArticlePage>
     );

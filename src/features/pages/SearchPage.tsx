@@ -1,5 +1,5 @@
 import { useSearchParams } from "@solidjs/router";
-import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, on, untrack } from "solid-js";
+import { Errored, For, Show, Loading, createEffect, createMemo, createSignal, untrack } from "solid-js";
 import { isBrowser, range } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowLeft from "~icons/ph/arrow-left";
@@ -58,9 +58,6 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
     onSortChange: (nextSort: SortType) => void;
     queryText: () => string | undefined;
 }) => {
-    if (data().error) {
-        return errorMsg(data().error);
-    }
     const formatDateISO = (value: string) => {
         const dateObj = new Date(value);
         if (!dateObj || Number.isNaN(dateObj.getTime())) return String(value ?? "");
@@ -78,21 +75,20 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
         return /(?:^|\s)tags?:[^\s]+/.test(value);
     };
     const isSubtitleMatched = (matched: any) => matched?.subtitle === true;
-    const elapsed = data().elapsed_ms ?? "--";
+    const elapsed = () => data().elapsed_ms ?? "--";
     return (
-        <>
+        <Show when={!data().error} fallback={errorMsg(data().error ?? "")}>
             <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-[var(--c-text-subtle)]">
-                <span>找到 {data().total} 条记录，耗时 {elapsed}ms</span>
+                <span>找到 {data().total} 条记录，耗时 {elapsed()}ms</span>
                 <div class="flex items-center gap-2">
                     <span>排序：</span>
                     <button
                         type="button"
                         onClick={() => onSortChange("relevance")}
-                        class="transition-colors"
-                        classList={{
+                        class={["transition-colors", {
                             "font-semibold text-[var(--c-text)]": sort() === "relevance",
                             "text-[var(--c-text-subtle)] hover:text-[var(--c-text)]": sort() !== "relevance",
-                        }}
+                        }]}
                     >
                         相关度
                     </button>
@@ -100,11 +96,10 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                     <button
                         type="button"
                         onClick={() => onSortChange("latest")}
-                        class="transition-colors"
-                        classList={{
+                        class={["transition-colors", {
                             "font-semibold text-[var(--c-text)]": sort() === "latest",
                             "text-[var(--c-text-subtle)] hover:text-[var(--c-text)]": sort() !== "latest",
-                        }}
+                        }]}
                     >
                         最新
                     </button>
@@ -113,8 +108,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
             <For each={data().hits}>
                 {(ret, idx) => (
                     <div
-                        class="mt-6 first:mt-4 border-b border-[var(--c-border)] pb-6"
-                        classList={{ "border-b-0 pb-0": idx() === data().hits.length - 1 }}
+                        class={["mt-6 first:mt-4 border-b border-[var(--c-border)] pb-6", { "border-b-0 pb-0": idx() === data().hits.length - 1 }]}
                     >
                         <h3 class="mt-3! mb-1! text-xl md:text-2xl font-medium font-sans">
                             <a class="text-[var(--c-text)]! no-underline!" href={getPathname(ret.url)} innerHTML={ret.title}></a>
@@ -126,16 +120,15 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                             <span class="search-snippet" innerHTML={ret.content ? `...${ret.content}...` : ""} />
                         </p>
                         <div class="mt-3 flex items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)] whitespace-nowrap overflow-hidden">
-                            <time dateTime={formatDateISO(ret.published_at)}>
+                            <time datetime={formatDateISO(ret.published_at)}>
                                 {formatDateISO(ret.published_at)}
                             </time>
                             {ret.category && <span class="text-[var(--c-text-subtle)]">/</span>}
                             {ret.category && (
                                 <span
-                                    class="text-[var(--c-text-subtle)] transition-colors"
-                                    classList={{
+                                    class={["text-[var(--c-text-subtle)] transition-colors", {
                                         "bg-[var(--c-selection)] rounded px-1 text-[var(--c-text)]": ret.matched?.category,
-                                    }}
+                                    }]}
                                 >
                                     {ret.category}
                                 </span>
@@ -199,7 +192,7 @@ const SearchResultComponent = ({ data, currentPage, updatePage, sort, onSortChan
                     border-radius: 0.25rem;
                 }
             `}</style>
-        </>
+        </Show>
     )
 }
 
@@ -254,9 +247,11 @@ const Search = ({ page }) => {
             setQuery(next);
         }
     };
-    createEffect(on([() => serachParams.q, () => serachParams.sort], () => {
-        const q = serachParams.q;
-        const nextSort = serachParams.sort === "latest" ? "latest" : "relevance";
+    createEffect(
+        () => ({ q: serachParams.q, sort: serachParams.sort }),
+        ({ q: rawQuery, sort: searchSort }) => {
+        const q = Array.isArray(rawQuery) ? rawQuery[0] ?? "" : rawQuery;
+        const nextSort = searchSort === "latest" ? "latest" : "relevance";
         setSort(nextSort);
         if (!q) {
             setInput("");
@@ -272,11 +267,15 @@ const Search = ({ page }) => {
             return;
         }
         setQueryIfChanged({ q: normalized, page: 1, sort: nextSort });
-    }));
-    createEffect(() => {
-        setTimeout(() => scrollElem?.scrollIntoView({ behavior: 'smooth', block: 'start' }), currentPage() * 0)
-    })
-    const [resource] = createResource(query, fetchSearchResult)
+    });
+    createEffect(currentPage, () => {
+        const timer = setTimeout(() => scrollElem?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+        return () => clearTimeout(timer);
+    });
+    const resource = createMemo(() => {
+        const current = query();
+        return current ? fetchSearchResult(current) : undefined;
+    });
     // 从 URL 读取
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -401,8 +400,8 @@ const Search = ({ page }) => {
             </div>
             <div class="mt-10">
                 <Show when={query()}>
-                    <Suspense fallback={<FakeResult limit={4} />}>
-                        <ErrorBoundary fallback={err => errorMsg(err)}>
+                    <Loading fallback={<FakeResult limit={4} />}>
+                        <Errored fallback={err => errorMsg(String(err()))}>
                             <Show when={resource()}>
                                 <SearchResultComponent
                                     data={resource}
@@ -413,8 +412,8 @@ const Search = ({ page }) => {
                                     queryText={() => query()?.q}
                                 />
                             </Show>
-                        </ErrorBoundary>
-                    </Suspense>
+                        </Errored>
+                    </Loading>
                 </Show>
             </div>
         </ArticlePage >

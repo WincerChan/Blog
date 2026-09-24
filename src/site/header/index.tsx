@@ -10,9 +10,9 @@ import Tools from "./Tools";
 const Header = () => {
     const [menuOpen, setMenuOpen] = createSignal(false);
 
-    createEffect(() => {
+    createEffect(menuOpen, (open) => {
         if (!isBrowser) return;
-        document.body.style.overflow = menuOpen() ? "hidden" : "";
+        document.body.style.overflow = open ? "hidden" : "";
     });
 
     onCleanup(() => {
@@ -36,7 +36,7 @@ const Header = () => {
                         <button
                             type="button"
                             aria-label={menuOpen() ? "Close menu" : "Menu"}
-                            aria-expanded={menuOpen()}
+                            aria-expanded={menuOpen() ? "true" : "false"}
                             onClick={() => setMenuOpen(!menuOpen())}
                             class="md:hidden inline-flex items-center justify-center text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors"
                         >

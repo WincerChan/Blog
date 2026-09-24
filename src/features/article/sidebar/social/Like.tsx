@@ -1,4 +1,4 @@
-import { ErrorBoundary, Show, Suspense, createEffect, createResource, createSignal, onCleanup, onMount } from "solid-js";
+import { Errored, Show, Loading, createEffect, createMemo, createSignal, onSettled } from "solid-js";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconHeart from "~icons/ph/heart";
 import IconHeartFill from "~icons/ph/heart-fill";
@@ -14,7 +14,6 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
     const [likes, setLikes] = createSignal(0)
     const [disabled, setDisabled] = createSignal(false)
     const [visible, setVisible] = createSignal(false)
-    const [url, setUrl] = createSignal<string | null>(null)
     const fetchKudos = async (targetUrl: string | null) => {
         if (!targetUrl) return null;
         try {
@@ -25,7 +24,6 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
             return null;
         }
     }
-    const [resource] = createResource(url, fetchKudos)
     const [animate, setAnimate] = createSignal(false)
     const buildKudosUrl = (token: string) => {
         const url = new URL(inkstoneApi("kudos"));
@@ -33,7 +31,7 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
         return url.toString();
     };
     let buttonRef: HTMLButtonElement | undefined;
-    onMount(() => {
+    onSettled(() => {
         if (!buttonRef || typeof IntersectionObserver === "undefined") {
             setVisible(true);
             return;
@@ -45,29 +43,18 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
             }
         })
         observer.observe(buttonRef);
-        onCleanup(() => observer.disconnect());
+        return () => observer.disconnect();
     })
-    createEffect(() => {
-        if (!visible()) {
-            setUrl(null);
-            return;
-        }
-        if (!inkstoneToken) {
-            setUrl(null);
-            return;
-        }
-        const slug = normalizeKudosPath(pageURL);
-        if (!slug) {
-            setUrl(null);
-            return;
-        }
-        setUrl(buildKudosUrl(inkstoneToken));
-    })
+    const url = createMemo(() => visible() && inkstoneToken && normalizeKudosPath(pageURL)
+        ? buildKudosUrl(inkstoneToken)
+        : null);
+    const resource = createMemo(() => url() ? fetchKudos(url()) : null)
     const click = async () => {
-        if (!url() || !inkstoneToken) return
+        const target = url();
+        if (!target || !inkstoneToken) return
         setDisabled(true)
         try {
-            const resp = await fetch(url(), { method: "POST", credentials: "include" })
+            const resp = await fetch(target, { method: "POST", credentials: "include" })
             if (!resp.ok) {
                 setDisabled(false)
                 return
@@ -87,8 +74,7 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
         return (number / 1000).toFixed(1) + 'K'; // Return the number in "K" format if it's less than a million
         // You can continue with more conditions for millions, billions, etc.
     }
-    createEffect(() => {
-        const data = resource()
+    createEffect(resource, (data) => {
         if (!data || typeof data !== "object") return;
         if (typeof data.count === "number") setLikes(data.count)
         if (typeof data.interacted === "boolean") {
@@ -103,8 +89,7 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
             disabled={disabled()}
             onClick={click}
             title={liked() ? `${likes()} 人已点赞` : "Like"}
-            class="inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-red-600 disabled:cursor-not-allowed"
-            classList={{ "text-red-600": liked() }}
+            class={["inline-flex items-center gap-2 text-sm text-[var(--c-text-muted)] transition-colors hover:text-red-600 disabled:cursor-not-allowed", { "text-red-600": liked() }]}
         >
             <Show
                 when={liked()}
@@ -112,13 +97,13 @@ const Like = ({ pageURL, inkstoneToken }: LikeProps) => {
             >
                 <IconHeartFill width={26} height={26} class="block transition-colors" />
             </Show>
-            <Suspense fallback={fallback}>
-                <ErrorBoundary fallback={fallback}>
+            <Loading fallback={fallback}>
+                <Errored fallback={fallback}>
                     <Show when={resource()} fallback={fallback}>
                         <span class="tabular-nums">{format(likes())}</span>
                     </Show>
-                </ErrorBoundary>
-            </Suspense>
+                </Errored>
+            </Loading>
         </button>
     )
 }

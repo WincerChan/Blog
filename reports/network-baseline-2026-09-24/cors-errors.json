@@ -1,0 +1,9 @@
+[
+  "Access to fetch at 'https://inkstone.itswincer.com/v2/douban/marks' from origin 'http://127.0.0.1:4173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+  "Failed to load resource: net::ERR_FAILED",
+  "TypeError: Failed to fetch\n    at Or (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:45404)\n    at http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:2619\n    at E (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:3324)\n    at A (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:2601)\n    at Object.fn (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:3175)\n    at he (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:5926)\n    at P (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:5706)\n    at _e (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:7080)\n    at ye (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:7905)\n    at ve (http://127.0.0.1:4173/_build/assets/app-shared-VOPZliXo.js:1:7315)",
+  "Access to fetch at 'https://inkstone.itswincer.com/v2/comments?post_id=%2Flife%2F' from origin 'http://127.0.0.1:4173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+  "Failed to load resource: net::ERR_FAILED",
+  "Access to fetch at 'https://inkstone.itswincer.com/v2/kudos?inkstone_token=[REDACTED]' from origin 'http://127.0.0.1:4173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+  "Failed to load resource: net::ERR_FAILED"
+]

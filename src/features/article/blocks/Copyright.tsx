@@ -24,7 +24,7 @@ const Copyright = ({ updated }: CopyrightProps) => {
                         <span class="text-[var(--c-text-subtle)]">
                             {labels()?.[1]?.()}
                         </span>
-                        <time dateTime={updatedISO()} class="font-mono tabular-nums text-[var(--c-text)]">
+                        <time datetime={updatedISO()} class="font-mono tabular-nums text-[var(--c-text)]">
                             {formatDateTime(updated)}
                         </time>
                     </div>

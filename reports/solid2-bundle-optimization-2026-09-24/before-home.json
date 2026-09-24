@@ -1,0 +1,137 @@
+{
+  "recordedAt": "2026-09-24T11:50:40.370Z",
+  "browser": "153.0.8010.49",
+  "base": "http://127.0.0.1:4173",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "method": "Fresh context per page; HTTP cache disabled; service workers blocked; no scrolling or interactions; at least 5s after load, then 1s network quiet, maximum 20s; page CDP Network events only; transfer = loadingFinished.encodedDataLength; resource = dataReceived.dataLength",
+  "pages": [
+    {
+      "label": "首页",
+      "path": "/",
+      "title": "首页 · Wincer's Blog",
+      "requestCount": 8,
+      "transferBytes": 92679,
+      "resourceBytes": 303239,
+      "failed": 0,
+      "httpErrors": 0,
+      "pending": 0,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:4173/",
+          "method": "GET",
+          "type": "Document",
+          "status": 200,
+          "transferBytes": 9661,
+          "resourceBytes": 41488,
+          "finished": true,
+          "failed": false,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/virtual_solid-ssr-entry-client-DtVvNFEr.css",
+          "method": "GET",
+          "type": "Stylesheet",
+          "status": 200,
+          "transferBytes": 9736,
+          "resourceBytes": 50838,
+          "finished": true,
+          "failed": false,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/app-shared-BX3motSg.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 55095,
+          "resourceBytes": 163809,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/utils-BW4K8Wb2.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 967,
+          "resourceBytes": 1168,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/events-BNF3Kc3X.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 1521,
+          "resourceBytes": 2737,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/index-CEMVAU4q.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 1915,
+          "resourceBytes": 3329,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/virtual_solid-ssr-entry-client-BNtuV9fe.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 13078,
+          "resourceBytes": 39463,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/favicon/light.svg",
+          "method": "GET",
+          "type": "Other",
+          "status": 200,
+          "transferBytes": 706,
+          "resourceBytes": 407,
+          "finished": true,
+          "failed": false,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity"
+        }
+      ]
+    }
+  ]
+}

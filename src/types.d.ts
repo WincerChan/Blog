@@ -30,3 +30,8 @@ declare const __SITE_CONF: {
         url: string
     },
 }
+
+declare module "~icons/*" {
+    const icon: import("solid-js").Component<import("@solidjs/web").JSX.IntrinsicElements["svg"]>;
+    export default icon;
+}

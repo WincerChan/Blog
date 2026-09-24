@@ -1,5 +1,5 @@
 import { Show, createMemo } from "solid-js";
-import { useHead } from "@solidjs/meta";
+import { useHead } from "@solidjs/web";
 import MainMeta from "./MainMeta";
 import OpenGraph from "./OpenGraph";
 import { HeadParams, HeadParamsInput, resolveHeadParams } from "./types";
@@ -75,18 +75,17 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
 
                 useHead({
                     tag: "script",
-                    id: "json-ld",
+                    key: "json-ld",
                     props: {
                         type: "application/ld+json",
                         get children() {
                             return jsonLd();
                         },
                     },
-                    setting: { close: true, escape: false },
                 });
                 useHead({
                     tag: "meta",
-                    id: "inkstone-token",
+                    key: "inkstone-token",
                     props: {
                         name: "inkstone:token",
                         content: params.inkstoneToken ?? "",
@@ -94,7 +93,7 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
                 });
                 useHead({
                     tag: "meta",
-                    id: "inkstone-path",
+                    key: "inkstone-path",
                     props: {
                         name: "inkstone:path",
                         content: inkstonePath,
@@ -102,7 +101,7 @@ const HeadTag = (props: { headParams: HeadParamsInput }) => {
                 });
                 useHead({
                     tag: "meta",
-                    id: "inkstone-discussion",
+                    key: "inkstone-discussion",
                     props: {
                         name: "inkstone:discussion",
                         content: params.discussionUrl ?? "",

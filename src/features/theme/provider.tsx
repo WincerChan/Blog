@@ -1,21 +1,6 @@
-import { createStore } from "solid-js/store";
-import { isBrowser } from "~/utils";
+import { createSignal } from "solid-js";
 import { getInitialTheme, type ThemeValue } from "./theme";
 
-type GlobalStore = {
-    theme: ThemeValue;
-    locale: string;
-    trackPage: (pathname?: string, token?: string) => void;
-    trackEngage: (useBeacon?: boolean) => void;
-};
+const [theme, setTheme] = createSignal<ThemeValue>(getInitialTheme());
 
-const initialStore: GlobalStore = {
-    theme: getInitialTheme(),
-    locale: isBrowser ? document.documentElement.lang || "zh-CN" : "zh-CN",
-    trackPage: () => undefined,
-    trackEngage: () => undefined,
-};
-
-const [globalStore, setGlobalStore] = createStore<GlobalStore>(initialStore);
-
-export { globalStore, setGlobalStore };
+export { theme, setTheme };

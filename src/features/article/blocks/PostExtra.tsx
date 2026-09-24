@@ -1,5 +1,5 @@
 import { Accessor, Show } from "solid-js";
-import type { Translations } from "~/i18n/i18n-types";
+import type { TranslationFunctions } from "~/i18n/i18n-types";
 import type { ArticleMeta, RelatedPost } from "~/features/article/types";
 import Copyright from "~/features/article/blocks/Copyright";
 import Relates from "~/features/article/blocks/Relates";
@@ -15,7 +15,7 @@ const PostExtra = ({
     rawBlog: ArticleMeta;
     relates: RelatedPost[];
     hideComment?: boolean;
-    LL: Accessor<Translations>;
+    LL: Accessor<TranslationFunctions>;
 }) => {
     return (
         <>

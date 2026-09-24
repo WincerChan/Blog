@@ -1,5 +1,5 @@
-import { Accessor, For, createSignal, onMount, Show } from "solid-js";
-import { Properties } from "solid-js/web";
+import { Accessor, For, createSignal, onSettled, Show } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 import IconShieldCheck from "~icons/ph/shield-check";
 import IconReply from "~icons/ph/arrow-bend-up-left";
@@ -34,7 +34,7 @@ const Comment = ({
     isChild,
     replyState,
 }: CommentProps & { replyState: ReplyState }) => {
-    let self: HTMLDivElement | null = null;
+    let self!: HTMLDivElement;
     const initial = (value: string) => {
         const trimmed = String(value ?? "").trim();
         if (!trimmed) return "?";
@@ -53,7 +53,7 @@ const Comment = ({
         replyState.setActiveId(isActive() ? null : id);
     };
     const shouldShowReply = () => source !== "legacy";
-    onMount(() => {
+    onSettled(() => {
         if (!self) return;
         // add all a tag with target="_blank", rel="noopener noreferrer"
         const aTags = self.querySelectorAll("a")
@@ -94,7 +94,7 @@ const Comment = ({
                                     Author
                                 </span>
                             </Show>
-                            <time class="font-mono tabular-nums" dateTime={formatDateISO(date)}>
+                            <time class="font-mono tabular-nums" datetime={formatDateISO(date)}>
                                 {formatDateISO(date)}
                             </time>
                         </div>
@@ -148,7 +148,7 @@ const CommentThread = (props: {
     const [activeId, setActiveId] = createSignal<string | null>(null);
     const replyState = props.replyState ?? { activeId, setActiveId };
     return (
-        <div classList={{ "space-y-6": !props.isChild, "space-y-5": props.isChild }}>
+        <div class={{ "space-y-6": !props.isChild, "space-y-5": !!props.isChild }}>
             <For each={props.comments}>
                 {comment => (
                     <Comment {...comment} isChild={props.isChild} replyState={replyState} />

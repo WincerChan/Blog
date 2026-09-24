@@ -1,0 +1,110 @@
+{
+  "method": "Client-only Vite write:false builds; entry + home route + recursive static imports; br is Node Brotli quality 11 estimate without HTTP overhead; small cross-build differences may include the time-based service-worker hash",
+  "experiments": [
+    {
+      "variant": "baseline",
+      "count": 3,
+      "bytes": 166693,
+      "br": 52272,
+      "modules": [
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/core/optimistic.js",
+          "renderedLength": 7090
+        },
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/store/utils.js",
+          "renderedLength": 14554
+        }
+      ],
+      "files": [
+        "_build/assets/index-DEcwrNeT.js",
+        "_build/assets/virtual_solid-ssr-entry-client-C32hAk3E.js",
+        "_build/assets/app-shared-CBgdzoXD.js"
+      ]
+    },
+    {
+      "variant": "direct-signals",
+      "count": 3,
+      "bytes": 167329,
+      "br": 52342,
+      "modules": [
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/core/optimistic.js",
+          "renderedLength": 7090
+        },
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/store/utils.js",
+          "renderedLength": 14554
+        }
+      ],
+      "files": [
+        "_build/assets/index-B3qa69BW.js",
+        "_build/assets/virtual_solid-ssr-entry-client-DRf5zQG-.js",
+        "_build/assets/app-shared-BwjOEdji.js"
+      ]
+    },
+    {
+      "variant": "sideeffects",
+      "count": 3,
+      "bytes": 166693,
+      "br": 52257,
+      "modules": [
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/core/optimistic.js",
+          "renderedLength": 7090
+        },
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/store/utils.js",
+          "renderedLength": 14554
+        }
+      ],
+      "files": [
+        "_build/assets/index-DEcwrNeT.js",
+        "_build/assets/virtual_solid-ssr-entry-client-Dzwz1GLs.js",
+        "_build/assets/app-shared-CBgdzoXD.js"
+      ]
+    },
+    {
+      "variant": "meta-direct",
+      "count": 3,
+      "bytes": 164870,
+      "br": 51833,
+      "modules": [
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/core/optimistic.js",
+          "renderedLength": 7090
+        },
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/store/utils.js",
+          "renderedLength": 11413
+        }
+      ],
+      "files": [
+        "_build/assets/index-B81qvROb.js",
+        "_build/assets/virtual_solid-ssr-entry-client-CFDMjS8G.js",
+        "_build/assets/app-shared-BByM0doQ.js"
+      ]
+    },
+    {
+      "variant": "implementation",
+      "count": 3,
+      "bytes": 164770,
+      "br": 51737,
+      "modules": [
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/core/optimistic.js",
+          "renderedLength": 7090
+        },
+        {
+          "id": "node_modules/.bun/@solidjs+signals@2.0.0-rc.9/node_modules/@solidjs/signals/dist/prod/store/utils.js",
+          "renderedLength": 11413
+        }
+      ],
+      "files": [
+        "_build/assets/index-C8S0mSe-.js",
+        "_build/assets/virtual_solid-ssr-entry-client-DIHAFFxI.js",
+        "_build/assets/app-shared-Bz0rmN2V.js"
+      ]
+    }
+  ]
+}

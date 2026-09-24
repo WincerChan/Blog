@@ -1,14 +1,14 @@
-import { JSXElement, Show, createEffect } from "solid-js"
+import { Element, Show, createEffect } from "solid-js"
 
 interface ModalProps {
-    children: JSXElement
+    children: Element
     toggle: () => boolean,
     setToggle: (toggle: boolean) => void
 }
 
 const Modal = ({ children, toggle, setToggle }: ModalProps) => {
-    createEffect(() => {
-        if (toggle())
+    createEffect(toggle, (open) => {
+        if (open)
             document.body.style.overflow = 'hidden'
         else
             document.body.style.overflow = ''

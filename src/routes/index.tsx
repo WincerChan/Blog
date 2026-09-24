@@ -2,13 +2,13 @@ import LatestBlog from "~/features/home/LatestCard";
 import OtherBlogs from "~/features/post-listing/OtherCards";
 import PageLayout from "~/layouts/PageLayout";
 import { getLatestPosts, postUrl } from "~/content/velite";
-import { Show, createMemo, createResource } from "solid-js";
+import { Show, createMemo } from "solid-js";
 import IconArrowRight from "~icons/ph/arrow-right";
 
 
 
 const Home = () => {
-    const [latest] = createResource(() => 5, () => getLatestPosts(5));
+    const latest = createMemo(async () => getLatestPosts(5));
     const latestPayload = createMemo(() => latest() ?? { items: [], inkstoneToken: "" });
     const recentPosts = createMemo(() =>
         latestPayload().items.map((p) => ({

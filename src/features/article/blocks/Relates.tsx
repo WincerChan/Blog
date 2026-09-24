@@ -1,16 +1,16 @@
 import { Accessor, For, Show } from "solid-js";
-import { Translations } from "~/i18n/i18n-types";
+import { TranslationFunctions } from "~/i18n/i18n-types";
 import type { RelatedPost } from "~/features/article/types";
 import { formatDate } from "~/utils";
 
 
-const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<Translations> }) => {
+const Relates = ({ relates, LL }: { relates: RelatedPost[], LL: Accessor<TranslationFunctions> }) => {
     const visibleRelates = () => relates.slice(0, 3);
     return (
         <Show when={visibleRelates().length}>
             <div class="mt-8">
                 <label class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">
-                    {LL && LL().post.RELATES}
+                    {LL && LL().post.RELATES()}
                 </label>
                 <ol class="mt-4 space-y-4">
                     <For each={visibleRelates()}>

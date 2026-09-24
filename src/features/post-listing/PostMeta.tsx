@@ -17,7 +17,7 @@ const PostMeta = ({ date, category }: PostMetaProps) => {
     const encodedCategory = category ? encodeURIComponent(category) : "";
     return (
         <div class="flex items-center gap-2 text-sm uppercase tracking-wide font-mono text-[var(--c-text-subtle)]">
-            <time dateTime={formattedDate}>{formattedDate}</time>
+            <time datetime={formattedDate}>{formattedDate}</time>
             {category && <span class="text-[var(--c-text-subtle)]">/</span>}
             {category && (
                 <a

@@ -1,4 +1,4 @@
-import { JSX } from "solid-js";
+import type { JSX } from "@solidjs/web";
 import PageLayout from "./PageLayout";
 
 type SimplePage = {

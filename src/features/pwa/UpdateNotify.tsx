@@ -1,4 +1,4 @@
-import { createSignal, onCleanup, onMount } from "solid-js";
+import { createSignal, onSettled } from "solid-js";
 import { isBrowser } from "~/utils";
 import IconRefresh from "~icons/ph/arrow-clockwise";
 
@@ -21,20 +21,19 @@ const UpdateNotify = () => {
         setVisible(false);
     };
 
-    onMount(() => {
+    onSettled(() => {
         const showNotify = () => {
             setVisible(true);
         };
         window.addEventListener("sw:update-ready", showNotify);
-        onCleanup(() => window.removeEventListener("sw:update-ready", showNotify));
+        return () => window.removeEventListener("sw:update-ready", showNotify);
     });
     return (
         <button
             id="sw-notify"
             onClick={requestUpdate}
             type="button"
-            class="group fixed bottom-5 left-16 right-16 md:left-6 md:right-auto z-50 inline-flex items-center gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-surface)] px-5 md:py-4 py-3 text-sm leading-relaxed text-[var(--c-text)] transition-colors hover:border-[var(--c-border-strong)] hover:text-[var(--c-link)]"
-            classList={{ hidden: !visible() }}
+            class={["group fixed bottom-5 left-16 right-16 md:left-6 md:right-auto z-50 inline-flex items-center gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-surface)] px-5 md:py-4 py-3 text-sm leading-relaxed text-[var(--c-text)] transition-colors hover:border-[var(--c-border-strong)] hover:text-[var(--c-link)]", { hidden: !visible() }]}
         >
             <div class="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--c-link)] opacity-70"></span>

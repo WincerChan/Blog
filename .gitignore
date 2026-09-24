@@ -49,3 +49,7 @@ public/search-index.json
 public/sw.js
 public/tags
 public/valid_paths.txt
+
+# Browser test artifacts
+/test-results/
+/playwright-report/

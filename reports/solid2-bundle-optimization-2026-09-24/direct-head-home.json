@@ -1,0 +1,109 @@
+{
+  "recordedAt": "2026-09-24T12:22:08.334Z",
+  "browser": "153.0.8010.49",
+  "base": "http://127.0.0.1:4173",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "method": "Fresh context per page; HTTP cache disabled; service workers blocked; no scrolling or interactions; at least 5s after load, then 1s network quiet, maximum 20s; page CDP Network events only; transfer = loadingFinished.encodedDataLength; resource = dataReceived.dataLength",
+  "pages": [
+    {
+      "label": "首页",
+      "path": "/",
+      "title": "首页 · Wincer's Blog",
+      "requestCount": 6,
+      "transferBytes": 81512,
+      "resourceBytes": 258488,
+      "failed": 0,
+      "httpErrors": 0,
+      "pending": 0,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:4173/",
+          "method": "GET",
+          "type": "Document",
+          "status": 200,
+          "transferBytes": 9623,
+          "resourceBytes": 41349,
+          "finished": true,
+          "failed": false,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/virtual_solid-ssr-entry-client-D5HcqkN-.css",
+          "method": "GET",
+          "type": "Stylesheet",
+          "status": 200,
+          "transferBytes": 9735,
+          "resourceBytes": 50838,
+          "finished": true,
+          "failed": false,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/app-shared-Bz0rmN2V.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 46954,
+          "resourceBytes": 124770,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/index-C8S0mSe-.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 1918,
+          "resourceBytes": 3339,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/_build/assets/virtual_solid-ssr-entry-client-BGpSBKGm.js",
+          "method": "GET",
+          "type": "Script",
+          "status": 200,
+          "transferBytes": 12576,
+          "resourceBytes": 37785,
+          "finished": true,
+          "failed": false,
+          "mimeType": "application/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "br"
+        },
+        {
+          "url": "http://127.0.0.1:4173/favicon/light.svg",
+          "method": "GET",
+          "type": "Other",
+          "status": 200,
+          "transferBytes": 706,
+          "resourceBytes": 407,
+          "finished": true,
+          "failed": false,
+          "mimeType": "image/svg+xml",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity"
+        }
+      ]
+    }
+  ]
+}
