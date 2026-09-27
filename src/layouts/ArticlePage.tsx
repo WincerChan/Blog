@@ -70,7 +70,8 @@ const ArticlePage = ({
     const headParams = constructHeadParams(blog);
 
     let wrapper: JSXElement;
-    if (blog.encrypted) wrapper = <ProtectBlog source={children} />;
+    // Encrypted posts pass the raw ciphertext string as children.
+    if (blog.encrypted) wrapper = <ProtectBlog source={children as string} />;
     else
         wrapper = (
             <div id="blog-article" class="prose dark:prose-invert md:text-[1.05rem]  max-w-[42rem]">

@@ -1,9 +1,7 @@
-import { Accessor, For, createSignal, onMount, Show } from "solid-js";
-import { Properties } from "solid-js/web";
+import { For, onMount, Show } from "solid-js";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 import IconShieldCheck from "~icons/ph/shield-check";
 import IconReply from "~icons/ph/arrow-bend-up-left";
-import IconGithub from "~icons/ph/github-logo";
 
 interface CommentProps {
     author: string,
@@ -17,11 +15,6 @@ interface CommentProps {
     isChild?: boolean
 }
 
-type ReplyState = {
-    activeId: Accessor<string | null>;
-    setActiveId: (id: string | null) => void;
-};
-
 const Comment = ({
     author,
     date,
@@ -32,8 +25,7 @@ const Comment = ({
     url,
     source,
     isChild,
-    replyState,
-}: CommentProps & { replyState: ReplyState }) => {
+}: CommentProps) => {
     let self: HTMLDivElement | null = null;
     const initial = (value: string) => {
         const trimmed = String(value ?? "").trim();
@@ -48,15 +40,12 @@ const Comment = ({
         const day = String(dateObj.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
     };
-    const isActive = () => replyState.activeId() === id;
-    const handleReplyClick = () => {
-        replyState.setActiveId(isActive() ? null : id);
-    };
-    const shouldShowReply = () => source !== "legacy";
+    // Legacy (Disqus) comments are read-only and have no GitHub URL to reply on.
+    const replyUrl = () => (source !== "legacy" && url ? url : null);
     onMount(() => {
         if (!self) return;
-        // add all a tag with target="_blank", rel="noopener noreferrer"
-        const aTags = self.querySelectorAll("a")
+        // add comment-body links with target="_blank", rel="noopener noreferrer"
+        const aTags = self.querySelectorAll(".comment-body a")
         aTags.forEach(a => {
             a.target = "_blank"
             a.classList.add(
@@ -101,37 +90,26 @@ const Comment = ({
                     </div>
                 </div>
                 <div class="comment-body text-sm leading-relaxed text-[var(--c-text-muted)]" innerHTML={message} />
-                <Show when={shouldShowReply()}>
-                    <div class="flex items-center gap-2 text-xs text-[var(--c-text-subtle)]">
-                        <Show
-                            when={url && isActive()}
-                            fallback={
-                                <button
-                                    type="button"
-                                    onClick={handleReplyClick}
-                                    class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)]"
-                                >
-                                    <IconReply class="h-4 w-4 mr-1" />
-                                    Reply
-                                </button>
-                            }
-                        >
+                <Show when={replyUrl()}>
+                    {(href) => (
+                        <div class="flex items-center text-xs text-[var(--c-text-subtle)]">
                             <a
-                                href={url}
+                                href={href()}
                                 target="_blank"
                                 rel="noreferrer"
-                                class="inline-flex items-center gap-1 transition-colors hover:text-[var(--c-text)] hover:underline hover:decoration-1 hover:underline-offset-4"
+                                title="在 GitHub 上回复"
+                                class="inline-flex items-center gap-1.5 rounded px-1.5 py-0.5 -mx-1.5 transition-colors hover:bg-[var(--c-hover-bg)] hover:text-[var(--c-link)]"
                             >
-                                <IconGithub class="h-4 w-4 mr-1" />
-                                Reply On Github
+                                <IconReply class="h-3.5 w-3.5" />
+                                Reply
                             </a>
-                        </Show>
-                    </div>
+                        </div>
+                    )}
                 </Show>
             </div>
             <Show when={children?.length}>
                 <div class="mt-5 border-l-2 border-[var(--c-border)] pl-4">
-                    <CommentThread comments={children!} isChild={true} replyState={replyState} />
+                    <CommentThread comments={children!} isChild={true} />
                 </div>
             </Show>
         </>
@@ -143,15 +121,12 @@ const Comment = ({
 const CommentThread = (props: {
     comments: CommentProps[];
     isChild?: boolean;
-    replyState?: ReplyState;
 }) => {
-    const [activeId, setActiveId] = createSignal<string | null>(null);
-    const replyState = props.replyState ?? { activeId, setActiveId };
     return (
         <div classList={{ "space-y-6": !props.isChild, "space-y-5": props.isChild }}>
             <For each={props.comments}>
                 {comment => (
-                    <Comment {...comment} isChild={props.isChild} replyState={replyState} />
+                    <Comment {...comment} isChild={props.isChild} />
                 )}
             </For>
         </div>

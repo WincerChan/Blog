@@ -3,6 +3,7 @@ import CommentThread from "./CommentThread";
 import { Translations } from "~/i18n/i18n-types";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowUpRight from "~icons/ph/arrow-up-right";
+import IconGithub from "~icons/ph/github-logo";
 
 interface CommentsProps {
     pageURL: string
@@ -165,29 +166,34 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
                     </h3>
                     <Show when={!resource.loading && resource()}>
                         {(payload) => (
-                            <Show
-                                when={payload().discussionUrl}
-                                fallback={
-                                    <span class="text-sm text-[var(--c-text-subtle)]">
-                                        {payload().totalKnown ? "尚未创建讨论" : "评论暂不可用"}
+                            <div class="flex items-center gap-3 text-sm text-[var(--c-text-subtle)]">
+                                <Show when={payload().totalKnown}>
+                                    <span class="font-mono tabular-nums">
+                                        <Show when={payload().total > 0} fallback="暂无评论">
+                                            共 {payload().total} 条
+                                        </Show>
                                     </span>
-                                }
-                            >
-                                <a
-                                    href={payload().discussionUrl!}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    class="group inline-flex items-center gap-1 text-sm text-[var(--c-text-muted)] underline decoration-1 underline-offset-4 decoration-[var(--c-border-strong)] transition-colors hover:text-[var(--c-text)] hover:decoration-[var(--c-text)]"
+                                </Show>
+                                <Show
+                                    when={payload().discussionUrl}
+                                    fallback={
+                                        <span>{payload().totalKnown ? "尚未创建讨论" : "评论暂不可用"}</span>
+                                    }
                                 >
-                                    <Show
-                                        when={payload().totalKnown}
-                                        fallback={<span>前往 GitHub 讨论</span>}
-                                    >
-                                        共 {payload().total} 条评论
-                                    </Show>
-                                    <IconArrowUpRight class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--c-link)]" />
-                                </a>
-                            </Show>
+                                    {(discussionUrl) => (
+                                        <a
+                                            href={discussionUrl()}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            class="group inline-flex items-center gap-1.5 rounded-md border border-[var(--c-border)] px-3 py-1.5 text-[var(--c-text)] transition-colors hover:border-[var(--c-link)] hover:text-[var(--c-link)]"
+                                        >
+                                            <IconGithub class="h-4 w-4" />
+                                            参与讨论
+                                            <IconArrowUpRight class="h-3.5 w-3.5 text-[var(--c-text-subtle)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--c-link)]" />
+                                        </a>
+                                    )}
+                                </Show>
+                            </div>
                         )}
                     </Show>
                 </div>
