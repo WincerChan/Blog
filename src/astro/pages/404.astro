@@ -1,0 +1,13 @@
+---
+import Site from '../layouts/Site.astro';
+import { ArticleMetadata } from '../StaticContent';
+import PostActions from '~/features/article/blocks/PostActions';
+const title = '404 Not Found';
+const summary = '您访问的页面已经消失得无影无踪，就像我的前任一样。';
+const blog = { title, slug: '/404/', date: new Date().toISOString(), updated: new Date().toISOString(), tags: [] };
+---
+<Site title={title} description={summary}>
+  <div class="w-full max-w-7xl mx-auto px-4 md:px-0 md:grid md:grid-cols-[1fr_minmax(0,42rem)_1fr] md:gap-x-8">
+    <article class="w-full max-w-2xl mx-auto md:col-start-2 md:row-start-1"><ArticleMetadata blog={blog} /><div id="blog-article" class="prose dark:prose-invert md:text-[1.05rem] max-w-[42rem]"><section><p>{summary}</p></section></div><PostActions pageURL="/404/" shareLabel="分享到..." client:visible /></article>
+  </div>
+</Site>

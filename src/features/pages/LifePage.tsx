@@ -12,7 +12,6 @@ import LazyImg from "~/ui/media/Img";
 import { fetcher } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
 import { range } from "~/utils/index";
-import ArticlePage from "~/layouts/ArticlePage";
 
 type WishingItemType = {
     date: string;
@@ -88,7 +87,7 @@ const Life = ({ page, children }) => {
     const getItems = () => resource()?.items ?? [];
     const { content, ...rest } = page;
     return (
-        <ArticlePage rawBlog={rest} relates={[]}>
+        <>
             {children}
             <h3 class="text-center my-8! block">
                 文字、光影与沉浸的梦（{year()}）
@@ -108,7 +107,7 @@ const Life = ({ page, children }) => {
                     </ErrorBoundary>
                 </Suspense>
             </div>
-        </ArticlePage>
+        </>
     );
 };
 

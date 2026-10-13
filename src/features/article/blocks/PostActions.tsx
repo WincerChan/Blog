@@ -1,4 +1,4 @@
-import { Show, createSignal } from "solid-js";
+import { Show, createSignal, onCleanup } from "solid-js";
 import IconBrandTwitter from "~icons/ph/twitter-logo";
 import IconLink from "~icons/ph/link-simple";
 import IconCheck from "~icons/ph/check";
@@ -6,14 +6,15 @@ import { useI18nContext } from "~/i18n/i18n-solid";
 import Like from "~/features/article/sidebar/social/Like";
 import { writeClipboardText } from "~/utils/clipboard";
 
-const PostActions = ({ pageURL, inkstoneToken }: { pageURL: string; inkstoneToken?: string }) => {
-    const { LL } = useI18nContext();
+const PostActions = ({ pageURL, inkstoneToken, shareLabel }: { pageURL: string; inkstoneToken?: string; shareLabel?: string }) => {
+    const LL = shareLabel === undefined ? useI18nContext().LL : undefined;
     const buildShareUrl = () =>
         typeof window !== "undefined" ? window.location.href : pageURL;
     const twitterShareUrl = () =>
         `https://twitter.com/intent/tweet?url=${encodeURIComponent(buildShareUrl())}`;
     const [copied, setCopied] = createSignal(false);
     let resetTimer: number | undefined;
+    onCleanup(() => { if (resetTimer) window.clearTimeout(resetTimer); });
     const copyUrl = async () => {
         try {
             const ok = await writeClipboardText(buildShareUrl());
@@ -30,7 +31,7 @@ const PostActions = ({ pageURL, inkstoneToken }: { pageURL: string; inkstoneToke
             <Like pageURL={pageURL} inkstoneToken={inkstoneToken} />
             <div class="flex items-center gap-4">
                 <span class="text-sm text-[var(--c-text-subtle)]">
-                    {LL().sidebar.TOOLS.share.title()}
+                    {shareLabel ?? LL?.().sidebar.TOOLS.share.title()}
                 </span>
                 <a
                     href={twitterShareUrl()}

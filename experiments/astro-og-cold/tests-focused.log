@@ -1,0 +1,29 @@
+bun test v1.3.14 (0d9b296a)
+
+scripts/og-image.test.ts:
+(pass) resolveOgImagePath > ignores cover for post pages [5.74ms]
+(pass) resolveOgImagePath > builds og path for post pages [0.07ms]
+(pass) resolveOgImagePath > sanitizes slashes in slug [0.02ms]
+(pass) resolveOgImagePath > ignores cover for non-post pages [0.07ms]
+(pass) resolveOgImagePath > builds og path for non-post pages [0.02ms]
+(pass) resolveOgImagePath > builds og path for home page [0.01ms]
+(pass) resolveOgImagePath > uses configured scale for og png generation
+
+scripts/og-render.test.ts:
+(pass) renderOgSvg > renders svg without layout errors [752.64ms]
+(pass) renderOgSvg > chooses title font based on lang and content [0.24ms]
+(pass) renderOgSvg > chooses subtitle font based on lang and content [0.03ms]
+
+scripts/og-cache.test.ts:
+(pass) PNG cache persists across instances and coalesces simultaneous renders [39.33ms]
+(pass) corrupt or incomplete cache entries regenerate, failed renders can retry [2.17ms]
+(pass) cache keys depend on displayed fields, not hidden dates or truncated suffixes [0.12ms]
+
+scripts/og-resvg-fonts.test.ts:
+(pass) renderPng > renders png for svg without text [5.54ms]
+(pass) renderPng > PNG encoding preserves resvg pixels, transparency and requested size [2.20ms]
+
+ 15 pass
+ 0 fail
+ 36 expect() calls
+Ran 15 tests across 4 files. [1159.00ms]

@@ -1,11 +1,9 @@
 import { For } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
-import SimplePageLayout from "~/layouts/SimplePageLayout";
 import { formatDate } from "~/utils";
 
-const Archives = ({ page }) => {
+const Archives = ({ postsByYear }: { page?: unknown; postsByYear: Record<string, Array<{ slug: string; title: string; date: string }>> }) => {
     const { LL } = useI18nContext();
-    const postsByYear = __CONTENT_POSTS_BY_YEAR_DETAIL;
     const allYears = Object.keys(postsByYear)
         .filter((x) => x !== "undefined")
         .sort((a, b) => Number(b) - Number(a));
@@ -21,7 +19,7 @@ const Archives = ({ page }) => {
     };
 
     return (
-        <SimplePageLayout page={page} lang={page.lang}>
+        <>
             <p class="mt-0 mb-8 text-xl font-serif md:text-2xl text-[var(--c-text-muted)] leading-relaxed">
                 {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
             </p>
@@ -68,7 +66,7 @@ const Archives = ({ page }) => {
                     )}
                 </For>
             </div>
-        </SimplePageLayout >
+        </>
     )
 }
 

@@ -1,12 +1,14 @@
-import { Accessor, ErrorBoundary, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
+import { Accessor, ErrorBoundary, Show, createEffect, createMemo, createResource, createSignal, onMount, onCleanup } from "solid-js";
 import CommentThread from "./CommentThread";
 import { Translations } from "~/i18n/i18n-types";
 import { inkstoneApi } from "~/utils/inkstone";
 import IconArrowUpRight from "~icons/ph/arrow-up-right";
+import IconReply from "~icons/ph/arrow-bend-up-left";
 
 interface CommentsProps {
     pageURL: string
-    LL: Accessor<Translations>
+    LL?: Accessor<Translations>
+    title?: string
 }
 
 type CommentItem = {
@@ -76,7 +78,7 @@ const CommentSkeleton = () => (
     </div>
 );
 
-export default function Comments({ pageURL, LL }: CommentsProps) {
+export default function Comments({ pageURL, LL, title }: CommentsProps) {
     const [visible, setVisible] = createSignal(false)
     const [url, setUrl] = createSignal<string | null>(null)
     const getDiscussionUrlFromMeta = () => {
@@ -137,15 +139,17 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
         return { total, discussionUrl, comments, totalKnown };
     };
     const [resource] = createResource(url, fetchLegacyComments)
-    let self;
-    createEffect(() => {
+    let self!: HTMLDivElement;
+    onMount(() => {
+        if (typeof IntersectionObserver === "undefined") { setVisible(true); return; }
         const observer = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
                 setVisible(true)
                 observer.unobserve(entries[0].target)
             }
         })
-        observer.observe(self as HTMLDivElement)
+        observer.observe(self)
+        onCleanup(() => observer.disconnect());
     })
 
     createEffect(() => {
@@ -161,7 +165,7 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
             <Show when={visible()}>
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-base md:text-lg font-semibold text-[var(--c-text-subtle)]">
-                        {LL && LL().post.COMMENTS}
+                        {title ?? (LL && LL().post.COMMENTS)}
                     </h3>
                     <Show when={!resource.loading && resource()}>
                         {(payload) => (
@@ -199,6 +203,21 @@ export default function Comments({ pageURL, LL }: CommentsProps) {
                         <CommentThread comments={resource()?.comments ?? []} />
                     </Show>
                 </ErrorBoundary>
+                <Show when={!resource.loading && resource()?.discussionUrl}>
+                    {(discussionUrl) => (
+                        <div class="mt-8 flex justify-center">
+                            <a
+                                href={discussionUrl()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--c-border-strong)] px-5 py-2.5 text-sm font-medium text-[var(--c-text)] transition-colors hover:border-[var(--c-link)] hover:bg-[var(--c-hover-bg)]"
+                            >
+                                <IconReply class="h-4 w-4" />
+                                Reply on GitHub
+                            </a>
+                        </div>
+                    )}
+                </Show>
             </Show>
         </div>
     )

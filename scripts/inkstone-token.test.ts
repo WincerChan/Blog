@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { expect, test } from "bun:test";
-import { buildInkstoneToken } from "../tools/velite/inkstoneToken";
+import { buildInkstoneToken } from "../tools/content/inkstoneToken";
 
 const toBase64Url = (value: Buffer | string) =>
   Buffer.from(value)

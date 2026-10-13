@@ -7,17 +7,17 @@ const registerServiceWorker = () => {
     navigator.serviceWorker
         .register(`/sw.js?v=${__SW_HASH}`, { scope: "/" })
         .then((reg) => {
-            if (reg.waiting && navigator.serviceWorker.controller) {
+            if (reg?.waiting && navigator.serviceWorker.controller) {
                 notifySwUpdateReady();
             }
-            reg.addEventListener("updatefound", () => {
+            reg?.addEventListener("updatefound", () => {
                 const newWorker = reg.installing;
                 newWorker?.addEventListener("statechange", () => {
                     if (newWorker.state !== "installed") return;
                     if (navigator.serviceWorker.controller) notifySwUpdateReady();
                 });
             });
-        });
+        }).catch((error) => console.warn("Service worker registration failed", error));
 };
 
 export { registerServiceWorker };

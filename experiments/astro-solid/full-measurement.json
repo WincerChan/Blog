@@ -1,0 +1,1132 @@
+{
+  "recordedAt": "2026-09-27T07:53:39.342Z",
+  "method": "Chrome; viewport 1440x900; same Brotli Q11 server; local resources only; API mocked; SW unavailable; cold cache disabled, warm cache enabled; transferred bytes include HTTP headers; scroll cumulative includes lazy islands",
+  "records": [
+    {
+      "name": "solid1",
+      "stage": "home-cold",
+      "requests": 6,
+      "transfer": 52825,
+      "jsRequests": 3,
+      "jsTransfer": 35025,
+      "jsDecoded": 121706,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/",
+          "type": "Document",
+          "bytes": 7693,
+          "decoded": 41820,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/entry-client-DI8c9gzl.css",
+          "type": "Stylesheet",
+          "bytes": 9696,
+          "decoded": 61147,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/app-shared-VOPZliXo.js",
+          "type": "Script",
+          "bytes": 22070,
+          "decoded": 78500,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/entry-client-Bf_NmeCS.js",
+          "type": "Script",
+          "bytes": 11379,
+          "decoded": 39877,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/index-LIp5QtE_.js",
+          "type": "Script",
+          "bytes": 1576,
+          "decoded": 3329,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "solid1",
+      "stage": "article-cold",
+      "requests": 10,
+      "transfer": 122248,
+      "jsRequests": 4,
+      "jsTransfer": 44531,
+      "jsDecoded": 156128,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/solana-vanity-prefix-vs-suffix-probability/",
+          "type": "Document",
+          "bytes": 17398,
+          "decoded": 150734,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/entry-client-DI8c9gzl.css",
+          "type": "Stylesheet",
+          "bytes": 9696,
+          "decoded": 61147,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/app-shared-VOPZliXo.js",
+          "type": "Script",
+          "bytes": 22070,
+          "decoded": 78500,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/entry-client-Bf_NmeCS.js",
+          "type": "Script",
+          "bytes": 11379,
+          "decoded": 39877,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/ArticlePage-D-F3x1MM.js",
+          "type": "Script",
+          "bytes": 10302,
+          "decoded": 36654,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/index-BKzCvfRQ.js",
+          "type": "Script",
+          "bytes": 780,
+          "decoded": 1097,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/katex.min-mOPBU0ZX.css",
+          "type": "Stylesheet",
+          "bytes": 7077,
+          "decoded": 29249,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+          "type": "Font",
+          "bytes": 26483,
+          "decoded": 26272,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+          "type": "Font",
+          "bytes": 16652,
+          "decoded": 16440,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "solid1",
+      "stage": "article-after-scroll-cumulative",
+      "requests": 10,
+      "transfer": 122248,
+      "jsRequests": 4,
+      "jsTransfer": 44531,
+      "jsDecoded": 156128,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/solana-vanity-prefix-vs-suffix-probability/",
+          "type": "Document",
+          "bytes": 17398,
+          "decoded": 150734,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/entry-client-DI8c9gzl.css",
+          "type": "Stylesheet",
+          "bytes": 9696,
+          "decoded": 61147,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/app-shared-VOPZliXo.js",
+          "type": "Script",
+          "bytes": 22070,
+          "decoded": 78500,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/entry-client-Bf_NmeCS.js",
+          "type": "Script",
+          "bytes": 11379,
+          "decoded": 39877,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/ArticlePage-D-F3x1MM.js",
+          "type": "Script",
+          "bytes": 10302,
+          "decoded": 36654,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/index-BKzCvfRQ.js",
+          "type": "Script",
+          "bytes": 780,
+          "decoded": 1097,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/katex.min-mOPBU0ZX.css",
+          "type": "Stylesheet",
+          "bytes": 7077,
+          "decoded": 29249,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+          "type": "Font",
+          "bytes": 26483,
+          "decoded": 26272,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+          "type": "Font",
+          "bytes": 16652,
+          "decoded": 16440,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "solid1",
+      "stage": "home-to-first-article-warm",
+      "requests": 4,
+      "transfer": 17166,
+      "jsRequests": 2,
+      "jsTransfer": 11082,
+      "jsDecoded": 37751,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/_build/assets/index-BKzCvfRQ.js",
+          "type": "Script",
+          "bytes": 780,
+          "decoded": 1097,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/ArticlePage-D-F3x1MM.js",
+          "type": "Script",
+          "bytes": 10302,
+          "decoded": 36654,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_data/posts/yunnan-family-trip-dali-lijiang.json",
+          "type": "Fetch",
+          "bytes": 6084,
+          "decoded": 14411,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 0,
+          "decoded": 407,
+          "status": 200,
+          "cached": true
+        }
+      ],
+      "documentPreserved": true,
+      "destination": "/posts/yunnan-family-trip-dali-lijiang/"
+    },
+    {
+      "name": "solid2",
+      "stage": "home-cold",
+      "requests": 6,
+      "transfer": 69160,
+      "jsRequests": 3,
+      "jsTransfer": 52675,
+      "jsDecoded": 165894,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/",
+          "type": "Document",
+          "bytes": 7868,
+          "decoded": 41349,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/virtual_solid-ssr-entry-client-M42awTEL.css",
+          "type": "Stylesheet",
+          "bytes": 8206,
+          "decoded": 50838,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/app-shared-wCdxpEE5.js",
+          "type": "Script",
+          "bytes": 40464,
+          "decoded": 124770,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/index-DNcZGCuj.js",
+          "type": "Script",
+          "bytes": 1562,
+          "decoded": 3339,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/virtual_solid-ssr-entry-client-Cfs9vdWz.js",
+          "type": "Script",
+          "bytes": 10649,
+          "decoded": 37785,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "solid2",
+      "stage": "article-cold",
+      "requests": 10,
+      "transfer": 138665,
+      "jsRequests": 4,
+      "jsTransfer": 62233,
+      "jsDecoded": 199739,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/solana-vanity-prefix-vs-suffix-probability/",
+          "type": "Document",
+          "bytes": 17607,
+          "decoded": 150339,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/virtual_solid-ssr-entry-client-M42awTEL.css",
+          "type": "Stylesheet",
+          "bytes": 8206,
+          "decoded": 50838,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/app-shared-wCdxpEE5.js",
+          "type": "Script",
+          "bytes": 40464,
+          "decoded": 124770,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/index-DMGOA088.js",
+          "type": "Script",
+          "bytes": 760,
+          "decoded": 1036,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/ArticlePage-DwArOkjH.js",
+          "type": "Script",
+          "bytes": 10360,
+          "decoded": 36148,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/virtual_solid-ssr-entry-client-Cfs9vdWz.js",
+          "type": "Script",
+          "bytes": 10649,
+          "decoded": 37785,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/katex.min-DCPAcJ-b.css",
+          "type": "Stylesheet",
+          "bytes": 7073,
+          "decoded": 29183,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+          "type": "Font",
+          "bytes": 26483,
+          "decoded": 26272,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+          "type": "Font",
+          "bytes": 16652,
+          "decoded": 16440,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "solid2",
+      "stage": "article-after-scroll-cumulative",
+      "requests": 10,
+      "transfer": 138665,
+      "jsRequests": 4,
+      "jsTransfer": 62233,
+      "jsDecoded": 199739,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/solana-vanity-prefix-vs-suffix-probability/",
+          "type": "Document",
+          "bytes": 17607,
+          "decoded": 150339,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/virtual_solid-ssr-entry-client-M42awTEL.css",
+          "type": "Stylesheet",
+          "bytes": 8206,
+          "decoded": 50838,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/app-shared-wCdxpEE5.js",
+          "type": "Script",
+          "bytes": 40464,
+          "decoded": 124770,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/index-DMGOA088.js",
+          "type": "Script",
+          "bytes": 760,
+          "decoded": 1036,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/ArticlePage-DwArOkjH.js",
+          "type": "Script",
+          "bytes": 10360,
+          "decoded": 36148,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/virtual_solid-ssr-entry-client-Cfs9vdWz.js",
+          "type": "Script",
+          "bytes": 10649,
+          "decoded": 37785,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/katex.min-DCPAcJ-b.css",
+          "type": "Stylesheet",
+          "bytes": 7073,
+          "decoded": 29183,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+          "type": "Font",
+          "bytes": 26483,
+          "decoded": 26272,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+          "type": "Font",
+          "bytes": 16652,
+          "decoded": 16440,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "solid2",
+      "stage": "home-to-first-article-warm",
+      "requests": 4,
+      "transfer": 17204,
+      "jsRequests": 2,
+      "jsTransfer": 11120,
+      "jsDecoded": 37184,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/_build/assets/index-DMGOA088.js",
+          "type": "Script",
+          "bytes": 760,
+          "decoded": 1036,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_build/assets/ArticlePage-DwArOkjH.js",
+          "type": "Script",
+          "bytes": 10360,
+          "decoded": 36148,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_data/posts/yunnan-family-trip-dali-lijiang.json",
+          "type": "Fetch",
+          "bytes": 6084,
+          "decoded": 14411,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 0,
+          "decoded": 407,
+          "status": 200,
+          "cached": true
+        }
+      ],
+      "documentPreserved": true,
+      "destination": "/posts/yunnan-family-trip-dali-lijiang/"
+    },
+    {
+      "name": "astro",
+      "stage": "home-cold",
+      "requests": 16,
+      "transfer": 47516,
+      "jsRequests": 13,
+      "jsTransfer": 30040,
+      "jsDecoded": 75452,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/",
+          "type": "Document",
+          "bytes": 8709,
+          "decoded": 41843,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CYDbzu1r.js",
+          "type": "Script",
+          "bytes": 5198,
+          "decoded": 16357,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Site.ClRQ9J1X.css",
+          "type": "Stylesheet",
+          "bytes": 8356,
+          "decoded": 50194,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Site.astro_astro_type_script_index_0_lang.BzHmsya5.js",
+          "type": "Script",
+          "bytes": 2969,
+          "decoded": 6251,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Header.D2opr2xr.js",
+          "type": "Script",
+          "bytes": 4715,
+          "decoded": 13594,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/client.Ouz_tbt3.js",
+          "type": "Script",
+          "bytes": 768,
+          "decoded": 1023,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/FooterControls.CS6hMEVG.js",
+          "type": "Script",
+          "bytes": 1620,
+          "decoded": 3569,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/web.CwTyhjzz.js",
+          "type": "Script",
+          "bytes": 8922,
+          "decoded": 24943,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/inkstone.DQOBDm0P.js",
+          "type": "Script",
+          "bytes": 398,
+          "decoded": 276,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/clipboard.UAl-NIkX.js",
+          "type": "Script",
+          "bytes": 518,
+          "decoded": 471,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/utils.joeqQ55M.js",
+          "type": "Script",
+          "bytes": 353,
+          "decoded": 187,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/i18n-solid.g2fdQrEF.js",
+          "type": "Script",
+          "bytes": 1557,
+          "decoded": 2929,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/list.CiNkNYAm.js",
+          "type": "Script",
+          "bytes": 444,
+          "decoded": 369,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/arrow-right.-3-81tqO.js",
+          "type": "Script",
+          "bytes": 460,
+          "decoded": 361,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/store.CceeVQ1f.js",
+          "type": "Script",
+          "bytes": 2118,
+          "decoded": 5122,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "astro",
+      "stage": "article-cold",
+      "requests": 20,
+      "transfer": 107404,
+      "jsRequests": 14,
+      "jsTransfer": 32021,
+      "jsDecoded": 80047,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/solana-vanity-prefix-vs-suffix-probability/",
+          "type": "Document",
+          "bytes": 16408,
+          "decoded": 98449,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/katex.min.C6NekUA5.css",
+          "type": "Stylesheet",
+          "bytes": 7073,
+          "decoded": 28836,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CYDbzu1r.js",
+          "type": "Script",
+          "bytes": 5198,
+          "decoded": 16357,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Site.ClRQ9J1X.css",
+          "type": "Stylesheet",
+          "bytes": 8356,
+          "decoded": 50194,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Site.astro_astro_type_script_index_0_lang.BzHmsya5.js",
+          "type": "Script",
+          "bytes": 2969,
+          "decoded": 6251,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Header.D2opr2xr.js",
+          "type": "Script",
+          "bytes": 4715,
+          "decoded": 13594,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/client.Ouz_tbt3.js",
+          "type": "Script",
+          "bytes": 768,
+          "decoded": 1023,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Toc.GbiJsCeH.js",
+          "type": "Script",
+          "bytes": 1981,
+          "decoded": 4595,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/FooterControls.CS6hMEVG.js",
+          "type": "Script",
+          "bytes": 1620,
+          "decoded": 3569,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/web.CwTyhjzz.js",
+          "type": "Script",
+          "bytes": 8922,
+          "decoded": 24943,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/inkstone.DQOBDm0P.js",
+          "type": "Script",
+          "bytes": 398,
+          "decoded": 276,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/clipboard.UAl-NIkX.js",
+          "type": "Script",
+          "bytes": 518,
+          "decoded": 471,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/KaTeX_Main-Regular.B22Nviop.woff2",
+          "type": "Font",
+          "bytes": 26483,
+          "decoded": 26272,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/KaTeX_Math-Italic.t53AETM-.woff2",
+          "type": "Font",
+          "bytes": 16652,
+          "decoded": 16440,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/store.CceeVQ1f.js",
+          "type": "Script",
+          "bytes": 2118,
+          "decoded": 5122,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/utils.joeqQ55M.js",
+          "type": "Script",
+          "bytes": 353,
+          "decoded": 187,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/i18n-solid.g2fdQrEF.js",
+          "type": "Script",
+          "bytes": 1557,
+          "decoded": 2929,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/list.CiNkNYAm.js",
+          "type": "Script",
+          "bytes": 444,
+          "decoded": 369,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/arrow-right.-3-81tqO.js",
+          "type": "Script",
+          "bytes": 460,
+          "decoded": 361,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "astro",
+      "stage": "article-after-scroll-cumulative",
+      "requests": 22,
+      "transfer": 113872,
+      "jsRequests": 16,
+      "jsTransfer": 38489,
+      "jsDecoded": 97504,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/solana-vanity-prefix-vs-suffix-probability/",
+          "type": "Document",
+          "bytes": 16408,
+          "decoded": 98449,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/katex.min.C6NekUA5.css",
+          "type": "Stylesheet",
+          "bytes": 7073,
+          "decoded": 28836,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CYDbzu1r.js",
+          "type": "Script",
+          "bytes": 5198,
+          "decoded": 16357,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Site.ClRQ9J1X.css",
+          "type": "Stylesheet",
+          "bytes": 8356,
+          "decoded": 50194,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Site.astro_astro_type_script_index_0_lang.BzHmsya5.js",
+          "type": "Script",
+          "bytes": 2969,
+          "decoded": 6251,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Header.D2opr2xr.js",
+          "type": "Script",
+          "bytes": 4715,
+          "decoded": 13594,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/client.Ouz_tbt3.js",
+          "type": "Script",
+          "bytes": 768,
+          "decoded": 1023,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Toc.GbiJsCeH.js",
+          "type": "Script",
+          "bytes": 1981,
+          "decoded": 4595,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/FooterControls.CS6hMEVG.js",
+          "type": "Script",
+          "bytes": 1620,
+          "decoded": 3569,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/web.CwTyhjzz.js",
+          "type": "Script",
+          "bytes": 8922,
+          "decoded": 24943,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/inkstone.DQOBDm0P.js",
+          "type": "Script",
+          "bytes": 398,
+          "decoded": 276,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/clipboard.UAl-NIkX.js",
+          "type": "Script",
+          "bytes": 518,
+          "decoded": 471,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/KaTeX_Main-Regular.B22Nviop.woff2",
+          "type": "Font",
+          "bytes": 26483,
+          "decoded": 26272,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/KaTeX_Math-Italic.t53AETM-.woff2",
+          "type": "Font",
+          "bytes": 16652,
+          "decoded": 16440,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/store.CceeVQ1f.js",
+          "type": "Script",
+          "bytes": 2118,
+          "decoded": 5122,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/utils.joeqQ55M.js",
+          "type": "Script",
+          "bytes": 353,
+          "decoded": 187,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/i18n-solid.g2fdQrEF.js",
+          "type": "Script",
+          "bytes": 1557,
+          "decoded": 2929,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/list.CiNkNYAm.js",
+          "type": "Script",
+          "bytes": 444,
+          "decoded": 369,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/arrow-right.-3-81tqO.js",
+          "type": "Script",
+          "bytes": 460,
+          "decoded": 361,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 411,
+          "decoded": 407,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/PostActions.CrZzGxrM.js",
+          "type": "Script",
+          "bytes": 2673,
+          "decoded": 6412,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Comments.BNQw9wnG.js",
+          "type": "Script",
+          "bytes": 3795,
+          "decoded": 11045,
+          "status": 200,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "name": "astro",
+      "stage": "home-to-first-article-warm",
+      "requests": 4,
+      "transfer": 17622,
+      "jsRequests": 1,
+      "jsTransfer": 1981,
+      "jsDecoded": 4595,
+      "errors": [],
+      "resources": [
+        {
+          "path": "/posts/yunnan-family-trip-dali-lijiang/",
+          "type": "Fetch",
+          "bytes": 15641,
+          "decoded": 62282,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/_astro/Toc.GbiJsCeH.js",
+          "type": "Script",
+          "bytes": 1981,
+          "decoded": 4595,
+          "status": 200,
+          "cached": false
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 0,
+          "decoded": 407,
+          "status": 200,
+          "cached": true
+        },
+        {
+          "path": "/favicon/light.svg",
+          "type": "Other",
+          "bytes": 0,
+          "decoded": 407,
+          "status": 200,
+          "cached": true
+        }
+      ],
+      "documentPreserved": true,
+      "destination": "/posts/yunnan-family-trip-dali-lijiang/"
+    }
+  ]
+}

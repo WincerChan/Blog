@@ -1,21 +1,10 @@
-import { describe, expect, test } from "bun:test";
-import fs from "node:fs/promises";
-import path from "node:path";
-
-const repoRoot = path.resolve(__dirname, "..");
-
-describe("static application meta", () => {
-  test("ApplicationMeta is mounted at app root only", async () => {
-    const appSource = await fs.readFile(
-      path.join(repoRoot, "src/app.tsx"),
-      "utf8",
-    );
-    const headSource = await fs.readFile(
-      path.join(repoRoot, "src/site/seo/index.tsx"),
-      "utf8",
-    );
-
-    expect(appSource).toContain("<ApplicationMeta />");
-    expect(headSource).not.toContain("ApplicationMeta");
-  });
+import { expect, test } from 'bun:test';
+import { structuredData } from '../src/site/seo/structuredData';
+test('home schema stays a Blog while article metadata stays per page', () => {
+  expect(structuredData({path:'/',title:'Home',description:'Site'})['@type']).toBe('Blog');
+  const article=structuredData({path:'/posts/demo/',title:'Demo',description:'Article',date:'2026-01-01',updated:'2026-02-01',words:123});
+  if (article['@type'] !== 'BlogPosting') throw new Error('Expected article schema');
+  expect(article['@type']).toBe('BlogPosting');
+  expect(article.dateModified).toBe('2026-02-01');
+  expect(article.wordCount).toBe(123);
 });

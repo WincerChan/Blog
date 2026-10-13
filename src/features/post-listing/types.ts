@@ -1,7 +1,7 @@
-import type { VelitePost } from "~/content/types";
+import type { Post } from "~/content/types";
 
 export type PostListItem = Pick<
-    VelitePost,
+    Post,
     "title" | "subtitle" | "date" | "category" | "cover" | "summary" | "words"
 > & {
     slug: string;

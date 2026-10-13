@@ -1,0 +1,264 @@
+$ astro build
+15:50:11 [content] Syncing content
+content:normalize: 0.598ms
+[30;43m WARN [0m [1;33m[content] comments-mapping count (92) does not match posts (85)[0m
+content:emit:sitemaps:index:build: 0.181ms
+content:emit:sitemaps:index:write: 1.068ms
+content:emit:sitemaps:posts:build: 1.691ms
+content:emit:sitemaps:posts:write: 0.831ms
+content:emit:sitemaps:pages:build: 0.141ms
+content:emit:sitemaps:pages:write: 0.294ms
+content:emit:sitemaps:category:build: 0.097ms
+content:emit:sitemaps:category:write: 0.288ms
+content:emit:sitemaps: 5.222ms
+content:emit:atom: 17.198ms
+content:emit:search-index: 119.894ms
+content:strip:raw: 0.092ms
+content:emit:public-assets: 45.221ms
+content:emit:public-data:collect: 1.044ms
+content:emit:public-data:latest: 0.196ms
+content:emit:public-data:category: 0.553ms
+content:emit:public-data:posts: 15.129ms
+content:emit:public-data:pages: 0.167ms
+content:emit:public-data:friends: 0.001ms
+content:emit:public-data: 17.593ms
+content:emit:valid-paths: 1.516ms
+content:markdown:rehype:shiki:init: 0.374ms (1)
+content:prepare: 860.072ms
+15:50:13 [blog-content] Loaded 85 posts and 10 pages
+15:50:13 [content] Synced content
+15:50:13 [types] Generated 2.77s
+15:50:13 [build] output: "static"
+15:50:13 [build] mode: "static"
+15:50:13 [build] directory: /Users/wincer/Terms/Blog/dist/astro/
+15:50:13 [build] Collecting build info...
+15:50:13 [build] ✓ Completed in 2.93s.
+15:50:14 [build] Building static entrypoints...
+15:50:14 [vite] ✓ built in 661ms
+15:50:14 [vite] ✓ built in 168ms
+15:50:14 [build] Rearranging server assets...
+
+ generating static routes
+[og] 103 images: 103 cached, 0 rendered in 49ms
+15:50:14   ├─ /404.html (+11ms)
+15:50:14   ├─ /category/分享境/index.html (+3ms)
+15:50:14   ├─ /category/博客栈/index.html (+2ms)
+15:50:14   ├─ /category/实验室/index.html (+2ms)
+15:50:14   ├─ /category/文字阁/index.html (+2ms)
+15:50:14   ├─ /category/碎碎念/index.html (+2ms)
+15:50:14   ├─ /category/行走记/index.html (+1ms)
+15:50:14   ├─ /og/1060d444.png (+1ms)
+15:50:14   ├─ /og/11ab0263.png (+1ms)
+15:50:14   ├─ /og/1352252a.png (+1ms)
+15:50:14   ├─ /og/16c559c7.png (+1ms)
+15:50:14   ├─ /og/18b98ea6.png (+1ms)
+15:50:14   ├─ /og/2022-year-end-summary.png (+1ms)
+15:50:14   ├─ /og/2024-year-end-reflection.png (+1ms)
+15:50:14   ├─ /og/2848ddef.png (+1ms)
+15:50:14   ├─ /og/286f4007.png (+1ms)
+15:50:14   ├─ /og/2aa541e6.png (+1ms)
+15:50:14   ├─ /og/2cdb7149.png (+1ms)
+15:50:14   ├─ /og/36b4c1ab.png (+0ms)
+15:50:14   ├─ /og/4a17b156.png (+0ms)
+15:50:14   ├─ /og/4aa5d46d.png (+1ms)
+15:50:14   ├─ /og/4f2b4bfb.png (+0ms)
+15:50:14   ├─ /og/50658b02.png (+0ms)
+15:50:15   ├─ /og/5873b0c0.png (+1ms)
+15:50:15   ├─ /og/58dd3c61.png (+0ms)
+15:50:15   ├─ /og/5fdce618.png (+0ms)
+15:50:15   ├─ /og/65e48179.png (+0ms)
+15:50:15   ├─ /og/6619f85a.png (+1ms)
+15:50:15   ├─ /og/71f1f91c.png (+0ms)
+15:50:15   ├─ /og/72171293.png (+1ms)
+15:50:15   ├─ /og/72474942.png (+0ms)
+15:50:15   ├─ /og/790223d2.png (+1ms)
+15:50:15   ├─ /og/7a2a84c6.png (+1ms)
+15:50:15   ├─ /og/7a8186a0.png (+1ms)
+15:50:15   ├─ /og/7e325dad.png (+1ms)
+15:50:15   ├─ /og/7efd2818.png (+1ms)
+15:50:15   ├─ /og/80689c8d.png (+1ms)
+15:50:15   ├─ /og/8575e868.png (+1ms)
+15:50:15   ├─ /og/859c63e4.png (+1ms)
+15:50:15   ├─ /og/89381f22.png (+1ms)
+15:50:15   ├─ /og/92d76830.png (+1ms)
+15:50:15   ├─ /og/9a260fa1.png (+1ms)
+15:50:15   ├─ /og/a0df572f.png (+1ms)
+15:50:15   ├─ /og/a5c39267.png (+0ms)
+15:50:15   ├─ /og/a6c2a51d.png (+0ms)
+15:50:15   ├─ /og/a9aef93a.png (+0ms)
+15:50:15   ├─ /og/a9d193c6.png (+0ms)
+15:50:15   ├─ /og/about-recent-blog-updates.png (+0ms)
+15:50:15   ├─ /og/ad42f575.png (+6ms)
+15:50:15   ├─ /og/b3085a7.png (+5ms)
+15:50:15   ├─ /og/bf0413ac.png (+2ms)
+15:50:15   ├─ /og/blog-optimization-again.png (+2ms)
+15:50:15   ├─ /og/blog-search-is-ready.png (+20ms)
+15:50:15   ├─ /og/building-my-moments.png (+1ms)
+15:50:15   ├─ /og/c12de45e.png (+1ms)
+15:50:15   ├─ /og/cfd78fa9.png (+1ms)
+15:50:15   ├─ /og/chatgpt-and-tts-work-together.png (+0ms)
+15:50:15   ├─ /og/chatgpt-and-tts-work-together-en.png (+1ms)
+15:50:15   ├─ /og/china-ai-breakthrough-deepseek-r1-showdown.png (+0ms)
+15:50:15   ├─ /og/company-departure-after-3-years.png (+0ms)
+15:50:15   ├─ /og/d42e79bb.png (+1ms)
+15:50:15   ├─ /og/d67271d8.png (+0ms)
+15:50:15   ├─ /og/d691e748.png (+0ms)
+15:50:15   ├─ /og/d9253d8c.png (+0ms)
+15:50:15   ├─ /og/dbcdebb.png (+0ms)
+15:50:15   ├─ /og/diy-pc-market-ai-thoughts.png (+0ms)
+15:50:15   ├─ /og/e0246a27.png (+0ms)
+15:50:15   ├─ /og/e4e1357d.png (+1ms)
+15:50:15   ├─ /og/e5d13eb.png (+0ms)
+15:50:15   ├─ /og/ee6b678.png (+1ms)
+15:50:15   ├─ /og/f011ea9c.png (+0ms)
+15:50:15   ├─ /og/f6e1eb2a.png (+1ms)
+15:50:15   ├─ /og/generating-solana-vanity-addresses-using-opencl.png (+0ms)
+15:50:15   ├─ /og/generating-solana-vanity-addresses-using-opencl-en.png (+1ms)
+15:50:15   ├─ /og/kansai-insights.png (+0ms)
+15:50:15   ├─ /og/migrating-from-hexo-to-hugo.png (+0ms)
+15:50:15   ├─ /og/open-core-boot-macos-ventura-tutorial.png (+0ms)
+15:50:15   ├─ /og/overcoming-procrastination-and-self-acceptance.png (+0ms)
+15:50:15   ├─ /og/quantumult-x-chain-proxy-setup.png (+0ms)
+15:50:15   ├─ /og/reconstruct-my-blog-with-hugo-solidstart.png (+0ms)
+15:50:15   ├─ /og/refactoring-blog-architecture-with-vibe-coding.png (+0ms)
+15:50:15   ├─ /og/set-up-freebsd-server-of-mine.png (+0ms)
+15:50:15   ├─ /og/softness-and-strengh-at-28.png (+0ms)
+15:50:15   ├─ /og/software-services-I-recently-subscribed.png (+0ms)
+15:50:15   ├─ /og/solana-vanity-prefix-vs-suffix-probability.png (+0ms)
+15:50:15   ├─ /og/solana-vanity-prefix-vs-suffix-probability-en.png (+0ms)
+15:50:15   ├─ /og/start-with-a-dns-traffic-test.png (+0ms)
+15:50:15   ├─ /og/summary-of-2020.png (+0ms)
+15:50:15   ├─ /og/tlv-encoding-practice.png (+0ms)
+15:50:15   ├─ /og/upgrade-reunion-with-past-self.png (+1ms)
+15:50:15   ├─ /og/when-the-world-met-me.png (+0ms)
+15:50:15   ├─ /og/yunnan-family-trip-dali-lijiang.png (+0ms)
+15:50:15   ├─ /og/page_about.png (+0ms)
+15:50:15   ├─ /og/page_about-en.png (+0ms)
+15:50:15   ├─ /og/page_archives.png (+0ms)
+15:50:15   ├─ /og/page_archives-en.png (+1ms)
+15:50:15   ├─ /og/page_friends.png (+0ms)
+15:50:15   ├─ /og/page_friends-en.png (+0ms)
+15:50:15   ├─ /og/page_life.png (+0ms)
+15:50:15   ├─ /og/page_life-en.png (+0ms)
+15:50:15   ├─ /og/page_search.png (+0ms)
+15:50:15   ├─ /og/page_search-en.png (+0ms)
+15:50:15   ├─ /og/page_category_实验室.png (+1ms)
+15:50:15   ├─ /og/page_category_碎碎念.png (+0ms)
+15:50:15   ├─ /og/page_category_分享境.png (+0ms)
+15:50:15   ├─ /og/page_category_博客栈.png (+0ms)
+15:50:15   ├─ /og/page_category_文字阁.png (+1ms)
+15:50:15   ├─ /og/page_category_行走记.png (+0ms)
+15:50:15   ├─ /og/page_index.png (+0ms)
+15:50:15   ├─ /og/page_404.png (+0ms)
+15:50:15   ├─ /posts/1060d444/index.html (+4ms)
+15:50:15   ├─ /posts/11ab0263/index.html (+2ms)
+15:50:15   ├─ /posts/1352252a/index.html (+2ms)
+15:50:15   ├─ /posts/16c559c7/index.html (+2ms)
+15:50:15   ├─ /posts/18b98ea6/index.html (+2ms)
+15:50:15   ├─ /posts/2022-year-end-summary/index.html (+2ms)
+15:50:15   ├─ /posts/2024-year-end-reflection/index.html (+2ms)
+15:50:15   ├─ /posts/2848ddef/index.html (+2ms)
+15:50:15   ├─ /posts/286f4007/index.html (+2ms)
+15:50:15   ├─ /posts/2aa541e6/index.html (+1ms)
+15:50:15   ├─ /posts/2cdb7149/index.html (+2ms)
+15:50:15   ├─ /posts/36b4c1ab/index.html (+2ms)
+15:50:15   ├─ /posts/4a17b156/index.html (+2ms)
+15:50:15   ├─ /posts/4aa5d46d/index.html (+2ms)
+15:50:15   ├─ /posts/4f2b4bfb/index.html (+1ms)
+15:50:15   ├─ /posts/50658b02/index.html (+2ms)
+15:50:15   ├─ /posts/5873b0c0/index.html (+2ms)
+15:50:15   ├─ /posts/58dd3c61/index.html (+1ms)
+15:50:15   ├─ /posts/5fdce618/index.html (+1ms)
+15:50:15   ├─ /posts/65e48179/index.html (+1ms)
+15:50:15   ├─ /posts/6619f85a/index.html (+1ms)
+15:50:15   ├─ /posts/71f1f91c/index.html (+2ms)
+15:50:15   ├─ /posts/72171293/index.html (+2ms)
+15:50:15   ├─ /posts/72474942/index.html (+2ms)
+15:50:15   ├─ /posts/790223d2/index.html (+2ms)
+15:50:15   ├─ /posts/7a2a84c6/index.html (+1ms)
+15:50:15   ├─ /posts/7a8186a0/index.html (+2ms)
+15:50:15   ├─ /posts/7e325dad/index.html (+1ms)
+15:50:15   ├─ /posts/7efd2818/index.html (+1ms)
+15:50:15   ├─ /posts/80689c8d/index.html (+1ms)
+15:50:15   ├─ /posts/8575e868/index.html (+2ms)
+15:50:15   ├─ /posts/859c63e4/index.html (+2ms)
+15:50:15   ├─ /posts/89381f22/index.html (+2ms)
+15:50:15   ├─ /posts/92d76830/index.html (+2ms)
+15:50:15   ├─ /posts/9a260fa1/index.html (+2ms)
+15:50:15   ├─ /posts/a0df572f/index.html (+2ms)
+15:50:15   ├─ /posts/a5c39267/index.html (+2ms)
+15:50:15   ├─ /posts/a6c2a51d/index.html (+2ms)
+15:50:15   ├─ /posts/a9aef93a/index.html (+2ms)
+15:50:15   ├─ /posts/a9d193c6/index.html (+1ms)
+15:50:15   ├─ /posts/about-recent-blog-updates/index.html (+7ms)
+15:50:15   ├─ /posts/ad42f575/index.html (+2ms)
+15:50:15   ├─ /posts/b3085a7/index.html (+1ms)
+15:50:15   ├─ /posts/bf0413ac/index.html (+2ms)
+15:50:15   ├─ /posts/blog-optimization-again/index.html (+2ms)
+15:50:15   ├─ /posts/blog-search-is-ready/index.html (+2ms)
+15:50:15   ├─ /posts/building-my-moments/index.html (+2ms)
+15:50:15   ├─ /posts/c12de45e/index.html (+2ms)
+15:50:15   ├─ /posts/cfd78fa9/index.html (+3ms)
+15:50:15   ├─ /posts/chatgpt-and-tts-work-together/index.html (+2ms)
+15:50:15   ├─ /posts/chatgpt-and-tts-work-together-en/index.html (+2ms)
+15:50:15   ├─ /posts/china-ai-breakthrough-deepseek-r1-showdown/index.html (+2ms)
+15:50:15   ├─ /posts/company-departure-after-3-years/index.html (+2ms)
+15:50:15   ├─ /posts/d42e79bb/index.html (+1ms)
+15:50:15   ├─ /posts/d67271d8/index.html (+2ms)
+15:50:15   ├─ /posts/d691e748/index.html (+1ms)
+15:50:15   ├─ /posts/d9253d8c/index.html (+1ms)
+15:50:15   ├─ /posts/dbcdebb/index.html (+2ms)
+15:50:15   ├─ /posts/diy-pc-market-ai-thoughts/index.html (+2ms)
+15:50:15   ├─ /posts/e0246a27/index.html (+2ms)
+15:50:15   ├─ /posts/e4e1357d/index.html (+2ms)
+15:50:15   ├─ /posts/e5d13eb/index.html (+2ms)
+15:50:15   ├─ /posts/ee6b678/index.html (+2ms)
+15:50:15   ├─ /posts/f011ea9c/index.html (+2ms)
+15:50:15   ├─ /posts/f6e1eb2a/index.html (+2ms)
+15:50:15   ├─ /posts/generating-solana-vanity-addresses-using-opencl/index.html (+2ms)
+15:50:15   ├─ /posts/generating-solana-vanity-addresses-using-opencl-en/index.html (+2ms)
+15:50:15   ├─ /posts/kansai-insights/index.html (+2ms)
+15:50:15   ├─ /posts/migrating-from-hexo-to-hugo/index.html (+2ms)
+15:50:15   ├─ /posts/open-core-boot-macos-ventura-tutorial/index.html (+2ms)
+15:50:15   ├─ /posts/overcoming-procrastination-and-self-acceptance/index.html (+1ms)
+15:50:15   ├─ /posts/quantumult-x-chain-proxy-setup/index.html (+2ms)
+15:50:15   ├─ /posts/reconstruct-my-blog-with-hugo-solidstart/index.html (+2ms)
+15:50:15   ├─ /posts/refactoring-blog-architecture-with-vibe-coding/index.html (+2ms)
+15:50:15   ├─ /posts/set-up-freebsd-server-of-mine/index.html (+2ms)
+15:50:15   ├─ /posts/softness-and-strengh-at-28/index.html (+8ms)
+15:50:15   ├─ /posts/software-services-I-recently-subscribed/index.html (+2ms)
+15:50:15   ├─ /posts/solana-vanity-prefix-vs-suffix-probability/index.html (+2ms)
+15:50:15   ├─ /posts/solana-vanity-prefix-vs-suffix-probability-en/index.html (+2ms)
+15:50:15   ├─ /posts/start-with-a-dns-traffic-test/index.html (+2ms)
+15:50:15   ├─ /posts/summary-of-2020/index.html (+2ms)
+15:50:15   ├─ /posts/tlv-encoding-practice/index.html (+2ms)
+15:50:15   ├─ /posts/upgrade-reunion-with-past-self/index.html (+2ms)
+15:50:15   ├─ /posts/when-the-world-met-me/index.html (+2ms)
+15:50:15   ├─ /posts/yunnan-family-trip-dali-lijiang/index.html (+1ms)
+15:50:15   ├─ /about/index.html (+1ms)
+15:50:15   ├─ /about-en/index.html (+1ms)
+15:50:15   ├─ /archives/index.html (+6ms)
+15:50:15   ├─ /archives-en/index.html (+6ms)
+15:50:15   ├─ /friends/index.html (+2ms)
+15:50:15   ├─ /friends-en/index.html (+1ms)
+15:50:15   ├─ /life/index.html (+2ms)
+15:50:15   ├─ /life-en/index.html (+1ms)
+15:50:15   ├─ /search/index.html (+1ms)
+15:50:15   ├─ /search-en/index.html (+1ms)
+15:50:15   ├─ /index.html (+2ms)
+15:50:15 ✓ Completed in 397ms.
+
+15:50:15 [build] ✓ Completed in 1.27s.
+vite v8.2.1 building client environment for production...
+[2K
+transforming...✓ 43 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/astro/sw.js  4.95 kB │ gzip: 2.02 kB
+
+✓ built in 11ms
+15:50:15 [build] 103 page(s) built in 4.25s
+15:50:15 [build] Complete!
+real 5.84
+user 6.54
+sys 0.88

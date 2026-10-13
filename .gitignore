@@ -6,7 +6,7 @@ dist
 .vercel
 .netlify
 
-# Velite
+# Legacy content cache
 .velite
 
 # Environment
@@ -34,7 +34,7 @@ resources
 _blogs
 docs/
 
-# Generated public assets (Velite/build)
+# Generated public assets (legacy builds)
 public/*.xml
 public/_data
 public/category
@@ -49,3 +49,10 @@ public/search-index.json
 public/sw.js
 public/tags
 public/valid_paths.txt
+
+# Astro
+.astro
+.astro-public
+
+# Persistent OG render cache
+.cache/og/

@@ -7,7 +7,7 @@ import Logo from "./Logo";
 import Pages from "./Pages";
 import Tools from "./Tools";
 
-const Header = () => {
+const Header = (props: { pages: Array<{slug: string; title: string}> }) => {
     const [menuOpen, setMenuOpen] = createSignal(false);
 
     createEffect(() => {
@@ -28,7 +28,7 @@ const Header = () => {
                     <div class="flex items-center gap-9">
                         <Logo />
                         <nav class="hidden md:flex items-center gap-7 text-base">
-                            <Pages />
+                            <Pages pages={props.pages} />
                         </nav>
                     </div>
                     <div class="flex items-center gap-6">
@@ -52,7 +52,7 @@ const Header = () => {
                     <div class="w-full max-w-5xl mx-auto px-6">
                         <div class="py-10 flex flex-col gap-10">
                             <nav class="flex flex-col gap-5 text-2xl font-sans font-medium text-[var(--c-text)]">
-                                <Pages
+                                <Pages pages={props.pages}
                                     class="group flex items-center justify-between border-b border-[var(--c-border)] pb-3 text-[var(--c-text)] transition-colors hover:text-[var(--c-link)] last:border-b-0 last:pb-0"
                                     onClick={closeMenu}
                                     showSuffixIcon={true}

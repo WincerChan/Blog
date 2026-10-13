@@ -1,0 +1,265 @@
+$ astro build
+15:35:08 [content] Syncing content
+content:normalize: 0.615ms
+[30;43m WARN [0m [1;33m[content] comments-mapping count (92) does not match posts (85)[0m
+content:emit:sitemaps:index:build: 0.135ms
+content:emit:sitemaps:index:write: 1.167ms
+content:emit:sitemaps:posts:build: 2.23ms
+content:emit:sitemaps:posts:write: 0.624ms
+content:emit:sitemaps:pages:build: 0.168ms
+content:emit:sitemaps:pages:write: 0.335ms
+content:emit:sitemaps:category:build: 0.083ms
+content:emit:sitemaps:category:write: 0.318ms
+content:emit:sitemaps: 5.909ms
+content:emit:atom: 17.044ms
+content:emit:search-index: 118.774ms
+content:strip:raw: 0.085ms
+content:emit:public-assets: 42.794ms
+[content] og-images: 103 targets, concurrency 8
+[content] og-image softness-and-strengh-at-28: satori 122.4ms resvg 48.4ms
+[content] og-image yunnan-family-trip-dali-lijiang: satori 407.2ms resvg 146.9ms
+[content] og-image diy-pc-market-ai-thoughts: satori 123.2ms resvg 64.8ms
+[content] og-image refactoring-blog-architecture-with-vibe-coding: satori 122.6ms resvg 80.2ms
+[content] og-image solana-vanity-prefix-vs-suffix-probability-en: satori 122.2ms resvg 95.8ms
+[content] og-image solana-vanity-prefix-vs-suffix-probability: satori 122.0ms resvg 111.2ms
+[content] og-image overcoming-procrastination-and-self-acceptance: satori 121.8ms resvg 141.8ms
+[content] og-image upgrade-reunion-with-past-self: satori 121.9ms resvg 126.4ms
+[content] og-image china-ai-breakthrough-deepseek-r1-showdown: satori 17.1ms resvg 90.0ms
+[content] og-image 2024-year-end-reflection: satori 17.2ms resvg 87.2ms
+[content] og-image building-my-moments: satori 19.8ms resvg 133.3ms
+[content] og-image kansai-insights: satori 16.3ms resvg 131.4ms
+[content] og-image blog-optimization-again: satori 16.0ms resvg 129.7ms
+[content] og-image generating-solana-vanity-addresses-using-opencl: satori 16.8ms resvg 93.8ms
+[content] og-image generating-solana-vanity-addresses-using-opencl-en: satori 15.8ms resvg 96.4ms
+[content] og-image quantumult-x-chain-proxy-setup: satori 16.1ms resvg 91.9ms
+[content] og-image when-the-world-met-me: satori 15.0ms resvg 91.1ms
+[content] og-image company-departure-after-3-years: satori 14.7ms resvg 125.7ms
+[content] og-image reconstruct-my-blog-with-hugo-solidstart: satori 17.5ms resvg 140.9ms
+[content] og-image open-core-boot-macos-ventura-tutorial: satori 20.7ms resvg 134.7ms
+[content] og-image chatgpt-and-tts-work-together: satori 16.4ms resvg 133.2ms
+[content] og-image 2022-year-end-summary: satori 15.2ms resvg 115.0ms
+[content] og-image chatgpt-and-tts-work-together-en: satori 15.6ms resvg 115.7ms
+[content] og-image software-services-I-recently-subscribed: satori 16.3ms resvg 98.6ms
+[content] og-image about-recent-blog-updates: satori 15.3ms resvg 72.8ms
+[content] og-image start-with-a-dns-traffic-test: satori 16.5ms resvg 132.2ms
+[content] og-image tlv-encoding-practice: satori 18.0ms resvg 147.2ms
+[content] og-image set-up-freebsd-server-of-mine: satori 17.1ms resvg 149.9ms
+[content] og-image blog-search-is-ready: satori 19.1ms resvg 122.1ms
+[content] og-image summary-of-2020: satori 19.5ms resvg 125.5ms
+[content] og-image migrating-from-hexo-to-hugo: satori 18.2ms resvg 119.6ms
+[content] og-image c12de45e: satori 18.0ms resvg 99.4ms
+[content] og-image 16c559c7: satori 16.7ms resvg 130.7ms
+[content] og-image 7a2a84c6: satori 18.0ms resvg 123.9ms
+[content] og-image ee6b678: satori 18.1ms resvg 127.4ms
+[content] og-image 71f1f91c: satori 16.9ms resvg 139.9ms
+[content] og-image e0246a27: satori 18.0ms resvg 139.1ms
+[content] og-image 286f4007: satori 18.7ms resvg 135.5ms
+[content] og-image a9aef93a: satori 17.8ms resvg 131.9ms
+[content] og-image 1352252a: satori 16.5ms resvg 82.5ms
+[content] og-image 5fdce618: satori 15.9ms resvg 92.4ms
+[content] og-image d42e79bb: satori 16.7ms resvg 107.6ms
+[content] og-image 36b4c1ab: satori 16.6ms resvg 105.4ms
+[content] og-image d691e748: satori 21.8ms resvg 137.0ms
+[content] og-image 92d76830: satori 16.2ms resvg 118.0ms
+[content] og-image e4e1357d: satori 15.9ms resvg 135.7ms
+[content] og-image 58dd3c61: satori 19.1ms resvg 82.4ms
+[content] og-image 2848ddef: satori 17.0ms resvg 79.9ms
+[content] og-image d9253d8c: satori 17.0ms resvg 80.2ms
+[content] og-image 50658b02: satori 17.0ms resvg 150.7ms
+[content] og-image dbcdebb: satori 17.9ms resvg 148.0ms
+[content] og-image a5c39267: satori 26.2ms resvg 130.5ms
+[content] og-image 89381f22: satori 17.9ms resvg 162.2ms
+[content] og-image 790223d2: satori 27.8ms resvg 117.2ms
+[content] og-image 8575e868: satori 16.5ms resvg 79.7ms
+[content] og-image f011ea9c: satori 18.9ms resvg 114.4ms
+[content] og-image 4f2b4bfb: satori 16.0ms resvg 114.4ms
+[content] og-image 65e48179: satori 17.2ms resvg 112.2ms
+[content] og-image bf0413ac: satori 17.3ms resvg 130.5ms
+[content] og-image 72171293: satori 17.7ms resvg 140.2ms
+[content] og-image 18b98ea6: satori 22.3ms resvg 143.1ms
+[content] og-image b3085a7: satori 18.1ms resvg 136.9ms
+[content] og-image a6c2a51d: satori 19.3ms resvg 100.9ms
+[content] og-image 7a8186a0: satori 18.0ms resvg 81.5ms
+[content] og-image 5873b0c0: satori 16.5ms resvg 99.9ms
+[content] og-image 4aa5d46d: satori 17.5ms resvg 111.4ms
+[content] og-image d67271d8: satori 19.3ms resvg 126.0ms
+[content] og-image a9d193c6: satori 17.2ms resvg 127.9ms
+[content] og-image 72474942: satori 21.5ms resvg 119.1ms
+[content] og-image f6e1eb2a: satori 16.8ms resvg 100.5ms
+[content] og-image ad42f575: satori 16.8ms resvg 99.8ms
+[content] og-image 6619f85a: satori 16.1ms resvg 108.6ms
+[content] og-image 2aa541e6: satori 17.0ms resvg 130.9ms
+[content] og-image 11ab0263: satori 17.3ms resvg 128.5ms
+[content] og-image e5d13eb: satori 20.1ms resvg 123.0ms
+[content] og-image a0df572f: satori 17.5ms resvg 138.5ms
+[content] og-image 1060d444: satori 20.0ms resvg 113.9ms
+[content] og-image 80689c8d: satori 17.7ms resvg 119.3ms
+[content] og-image 2cdb7149: satori 16.6ms resvg 63.5ms
+[content] og-image cfd78fa9: satori 17.1ms resvg 95.5ms
+[content] og-image 7e325dad: satori 19.7ms resvg 90.4ms
+[content] og-image 7efd2818: satori 17.1ms resvg 87.9ms
+[content] og-image 859c63e4: satori 16.7ms resvg 119.1ms
+[content] og-image 9a260fa1: satori 17.6ms resvg 133.5ms
+[content] og-image 4a17b156: satori 15.8ms resvg 84.5ms
+[content] og-image /about-en/: satori 15.9ms resvg 82.9ms
+[content] og-image /about/: satori 16.5ms resvg 65.2ms
+[content] og-image /archives-en/: satori 15.3ms resvg 87.4ms
+[content] og-image /archives/: satori 15.8ms resvg 86.3ms
+[content] og-image /friends-en/: satori 15.9ms resvg 101.5ms
+[content] og-image /friends/: satori 16.5ms resvg 114.6ms
+[content] og-image /life-en/: satori 15.3ms resvg 131.8ms
+[content] og-image /life/: satori 15.7ms resvg 99.4ms
+[content] og-image /search-en/: satori 17.4ms resvg 81.1ms
+[content] og-image /search/: satori 16.4ms resvg 63.3ms
+[content] og-image /category/分享境/: satori 13.7ms resvg 79.2ms
+[content] og-image /category/行走记/: satori 13.7ms resvg 78.5ms
+[content] og-image /category/博客栈/: satori 17.7ms resvg 92.6ms
+[content] og-image /category/碎碎念/: satori 13.6ms resvg 93.4ms
+[content] og-image /category/实验室/: satori 14.4ms resvg 109.4ms
+[content] og-image /category/文字阁/: satori 13.5ms resvg 95.8ms
+[content] og-image /404/: satori 14.6ms resvg 47.0ms
+[content] og-image /: satori 14.8ms resvg 63.0ms
+content:emit:og-images: 4.098s
+content:emit:public-data:collect: 0.845ms
+content:emit:public-data:latest: 0.167ms
+content:emit:public-data:category: 0.415ms
+content:emit:public-data:posts: 14.612ms
+content:emit:public-data:pages: 0.133ms
+content:emit:public-data:friends: 0.001ms
+content:emit:public-data: 16.556ms
+content:emit:valid-paths: 0.531ms
+content:markdown:rehype:shiki:init: 0.350ms (1)
+content:prepare: 5.241s
+15:35:15 [blog-content] Loaded 85 posts and 10 pages
+15:35:15 [content] Synced content
+15:35:15 [types] Generated 7.20s
+15:35:15 [build] output: "static"
+15:35:15 [build] mode: "static"
+15:35:15 [build] directory: /Users/wincer/Terms/Blog/dist/astro/
+15:35:15 [build] Collecting build info...
+15:35:15 [build] ✓ Completed in 7.36s.
+15:35:15 [build] Building static entrypoints...
+15:35:15 [vite] ✓ built in 619ms
+15:35:16 [vite] ✓ built in 184ms
+15:35:16 [build] Rearranging server assets...
+
+ generating static routes
+15:35:16   ├─ /404.html (+10ms)
+15:35:16   ├─ /category/分享境/index.html (+4ms)
+15:35:16   ├─ /category/博客栈/index.html (+2ms)
+15:35:16   ├─ /category/实验室/index.html (+2ms)
+15:35:16   ├─ /category/文字阁/index.html (+1ms)
+15:35:16   ├─ /category/碎碎念/index.html (+2ms)
+15:35:16   ├─ /category/行走记/index.html (+1ms)
+15:35:16   ├─ /posts/1060d444/index.html (+3ms)
+15:35:16   ├─ /posts/11ab0263/index.html (+2ms)
+15:35:16   ├─ /posts/1352252a/index.html (+2ms)
+15:35:16   ├─ /posts/16c559c7/index.html (+2ms)
+15:35:16   ├─ /posts/18b98ea6/index.html (+2ms)
+15:35:16   ├─ /posts/2022-year-end-summary/index.html (+2ms)
+15:35:16   ├─ /posts/2024-year-end-reflection/index.html (+2ms)
+15:35:16   ├─ /posts/2848ddef/index.html (+2ms)
+15:35:16   ├─ /posts/286f4007/index.html (+2ms)
+15:35:16   ├─ /posts/2aa541e6/index.html (+2ms)
+15:35:16   ├─ /posts/2cdb7149/index.html (+10ms)
+15:35:16   ├─ /posts/36b4c1ab/index.html (+2ms)
+15:35:16   ├─ /posts/4a17b156/index.html (+2ms)
+15:35:16   ├─ /posts/4aa5d46d/index.html (+2ms)
+15:35:16   ├─ /posts/4f2b4bfb/index.html (+2ms)
+15:35:16   ├─ /posts/50658b02/index.html (+1ms)
+15:35:16   ├─ /posts/5873b0c0/index.html (+1ms)
+15:35:16   ├─ /posts/58dd3c61/index.html (+2ms)
+15:35:16   ├─ /posts/5fdce618/index.html (+2ms)
+15:35:16   ├─ /posts/65e48179/index.html (+2ms)
+15:35:16   ├─ /posts/6619f85a/index.html (+1ms)
+15:35:16   ├─ /posts/71f1f91c/index.html (+2ms)
+15:35:16   ├─ /posts/72171293/index.html (+2ms)
+15:35:16   ├─ /posts/72474942/index.html (+2ms)
+15:35:16   ├─ /posts/790223d2/index.html (+2ms)
+15:35:16   ├─ /posts/7a2a84c6/index.html (+2ms)
+15:35:16   ├─ /posts/7a8186a0/index.html (+2ms)
+15:35:16   ├─ /posts/7e325dad/index.html (+2ms)
+15:35:16   ├─ /posts/7efd2818/index.html (+3ms)
+15:35:16   ├─ /posts/80689c8d/index.html (+2ms)
+15:35:16   ├─ /posts/8575e868/index.html (+2ms)
+15:35:16   ├─ /posts/859c63e4/index.html (+1ms)
+15:35:16   ├─ /posts/89381f22/index.html (+2ms)
+15:35:16   ├─ /posts/92d76830/index.html (+2ms)
+15:35:16   ├─ /posts/9a260fa1/index.html (+2ms)
+15:35:16   ├─ /posts/a0df572f/index.html (+2ms)
+15:35:16   ├─ /posts/a5c39267/index.html (+2ms)
+15:35:16   ├─ /posts/a6c2a51d/index.html (+2ms)
+15:35:16   ├─ /posts/a9aef93a/index.html (+2ms)
+15:35:16   ├─ /posts/a9d193c6/index.html (+1ms)
+15:35:16   ├─ /posts/about-recent-blog-updates/index.html (+1ms)
+15:35:16   ├─ /posts/ad42f575/index.html (+2ms)
+15:35:16   ├─ /posts/b3085a7/index.html (+2ms)
+15:35:16   ├─ /posts/bf0413ac/index.html (+2ms)
+15:35:16   ├─ /posts/blog-optimization-again/index.html (+2ms)
+15:35:16   ├─ /posts/blog-search-is-ready/index.html (+2ms)
+15:35:16   ├─ /posts/building-my-moments/index.html (+10ms)
+15:35:16   ├─ /posts/c12de45e/index.html (+2ms)
+15:35:16   ├─ /posts/cfd78fa9/index.html (+2ms)
+15:35:16   ├─ /posts/chatgpt-and-tts-work-together/index.html (+2ms)
+15:35:16   ├─ /posts/chatgpt-and-tts-work-together-en/index.html (+2ms)
+15:35:16   ├─ /posts/china-ai-breakthrough-deepseek-r1-showdown/index.html (+2ms)
+15:35:16   ├─ /posts/company-departure-after-3-years/index.html (+2ms)
+15:35:16   ├─ /posts/d42e79bb/index.html (+1ms)
+15:35:16   ├─ /posts/d67271d8/index.html (+2ms)
+15:35:16   ├─ /posts/d691e748/index.html (+2ms)
+15:35:16   ├─ /posts/d9253d8c/index.html (+2ms)
+15:35:16   ├─ /posts/dbcdebb/index.html (+2ms)
+15:35:16   ├─ /posts/diy-pc-market-ai-thoughts/index.html (+2ms)
+15:35:16   ├─ /posts/e0246a27/index.html (+2ms)
+15:35:16   ├─ /posts/e4e1357d/index.html (+2ms)
+15:35:16   ├─ /posts/e5d13eb/index.html (+2ms)
+15:35:16   ├─ /posts/ee6b678/index.html (+2ms)
+15:35:16   ├─ /posts/f011ea9c/index.html (+1ms)
+15:35:16   ├─ /posts/f6e1eb2a/index.html (+2ms)
+15:35:16   ├─ /posts/generating-solana-vanity-addresses-using-opencl/index.html (+2ms)
+15:35:16   ├─ /posts/generating-solana-vanity-addresses-using-opencl-en/index.html (+2ms)
+15:35:16   ├─ /posts/kansai-insights/index.html (+1ms)
+15:35:16   ├─ /posts/migrating-from-hexo-to-hugo/index.html (+1ms)
+15:35:16   ├─ /posts/open-core-boot-macos-ventura-tutorial/index.html (+2ms)
+15:35:16   ├─ /posts/overcoming-procrastination-and-self-acceptance/index.html (+2ms)
+15:35:16   ├─ /posts/quantumult-x-chain-proxy-setup/index.html (+1ms)
+15:35:16   ├─ /posts/reconstruct-my-blog-with-hugo-solidstart/index.html (+2ms)
+15:35:16   ├─ /posts/refactoring-blog-architecture-with-vibe-coding/index.html (+1ms)
+15:35:16   ├─ /posts/set-up-freebsd-server-of-mine/index.html (+2ms)
+15:35:16   ├─ /posts/softness-and-strengh-at-28/index.html (+1ms)
+15:35:16   ├─ /posts/software-services-I-recently-subscribed/index.html (+2ms)
+15:35:16   ├─ /posts/solana-vanity-prefix-vs-suffix-probability/index.html (+2ms)
+15:35:16   ├─ /posts/solana-vanity-prefix-vs-suffix-probability-en/index.html (+2ms)
+15:35:16   ├─ /posts/start-with-a-dns-traffic-test/index.html (+2ms)
+15:35:16   ├─ /posts/summary-of-2020/index.html (+2ms)
+15:35:16   ├─ /posts/tlv-encoding-practice/index.html (+2ms)
+15:35:16   ├─ /posts/upgrade-reunion-with-past-self/index.html (+1ms)
+15:35:16   ├─ /posts/when-the-world-met-me/index.html (+9ms)
+15:35:16   ├─ /posts/yunnan-family-trip-dali-lijiang/index.html (+2ms)
+15:35:16   ├─ /about/index.html (+2ms)
+15:35:16   ├─ /about-en/index.html (+1ms)
+15:35:16   ├─ /archives/index.html (+7ms)
+15:35:16   ├─ /archives-en/index.html (+7ms)
+15:35:16   ├─ /friends/index.html (+2ms)
+15:35:16   ├─ /friends-en/index.html (+2ms)
+15:35:16   ├─ /life/index.html (+1ms)
+15:35:16   ├─ /life-en/index.html (+1ms)
+15:35:16   ├─ /search/index.html (+1ms)
+15:35:16   ├─ /search-en/index.html (+1ms)
+15:35:16   ├─ /index.html (+2ms)
+15:35:16 ✓ Completed in 264ms.
+
+15:35:16 [build] ✓ Completed in 1.11s.
+vite v8.2.1 building client environment for production...
+[2K
+transforming...✓ 43 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/astro/sw.js  4.95 kB │ gzip: 2.02 kB
+
+✓ built in 12ms
+15:35:16 [build] 103 page(s) built in 8.51s
+15:35:16 [build] Complete!
+real 10.00
+user 14.39
+sys 1.10

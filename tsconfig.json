@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -12,7 +14,7 @@
     "strict": true,
     "noEmit": true,
     "types": [
-      "@solidjs/start/env",
+      "astro/client",
       "node",
       "unplugin-icons/types/solid",
     ],
@@ -23,6 +25,7 @@
       ]
     }
   },
+  "include": [".astro/types.d.ts", "src/**/*", "tools/**/*", "scripts/**/*", "packages/**/*", "*.ts"],
   "exclude": [
     "node_modules",
     ".git",

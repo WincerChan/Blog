@@ -9,12 +9,12 @@ const formatWordCount = (value: unknown) => {
     return `${Math.max(1, Math.round(total / 1000))}k`;
 };
 
-const Stats = ({ LL }: { LL: Accessor<Translations> }) => {
+const Stats = ({ LL, stats }: { LL: Accessor<Translations>; stats: { posts: number; categories: number; words: number; tags: number } }) => {
     const elems = createMemo(() => [
-        __CONTENT_TOTAL_POSTS,
-        __CONTENT_TOTAL_CATEGORIES.length,
-        formatWordCount(__CONTENT_WORDS),
-        __CONTENT_TAGS,
+        stats.posts,
+        stats.categories,
+        formatWordCount(stats.words),
+        stats.tags,
     ])
 
     return (

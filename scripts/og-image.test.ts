@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { resolveOgImagePath } from "../src/site/seo/og";
-import { OG_PNG_SCALE } from "../tools/velite/emit/ogImages";
+import { OG_PNG_SCALE } from "../tools/content/og/targets";
 
 describe("resolveOgImagePath", () => {
   test("ignores cover for post pages", () => {

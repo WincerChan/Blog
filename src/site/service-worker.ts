@@ -62,7 +62,7 @@ registerRoute(
     ({ request, url }) =>
         request.method === "GET" &&
         url.origin === self.location.origin &&
-        url.pathname.startsWith("/_build/assets/") &&
+        url.pathname.startsWith("/_astro/") &&
         (request.destination === "script" || request.destination === "style"),
     async ({ request, url }) => {
         const cache = await caches.open(`assets-${getSwHash() || "dev"}`);
@@ -85,7 +85,7 @@ registerRoute(
     ({ request, url }) =>
         request.method === "GET" &&
         url.origin === self.location.origin &&
-        url.pathname.startsWith("/_data/"),
+        (request.destination === "document" || request.headers.get("accept")?.includes("text/html") || url.pathname === "/search-index.json"),
     async ({ request, url }) => {
         const cache = await caches.open(dataCacheName());
         try {
@@ -95,22 +95,9 @@ registerRoute(
                 return res;
             }
 
-            const mirror = await fetchFirstOk(
-                ASSETS_PREFIXES.map((p) => `${p}latest${url.pathname}`),
-            );
-            if (mirror) {
-                void cache.put(request, mirror.clone());
-                return mirror;
-            }
-            return res;
+            const cached = await cache.match(request);
+            return cached ?? res;
         } catch {
-            const mirror = await fetchFirstOk(
-                ASSETS_PREFIXES.map((p) => `${p}latest${url.pathname}`),
-            );
-            if (mirror) {
-                void cache.put(request, mirror.clone());
-                return mirror;
-            }
             const cached = await cache.match(request);
             if (cached) return cached;
             return new Response("offline", { status: 504 });

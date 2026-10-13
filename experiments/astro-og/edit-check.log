@@ -1,0 +1,3 @@
+PASS body-only edit: identical PNGs
+PASS title edit: exactly one PNG changed
+PASS original source restored, all PNGs match

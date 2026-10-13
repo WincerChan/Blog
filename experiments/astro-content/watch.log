@@ -1,0 +1,5 @@
+PASS new article route and search entry
+PASS edit and slug rename remove old route
+PASS draft removes route, search and taxonomy
+PASS republish restores route
+PASS delete removes route and search

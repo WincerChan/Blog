@@ -1,22 +1,31 @@
-import { useLocation } from "@solidjs/router";
-import { Show, createEffect, createMemo, createSignal, onCleanup, onMount } from "solid-js";
+import { Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { useI18nContext } from "~/i18n/i18n-solid";
 import IconList from "~icons/ph/list";
 
 interface ToCInterface {
     toc: string;
     slug: string,
+    label?: string;
 }
-const ToC = ({ toc, slug }: ToCInterface) => {
+const ToC = ({ toc, slug, label }: ToCInterface) => {
     if (!toc) return <></>
 
     let desktopRef: HTMLDivElement;
     let mobileRef: HTMLDivElement;
-    const { LL } = useI18nContext()
+    const LL = label === undefined ? useI18nContext().LL : undefined;
     const [visible, setVisible] = createSignal(false);
 
-    const loc = useLocation()
-    const hash = createMemo(() => loc.hash)
+    const [hash, setHash] = createSignal("");
+    onMount(() => {
+        const syncHash = () => setHash(window.location.hash);
+        syncHash();
+        window.addEventListener("hashchange", syncHash);
+        onCleanup(() => {
+            window.removeEventListener("hashchange", syncHash);
+            document.body.style.overflow = "";
+            stopScrolling();
+        });
+    });
 
     const decodeFragment = (fragment: string) => {
         try {
@@ -213,7 +222,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
         <div class="md:col-start-3 md:row-start-1 md:justify-self-start">
             <aside class="hidden md:block md:sticky md:top-30">
                 <div class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
-                    <span>{LL().sidebar.TOC()}</span>
+                    <span>{label ?? LL?.().sidebar.TOC()}</span>
                 </div>
                 <div
                     id="toc"
@@ -238,7 +247,7 @@ const ToC = ({ toc, slug }: ToCInterface) => {
                 />
                 <div class="md:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border border-[var(--c-border)] bg-[var(--c-surface)] shadow-lg">
                     <div class="flex items-center justify-between px-4 pt-4 pb-2 text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
-                        <span>{LL().sidebar.TOC()}</span>
+                        <span>{label ?? LL?.().sidebar.TOC()}</span>
                         <button
                             type="button"
                             onClick={() => setVisible(false)}

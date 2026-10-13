@@ -1,7 +1,6 @@
 import { useI18nContext } from "~/i18n/i18n-solid";
 import OtherBlogs from "~/features/post-listing/OtherCards";
 import type { PostListItem } from "~/features/post-listing/types";
-import PageLayout from "~/layouts/PageLayout";
 import { createMemo } from "solid-js";
 
 type TaxoLayoutProps = {
@@ -41,7 +40,7 @@ const CategoryPage = (props: TaxoLayoutProps) => {
         constructHeadParams(props.rawTaxo.term, basePath(), blogsByTerm(), props.inkstoneToken),
     );
     return (
-        <PageLayout headParams={headParams()} >
+        <>
             <h1 class="mt-10 md:mt-14 mb-3 text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">
                 {LL && LL().archive.CATE()}{headParams().title}
             </h1>
@@ -49,7 +48,7 @@ const CategoryPage = (props: TaxoLayoutProps) => {
                 {LL && LL().archive.ARCHIVES_SUBTITLE({ total: totalCount() })}
             </p>
             <OtherBlogs posts={() => blogsByTerm()} description={null} />
-        </PageLayout>
+        </>
     )
 }
 

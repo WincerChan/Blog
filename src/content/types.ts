@@ -1,4 +1,4 @@
-export type VelitePost = {
+export type Post = {
     title: string;
     subtitle?: string;
     date: string;
@@ -19,7 +19,7 @@ export type VelitePost = {
     discussionUrl?: string;
 };
 
-export type VelitePage = {
+export type Page = {
     title: string;
     date: string;
     updated: string;
@@ -40,4 +40,16 @@ export type FriendLink = {
     url: string;
     avatar?: string;
     inactive?: boolean;
+};
+
+type PostNeighbourLink = { title: string; slug: string };
+type PostNeighbours = { prev?: PostNeighbourLink; next?: PostNeighbourLink };
+type RelatedPost = { title: string; slug: string; date: string; score: number };
+
+export type PostPublic = Post & {
+    url?: string;
+    neighbours?: PostNeighbours;
+    relates?: RelatedPost[];
+    hasMath?: boolean;
+    inkstoneToken?: string;
 };

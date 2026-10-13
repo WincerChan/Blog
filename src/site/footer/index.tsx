@@ -8,14 +8,12 @@ import IconDotFill from "~icons/ph/dot-outline-fill";
 import Archives from "./Archives";
 import Category from "./Category";
 import Stats from "./Stats";
-import BackTop from "../widgets/BackTop";
-import UpdateNotify from "~/features/pwa/UpdateNotify";
 
 const SINCE = 2017;
 
-const FooterNav = () => {
+export const FooterNav = (props: any) => {
   const { LL } = useI18nContext();
-  const elems = [Stats, Category, Archives];
+  const elems = [() => <Stats LL={LL as any} stats={props.stats} />, () => <Category categories={props.categories} />, () => <Archives years={props.years} />];
   const year = createMemo(() => new Date().getFullYear());
   return (
     <footer class="w-full border-t border-[var(--c-border)] bg-[var(--c-surface-2)]">
@@ -58,7 +56,7 @@ const FooterNav = () => {
           <For each={elems}>
             {(Elem) => (
               <div class="md:w-[12rem] flex-1 md:flex-none md:w-56">
-                <Elem LL={LL} />
+                <Elem />
               </div>
             )}
           </For>
@@ -111,14 +109,4 @@ const FooterNav = () => {
   );
 };
 
-const Footer = () => {
-  return (
-    <>
-      <BackTop />
-      <UpdateNotify />
-      <FooterNav />
-    </>
-  );
-};
-
-export default Footer;
+export default FooterNav;

@@ -3,6 +3,7 @@ import { useI18nContext } from "~/i18n/i18n-solid";
 import IconArrowRight from "~icons/ph/arrow-right";
 
 type PagesProps = {
+    pages: Array<{slug: string; title: string}>;
     class?: string;
     onClick?: () => void;
     showSuffixIcon?: boolean;
@@ -11,9 +12,7 @@ type PagesProps = {
 
 const Pages = (props: PagesProps) => {
     const { locale } = useI18nContext();
-    let pages = createMemo(() =>
-        (locale() === "zh-CN" ? __CONTENT_ZH_NAV : __CONTENT_EN_NAV),
-    );
+    const pages = () => props.pages;
     const itemClass =
         props.class ?? "text-[var(--c-text-muted)] hover:text-[var(--c-link)] transition-colors";
     const iconClass =

@@ -1,0 +1,73 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
+const base=process.env.ASTRO_TEST_URL || 'http://127.0.0.1:4180';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const results=[];
+try {
+ const context=await browser.newContext({viewport:{width:375,height:900},serviceWorkers:'block'});
+ await context.addInitScript(()=>{delete Navigator.prototype.serviceWorker;});
+ const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const searches=[];
+ await page.route('**/v2/**',r=>{
+  const u=new URL(r.request().url());
+  if(u.pathname.endsWith('/search')) {
+   searches.push(Object.fromEntries(u.searchParams));
+   const offset=Number(u.searchParams.get('offset')||0);
+   return r.fulfill({json:{total:18,elapsed_ms:1,hits:Array.from({length:8},(_,i)=>({title:`Result ${offset+i+1}`,url:'https://blog.itswincer.com/posts/solana-vanity-prefix-vs-suffix-probability/',content:'Matched fixture',published_at:'2026-01-01',tags:[]}))}});
+  }
+  if(u.pathname.endsWith('/douban/marks'))return r.fulfill({json:{items:[{title:'Life fixture',poster:'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',date:'2026-01-01',type:'book',url:'https://example.com'}]}});
+  return r.fulfill({json:{count:0,total:0,comments:[]}});
+ });
+ await page.goto(base+'/search/?q=solid');
+ await page.getByText('Result 1',{exact:true}).waitFor();
+ await page.evaluate(()=>window.__searchDocument=1);
+ await page.getByTitle('Next',{exact:true}).click();await page.getByText('Result 9',{exact:true}).waitFor();
+ assert.equal(searches.at(-1).offset,'8');
+ await page.getByRole('button',{name:'最新',exact:true}).click();
+ await page.waitForFunction(()=>new URLSearchParams(location.search).get('sort')==='latest');
+ await page.getByText('Result 1',{exact:true}).waitFor();
+ assert.equal(searches.at(-1).sort,'latest');assert.equal(searches.at(-1).offset,'0');
+ await page.goBack();await page.waitForFunction(()=>!new URLSearchParams(location.search).has('sort'));
+ await page.getByText('Result 1',{exact:true}).waitFor();
+ assert(await page.evaluate(()=>window.__searchDocument===1));
+ const input=page.getByRole('textbox',{name:'Search'});
+ await input.fill('');await page.getByRole('button',{name:'tag:{name}',exact:true}).click();assert.equal(await input.inputValue(),'tag:');
+ await input.fill('astro');await input.press('Enter');await page.waitForFunction(()=>new URLSearchParams(location.search).get('q')==='astro');
+ await page.locator('form button[type="button"]').click();
+ assert.equal(await input.inputValue(),'');assert.equal(new URL(page.url()).search,'');
+ results.push('PASS search query, syntax, pagination, sort, clear and browser history');
+ await page.goto(base+'/life/');await page.getByText('Life fixture',{exact:true}).waitFor();
+ await page.getByRole('button',{name:'Menu',exact:true}).click();assert.equal(await page.locator('body').evaluate(e=>e.style.overflow),'hidden');
+ await page.locator('nav').filter({has:page.getByRole('link',{name:'归档',exact:true})}).last().getByRole('link',{name:'归档',exact:true}).click();
+ await page.waitForURL('**/archives/');await page.waitForTimeout(350);assert.equal(await page.locator('body').evaluate(e=>e.style.overflow),'');
+ results.push('PASS life API rendering and mobile menu navigation/scroll unlock');
+ await page.goto(base+'/posts/solana-vanity-prefix-vs-suffix-probability-en/');
+ assert.equal(await page.locator('html').getAttribute('lang'),'en');
+ assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://blog.itswincer.com/posts/solana-vanity-prefix-vs-suffix-probability-en/');
+ assert.equal(await page.locator('link[hreflang]').count(),2);
+ const schema=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());assert.equal(schema.inLanguage,'en');
+ await page.getByRole('button',{name:'Back to top'}).evaluate(e=>window.scrollTo(0,document.body.scrollHeight));
+ await page.getByRole('button',{name:'Back to top'}).click();await page.waitForFunction(()=>scrollY<3);
+ assert.deepEqual(errors,[]);results.push('PASS English metadata, translations, back-to-top and no JS errors');
+ await context.close();
+ // Exercise real SW lifecycle; no API writes and no CDN dependence.
+ const swContext=await browser.newContext();
+ await swContext.addInitScript(()=>{const f=fetch.bind(window);window.fetch=(input,init)=>new URL(input instanceof Request?input.url:String(input),location.href).pathname.startsWith('/v2/')?Promise.resolve(new Response('{}',{headers:{'content-type':'application/json'}})):f(input,init);navigator.sendBeacon=()=>true;});
+ const swPage=await swContext.newPage();
+ await swPage.goto(base+'/');await swPage.evaluate(()=>navigator.serviceWorker.ready);
+ await swPage.reload();await swPage.waitForFunction(()=>!!navigator.serviceWorker.controller);
+ await swPage.waitForTimeout(1500);
+ assert(await swPage.evaluate(async()=>{const keys=await caches.keys();return keys.some(k=>k.startsWith('data-'))&&keys.some(k=>k.startsWith('assets-'));}));
+ await swContext.setOffline(true);await swPage.reload();await swPage.locator('main h2').first().waitFor();
+ results.push('PASS service worker activation and cached homepage offline reload');
+ await swContext.setOffline(false);
+ await swPage.evaluate(()=>navigator.serviceWorker.register('/sw.js?v=lifecycle-test',{scope:'/'}));
+ await swPage.waitForFunction(async()=>!!(await navigator.serviceWorker.getRegistration())?.waiting);
+ await swPage.locator('#sw-notify').waitFor({state:'visible'});
+ const navigation=swPage.waitForEvent('load');await swPage.locator('#sw-notify').click();await navigation;
+ results.push('PASS service worker update notification, skip-waiting and reload');
+ await swContext.close();
+} finally {await browser.close();}
+await fs.writeFile('/tmp/blog-astro-full-browser-results.json',JSON.stringify(results,null,2));console.log(results.join('\n'));

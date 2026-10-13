@@ -1,0 +1,45 @@
+{
+  "before": {
+    "runs": [
+      {
+        "wallSeconds": 10.2,
+        "ogMs": 4240
+      },
+      {
+        "wallSeconds": 9.39,
+        "ogMs": 4207
+      },
+      {
+        "wallSeconds": 9.63,
+        "ogMs": 4272
+      }
+    ],
+    "medianWallSeconds": 9.63,
+    "medianOgMs": 4240
+  },
+  "after": {
+    "runs": [
+      {
+        "wallSeconds": 9.17,
+        "ogMs": 2893
+      },
+      {
+        "wallSeconds": 7.9,
+        "ogMs": 2952
+      },
+      {
+        "wallSeconds": 8.21,
+        "ogMs": 2994
+      }
+    ],
+    "medianWallSeconds": 8.21,
+    "medianOgMs": 2952
+  },
+  "pixels": {
+    "count": 103,
+    "pixelIdentical": true,
+    "filesWithDifferentEncoding": 103,
+    "beforeBytes": 13341564,
+    "afterBytes": 11037736
+  }
+}

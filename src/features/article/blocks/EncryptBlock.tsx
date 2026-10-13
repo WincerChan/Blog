@@ -84,14 +84,29 @@ const ProtectBlog = ({ source }) => {
     return (
         <>
             <Show when={!show()}>
-                <form onSubmit={handleDecrypt} class="">
-                    <input type="text" class="" placeholder="你面前的是一个未知的领域，输入密码才能继续前进。" />
-                    <button title="解密" class="" disabled={loading()}>
+                <form onSubmit={handleDecrypt} class="my-6 flex flex-col gap-3 sm:flex-row">
+                    <input
+                        type="password"
+                        aria-label="文章密码"
+                        aria-invalid={!!error()}
+                        aria-describedby={error() ? "decrypt-error" : undefined}
+                        autocomplete="current-password"
+                        class="min-w-0 w-full flex-1 rounded-md border border-[var(--c-border-strong)] bg-[var(--c-surface-2)] px-4 py-3 text-base text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] focus:border-[var(--c-link)]"
+                        placeholder="你面前的是一个未知的领域，输入密码才能继续前进。"
+                    />
+                    <button
+                        type="submit"
+                        title="解密"
+                        class="min-h-11 shrink-0 rounded-md border border-[var(--c-border-strong)] px-5 py-2.5 text-base font-medium text-[var(--c-text)] transition-colors hover:border-[var(--c-link)] hover:bg-[var(--c-hover-bg)] disabled:cursor-wait disabled:opacity-60"
+                        disabled={loading()}
+                    >
                         {loading() ? "解密中" : "解密"}
                     </button>
                 </form>
             </Show>
-            <Show when={error()}><b class="">{error()}</b></Show>
+            <Show when={error()}>
+                <p id="decrypt-error" role="alert" class="my-3 text-sm text-red-600 dark:text-red-400">{error()}</p>
+            </Show>
             <Show when={show()}><section class="" innerHTML={content()} /></Show>
         </>
     )

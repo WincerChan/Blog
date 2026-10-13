@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { loadOgFonts } from "../tools/velite/og/fonts";
-import { resolveSubtitleFontFamily, resolveTitleFontFamily } from "../tools/velite/emit/ogImages";
-import { clampByUnits, renderOgSvg } from "../tools/velite/og/template";
+import { loadOgFonts } from "../tools/content/og/fonts";
+import { resolveSubtitleFontFamily, resolveTitleFontFamily } from "../tools/content/og/targets";
+import { clampByUnits, renderOgSvg } from "../tools/content/og/template";
 
 describe("renderOgSvg", () => {
   test("renders svg without layout errors", async () => {

@@ -1,4 +1,4 @@
-import { useSearchParams } from "@solidjs/router";
+import { useSearchParams } from "~/utils/searchParams";
 import { ErrorBoundary, For, Show, Suspense, createEffect, createResource, createSignal, on, untrack } from "solid-js";
 import { isBrowser, range } from "~/utils";
 import { inkstoneApi } from "~/utils/inkstone";
@@ -6,7 +6,6 @@ import IconArrowLeft from "~icons/ph/arrow-left";
 import IconArrowRight from "~icons/ph/arrow-right";
 import IconReturn from "~icons/ph/arrow-elbow-down-left";
 import IconClear from "~icons/ph/backspace";
-import ArticlePage from "~/layouts/ArticlePage";
 import { canAppendToken, findToken, normalizeQuery } from "./searchQuery";
 
 const resultPerPage = 8
@@ -353,7 +352,7 @@ const Search = ({ page }) => {
         setSearchParams({ q: undefined, sort: undefined } as Record<string, string | undefined>)
     }
     return (
-        <ArticlePage rawBlog={page} relates={[]} hideComment={true} hideActions={true}>
+        <>
             <div class="mt-10 md:mt-14">
                 <form onSubmit={handleSubmit} method="get" class="relative">
                     <input
@@ -417,7 +416,7 @@ const Search = ({ page }) => {
                     </Suspense>
                 </Show>
             </div>
-        </ArticlePage >
+        </>
     )
 }
 

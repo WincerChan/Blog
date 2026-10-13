@@ -1,0 +1,21 @@
+[0.88ms] ".env"
+bun add v1.3.14 (0d9b296a)
+Resolving dependencies
+Resolved, downloaded and extracted [2]
+Saved lockfile
+
+$ bun run packages:build
+$ cd packages/inkstone-track && bun run build && bun run build:types
+$ bun build src/index.ts --outdir dist --format esm
+Bundled 1 module in 11ms
+
+  index.js  5.0 KB  (entry point)
+
+$ tsc -p tsconfig.json
+
++ unocss@66.7.5
++ @astrojs/solid-js@7.0.2
+
+installed sharp@0.35.4
+
+8 packages installed [1.52s]

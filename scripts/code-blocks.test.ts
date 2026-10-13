@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { wrapCodeBlock } from "../tools/velite/codeBlocks";
+import { wrapCodeBlock } from "../tools/content/codeBlocks";
 
 describe("wrapCodeBlock", () => {
   test("wraps pre with code-block container", () => {

@@ -28,7 +28,9 @@ if [ "$1" == "--hitcache" ]; then
     exit
 fi
 mkdir -p dist
-cp -r .output/public dist/
+rm -rf dist/public
+mkdir -p dist/public
+cp -r dist/astro/. dist/public/
 cp dist/public/404/index.html dist/public/404.html
 
 if [ "$1" == "--publish" ]; then
@@ -52,13 +54,11 @@ if [ "$1" == "--publish" ]; then
     jq --arg nv "$NEXT_WIR_VERSION" '.version = $nv' _blogs/wir/package.json > _blogs/wir/.package.json && mv _blogs/wir/.package.json _blogs/wir/package.json
 
     echo -e "${YELLOW}Cleaning old assets...${RESET}"
-    rm -rf _blogs/wir/assets/
+    rm -rf _blogs/wir/assets/ _blogs/wir/_astro/
     echo -e "${YELLOW}Cleaning old _data...${RESET}"
     rm -rf _blogs/wir/_data/
     echo -e "${YELLOW}Copy new assets...${RESET}"
-    cp -r .output/public/_build/assets _blogs/wir/
-    echo -e "${YELLOW}Copy new _data...${RESET}"
-    cp -r .output/public/_data _blogs/wir/
+    cp -r dist/astro/_astro _blogs/wir/
     cd _blogs/wir
     NEW_VERSION=$(jq -r '.version' package.json)
     echo -e "${YELLOW}Publishing new version ${NEW_VERSION}...${RESET}"

@@ -1,0 +1,34 @@
+---
+import Site from '../layouts/Site.astro';
+import { pages, friends } from '../content';
+import { ArticleMetadata, ArchiveContent, FriendsContent } from '../StaticContent';
+import Search from '../islands/Search';
+import Life from '../islands/Life';
+import Comments from '../islands/Comments';
+import PostActions from '~/features/article/blocks/PostActions';
+import { contentStatsPostsByYearDetail } from '../../../tools/content/stats';
+export function getStaticPaths() { return pages.map(page => ({ params: { page: page.slug }, props: { page } })); }
+const { page } = Astro.props;
+const kind = page.slug.replace(/-en$/, '');
+const blog = { ...page, slug: `/${page.slug}/`, toc: '', category: '', tags: [], words: 0, neighbours: {} };
+const simple = kind === 'archives';
+---
+<Site title={page.title} description={page.summary || page.title} lang={page.lang} token={page.inkstoneToken} date={page.date} updated={page.updated} isTranslation={page.isTranslation}>
+  {simple ? <article class="w-full max-w-2xl mx-auto px-4 md:px-0">
+    <h1 class="mt-10 md:mt-14 mb-3 text-3xl md:text-4xl font-semibold font-serif tracking-tight leading-tight text-[var(--c-text)]">{page.title}</h1>
+    <ArchiveContent page={blog} postsByYear={contentStatsPostsByYearDetail} />
+  </article> : <div class="w-full max-w-7xl mx-auto px-4 md:px-0 md:grid md:grid-cols-[1fr_minmax(0,42rem)_1fr] md:gap-x-8">
+    <article class="w-full max-w-2xl mx-auto md:col-start-2 md:row-start-1">
+      <ArticleMetadata blog={blog} />
+      <div id="blog-article" class="prose dark:prose-invert md:text-[1.05rem] max-w-[42rem]">
+        {kind === 'search' ? <Search page={blog} client:load /> : <>
+          <section set:html={page.html} />
+          {kind === 'friends' && <FriendsContent page={blog} links={friends} />}
+          {kind === 'life' && <Life page={blog} client:load />}
+        </>}
+      </div>
+      {kind !== 'search' && <PostActions pageURL={blog.slug} inkstoneToken={page.inkstoneToken} shareLabel={page.lang === 'en' ? 'Share to...' : '分享到...'} client:visible />}
+      {kind !== 'search' && <Comments pageURL={blog.slug} lang={page.lang} client:visible />}
+    </article>
+  </div>}
+</Site>

@@ -1,0 +1,165 @@
+bun test v1.3.14 (0d9b296a)
+
+scripts/og-image.test.ts:
+(pass) resolveOgImagePath > ignores cover for post pages [6.72ms]
+(pass) resolveOgImagePath > builds og path for post pages [0.17ms]
+(pass) resolveOgImagePath > sanitizes slashes in slug [0.04ms]
+(pass) resolveOgImagePath > ignores cover for non-post pages [0.15ms]
+(pass) resolveOgImagePath > builds og path for non-post pages [0.09ms]
+(pass) resolveOgImagePath > builds og path for home page [0.05ms]
+(pass) resolveOgImagePath > uses configured scale for og png generation [0.02ms]
+
+scripts/content-summary.test.ts:
+(pass) summaryFromMeta > stops at <!-- more --> marker with spaces [0.18ms]
+(pass) summaryFromMeta > falls back to plain when mdast is missing [2.27ms]
+(pass) plainFromMarkdown > strips markdown and keeps readable text [2.50ms]
+(pass) plainFromMarkdown > removes emphasis markers [0.36ms]
+(pass) countCjkAndLatin > counts cjk and latin separately [0.49ms]
+
+scripts/inkstone-icons.test.ts:
+(pass) inkstone icons package includes svg and png assets [0.75ms]
+
+scripts/content-public-assets.test.ts:
+(pass) emitPublicAssets > writes manifest values from site config fields [37.03ms]
+
+scripts/content-comments-mapping.test.ts:
+(pass) normalizeCommentPath > normalizes paths and strips query/hash [0.13ms]
+(pass) buildCommentsMapping > filters invalid entries and normalizes keys [0.06ms]
+(pass) formatCommentsMappingFetchError > expands timeout errors with actionable detail [0.37ms]
+(pass) resolveInkstoneBase > defaults to the local API in development [0.02ms]
+(pass) resolveInkstoneBase > defaults to the public API outside development
+(pass) resolveInkstoneBase > prefers an explicit API base from env [0.02ms]
+
+scripts/content-prepare.test.ts:
+(pass) isLocalPreview > returns true only for development [0.03ms]
+(pass) resolveInkstoneTokenSecret > uses explicit secret when provided [0.02ms]
+(pass) resolveInkstoneTokenSecret > falls back to local preview placeholder only in development [0.01ms]
+(pass) formatWarningLog > adds a highlighted warning badge [0.02ms]
+
+scripts/og-render.test.ts:
+(pass) renderOgSvg > renders svg without layout errors [732.06ms]
+(pass) renderOgSvg > chooses title font based on lang and content [0.09ms]
+(pass) renderOgSvg > chooses subtitle font based on lang and content [0.02ms]
+
+scripts/seo-static-meta.test.ts:
+(pass) home schema stays a Blog while article metadata stays per page [2.02ms]
+
+scripts/content-time.test.ts:
+(pass) parseDateLikeHugo > parses ISO with Z timezone [0.17ms]
+(pass) parseDateLikeHugo > parses date-only string with default timezone [0.02ms]
+(pass) parseDateLikeHugo > normalizes space separated datetime and pads hour [0.01ms]
+(pass) parseDateLikeHugo > returns invalid date for malformed input [0.03ms]
+
+scripts/content-search-index.test.ts:
+(pass) emitSearchIndex outputs per-field cjk/latin counts [4.42ms]
+
+scripts/code-blocks.test.ts:
+(pass) wrapCodeBlock > wraps pre with code-block container [1.03ms]
+(pass) wrapCodeBlock > falls back to text label when language missing [0.02ms]
+(pass) wrapCodeBlock > uses pre data-lang when available [0.02ms]
+(pass) wrapCodeBlock > reads language from class property [0.02ms]
+(pass) wrapCodeBlock > normalizes className to class before inferring [0.02ms]
+
+scripts/utils-date.test.ts:
+(pass) formatDateTime > formats article updated time in Shanghai timezone [1.33ms]
+(pass) formatDateTime > falls back to the original value for invalid input
+
+scripts/search-query.test.ts:
+(pass) normalizeQuery > trims and normalizes tokens [0.15ms]
+(pass) findToken > locates category token range [0.07ms]
+(pass) canAppendToken > enforces tag and category limits [0.06ms]
+
+scripts/content-shiki-themes.test.ts:
+(pass) shikiThemes > exports a single semantic theme [0.01ms]
+(pass) shikiThemes > uses css variables for base colors [0.01ms]
+(pass) shikiThemes > token colors are mapped to code variables [0.04ms]
+
+scripts/seo-jsonld-logo.test.ts:
+(pass) article structured data includes local logo and canonical URL [0.06ms]
+
+scripts/og-cache.test.ts:
+(pass) PNG cache persists across instances and coalesces simultaneous renders [41.11ms]
+(pass) corrupt or incomplete cache entries regenerate, failed renders can retry [3.20ms]
+(pass) cache keys depend on displayed fields, not hidden dates or truncated suffixes [0.14ms]
+
+scripts/inkstone-track-package.test.ts:
+(pass) inkstone-track package exports built artifacts [0.04ms]
+
+scripts/kudos.test.ts:
+(pass) normalizeKudosPath > strips -zh suffix [0.06ms]
+(pass) normalizeKudosPath > strips -en suffix [0.11ms]
+(pass) normalizeKudosPath > returns empty string for empty input [0.06ms]
+
+scripts/inkstone-token.test.ts:
+(pass) buildInkstoneToken signs category paths [1.55ms]
+
+scripts/inkstone-track.test.ts:
+(pass) inkstone tracker > skips when token missing [0.28ms]
+(pass) inkstone tracker > sends pulse pv and engage with token [1.27ms]
+(pass) inkstone tracker > skips when siteHost mismatch in prod [0.05ms]
+
+scripts/og-resvg-fonts.test.ts:
+(pass) renderPng > renders png for svg without text [9.32ms]
+
+scripts/content-shared.test.ts:
+(pass) visibility helpers > filters draft posts and keeps translations for visiblePosts [0.09ms]
+(pass) visibility helpers > canonicalPosts excludes translations [0.03ms]
+(pass) visibility helpers > visiblePages filters drafts and sorts by weight [0.04ms]
+(pass) computeNeighbours > uses canon order for prev/next [0.15ms]
+(pass) computeRelated > scores by category and tags [0.14ms]
+
+scripts/package-json.test.ts:
+(pass) root package.json includes typescript in devDependencies [0.03ms]
+(pass) root package.json defines workspace build hooks [0.01ms]
+
+scripts/content-public-data.test.ts:
+[0.05ms] content:emit:public-data:collect
+[0.07ms] content:emit:public-data:latest
+[0.08ms] content:emit:public-data:category
+[0.12ms] content:emit:public-data:posts
+[0.03ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+(pass) public content retains discussion links and math detection [1.24ms]
+[0.00ms] content:emit:public-data:collect
+[0.01ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[9.00ms] content:emit:public-data:posts
+[0.01ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+(pass) encrypted content strips secrets and decrypts with the existing browser format [17.16ms]
+[0.01ms] content:emit:public-data:collect
+[0.03ms] content:emit:public-data:latest
+[0.04ms] content:emit:public-data:category
+[0.02ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[0.00ms] content:emit:public-data:collect
+[0.01ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[0.00ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[0.00ms] content:emit:public-data:collect
+[0.00ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[0.00ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+(pass) removed or drafted posts disappear from all derived lists [0.33ms]
+
+scripts/content-metadata.test.ts:
+(pass) frontmatter preserves date normalization and BOM handling [1.45ms]
+(pass) summary stops at more while word counts exclude HTML tags and image alt text [3.93ms]
+(pass) TOC retains nested heading structure, duplicate anchors and depth limit [1.81ms]
+
+scripts/post-meta.test.ts:
+(pass) hasTranslationMeta > returns true when lang exists and isTranslation is present [0.03ms]
+(pass) hasTranslationMeta > returns false when lang is missing
+(pass) hasTranslationMeta > returns false when isTranslation is missing
+
+tools/content/crypto-gcm.test.cjs:
+
+ 75 pass
+ 0 fail
+ 193 expect() calls
+Ran 75 tests across 27 files. [1375.00ms]

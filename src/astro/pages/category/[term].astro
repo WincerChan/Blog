@@ -1,0 +1,12 @@
+---
+import Site from '../../layouts/Site.astro';
+import { categories, categoryData } from '../../content';
+import { CategoryContent } from '../../StaticContent';
+export function getStaticPaths() { return categories.map(c => ({ params: { term: c.title }, props: { category: c } })); }
+const { category } = Astro.props;
+const data = categoryData[category.title];
+const posts = data.items.map(post => ({...post, slug: post.url}));
+---
+<Site title={category.title} description={`分类 · ${category.title}，共 ${posts.length} 篇文章`} token={data.inkstoneToken}>
+  <article class="w-full max-w-2xl mx-auto px-4 md:px-0"><CategoryContent rawTaxo={{term: category.title, pages: posts}} type="category" /></article>
+</Site>

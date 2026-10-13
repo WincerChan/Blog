@@ -97,6 +97,7 @@ const ToggleButton = () => {
         else document.removeEventListener("click", handleClickOutside)
     }
     let self: HTMLDivElement;
+    onMount(() => onCleanup(() => document.removeEventListener("click", handleClickOutside)));
 
     const handleClickOutside = (e: MouseEvent) => {
         if (!self.contains(e.target as Node)) {

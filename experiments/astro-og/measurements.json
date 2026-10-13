@@ -1,0 +1,39 @@
+{
+  "before": {
+    "runs_seconds": [
+      10.0,
+      9.29,
+      9.17
+    ],
+    "median_seconds": 9.29
+  },
+  "cold": {
+    "runs_seconds": [
+      10.06,
+      9.16,
+      9.61
+    ],
+    "median_seconds": 9.61
+  },
+  "warm": {
+    "runs_seconds": [
+      5.27,
+      4.77,
+      5.14
+    ],
+    "median_seconds": 5.14
+  },
+  "warm_reduction_percent": 44.671689989235745,
+  "body-edit": {
+    "wall_seconds": 5.84,
+    "og": "[og] 103 images: 103 cached, 0 rendered in 49ms"
+  },
+  "title-edit": {
+    "wall_seconds": 5.7,
+    "og": "[og] 103 images: 102 cached, 1 rendered in 677ms"
+  },
+  "restored": {
+    "wall_seconds": 5.28,
+    "og": "[og] 103 images: 103 cached, 0 rendered in 22ms"
+  }
+}

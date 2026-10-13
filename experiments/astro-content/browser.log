@@ -1,0 +1,10 @@
+PASS comments: legacy
+PASS comments: empty
+PASS comments: fallback
+PASS comments: missing
+PASS password: light 1280px, blank/wrong/correct
+PASS password: light 375px, blank/wrong/correct
+PASS password: dark 1280px, blank/wrong/correct
+PASS password: dark 375px, blank/wrong/correct
+PASS navigation, theme, ToC and mocked like: 1440px
+PASS navigation, theme, ToC and mocked like: 375px

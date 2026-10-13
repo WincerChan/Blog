@@ -1,0 +1,26 @@
+---
+import Site from '../../layouts/Site.astro';
+import { posts } from '../../content';
+import { ArticleMetadata, ArticleExtras } from '../../StaticContent';
+import Toc from '../../islands/Toc';
+import Comments from '../../islands/Comments';
+import PostActions from '~/features/article/blocks/PostActions';
+import Encrypt from '~/features/article/blocks/EncryptBlock';
+export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
+const { post } = Astro.props;
+const blog = { ...post, slug: post.url };
+---
+<Site title={post.title} description={post.summary} lang={post.lang} token={post.inkstoneToken} discussionUrl={post.discussionUrl} hasMath={post.hasMath} date={post.date} updated={post.updated} isTranslation={post.isTranslation} keywords={post.tags} words={post.words} subtitle={post.subtitle}>
+  <div class="w-full max-w-7xl mx-auto px-4 md:px-0 md:grid md:grid-cols-[1fr_minmax(0,42rem)_1fr] md:gap-x-8">
+    {post.toc && <Toc toc={post.toc} slug={post.url!} lang={post.lang} client:load />}
+    <article class="w-full max-w-2xl mx-auto md:col-start-2 md:row-start-1">
+      <ArticleMetadata blog={blog} />
+      <div id="blog-article" class="prose dark:prose-invert md:text-[1.05rem] max-w-[42rem]">
+        {post.encrypted ? <Encrypt source={post.html} client:load /> : <section set:html={post.html} />}
+      </div>
+      <PostActions pageURL={post.url!} inkstoneToken={post.inkstoneToken} shareLabel={post.lang === "en" ? "Share to..." : "分享到..."} client:visible />
+      {post.category && <ArticleExtras blog={blog} />}
+      <Comments pageURL={post.url!} lang={post.lang} client:visible />
+    </article>
+  </div>
+</Site>

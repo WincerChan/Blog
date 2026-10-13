@@ -1,4 +1,4 @@
-/// <reference types="@solidjs/start/env" />
+/// <reference types="astro/client" />
 
 export { }
 

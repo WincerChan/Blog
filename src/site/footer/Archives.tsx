@@ -2,9 +2,9 @@ import { useI18nContext } from "~/i18n/i18n-solid";
 import IconArrowRight from "~icons/ph/arrow-right";
 import IconPointFilled from "~icons/ph/dot-outline-fill";
 
-const Archives = () => {
+const Archives = (props: { years: Record<string, number> }) => {
     const { LL } = useI18nContext();
-    const years = Object.entries(__CONTENT_POSTS_BY_YEAR)
+    const years = Object.entries(props.years)
         .filter(([year]) => year !== "undefined")
         .sort(([a], [b]) => Number(b) - Number(a));
     const displayedYears = years.slice(0, 5);
