@@ -8,9 +8,7 @@ import { build } from 'vite';
 import { fileURLToPath } from 'node:url';
 import computeSwHash from './tools/build/swHash.ts';
 import { ogTemplate } from './tools/astro/ogTemplate.ts';
-import { unified } from '@astrojs/markdown-remark';
-import { md } from './tools/content/markdown.ts';
-import { rehypeParseHtml, rehypeKeepPublicImages } from './tools/content/metadata.ts';
+import { markdownOptions } from './tools/content/markdown.ts';
 import { existsSync } from 'node:fs';
 import site from './site.config.json' with { type: 'json' };
 
@@ -30,11 +28,7 @@ export default defineConfig({
   outDir: './dist/astro',
   publicDir: './.astro-public',
   trailingSlash: 'always',
-  markdown: {
-    syntaxHighlight: false,
-    processor: unified({ smartypants: false, remarkPlugins: md.remarkPlugins,
-      rehypePlugins: [rehypeParseHtml, ...md.rehypePlugins, rehypeKeepPublicImages] }),
-  },
+  markdown: markdownOptions,
   integrations: [solid({ exclude: ["tools/content/og/**"] }), {
     name: 'blog-static-assets',
     hooks: { 'astro:config:setup': async () => {

@@ -1,4 +1,4 @@
-import matter from "gray-matter";
+import { parseFrontmatter } from "@astrojs/markdown-remark";
 
 const BOM_RE = /^\uFEFF/;
 
@@ -16,9 +16,9 @@ const normalizeFrontmatter = (value: unknown): unknown => {
 };
 
 export function parseMarkdown(value: string) {
-  const parsed = matter(value.replace(BOM_RE, "").trim());
+  const parsed = parseFrontmatter(value.replace(BOM_RE, "").trim());
   return {
-    data: normalizeFrontmatter(parsed.data ?? {}) as Record<string, unknown>,
+    data: normalizeFrontmatter(parsed.frontmatter) as Record<string, unknown>,
     content: String(parsed.content ?? "").trim(),
   };
 }

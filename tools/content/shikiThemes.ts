@@ -48,7 +48,7 @@ const semanticTokenColors = [
 
 const createSemanticTheme = () => ({
   name: "inkstone-semantic",
-  type: "light",
+  type: "light" as const,
   colors: {
     "editor.background": "var(--code-bg)",
     "editor.foreground": "var(--code-fg)",

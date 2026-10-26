@@ -15,7 +15,7 @@ export async function contentRenderVersion(root: string) {
     'astro.config.mjs', 'bun.lock', 'tools/content/loader.ts',
     'tools/content/renderCache.ts', 'tools/content/metadata.ts', 'tools/content/markdown.ts',
     'tools/content/codeBlocks.ts', 'tools/content/shikiThemes.ts',
-    'tools/content/loaders/matterLoader.ts', 'tools/content/collections.ts',
+    'tools/content/frontmatter.ts', 'tools/content/collections.ts',
   ];
   const contents = await Promise.all(sources.map(file => readFile(path.join(root, file), 'utf8')));
   return hash(JSON.stringify([1, process.versions.node, sources, contents]));

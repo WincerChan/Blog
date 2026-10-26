@@ -33,9 +33,11 @@ English version: `README.en.md`
 ## 内容流程
 
 1. 在 `_blogs/content/posts` 与 `_blogs/content/pages` 写作。
-2. Astro loader 扫描并校验 frontmatter，使用官方 Unified processor 和现有插件渲染 Markdown。
+2. Astro loader 使用官方 `parseFrontmatter` 解析并校验元数据，交给官方 Unified processor 渲染 Markdown。标题锚点、目录数据和 Shiki 高亮由 Astro 提供；摘要、字数和搜索文本通过插件复用同一次解析的语法树。
 3. 保留原有 Atom、sitemap、搜索索引和加密逻辑；这些静态资源生成到 `.astro-public`，OG 由独立 Astro endpoint 生成。
 4. 页面通过 `astro:content` 消费安全内容，生成 HTML；浏览器只激活交互 islands。
+
+目录只保留五级以内的正文标题；摘要在 `<!--more-->` 处截断（最多 260 字符），搜索保留代码、图片说明和公式原文。GFM 删除线、表格和脚注按正文语义提取，不再单独按 CommonMark 解析。迁移差异及验证见 [内容管线精简记录](experiments/astro-native-content/COMPARISON.md)。
 
 开发时监听新增、编辑和删除，同步路由、分类与生成文件。生产构建在渲染前过滤草稿，并提前请求评论映射，与 Markdown 处理重叠；接口超时覆盖响应头和正文。
 

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { postUrl } from "../shared";
-import { transforms } from "../markdown";
+import { transforms } from "../metadata";
 
 const toIsoString = (value: unknown) => {
   if (value instanceof Date) return value.toISOString();
@@ -19,14 +19,14 @@ export const emitSearchIndex = async ({
   publicDir: string;
   posts: any[];
 }) => {
-  const payload = posts.map((post) => {
+  const payload = await Promise.all(posts.map(async (post) => {
     const slug = String(post.slug ?? "");
     const isEncrypted = !!post.encrypt_pwd;
     const rawContent = String(post.rawContent ?? "");
-    const plainTitle = transforms.plainFromMarkdown(String(post.title ?? ""));
-    const plainSubtitle = transforms.plainFromMarkdown(String(post.subtitle ?? ""));
+    const plainTitle = await transforms.plainFromMarkdown(String(post.title ?? ""));
+    const plainSubtitle = await transforms.plainFromMarkdown(String(post.subtitle ?? ""));
     const encryptedNotice = "抱歉，本文已加密，请至网站输入密码后阅读。";
-    const contentText = isEncrypted ? encryptedNotice : post.searchText ?? transforms.plainFromMarkdown(rawContent);
+    const contentText = isEncrypted ? encryptedNotice : post.searchText ?? await transforms.plainFromMarkdown(rawContent);
     const titleSplit = transforms.splitCjkLatinText(plainTitle);
     const subtitleSplit = transforms.splitCjkLatinText(plainSubtitle);
     const contentSplit = transforms.splitCjkLatinText(contentText);
@@ -46,7 +46,7 @@ export const emitSearchIndex = async ({
       content_cjk: contentSplit.cjk,
       content_latin: contentSplit.latin,
     };
-  });
+  }));
 
   const outputPath = path.join(publicDir, "search-index.json");
   await fs.mkdir(path.dirname(outputPath), { recursive: true });

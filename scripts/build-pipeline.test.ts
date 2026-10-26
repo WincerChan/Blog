@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { pathToFileURL } from 'node:url';
 import { createArticleCache } from '../tools/content/renderCache';
+import { markdownOptions } from '../tools/content/markdown';
 import { blogLoader } from '../tools/content/loader';
 import { blogSchema } from '../tools/content/collections';
 import { fetchCommentsMapping } from '../tools/content/commentsMapping';
@@ -51,9 +52,9 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
   const renders: string[] = [];
   const article = (slug: string, extra = '', body = 'Public fixture') => `---\ntitle: Fixture\nslug: ${slug}\ndate: '2025-01-01'\nupdated: '2025-01-01'\n${extra}---\n${body}`;
   try {
-    for (const dir of ['_blogs/content/posts', '_blogs/content/pages', 'public/favicon', 'tools/content/loaders']) await mkdir(path.join(root, dir), { recursive: true });
+    for (const dir of ['_blogs/content/posts', '_blogs/content/pages', 'public/favicon', 'tools/content']) await mkdir(path.join(root, dir), { recursive: true });
     // The fingerprint reads the same renderer/config inputs as a real build.
-    for (const file of ['astro.config.mjs', 'bun.lock', 'tools/content/loader.ts', 'tools/content/renderCache.ts', 'tools/content/metadata.ts', 'tools/content/markdown.ts', 'tools/content/codeBlocks.ts', 'tools/content/shikiThemes.ts', 'tools/content/loaders/matterLoader.ts', 'tools/content/collections.ts', 'site.config.json', 'public/favicon/light.svg']) {
+    for (const file of ['astro.config.mjs', 'bun.lock', 'tools/content/loader.ts', 'tools/content/renderCache.ts', 'tools/content/metadata.ts', 'tools/content/markdown.ts', 'tools/content/codeBlocks.ts', 'tools/content/shikiThemes.ts', 'tools/content/frontmatter.ts', 'tools/content/collections.ts', 'site.config.json', 'public/favicon/light.svg']) {
       await copyFile(file, path.join(root, file));
     }
     await writeFile(path.join(root, '_blogs/content/friends.json'), '[]');
@@ -61,6 +62,7 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     await writeFile(publicFile, article('public'));
     await writeFile(path.join(root, '_blogs/content/posts/private.md'), article('private', 'encrypt_pwd: PRIVATE_PASSWORD_SENTINEL\n', 'Public introduction\n\n<!-- more -->\n\nPRIVATE_BODY_SENTINEL'));
     await writeFile(path.join(root, '_blogs/content/posts/draft.md'), article('draft', 'draft: true\n', 'DRAFT_BODY_SENTINEL'));
+    const renderer = await markdownOptions.processor.createRenderer(markdownOptions);
     const context: any = {
       config: { root: pathToFileURL(root + '/'), publicDir: pathToFileURL(root + '/public/') },
       store: { keys: () => entries.keys(), delete: (id: string) => entries.delete(id), set: (entry: any) => entries.set(entry.id, entry) },
@@ -69,7 +71,8 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
       renderMarkdown: async (body: string) => {
         expect(requested).toBe(true);
         renders.push(body);
-        return { html: `<p>${body}</p>` };
+        const result = await renderer.render(body);
+        return { html: result.code, metadata: result.metadata };
       },
       logger: { info() {} },
     };

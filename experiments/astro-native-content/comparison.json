@@ -1,0 +1,175 @@
+{
+  "baseline": "010c650",
+  "parity": {
+    "articles": 94,
+    "bodyTextEqual": 94,
+    "headingIdsEqual": 94,
+    "codeLanguagesEqual": 94
+  },
+  "metadataChanges": {
+    "toc": [
+      {
+        "source": "_blogs/content/posts/离职之后的两个月.md",
+        "before": "<nav id=\"TableOfContents\"><ul><li><a href=\"#在前公司的状况\">在前公司的状况</a></li><li><a href=\"#离职的原因\">离职的原因</a></li><li><a href=\"#两个月我做了什么\">两个月我做了什么</a></li><li><a href=\"#总结--打算\">总结 & 打算</a></li></ul></nav>",
+        "after": "<nav id=\"TableOfContents\"><ul><li><a href=\"#在前公司的状况\">在前公司的状况</a></li><li><a href=\"#离职的原因\">离职的原因</a></li><li><a href=\"#两个月我做了什么\">两个月我做了什么</a></li><li><a href=\"#总结--打算\">总结 &amp; 打算</a></li></ul></nav>"
+      },
+      {
+        "source": "_blogs/content/posts/基于-ETS-的漏斗限流.md",
+        "before": "<nav id=\"TableOfContents\"><ul><li><a href=\"#\"></a><ul><li><a href=\"#惰性删除\">惰性删除</a></li><li><a href=\"#提高可用性\">提高可用性</a></li></ul></li></ul></nav>",
+        "after": "<nav id=\"TableOfContents\"><ul><li><a href=\"#漏斗限流\">漏斗限流</a></li><li><a href=\"#使用-ets\">使用 ETS</a></li><li><a href=\"#\"></a><ul><li><a href=\"#惰性删除\">惰性删除</a></li><li><a href=\"#提高可用性\">提高可用性</a></li></ul></li></ul></nav>"
+      },
+      {
+        "source": "_blogs/content/posts/OpenCore-引导安装-macOS-Ventura-教程.md",
+        "before": "<nav id=\"TableOfContents\"><ul><li><a href=\"#准备工作\">准备工作</a><ul><li><a href=\"#bios-配置\">BIOS 配置</a></li><li><a href=\"#下载-macos-镜像\">下载 macOS 镜像</a></li><li><a href=\"#刻录启动盘\">刻录启动盘</a></li></ul></li><li><a href=\"#挂载-efi-分区\">挂载 EFI 分区</a></li><li><a href=\"#drivers-相关\">Drivers 相关</a><ul><li><a href=\"#kexts-相关\">Kexts 相关</a></li><li><a href=\"#无线网卡-kexts\">无线网卡 Kexts</a></li></ul></li><li><a href=\"#acpi-相关\">ACPI 相关</a></li><li><a href=\"#tools-文件夹\">Tools 文件夹</a></li><li><a href=\"#resources-文件夹\">Resources 文件夹</a></li><li><a href=\"#整合-configplist\">整合 config.plist</a><ul><li><a href=\"#booter\">Booter</a></li><li><a href=\"#deviceproperties\">DeviceProperties</a></li><li><a href=\"#kernel\">Kernel</a></li><li><a href=\"#misc\">Misc</a></li><li><a href=\"#nvram\">NVRAM</a></li><li><a href=\"#platforminfo\">PlatformInfo</a></li><li><a href=\"#uefi\">UEFI</a></li></ul></li><li><a href=\"#调试\">调试</a><ul><li><a href=\"#验证\">验证</a></li></ul></li><li><a href=\"#更新-macos\">更新 macOS</a></li><li><a href=\"#windows-11-双系统\">Windows 11 双系统</a><ul><li><a href=\"#制作-windows-11-镜像\">制作 Windows 11 镜像</a></li><li><a href=\"#启动转换助理\">启动转换助理</a></li><li><a href=\"#分区--安装\">分区 & 安装</a></li><li><a href=\"#windows-支持软件\">Windows 支持软件</a></li></ul></li><li><a href=\"#注意事项\">注意事项</a><ul><li><a href=\"#备份\">备份</a></li><li><a href=\"#引导丢失\">引导丢失</a></li><li><a href=\"#reset-nvram\">Reset NVRAM</a></li><li><a href=\"#最简原则\">最简原则</a></li></ul></li><li><a href=\"#成果\">成果</a></li><li><a href=\"#总结\">总结</a></li></ul></nav>",
+        "after": "<nav id=\"TableOfContents\"><ul><li><a href=\"#准备工作\">准备工作</a><ul><li><a href=\"#bios-配置\">BIOS 配置</a></li><li><a href=\"#下载-macos-镜像\">下载 macOS 镜像</a></li><li><a href=\"#刻录启动盘\">刻录启动盘</a></li></ul></li><li><a href=\"#挂载-efi-分区\">挂载 EFI 分区</a></li><li><a href=\"#drivers-相关\">Drivers 相关</a><ul><li><a href=\"#kexts-相关\">Kexts 相关</a></li><li><a href=\"#无线网卡-kexts\">无线网卡 Kexts</a></li></ul></li><li><a href=\"#acpi-相关\">ACPI 相关</a></li><li><a href=\"#tools-文件夹\">Tools 文件夹</a></li><li><a href=\"#resources-文件夹\">Resources 文件夹</a></li><li><a href=\"#整合-configplist\">整合 config.plist</a><ul><li><a href=\"#booter\">Booter</a></li><li><a href=\"#deviceproperties\">DeviceProperties</a></li><li><a href=\"#kernel\">Kernel</a></li><li><a href=\"#misc\">Misc</a></li><li><a href=\"#nvram\">NVRAM</a></li><li><a href=\"#platforminfo\">PlatformInfo</a></li><li><a href=\"#uefi\">UEFI</a></li></ul></li><li><a href=\"#调试\">调试</a><ul><li><a href=\"#验证\">验证</a></li></ul></li><li><a href=\"#更新-macos\">更新 macOS</a></li><li><a href=\"#windows-11-双系统\">Windows 11 双系统</a><ul><li><a href=\"#制作-windows-11-镜像\">制作 Windows 11 镜像</a></li><li><a href=\"#启动转换助理\">启动转换助理</a></li><li><a href=\"#分区--安装\">分区 &amp; 安装</a></li><li><a href=\"#windows-支持软件\">Windows 支持软件</a></li></ul></li><li><a href=\"#注意事项\">注意事项</a><ul><li><a href=\"#备份\">备份</a></li><li><a href=\"#引导丢失\">引导丢失</a></li><li><a href=\"#reset-nvram\">Reset NVRAM</a></li><li><a href=\"#最简原则\">最简原则</a></li></ul></li><li><a href=\"#成果\">成果</a></li><li><a href=\"#总结\">总结</a></li></ul></nav>"
+      },
+      {
+        "source": "_blogs/content/posts/Solana-Address-Prefix-Char-Probability-Analysis.md",
+        "before": "<nav id=\"TableOfContents\"><ul><li><a href=\"#an-invisible-rule-for-public-keys\">An Invisible Rule for Public Keys</a></li><li><a href=\"#real-test\">Real Test</a></li><li><a href=\"#remaining-characters\">Remaining characters</a></li><li><a href=\"#is-character-1-special\">Is character '1' special?</a></li><li><a href=\"#final-decision\">Final decision</a><ul><li><a href=\"#suffix-matching\">Suffix matching</a></li><li><a href=\"#prefix-matching\">Prefix matching</a></li></ul></li></ul></nav>",
+        "after": "<nav id=\"TableOfContents\"><ul><li><a href=\"#an-invisible-rule-for-public-keys\">An Invisible Rule for Public Keys</a></li><li><a href=\"#real-test\">Real Test</a></li><li><a href=\"#remaining-characters\">Remaining characters</a></li><li><a href=\"#is-character-1-special\">Is character &#39;1&#39; special?</a></li><li><a href=\"#final-decision\">Final decision</a><ul><li><a href=\"#suffix-matching\">Suffix matching</a></li><li><a href=\"#prefix-matching\">Prefix matching</a></li></ul></li></ul></nav>"
+      }
+    ],
+    "searchText": [
+      {
+        "source": "_blogs/content/posts/使用-Opencore-引导黑苹果踩坑记录.md"
+      },
+      {
+        "source": "_blogs/content/posts/世界与我的一次邂逅.md"
+      },
+      {
+        "source": "_blogs/content/posts/杭州见闻.md"
+      },
+      {
+        "source": "_blogs/content/posts/OpenCore-引导安装-macOS-Ventura-教程.md"
+      },
+      {
+        "source": "_blogs/content/posts/记一次反向代理的搭建.md"
+      },
+      {
+        "source": "_blogs/content/posts/基于-OpenCL-生成-Solana-虚荣地址.md"
+      },
+      {
+        "source": "_blogs/content/posts/Nextcloud 搭建私人云服务教程.md"
+      },
+      {
+        "source": "_blogs/content/posts/Generating-Solana-Vanity-Addresses-Using-OpenCL.md"
+      },
+      {
+        "source": "_blogs/content/posts/关西见闻.md"
+      },
+      {
+        "source": "_blogs/content/posts/Python-并发之痛-线程-协程.md"
+      },
+      {
+        "source": "_blogs/content/posts/读《拖延心理学》有感.md"
+      },
+      {
+        "source": "_blogs/content/posts/代码整洁之道-读书笔记.md"
+      },
+      {
+        "source": "_blogs/content/posts/Python 知多少-二-继承.md"
+      },
+      {
+        "source": "_blogs/content/posts/Solana-地址前缀字符的概率分析.md"
+      },
+      {
+        "source": "_blogs/content/posts/ChatGPT-与-TTS-会擦出什么样的火花？.md"
+      },
+      {
+        "source": "_blogs/content/posts/导出 QQ 聊天记录.md"
+      },
+      {
+        "source": "_blogs/content/posts/博客折腾小记.md"
+      },
+      {
+        "source": "_blogs/content/posts/我对 DIY 市场、AI 的一点看法.md"
+      },
+      {
+        "source": "_blogs/content/posts/写给 21 岁的自己.md"
+      },
+      {
+        "source": "_blogs/content/posts/离职，三年未满.md"
+      },
+      {
+        "source": "_blogs/content/posts/Sorry-会写代码真的能为所欲为.md"
+      },
+      {
+        "source": "_blogs/content/posts/豆瓣电影 Top 250 数据分析.md"
+      },
+      {
+        "source": "_blogs/content/posts/Solana-Address-Prefix-Char-Probability-Analysis.md"
+      },
+      {
+        "source": "_blogs/content/posts/Spacemacs 生存指北.md"
+      },
+      {
+        "source": "_blogs/content/posts/Kindle Papwerwhite 开箱 & 简评.md"
+      },
+      {
+        "source": "_blogs/content/posts/又一次博客优化记录.md"
+      },
+      {
+        "source": "_blogs/content/posts/再见 LiveRe-拥抱 Disqus.md"
+      },
+      {
+        "source": "_blogs/content/posts/我的-FreeBSD-服务器配置.md"
+      },
+      {
+        "source": "_blogs/content/posts/QQ 音乐外链解析.md"
+      },
+      {
+        "source": "_blogs/content/posts/Quantumult-X-的链式代理配置.md"
+      },
+      {
+        "source": "_blogs/content/posts/构建一言 API 踩坑记录.md"
+      },
+      {
+        "source": "_blogs/content/posts/一台 VPS 的正确打开方式.md"
+      }
+    ],
+    "summary": [
+      {
+        "source": "_blogs/content/posts/Python-并发之痛-线程-协程.md",
+        "before": "算算日子，我又有两个多月没有写新文章了，是时候给博客除除草了——拖更的原因是（ ~~懒~~ ）换了一份新的工作，在适应新的工作与生活环境。在入职奇安信（上一份工作）的时候，有半年的时间没有更新博客，当时的我把原因归咎于公司 push 员工太厉害，导致员工没有属于自己的空间；可现在的工作明明给予了我足够的空间，我却还是两个多月没有新文章产出，看来个人方面也有一定的原因。 废话好像有点太多了，本篇文章准备分享一下最近工作上遇到的问题以及解决办法。",
+        "after": "算算日子，我又有两个多月没有写新文章了，是时候给博客除除草了——拖更的原因是（ 懒 ）换了一份新的工作，在适应新的工作与生活环境。在入职奇安信（上一份工作）的时候，有半年的时间没有更新博客，当时的我把原因归咎于公司 push 员工太厉害，导致员工没有属于自己的空间；可现在的工作明明给予了我足够的空间，我却还是两个多月没有新文章产出，看来个人方面也有一定的原因。 废话好像有点太多了，本篇文章准备分享一下最近工作上遇到的问题以及解决办法。"
+      },
+      {
+        "source": "_blogs/content/posts/读《拖延心理学》有感.md",
+        "before": "好久没在 文字阁 分类里发文了~~这当然不是因为我好久没读书了~~。最近这段时间因为意识到了内心深处的冲突与迷茫，我开始不断看书，试图从书中寻找答案。倒不是说最近我的内心才有冲突与迷茫，而是我最近才从我的一些行为意识到原来这是我内心冲突与迷茫的外在表现。我在 2024 年终总结 里写道：「今年我浪费了好多时间在刷 B 站、抖音上面，我觉得这样并不好，短视频刷多了会让我明显感觉到自己变得浮躁了起来」。其实我当时弄错了因果关系，并不是因为刷短视频让我变得浮躁了。而是因为我的内心本身就是浮躁的，所以才会去看刷很多视频。",
+        "after": "好久没在 文字阁 分类里发文了 这当然不是因为我好久没读书了 。最近这段时间因为意识到了内心深处的冲突与迷茫，我开始不断看书，试图从书中寻找答案。倒不是说最近我的内心才有冲突与迷茫，而是我最近才从我的一些行为意识到原来这是我内心冲突与迷茫的外在表现。我在 2024 年终总结 里写道：「今年我浪费了好多时间在刷 B 站、抖音上面，我觉得这样并不好，短视频刷多了会让我明显感觉到自己变得浮躁了起来」。其实我当时弄错了因果关系，并不是因为刷短视频让我变得浮躁了。而是因为我的内心本身就是浮躁的，所以才会去看刷很多视频。"
+      },
+      {
+        "source": "_blogs/content/posts/Python 知多少-二-继承.md",
+        "before": "好像又有一段日子没写技术类博文，翻了翻归档，发现最近一篇技术类文章已经是俩月多之前的事了，吓得我赶紧~~水~~写一篇的技术文章不然怕是要被人当成生活博主了。思来想去写些什么好，还是继续上次开的新坑，来聊聊 Python 中的继承。",
+        "after": "好像又有一段日子没写技术类博文，翻了翻归档，发现最近一篇技术类文章已经是俩月多之前的事了，吓得我赶紧 水 写一篇的技术文章不然怕是要被人当成生活博主了。思来想去写些什么好，还是继续上次开的新坑，来聊聊 Python 中的继承。"
+      }
+    ],
+    "words": [
+      {
+        "source": "_blogs/content/posts/博客折腾小记.md",
+        "before": 1555,
+        "after": 1552
+      },
+      {
+        "source": "_blogs/content/posts/我对 DIY 市场、AI 的一点看法.md",
+        "before": 2569,
+        "after": 2537
+      },
+      {
+        "source": "_blogs/content/posts/我的-FreeBSD-服务器配置.md",
+        "before": 3270,
+        "after": 3264
+      }
+    ]
+  },
+  "clientJs": {
+    "before": {
+      "files": 19,
+      "bytes": 115287
+    },
+    "after": {
+      "files": 19,
+      "bytes": 115287
+    }
+  }
+}

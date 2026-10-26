@@ -2,9 +2,9 @@ import { readdir, readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { Loader, LoaderContext } from 'astro/loaders';
-import { parseMarkdown } from './loaders/matterLoader';
+import { parseMarkdown } from './frontmatter';
 import { postInput, pageInput, friendInput } from './collections';
-import { markdownMetadata } from './metadata';
+import { renderedMetadata } from './metadata';
 import { beginContentPreparation, prepareContent } from './prepare';
 import { contentRenderVersion, createArticleCache } from './renderCache';
 
@@ -61,7 +61,7 @@ export function blogLoader(): Loader {
               if (rendered) stats.cached++;
               else {
                 const result = await renderMarkdown(content, { fileURL: pathToFileURL(file) });
-                rendered = { html: result.html, ...markdownMetadata(content, kind === 'posts' && !privateArticle) };
+                rendered = { html: result.html, ...renderedMetadata(result.metadata, kind === 'posts' && !privateArticle) };
                 if (!watcher && !privateArticle) await persistent.write(relative, source, rendered);
                 stats.rendered++;
               }
