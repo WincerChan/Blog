@@ -1,0 +1,352 @@
+bun test v1.3.14 (0d9b296a)
+
+scripts/og-image.test.ts:
+(pass) resolveOgImagePath > ignores cover for post pages [10.36ms]
+(pass) resolveOgImagePath > builds og path for post pages [0.32ms]
+(pass) resolveOgImagePath > sanitizes slashes in slug [0.11ms]
+(pass) resolveOgImagePath > ignores cover for non-post pages [0.14ms]
+(pass) resolveOgImagePath > builds og path for non-post pages [0.02ms]
+(pass) resolveOgImagePath > builds og path for home page [0.01ms]
+(pass) resolveOgImagePath > uses configured scale for og png generation
+
+scripts/content-summary.test.ts:
+(pass) summaryFromMeta > stops at <!-- more --> marker with spaces [1.46ms]
+(pass) summaryFromMeta > falls back to plain when mdast is missing [1.89ms]
+(pass) plainFromMarkdown > strips markdown and keeps readable text [2.90ms]
+(pass) plainFromMarkdown > removes emphasis markers [0.40ms]
+(pass) countCjkAndLatin > counts cjk and latin separately [0.66ms]
+
+scripts/inkstone-icons.test.ts:
+(pass) inkstone icons package includes svg and png assets [1.19ms]
+
+scripts/content-public-assets.test.ts:
+(pass) emitPublicAssets > writes manifest values from site config fields [73.49ms]
+
+scripts/content-comments-mapping.test.ts:
+(pass) normalizeCommentPath > normalizes paths and strips query/hash [0.09ms]
+(pass) buildCommentsMapping > filters invalid entries and normalizes keys [0.06ms]
+(pass) formatCommentsMappingFetchError > expands timeout errors with actionable detail [0.83ms]
+(pass) resolveInkstoneBase > defaults to the local API in development [0.03ms]
+(pass) resolveInkstoneBase > defaults to the public API outside development [0.01ms]
+(pass) resolveInkstoneBase > prefers an explicit API base from env [0.05ms]
+
+scripts/content-prepare.test.ts:
+(pass) isLocalPreview > returns true only for development [0.03ms]
+(pass) resolveInkstoneTokenSecret > uses explicit secret when provided [0.03ms]
+(pass) resolveInkstoneTokenSecret > falls back to local preview placeholder only in development [0.01ms]
+(pass) formatWarningLog > adds a highlighted warning badge [0.02ms]
+
+scripts/og-render.test.ts:
+(pass) renderOgSvg > renders svg without layout errors [742.75ms]
+(pass) renderOgSvg > chooses title font based on lang and content [0.08ms]
+(pass) renderOgSvg > chooses subtitle font based on lang and content [0.02ms]
+
+scripts/build-pipeline.test.ts:
+(pass) public render cache handles restart, content/config changes, corruption and removal [6.29ms]
+[0.11ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (2)[0m
+[0.07ms] content:emit:sitemaps:index:build
+[0.11ms] content:emit:sitemaps:index:write
+[0.14ms] content:emit:sitemaps:posts:build
+[0.16ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.15ms] content:emit:sitemaps:pages:write
+[0.01ms] content:emit:sitemaps:category:build
+[0.18ms] content:emit:sitemaps:category:write
+[1.17ms] content:emit:sitemaps
+[0.81ms] content:emit:atom
+[0.66ms] content:emit:search-index
+[0.01ms] content:strip:raw
+[24.17ms] content:emit:public-assets
+[0.16ms] content:emit:public-data:collect
+[0.07ms] content:emit:public-data:latest
+[0.08ms] content:emit:public-data:category
+[9.07ms] content:emit:public-data:posts
+[0.07ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[9.78ms] content:emit:public-data
+[0.35ms] content:emit:valid-paths
+content:markdown:rehype:shiki:init: 135.060ms (1)
+[37.99ms] content:prepare
+[0.01ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (2)[0m
+[0.01ms] content:emit:sitemaps:index:build
+[0.07ms] content:emit:sitemaps:index:write
+[0.01ms] content:emit:sitemaps:posts:build
+[0.05ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.05ms] content:emit:sitemaps:pages:write
+[0.00ms] content:emit:sitemaps:category:build
+[0.06ms] content:emit:sitemaps:category:write
+[0.30ms] content:emit:sitemaps
+[0.14ms] content:emit:atom
+[0.24ms] content:emit:search-index
+[0.00ms] content:strip:raw
+[5.68ms] content:emit:public-assets
+[0.02ms] content:emit:public-data:collect
+[0.03ms] content:emit:public-data:latest
+[0.01ms] content:emit:public-data:category
+[7.81ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[7.94ms] content:emit:public-data
+[1.39ms] content:emit:valid-paths
+[15.82ms] content:prepare
+[0.01ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (2)[0m
+[0.01ms] content:emit:sitemaps:index:build
+[0.05ms] content:emit:sitemaps:index:write
+[0.01ms] content:emit:sitemaps:posts:build
+[0.05ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.04ms] content:emit:sitemaps:pages:write
+[0.00ms] content:emit:sitemaps:category:build
+[0.04ms] content:emit:sitemaps:category:write
+[0.23ms] content:emit:sitemaps
+[0.13ms] content:emit:atom
+[0.22ms] content:emit:search-index
+[0.00ms] content:strip:raw
+[5.57ms] content:emit:public-assets
+[0.02ms] content:emit:public-data:collect
+[0.02ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[7.97ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.01ms] content:emit:public-data:friends
+[8.08ms] content:emit:public-data
+[0.13ms] content:emit:valid-paths
+[14.46ms] content:prepare
+[0.01ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (2)[0m
+[0.01ms] content:emit:sitemaps:index:build
+[0.06ms] content:emit:sitemaps:index:write
+[0.01ms] content:emit:sitemaps:posts:build
+[0.05ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.05ms] content:emit:sitemaps:pages:write
+[0.00ms] content:emit:sitemaps:category:build
+[0.05ms] content:emit:sitemaps:category:write
+[0.26ms] content:emit:sitemaps
+[0.16ms] content:emit:atom
+[0.22ms] content:emit:search-index
+[0.00ms] content:strip:raw
+[6.07ms] content:emit:public-assets
+[0.02ms] content:emit:public-data:collect
+[0.03ms] content:emit:public-data:latest
+[0.01ms] content:emit:public-data:category
+[15.34ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[15.45ms] content:emit:public-data
+[0.89ms] content:emit:valid-paths
+[23.17ms] content:prepare
+[0.01ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (1)[0m
+[0.02ms] content:emit:sitemaps:index:build
+[0.06ms] content:emit:sitemaps:index:write
+[0.01ms] content:emit:sitemaps:posts:build
+[0.08ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.06ms] content:emit:sitemaps:pages:write
+[0.00ms] content:emit:sitemaps:category:build
+[0.05ms] content:emit:sitemaps:category:write
+[0.32ms] content:emit:sitemaps
+[0.14ms] content:emit:atom
+[0.19ms] content:emit:search-index
+[0.00ms] content:strip:raw
+[5.43ms] content:emit:public-assets
+[0.00ms] content:emit:public-data:collect
+[0.02ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[7.69ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[7.78ms] content:emit:public-data
+[0.14ms] content:emit:valid-paths
+[14.10ms] content:prepare
+[0.01ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (2)[0m
+[0.01ms] content:emit:sitemaps:index:build
+[1.16ms] content:emit:sitemaps:index:write
+[0.05ms] content:emit:sitemaps:posts:build
+[0.07ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.05ms] content:emit:sitemaps:pages:write
+[0.00ms] content:emit:sitemaps:category:build
+[0.05ms] content:emit:sitemaps:category:write
+[1.43ms] content:emit:sitemaps
+[0.15ms] content:emit:atom
+[0.28ms] content:emit:search-index
+[0.00ms] content:strip:raw
+[5.58ms] content:emit:public-assets
+[0.02ms] content:emit:public-data:collect
+[0.02ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[7.76ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[7.85ms] content:emit:public-data
+[0.11ms] content:emit:valid-paths
+[15.54ms] content:prepare
+[0.01ms] content:normalize
+[30;43m WARN [0m [1;33m[content] comments-mapping count (0) does not match posts (1)[0m
+[0.02ms] content:emit:sitemaps:index:build
+[0.07ms] content:emit:sitemaps:index:write
+[0.01ms] content:emit:sitemaps:posts:build
+[0.08ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.05ms] content:emit:sitemaps:pages:write
+[0.00ms] content:emit:sitemaps:category:build
+[0.05ms] content:emit:sitemaps:category:write
+[0.31ms] content:emit:sitemaps
+[0.13ms] content:emit:atom
+[0.20ms] content:emit:search-index
+[0.00ms] content:strip:raw
+[5.26ms] content:emit:public-assets
+[0.01ms] content:emit:public-data:collect
+[0.02ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[7.70ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[7.77ms] content:emit:public-data
+[0.12ms] content:emit:valid-paths
+[13.90ms] content:prepare
+(pass) loader starts API early, skips drafts, reuses public renders and evicts private/deleted data [171.68ms]
+(pass) mapping deadline covers a stalled response body after successful headers [62.87ms]
+(pass) service worker version is stable and follows content/code, excluding environment secrets [2.17ms]
+(pass) Wind4 theme output is independent of module discovery order [11.56ms]
+(pass) renderer fingerprint follows installed transitives and optional native packages only [5.13ms]
+[0.01ms] content:emit:sitemaps:index:build
+[0.08ms] content:emit:sitemaps:index:write
+[0.01ms] content:emit:sitemaps:posts:build
+[0.13ms] content:emit:sitemaps:posts:write
+[0.00ms] content:emit:sitemaps:pages:build
+[0.12ms] content:emit:sitemaps:pages:write
+[0.03ms] content:emit:sitemaps:category:build
+[0.15ms] content:emit:sitemaps:category:write
+(pass) feed and category sitemap dates reflect their content, not build time [2.06ms]
+
+scripts/seo-static-meta.test.ts:
+(pass) home schema stays a Blog while article metadata stays per page [0.13ms]
+
+scripts/content-time.test.ts:
+(pass) parseDateLikeHugo > parses ISO with Z timezone [0.63ms]
+(pass) parseDateLikeHugo > parses date-only string with default timezone [0.03ms]
+(pass) parseDateLikeHugo > normalizes space separated datetime and pads hour [0.02ms]
+(pass) parseDateLikeHugo > returns invalid date for malformed input [0.01ms]
+
+scripts/content-search-index.test.ts:
+(pass) emitSearchIndex outputs per-field cjk/latin counts [2.15ms]
+
+scripts/code-blocks.test.ts:
+(pass) wrapCodeBlock > wraps pre with code-block container [1.36ms]
+(pass) wrapCodeBlock > falls back to text label when language missing [0.02ms]
+(pass) wrapCodeBlock > uses pre data-lang when available [0.02ms]
+(pass) wrapCodeBlock > reads language from class property [0.02ms]
+(pass) wrapCodeBlock > normalizes className to class before inferring [0.02ms]
+
+scripts/utils-date.test.ts:
+(pass) formatDateTime > formats article updated time in Shanghai timezone [1.40ms]
+(pass) formatDateTime > falls back to the original value for invalid input [0.01ms]
+
+scripts/search-query.test.ts:
+(pass) normalizeQuery > trims and normalizes tokens [0.15ms]
+(pass) findToken > locates category token range [0.08ms]
+(pass) canAppendToken > enforces tag and category limits [0.06ms]
+
+scripts/content-shiki-themes.test.ts:
+(pass) shikiThemes > exports a single semantic theme [0.01ms]
+(pass) shikiThemes > uses css variables for base colors [0.01ms]
+(pass) shikiThemes > token colors are mapped to code variables [0.04ms]
+
+scripts/seo-jsonld-logo.test.ts:
+(pass) article structured data includes local logo and canonical URL [0.50ms]
+
+scripts/og-cache.test.ts:
+(pass) PNG cache persists across instances and coalesces simultaneous renders [38.88ms]
+(pass) corrupt or incomplete cache entries regenerate, failed renders can retry [1.93ms]
+(pass) cache keys depend on displayed fields, not hidden dates or truncated suffixes [0.11ms]
+
+scripts/inkstone-track-package.test.ts:
+(pass) inkstone-track package exports built artifacts [0.03ms]
+
+scripts/kudos.test.ts:
+(pass) normalizeKudosPath > strips -zh suffix [0.04ms]
+(pass) normalizeKudosPath > strips -en suffix
+(pass) normalizeKudosPath > returns empty string for empty input
+
+scripts/inkstone-token.test.ts:
+(pass) buildInkstoneToken signs category paths [0.50ms]
+
+scripts/inkstone-track.test.ts:
+(pass) inkstone tracker > skips when token missing [0.13ms]
+(pass) inkstone tracker > sends pulse pv and engage with token [0.46ms]
+(pass) inkstone tracker > skips when siteHost mismatch in prod [0.05ms]
+
+scripts/og-resvg-fonts.test.ts:
+(pass) renderPng > renders png for svg without text [2.82ms]
+(pass) renderPng > PNG encoding preserves resvg pixels, transparency and requested size [1.76ms]
+
+scripts/content-shared.test.ts:
+(pass) visibility helpers > filters draft posts and keeps translations for visiblePosts [0.93ms]
+(pass) visibility helpers > canonicalPosts excludes translations [0.04ms]
+(pass) visibility helpers > visiblePages filters drafts and sorts by weight [0.04ms]
+(pass) computeNeighbours > uses canon order for prev/next [0.05ms]
+(pass) computeRelated > scores by category and tags [0.07ms]
+
+scripts/package-json.test.ts:
+(pass) root package.json includes typescript in devDependencies [0.18ms]
+(pass) root package.json defines workspace build hooks [0.01ms]
+
+scripts/content-public-data.test.ts:
+[0.02ms] content:emit:public-data:collect
+[0.05ms] content:emit:public-data:latest
+[0.01ms] content:emit:public-data:category
+[0.04ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+(pass) public content retains discussion links and math detection [0.29ms]
+[0.01ms] content:emit:public-data:collect
+[0.01ms] content:emit:public-data:latest
+[0.01ms] content:emit:public-data:category
+[7.72ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+(pass) encrypted content strips secrets and decrypts with the existing browser format [15.76ms]
+[0.02ms] content:emit:public-data:collect
+[0.03ms] content:emit:public-data:latest
+[0.05ms] content:emit:public-data:category
+[0.03ms] content:emit:public-data:posts
+[0.01ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[0.00ms] content:emit:public-data:collect
+[0.01ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[0.00ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+[0.00ms] content:emit:public-data:collect
+[0.00ms] content:emit:public-data:latest
+[0.00ms] content:emit:public-data:category
+[0.00ms] content:emit:public-data:posts
+[0.00ms] content:emit:public-data:pages
+[0.00ms] content:emit:public-data:friends
+(pass) removed or drafted posts disappear from all derived lists [0.43ms]
+
+scripts/content-metadata.test.ts:
+(pass) frontmatter preserves date normalization and BOM handling [0.28ms]
+(pass) summary stops at more while word counts exclude HTML tags and image alt text [1.53ms]
+(pass) TOC retains nested heading structure, duplicate anchors and depth limit [1.34ms]
+
+scripts/post-meta.test.ts:
+(pass) hasTranslationMeta > returns true when lang exists and isTranslation is present [0.03ms]
+(pass) hasTranslationMeta > returns false when lang is missing
+(pass) hasTranslationMeta > returns false when isTranslation is missing
+
+tools/content/crypto-gcm.test.cjs:
+
+ 83 pass
+ 0 fail
+ 242 expect() calls
+Ran 83 tests across 28 files. [1.73s]

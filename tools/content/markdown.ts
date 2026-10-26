@@ -465,6 +465,7 @@ export const transforms = {
   tocToHtml,
   summaryFromMeta,
   plainFromMarkdown,
+  plainFromMdast,
   splitCjkLatinText,
   countCjkAndLatin,
   countWords,

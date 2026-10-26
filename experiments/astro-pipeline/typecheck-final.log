@@ -1,0 +1,227 @@
+scripts/build-pipeline.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/code-blocks.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-comments-mapping.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-metadata.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-prepare.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-public-assets.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-public-data.test.ts(2,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-search-index.test.ts(4,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-shared.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-shared.test.ts(24,25): error TS2345: Argument of type '{ slug: string; title: string; date: string; }[]' is not assignable to parameter of type '{ draft?: boolean | undefined; }[]'.
+  Type '{ slug: string; title: string; date: string; }' has no properties in common with type '{ draft?: boolean | undefined; }'.
+scripts/content-shared.test.ts(24,45): error TS2339: Property 'slug' does not exist on type '{ draft?: boolean | undefined; }'.
+scripts/content-shared.test.ts(32,27): error TS2345: Argument of type '{ slug: string; title: string; date: string; }[]' is not assignable to parameter of type '{ isTranslation?: boolean | undefined; draft?: boolean | undefined; }[]'.
+  Type '{ slug: string; title: string; date: string; }' has no properties in common with type '{ isTranslation?: boolean | undefined; draft?: boolean | undefined; }'.
+scripts/content-shared.test.ts(32,47): error TS2339: Property 'slug' does not exist on type '{ isTranslation?: boolean | undefined; draft?: boolean | undefined; }'.
+scripts/content-shiki-themes.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-summary.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/content-time.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/inkstone-icons.test.ts(3,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/inkstone-token.test.ts(2,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/inkstone-track-package.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/inkstone-track.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/inkstone-track.test.ts(11,15): error TS2352: Conversion of type '{ visibilityState: "visible"; referrer: string; addEventListener: () => undefined; }' to type 'Document' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ visibilityState: "visible"; referrer: string; addEventListener: () => undefined; }' is missing the following properties from type 'Document': URL, alinkColor, all, anchors, and 256 more.
+scripts/kudos.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/og-cache.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/og-image.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/og-render.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/og-resvg-fonts.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/package-json.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/post-meta.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/search-query.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/seo-jsonld-logo.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/seo-static-meta.test.ts(1,30): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+scripts/utils-date.test.ts(1,40): error TS2307: Cannot find module 'bun:test' or its corresponding type declarations.
+src/features/article/blocks/EncryptBlock.tsx(59,24): error TS7031: Binding element 'source' implicitly has an 'any' type.
+src/features/article/blocks/EncryptBlock.tsx(65,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/features/article/blocks/PostMeta.tsx(39,36): error TS2349: This expression is not callable.
+  Type 'String' has no call signatures.
+src/features/article/comments/Comment.tsx(32,7): error TS7023: 'sortCommentTree' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.
+src/features/article/comments/Comment.tsx(34,14): error TS7024: Function implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.
+src/features/article/comments/CommentThread.tsx(59,28): error TS2339: Property 'querySelectorAll' does not exist on type 'never'.
+src/features/article/comments/CommentThread.tsx(60,23): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/features/article/components/ToC.tsx(82,30): error TS7006: Parameter 'entries' implicitly has an 'any' type.
+src/features/article/components/ToC.tsx(83,25): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/features/article/components/ToC.tsx(154,26): error TS2454: Variable 'desktopRef' is used before being assigned.
+src/features/article/components/ToC.tsx(155,26): error TS2454: Variable 'mobileRef' is used before being assigned.
+src/features/article/components/ToC.tsx(161,26): error TS2454: Variable 'mobileRef' is used before being assigned.
+src/features/article/components/ToC.tsx(162,13): error TS2454: Variable 'desktopRef' is used before being assigned.
+src/features/article/components/ToC.tsx(163,16): error TS2454: Variable 'mobileRef' is used before being assigned.
+src/features/article/sidebar/social/Like.tsx(70,38): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Argument of type 'string | null' is not assignable to parameter of type 'string | URL | Request'.
+      Type 'null' is not assignable to type 'string | URL | Request'.
+  Overload 2 of 2, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Argument of type 'string | null' is not assignable to parameter of type 'URL | RequestInfo'.
+      Type 'null' is not assignable to type 'URL | RequestInfo'.
+src/features/article/sidebar/social/Like.tsx(85,21): error TS7006: Parameter 'number' implicitly has an 'any' type.
+src/features/article/sidebar/social/Translate.tsx(54,21): error TS2322: Type '{ children: (string | Element)[]; href: string; lang: string; link: boolean; title: LocalizedString; "aria-label": LocalizedString; class: string; }' is not assignable to type 'AnchorHTMLAttributes<HTMLAnchorElement>'.
+  Property 'link' does not exist on type 'AnchorHTMLAttributes<HTMLAnchorElement>'.
+src/features/home/LatestCard.tsx(23,24): error TS2322: Type '{ children: Element[]; link: boolean; href: string; class: string; }' is not assignable to type 'AnchorHTMLAttributes<HTMLAnchorElement>'.
+  Property 'link' does not exist on type 'AnchorHTMLAttributes<HTMLAnchorElement>'.
+src/features/pages/LifePage.tsx(80,17): error TS7031: Binding element 'page' implicitly has an 'any' type.
+src/features/pages/LifePage.tsx(80,23): error TS7031: Binding element 'children' implicitly has an 'any' type.
+src/features/pages/LifePage.tsx(86,24): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(fetcher: (k: true, info: ResourceFetcherInfo<unknown, unknown>) => unknown, options: ResourceOptions<unknown, true> & { initialValue: unknown; }): InitializedResourceReturn<unknown, unknown>', gave the following error.
+    Argument of type '(url: string) => Promise<any>' is not assignable to parameter of type 'ResourceOptions<unknown, true> & { initialValue: unknown; }'.
+      Type '(url: string) => Promise<any>' is not assignable to type '{ initialValue: unknown; }'.
+  Overload 2 of 4, '(fetcher: ResourceFetcher<true, unknown, unknown>, options?: ResourceOptions<unknown, true> | undefined): ResourceReturn<unknown, unknown>', gave the following error.
+    Type '(url: string) => Promise<any>' has no properties in common with type 'ResourceOptions<unknown, true>'.
+  Overload 3 of 4, '(source: ResourceSource<string>, fetcher: ResourceFetcher<string, any, unknown>, options?: ResourceOptions<any, string> | undefined): ResourceReturn<...>', gave the following error.
+    Argument of type 'Accessor<unknown>' is not assignable to parameter of type 'ResourceSource<string>'.
+      Type 'Accessor<unknown>' is not assignable to type '() => string | false | null | undefined'.
+        Type 'unknown' is not assignable to type 'string | false | null | undefined'.
+src/features/pages/LifePage.tsx(87,40): error TS2339: Property 'items' does not exist on type '{}'.
+src/features/pages/SearchPage.tsx(61,25): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/features/pages/SearchPage.tsx(143,87): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/features/pages/SearchPage.tsx(232,19): error TS7031: Binding element 'page' implicitly has an 'any' type.
+src/features/pages/SearchPage.tsx(280,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/features/pages/SearchPage.tsx(407,37): error TS2322: Type 'Resource<any>' is not assignable to type '() => { total: number; hits: any[]; elapsed_ms: number | null; error?: string | undefined; }'.
+  Type 'Unresolved' is not assignable to type '() => { total: number; hits: any[]; elapsed_ms: number | null; error?: string | undefined; }'.
+    Type 'undefined' is not assignable to type '{ total: number; hits: any[]; elapsed_ms: number | null; error?: string | undefined; }'.
+src/features/post-listing/OtherCards.tsx(14,20): error TS2322: Type '{ children: Element[]; link: boolean; href: string; class: string; }' is not assignable to type 'AnchorHTMLAttributes<HTMLAnchorElement>'.
+  Property 'link' does not exist on type 'AnchorHTMLAttributes<HTMLAnchorElement>'.
+src/features/theme/switcher.tsx(103,14): error TS2454: Variable 'self' is used before being assigned.
+src/site/footer/Stats.tsx(30,40): error TS2349: This expression is not callable.
+  Type 'String' has no call signatures.
+src/site/service-worker.ts(111,11): error TS2339: Property 'waitUntil' does not exist on type 'Event'.
+src/styles/unocss/theme.ts(35,5): error TS2353: Object literal may only specify known properties, and 'fontFamily' does not exist in type 'Theme'.
+src/ui/media/BG.tsx(18,26): error TS2454: Variable 'self' is used before being assigned.
+src/ui/media/Img.tsx(3,20): error TS7031: Binding element 'src' implicitly has an 'any' type.
+src/ui/media/Img.tsx(14,26): error TS2454: Variable 'self' is used before being assigned.
+src/utils/async.tsx(12,9): error TS2345: Argument of type 'Promise<T>' is not assignable to parameter of type 'ResourceFetcher<true, unknown, unknown>'.
+  Type 'Promise<T>' provides no match for the signature '(k: true, info: ResourceFetcherInfo<unknown, unknown>): unknown'.
+src/utils/async.tsx(16,33): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { when: unknown; keyed?: false | undefined; fallback?: Element; children: Element | ((item: Accessor<{}>) => Element); }): Element', gave the following error.
+    Type 'Element | ((data: T) => Element)' is not assignable to type 'Element | ((item: Accessor<{}>) => Element)'.
+      Type '(data: T) => Element' is not assignable to type 'Element | ((item: Accessor<{}>) => Element)'.
+        Type '(data: T) => Element' is not assignable to type '(item: Accessor<{}>) => Element'.
+          Types of parameters 'data' and 'item' are incompatible.
+            Type 'Accessor<{}>' is not assignable to type 'T'.
+              'T' could be instantiated with an arbitrary type which could be unrelated to 'Accessor<{}>'.
+  Overload 2 of 2, '(props: { when: unknown; keyed: true; fallback?: Element; children: Element | ((item: {}) => Element); }): Element', gave the following error.
+    Type 'Element | ((data: T) => Element)' is not assignable to type 'Element | ((item: {}) => Element)'.
+      Type '(data: T) => Element' is not assignable to type 'Element | ((item: {}) => Element)'.
+        Type '(data: T) => Element' is not assignable to type '(item: {}) => Element'.
+          Types of parameters 'data' and 'item' are incompatible.
+            Type '{}' is not assignable to type 'T'.
+              'T' could be instantiated with an arbitrary type which could be unrelated to '{}'.
+tools/content/emit/atom.ts(69,12): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+tools/content/markdown.ts(130,5): error TS4104: The type 'readonly [{ name: string; type: string; colors: { "editor.background": string; "editor.foreground": string; }; tokenColors: { scope: string[]; settings: { foreground: string; }; }[]; }]' is 'readonly' and cannot be assigned to the mutable type '(ThemeInput | "none" | StringLiteralUnion<BundledTheme, string>)[]'.
+tools/content/markdown.ts(234,9): error TS7023: 'render' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.
+tools/content/markdown.ts(235,11): error TS7022: 'lis' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+tools/content/markdown.ts(236,12): error TS7024: Function implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.
+tools/content/markdown.ts(238,15): error TS7022: 'nested' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+tools/content/og/template.tsx(95,9): error TS7034: Variable 'dotRects' implicitly has type 'any[]' in some locations where its type cannot be determined.
+tools/content/og/template.tsx(108,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(125,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(133,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(143,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(153,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(161,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(162,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(173,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(174,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(178,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(190,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(194,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(207,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(217,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(218,12): error TS7005: Variable 'dotRects' implicitly has an 'any[]' type.
+tools/content/og/template.tsx(219,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(220,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(221,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(230,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(231,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(232,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(233,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(240,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(241,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(242,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(243,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(252,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(253,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(254,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(255,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(256,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(257,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(258,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(259,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(260,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(261,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(270,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(278,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(285,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(294,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(295,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(296,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(297,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(298,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(299,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(306,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(318,19): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(318,67): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(320,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(321,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(322,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(324,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(325,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(335,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(347,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(349,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(350,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(361,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(369,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(370,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(371,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(372,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(381,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(390,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(391,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(392,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(393,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+tools/content/og/template.tsx(399,5): error TS2322: Type 'OgFont[]' is not assignable to type 'FontOptions[]'.
+  Type 'OgFont' is not assignable to type 'FontOptions'.
+    Types of property 'weight' are incompatible.
+      Type 'number' is not assignable to type 'Weight | undefined'.
+uno.config.ts(11,5): error TS4104: The type 'readonly [readonly ["text-pretty", { readonly "text-wrap": "pretty"; }]]' is 'readonly' and cannot be assigned to the mutable type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>[]'.
+uno.config.ts(14,9): error TS2322: Type 'Preset<Theme>' is not assignable to type 'PresetOrFactoryAwaitable<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }> | PresetOrFactoryAwaitable<{ font: { sans: string; mono: string; }; fontFamily: { ...; }; }>[]'.
+  Type 'Preset<Theme>' is not assignable to type 'Preset<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>'.
+    Types of property 'rules' are incompatible.
+      Type 'Rule<Theme>[] | undefined' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>[] | undefined'.
+        Type 'Rule<Theme>[]' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>[]'.
+          Type 'Rule<Theme>' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>'.
+            Type 'DynamicRule<Theme>' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>'.
+              Type '[RegExp, DynamicMatcher<Theme>, (RuleMeta | undefined)?]' is not assignable to type 'StaticRule'.
+                Type at position 0 in source is not compatible with type at position 0 in target.
+                  Type 'RegExp' is not assignable to type 'string'.
+uno.config.ts(15,9): error TS2322: Type 'Preset<TypographyTheme>' is not assignable to type 'PresetOrFactoryAwaitable<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }> | PresetOrFactoryAwaitable<{ font: { sans: string; mono: string; }; fontFamily: { ...; }; }>[]'.
+  Type 'Preset<TypographyTheme>' is not assignable to type 'Preset<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>'.
+    Types of property 'rules' are incompatible.
+      Type 'Rule<TypographyTheme>[] | undefined' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>[] | undefined'.
+        Type 'Rule<TypographyTheme>[]' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>[]'.
+          Type 'Rule<TypographyTheme>' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>'.
+            Type 'DynamicRule<TypographyTheme>' is not assignable to type 'Rule<{ font: { sans: string; mono: string; }; fontFamily: { sans: string; mono: string; }; }>'.
+              Type '[RegExp, DynamicMatcher<TypographyTheme>, (RuleMeta | undefined)?]' is not assignable to type 'StaticRule'.
+                Type at position 0 in source is not compatible with type at position 0 in target.
+                  Type 'RegExp' is not assignable to type 'string'.
+uno.config.ts(17,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(18,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(19,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(20,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(21,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(22,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(23,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(24,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(25,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(26,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(27,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(28,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(29,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(30,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(31,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(32,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(33,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.
+uno.config.ts(34,17): error TS2322: Type 'string' is not assignable to type 'CSSObject'.

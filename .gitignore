@@ -56,3 +56,6 @@ public/valid_paths.txt
 
 # Persistent OG render cache
 .cache/og/
+
+# Persistent public Markdown renders
+.cache/content/

@@ -90,40 +90,32 @@ const fetchCommentsMapping = async ({
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
-  let response: Response;
   try {
-    response = await fetch(url, { signal: controller.signal });
-  } catch (error) {
-    throw new Error(
-      formatCommentsMappingFetchError({
-        error,
-        url: logUrl,
-        timeoutMs,
-      }),
-    );
+    let response: Response;
+    try {
+      response = await fetch(url, { signal: controller.signal });
+    } catch (error) {
+      throw new Error(formatCommentsMappingFetchError({ error, url: logUrl, timeoutMs }));
+    }
+    if (!response.ok) {
+      throw new Error(`[content] comments-mapping fetch failed: ${response.status} ${response.statusText} (${logUrl})`);
+    }
+    let payload: any;
+    try {
+      payload = await response.json();
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new Error(formatCommentsMappingFetchError({ error: new DOMException('Aborted', 'AbortError'), url: logUrl, timeoutMs }));
+      }
+      throw new Error(`[content] comments-mapping parse failed: ${logUrl}: ${String(error)}`);
+    }
+    const map = buildCommentsMapping(payload?.items ?? []);
+    return { map, total: map.size,
+      reportedTotal: Number.isFinite(payload?.total) ? Number(payload.total) : undefined };
   } finally {
+    // fetch resolves at the headers; keep the deadline active through body parsing.
     clearTimeout(timer);
   }
-
-  if (!response.ok) {
-    throw new Error(
-      `[content] comments-mapping fetch failed: ${response.status} ${response.statusText} (${logUrl})`,
-    );
-  }
-
-  let payload: any = null;
-  try {
-    payload = await response.json();
-  } catch (error) {
-    throw new Error(`[content] comments-mapping parse failed: ${logUrl}: ${String(error)}`);
-  }
-
-  const map = buildCommentsMapping(payload?.items ?? []);
-  return {
-    map,
-    total: map.size,
-    reportedTotal: Number.isFinite(payload?.total) ? Number(payload.total) : undefined,
-  };
 };
 
 const resolveInkstoneBase = (env = process.env) => {

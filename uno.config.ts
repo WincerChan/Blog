@@ -1,4 +1,5 @@
-import { defineConfig, presetTypography, presetWind4 as presetWind } from "unocss";
+import { defineConfig, presetTypography } from "unocss";
+import { stableWind } from "./src/styles/unocss/stableWind";
 import { rules } from "./src/styles/unocss/rules";
 import { shortcuts } from "./src/styles/unocss/shortcuts";
 import { theme } from "./src/styles/unocss/theme";
@@ -10,7 +11,7 @@ export default defineConfig({
     rules,
     shortcuts,
     presets: [
-        presetWind(),
+        stableWind(),
         presetTypography({
             cssExtend: {
                 "--un-prose-body": "var(--c-text)",

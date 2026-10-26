@@ -1,0 +1,70 @@
+{
+  "before": {
+    "runs": [
+      {
+        "wallSeconds": 7.29,
+        "ogMs": 40
+      },
+      {
+        "wallSeconds": 5.08,
+        "ogMs": 20
+      },
+      {
+        "wallSeconds": 4.95,
+        "ogMs": 20
+      }
+    ],
+    "medianWallSeconds": 5.08
+  },
+  "warm": {
+    "runs": [
+      {
+        "wallSeconds": 4.2,
+        "ogMs": 54
+      },
+      {
+        "wallSeconds": 3.21,
+        "ogMs": 36
+      },
+      {
+        "wallSeconds": 2.94,
+        "ogMs": 36
+      }
+    ],
+    "medianWallSeconds": 3.21
+  },
+  "before-cold": {
+    "runs": [
+      {
+        "wallSeconds": 10.29,
+        "ogMs": 2863
+      },
+      {
+        "wallSeconds": 7.62,
+        "ogMs": 2760
+      },
+      {
+        "wallSeconds": 7.34,
+        "ogMs": 2826
+      }
+    ],
+    "medianWallSeconds": 7.62
+  },
+  "after-cold": {
+    "runs": [
+      {
+        "wallSeconds": 7.08,
+        "ogMs": 3084
+      },
+      {
+        "wallSeconds": 6.7,
+        "ogMs": 2854
+      },
+      {
+        "wallSeconds": 6.7,
+        "ogMs": 2826
+      }
+    ],
+    "medianWallSeconds": 6.7
+  }
+}

@@ -1,0 +1,8 @@
+PASS dev server ready
+PASS homepage/content sync generates no OG images
+PASS first OG request generates one PNG; second reuses it; unknown route is 404
+PASS template edit invalidates cached PNG
+PASS restored template reuses original image
+PASS new content becomes an OG route
+PASS draft OG route returns 404
+PASS dev on-demand generation and invalidation

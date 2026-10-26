@@ -3,13 +3,16 @@ YELLOW='\033[0;33m'
 RESET='\033[0m'
 export LANG=en_US.UTF-8
 set -e
+case "${1:-}" in
+    ""|--publish) ;;
+    *) echo "Usage: $0 [--publish]" >&2; exit 1 ;;
+esac
 echo -e "${YELLOW}Installing dependencies...${RESET}"
 if ! command -v bun >/dev/null 2>&1; then
     echo -e "${YELLOW}bun not found, please install bun first.${RESET}"
     exit 1
 fi
 bun install --frozen-lockfile
-bun run clean
 if [ ! -d "_blogs" ]; then
     echo -e "${YELLOW}Cloning Blogs...${RESET}"
     git clone https://${GH_TOKEN}@github.com/WincerChan/BlogContent _blogs
@@ -22,16 +25,10 @@ fi
 echo -e "${YELLOW}Building site...${RESET}"
 bun run build
 
-if [ "$1" == "--hitcache" ]; then
-    echo -e "${YELLOW}String hit cache...${RESET}"
-    ./hit-cache.cjs
-    exit
-fi
 mkdir -p dist
 rm -rf dist/public
 mkdir -p dist/public
 cp -r dist/astro/. dist/public/
-cp dist/public/404/index.html dist/public/404.html
 
 if [ "$1" == "--publish" ]; then
     if ! command -v jq >/dev/null 2>&1; then

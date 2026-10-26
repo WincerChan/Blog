@@ -4,6 +4,7 @@ import { availableParallelism } from 'node:os';
 import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { createPngCache } from './cache';
+import { rendererDependencyFiles } from '../../build/rendererDependencies';
 import { ogFontSources, loadOgFonts } from './fonts';
 import { OG_PNG_SCALE, type OgRenderInput } from './targets';
 import templateSource from './template.tsx?raw';
@@ -16,22 +17,26 @@ import fontsSource from './fonts.ts?raw';
 const renderSources = [templateSource, textSource, resvgSource, fontsSource];
 const rendererPackages = ['satori', '@resvg/resvg-js', 'sharp'];
 let current: { signature: string; service: ReturnType<typeof createPngCache> } | undefined;
+let dependencyGraph: { signature: string; files: string[] } | undefined;
 let initialization: Promise<ReturnType<typeof createPngCache>> | undefined;
 
 async function initialize() {
   const root = process.cwd();
+  const lock = await stat(path.join(root, 'bun.lock'));
+  const graphSignature = JSON.stringify([root, lock.mtimeMs, lock.ctimeMs, lock.size]);
+  if (dependencyGraph?.signature !== graphSignature) {
+    dependencyGraph = { signature: graphSignature, files: await rendererDependencyFiles(root, rendererPackages) };
+  }
   const files = [
-    ...rendererPackages.map(name => path.join(root, 'node_modules', name, 'package.json')),
+    ...dependencyGraph.files,
     ...ogFontSources(root).map(font => font.path),
-    // Include transitive renderer versions as well, to invalidate across lockfile updates.
-    path.join(root, 'bun.lock'),
   ];
   const signature = JSON.stringify(await Promise.all(files.map(async file => {
     const info = await stat(file);
     return [file, info.mtimeMs, info.ctimeMs, info.size];
   })));
   if (current?.signature === signature) return current.service;
-  const hash = createHash('sha256').update(JSON.stringify([1, OG_PNG_SCALE, process.platform, process.arch, renderSources]));
+  const hash = createHash('sha256').update(JSON.stringify([2, OG_PNG_SCALE, process.platform, process.arch, process.versions.node, renderSources]));
   for (const file of files) {
     const data = await readFile(file);
     hash.update(String(data.length)).update(':').update(data);
@@ -60,6 +65,9 @@ async function initialize() {
 }
 
 export async function getOgRenderer() {
+  // A production build uses one immutable dependency snapshot. Dev still checks
+  // fonts/package metadata so local edits invalidate without a process restart.
+  if (import.meta.env.PROD && current) return current.service;
   if (initialization) return initialization;
   initialization = initialize();
   try { return await initialization; }

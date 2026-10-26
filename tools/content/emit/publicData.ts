@@ -102,7 +102,7 @@ const buildPostOutputs = async ({
     const encrypted = !!encryptPwd;
     const content = encrypted ? encryptHtml(encryptPwd, html) : html;
     const hasMath = html.includes("katex");
-    const { encrypt_pwd, rawContent, ...rest } = p;
+    const { encrypt_pwd, rawContent, searchText, ...rest } = p;
     const discussionUrl =
       discussionMapping?.get(normalizeCommentPath(postPath)) ?? undefined;
     const data = {

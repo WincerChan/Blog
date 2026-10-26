@@ -26,7 +26,7 @@ export const emitAtom = async ({
 }) => {
   const siteBaseForAtom = new URL("/", site.baseURL).toString();
   const feedId = hugoAtomIdFromString(siteBaseForAtom);
-  const feedUpdated = formatUtc(new Date(Math.max(latestUpdated(renderablePosts), Date.now())));
+  const feedUpdated = formatUtc(new Date(latestUpdated(publishedPosts)));
 
   const atomEntries = publishedPosts
     .map((p) => {

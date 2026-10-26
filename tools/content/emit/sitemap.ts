@@ -91,11 +91,11 @@ export const emitSitemaps = async ({
     [
       { section: "posts", lastmod: latestUpdated(renderablePosts) },
       { section: "pages", lastmod: latestUpdated(renderablePages) },
-      { section: "category", lastmod: Date.now() },
+      { section: "category", lastmod: latestUpdated(publishedPosts) },
     ]
       .map(
         (s) =>
-          `  <sitemap>\n    <loc>${site.baseURL}/${s.section}/sitemap.xml</loc>\n    <lastmod>${formatUtc(new Date(s.lastmod || Date.now()))}</lastmod>\n  </sitemap>`,
+          `  <sitemap>\n    <loc>${site.baseURL}/${s.section}/sitemap.xml</loc>\n    <lastmod>${formatUtc(new Date(s.lastmod))}</lastmod>\n  </sitemap>`,
       )
       .join("\n") +
     `\n</sitemapindex>\n`;
@@ -183,7 +183,7 @@ export const emitSitemaps = async ({
     Array.from(categoryToPosts.keys())
       .map((c) => {
         const loc = `${site.baseURL}/category/${c}/`;
-        return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${formatUtc(new Date())}</lastmod>\n    <changefreq>${site.sitemap.changeFreq}</changefreq>\n    <priority>${site.sitemap.termPriority}</priority>\n  </url>`;
+        return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${formatUtc(new Date(latestUpdated(categoryToPosts.get(c) ?? [])))}</lastmod>\n    <changefreq>${site.sitemap.changeFreq}</changefreq>\n    <priority>${site.sitemap.termPriority}</priority>\n  </url>`;
       })
       .join("\n") +
     `\n${urlsetEnd}`;

@@ -18,7 +18,9 @@
     "test": "bun test",
     "astro:dev": "bun run dev",
     "astro:build": "bun run build",
-    "astro:preview": "bun run preview"
+    "astro:preview": "bun run preview",
+    "clean:content": "rm -rf .cache/content",
+    "clean:all": "bun run clean && bun run clean:content && bun run clean:og"
   },
   "dependencies": {
     "@astrojs/solid-js": "^7.0.2",

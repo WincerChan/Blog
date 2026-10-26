@@ -74,10 +74,21 @@ const resolveInkstoneTokenSecret = (env = process.env) => {
   };
 };
 
-export const prepareContent = async (data: {posts: any[]; pages: any[]; friends: any[]}, repoRoot: string, publicDir: string) => {
+// Attach both handlers immediately: rendering may fail or outlast an API error.
+export function beginContentPreparation() {
+  const auth = resolveInkstoneTokenSecret();
+  if (!auth.tokenSecret) throw new Error("[content] Missing INKSTONE_PUBLIC_TOKEN_SECRET");
+  const mapping = !auth.hasExplicitSecret && isLocalPreview()
+    ? Promise.resolve({ value: undefined })
+    : fetchCommentsMapping({ tokenSecret: auth.tokenSecret, baseUrl: resolveInkstoneBase() })
+      .then(value => ({ value }), error => ({ error }));
+  return { ...auth, mapping };
+}
+
+export const prepareContent = async (data: {posts: any[]; pages: any[]; friends: any[]}, repoRoot: string, publicDir: string, preparation = beginContentPreparation()) => {
   console.time("content:prepare");
   const site = await readSiteConf(repoRoot);
-  const { tokenSecret, hasExplicitSecret } = resolveInkstoneTokenSecret();
+  const { tokenSecret, hasExplicitSecret } = preparation;
   if (!tokenSecret) {
     throw new Error("[content] Missing INKSTONE_PUBLIC_TOKEN_SECRET");
   }
@@ -112,10 +123,10 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
     );
   } else {
     try {
-      const mapping = await fetchCommentsMapping({
-        tokenSecret,
-        baseUrl: resolveInkstoneBase(),
-      });
+      const outcome = await preparation.mapping;
+      if ('error' in outcome) throw outcome.error;
+      const mapping = outcome.value;
+      if (!mapping) throw new Error('[content] Missing comments mapping result');
       discussionMapping = mapping.map;
       discussionTotal = mapping.total;
       loadedDiscussionMapping = true;

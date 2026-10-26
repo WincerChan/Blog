@@ -8,7 +8,7 @@ import { transforms } from './markdown';
 
 // Metadata deliberately uses CommonMark, as the original content pipeline did.
 // Rendering separately enables GFM/math without changing summaries or word counts.
-export function markdownMetadata(content: string) {
+export function markdownMetadata(content: string, includeSearchText = false) {
   const tree = unified().use(remarkParse).parse(content);
   const visit = (node: any, fn: (node: any) => void) => {
     fn(node);
@@ -28,6 +28,7 @@ export function markdownMetadata(content: string) {
     });
   };
   return {
+    ...(includeSearchText ? { searchText: transforms.plainFromMdast(tree) } : {}),
     summary: transforms.summaryFromMeta({ mdast: tree, content }, 260),
     words: transforms.countWords(transforms.normalizeWhitespace(toString(raw(toHast(tree, { allowDangerousHtml: true }))))),
     toc: transforms.tocToHtml(parseToc(toc(tree, { maxDepth: 5 }).map)),

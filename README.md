@@ -37,7 +37,9 @@ English version: `README.en.md`
 3. 保留原有 Atom、sitemap、搜索索引和加密逻辑；这些静态资源生成到 `.astro-public`，OG 由独立 Astro endpoint 生成。
 4. 页面通过 `astro:content` 消费安全内容，生成 HTML；浏览器只激活交互 islands。
 
-开发时监听新增、编辑和删除，同步路由、分类与生成文件。渲染缓存只在开发进程内复用；原始正文和密码不写入 Content Layer。
+开发时监听新增、编辑和删除，同步路由、分类与生成文件。生产构建在渲染前过滤草稿，并提前请求评论映射，与 Markdown 处理重叠；接口超时覆盖响应头和正文。
+
+公开文章的 HTML、摘要、目录、字数和搜索文本持久化到 `.cache/content/`，按源文件和渲染配置校验复用。加密文章只在内存中处理，正文与密码不写入该缓存；文章转为草稿、加密或被删除时，会清除旧的公开缓存。开发模式使用进程内缓存。
 
 ### 加密文章
 
@@ -51,7 +53,7 @@ English version: `README.en.md`
 
 `src/astro/pages/og/[image].png.ts` 在生产构建时输出原有 `/og/*.png`；开发时仅在访问图片 URL 时渲染。保留现有 Satori 排版和 resvg 栅格化，使用 Sharp 异步无损编码 PNG，避免在主线程逐张压缩图片。
 
-完整 PNG 缓存在 `.cache/og/`。展示内容、模板、字体、渲染器依赖或尺寸改变时失效；缓存读入时校验完整性。`bun run clean` 保留该缓存，`bun run clean:og` 显式清除。CI 必须保存并恢复 `.cache/og/` 才能跨部署复用；缓存不是部署产物。旧图片不会因为仍在缓存中而重新进入发布路由。
+完整 PNG 缓存在 `.cache/og/`。展示内容、模板、字体、实际安装的渲染器及其传递依赖、补丁或尺寸改变时失效（无关的锁文件变更不会使全部 OG 失效）；缓存读入时校验完整性。`bun run clean` 保留该缓存，`bun run clean:og` 显式清除。CI 必须保存并恢复 `.cache/og/` 才能跨部署复用；缓存不是部署产物。旧图片不会因为仍在缓存中而重新进入发布路由。
 
 ## 本地开发
 
@@ -73,6 +75,10 @@ NODE_ENV=production bun run build
 ```
 
 产物位于 `dist/astro`，适配 Cloudflare Pages 部署。
+
+常规构建和 `build.sh` 保留缓存；`bun run clean` 仅清理生成产物，`bun run clean:content` 清理内容缓存，`bun run clean:og` 清理图片缓存，`bun run clean:all` 清理以上全部。CI 如需跨部署复用，应恢复 `.cache/content/` 和 `.cache/og/`。两者都不应发布到站点。
+
+相同源输入的 Service Worker 版本和 CSS 输出保持稳定，Atom / sitemap 更新时间取自内容。加密文章仍使用随机 salt/IV，因此重复构建的加密页面密文字节可以不同。
 
 ## 构建脚本（可选）
 
