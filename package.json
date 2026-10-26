@@ -23,18 +23,18 @@
     "clean:all": "bun run clean && bun run clean:content && bun run clean:og"
   },
   "dependencies": {
-    "@astrojs/solid-js": "^7.0.2",
+    "@astrojs/solid-js": "^7.1.1",
     "@wincer/inkstone-track": "workspace:*",
-    "astro": "^7.3.5",
+    "astro": "^7.4.2",
     "solid-js": "^1.9.14",
     "typesafe-i18n": "^5.26.2",
-    "vite": "^8.2.1"
+    "vite": "^8.3.5"
   },
   "engines": {
     "node": ">=24"
   },
   "devDependencies": {
-    "@astrojs/markdown-remark": "^7.3.2",
+    "@astrojs/markdown-remark": "^7.3.4",
     "@fontsource/fraunces": "^5.2.9",
     "@fontsource/ibm-plex-sans": "^5.2.8",
     "@fontsource/lxgw-wenkai": "^5.2.5",
