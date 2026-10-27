@@ -5,9 +5,15 @@ import { unified } from "@astrojs/markdown-remark";
 import { isCodeBlockWrapper, wrapCodeBlock } from "./codeBlocks";
 import { createSemanticTheme } from "./shikiThemes";
 import { remarkBlogMetadata, rehypeBlogMetadata, rehypeKeepPublicImages } from "./metadata";
+import { isContentDebug } from "./timing";
 
 type TimingEntry = { total: number; count: number };
-const markdownTiming = new Map<string, TimingEntry>();
+// Astro config and the content loader can load separate instances of this module.
+const markdownTimingKey = Symbol.for('blog.content.markdownTiming');
+const timingState = globalThis as typeof globalThis & {
+  [markdownTimingKey]?: Map<string, TimingEntry>;
+};
+const markdownTiming = timingState[markdownTimingKey] ??= new Map<string, TimingEntry>();
 const recordTiming = (name: string, durationMs: number) => {
   const prev = markdownTiming.get(name) ?? { total: 0, count: 0 };
   markdownTiming.set(name, { total: prev.total + durationMs, count: prev.count + 1 });
@@ -19,6 +25,7 @@ const withTiming =
     const transformer = plugin.apply(this, args);
     if (typeof transformer !== "function") return transformer;
     return function (this: unknown, tree: unknown, file: unknown) {
+      if (!isContentDebug()) return transformer.call(this, tree, file);
       const start = performance.now();
       const finalize = () => recordTiming(name, performance.now() - start);
       try {
@@ -46,12 +53,14 @@ const withTiming =
 
 export const reportMarkdownTiming = () => {
   if (!markdownTiming.size) return;
-  const entries = Array.from(markdownTiming.entries()).sort((a, b) => b[1].total - a[1].total);
-  entries.forEach(([name, value]) => {
-    console.log(
-      `content:markdown:${name}: ${value.total.toFixed(3)}ms (${value.count})`,
-    );
-  });
+  if (isContentDebug()) {
+    const entries = Array.from(markdownTiming.entries()).sort((a, b) => b[1].total - a[1].total);
+    entries.forEach(([name, value]) => {
+      console.log(
+        `content:markdown:${name}: ${value.total.toFixed(3)}ms (${value.count})`,
+      );
+    });
+  }
   markdownTiming.clear();
 };
 

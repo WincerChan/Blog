@@ -1,3 +1,4 @@
+import { performance } from "node:perf_hooks";
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
 import { buildPublicData } from "./emit/publicData";
@@ -6,6 +7,7 @@ import { emitSearchIndex } from "./emit/searchIndex";
 import { emitValidPaths } from "./emit/validPaths";
 import { reportMarkdownTiming } from "./markdown";
 import { fetchCommentsMapping, resolveInkstoneBase } from "./commentsMapping";
+import { createContentTimer, isContentDebug } from "./timing";
 
 const assertValidDate = (label: string, value: string | undefined, slug: string) => {
   const parsed = parseDateLikeHugo(value);
@@ -84,7 +86,8 @@ export function beginContentPreparation() {
 }
 
 export const prepareContent = async (data: {posts: any[]; pages: any[]; friends: any[]}, repoRoot: string, publicDir: string, preparation = beginContentPreparation()) => {
-  console.time("content:prepare");
+  const started = performance.now();
+  const timing = createContentTimer();
   const site = await readSiteConf(repoRoot);
   const { tokenSecret, hasExplicitSecret } = preparation;
   if (!tokenSecret) {
@@ -98,10 +101,10 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
     );
   }
 
-  console.time("content:normalize");
+  timing.start("content:normalize");
   const posts = (data.posts as any[]).map(normalizePost);
   const pages = (data.pages as any[]).map(normalizePage);
-  console.timeEnd("content:normalize");
+  timing.end("content:normalize");
   data.posts = posts;
   data.pages = pages;
 
@@ -111,8 +114,7 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
   const publishedPosts = renderablePosts.filter((p) => p.isTranslation !== true);
   const renderablePages = [...pages].filter((p) => p.draft !== true);
   let discussionMapping = new Map<string, string>();
-  let discussionTotal = 0;
-  let loadedDiscussionMapping = false;
+  let commentsWaitMs = 0;
   if (!hasExplicitSecret && isLocalPreview()) {
     console.warn(
       formatWarningLog(
@@ -120,14 +122,14 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
       ),
     );
   } else {
+    // The request started before Markdown rendering; measure only the remaining wait.
+    const waitStarted = performance.now();
     try {
       const outcome = await preparation.mapping;
       if ('error' in outcome) throw outcome.error;
       const mapping = outcome.value;
       if (!mapping) throw new Error('[content] Missing comments mapping result');
       discussionMapping = mapping.map;
-      discussionTotal = mapping.total;
-      loadedDiscussionMapping = true;
     } catch (error) {
       if (!isLocalPreview()) throw error;
       const message = error instanceof Error ? error.message : String(error);
@@ -136,31 +138,26 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
           `[content] Inkstone API unavailable in local preview. Continue with markdown-only content.\n${message}`,
         ),
       );
+    } finally {
+      commentsWaitMs = performance.now() - waitStarted;
     }
-  }
-  if (loadedDiscussionMapping && discussionTotal !== renderablePosts.length) {
-    console.warn(
-      formatWarningLog(
-        `[content] comments-mapping count (${discussionTotal}) does not match posts (${renderablePosts.length})`,
-      ),
-    );
   }
 
   const searchPosts = renderablePosts;
-  console.time("content:emit:search-index");
+  timing.start("content:emit:search-index");
   await emitSearchIndex({ publicDir, posts: searchPosts });
-  console.timeEnd("content:emit:search-index");
+  timing.end("content:emit:search-index");
 
-  console.time("content:strip:raw");
+  timing.start("content:strip:raw");
   posts.forEach((post) => {
     delete (post as { rawContent?: unknown }).rawContent;
   });
-  console.timeEnd("content:strip:raw");
+  timing.end("content:strip:raw");
 
-  console.time("content:emit:public-assets");
+  timing.start("content:emit:public-assets");
   await emitPublicAssets({ site, publicDir });
-  console.timeEnd("content:emit:public-assets");
-  console.time("content:emit:public-data");
+  timing.end("content:emit:public-assets");
+  timing.start("content:emit:public-data");
   const result = await buildPublicData({
     posts,
     pages,
@@ -168,17 +165,19 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
     tokenSecret,
     discussionMapping,
   });
-  console.timeEnd("content:emit:public-data");
-  console.time("content:emit:valid-paths");
+  timing.end("content:emit:public-data");
+  timing.start("content:emit:valid-paths");
   await emitValidPaths({
     publicDir,
     renderablePosts,
     renderablePages,
     publishedPosts,
   });
-  console.timeEnd("content:emit:valid-paths");
+  timing.end("content:emit:valid-paths");
   reportMarkdownTiming();
-  console.timeEnd("content:prepare");
+  if (isContentDebug()) {
+    console.log(`content:prepare: ${(performance.now() - started).toFixed(1)}ms (comments HTTP wait: ${commentsWaitMs.toFixed(1)}ms)`);
+  }
   return result;
 };
 

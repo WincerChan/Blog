@@ -1,4 +1,4 @@
-import { expect, test } from 'bun:test';
+import { expect, spyOn, test } from 'bun:test';
 import { mkdtemp, mkdir, readFile, readdir, rm, writeFile, copyFile } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -45,6 +45,10 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
   const originalFetch = globalThis.fetch;
   const savedSecret = process.env.INKSTONE_PUBLIC_TOKEN_SECRET;
   const savedEnv = process.env.NODE_ENV;
+  const savedDebug = process.env.CONTENT_DEBUG;
+  delete process.env.CONTENT_DEBUG;
+  const log = spyOn(console, 'log').mockImplementation(() => {});
+  const warn = spyOn(console, 'warn').mockImplementation(() => {});
   process.env.NODE_ENV = 'production';
   process.env.INKSTONE_PUBLIC_TOKEN_SECRET = 'pipeline-fixture-secret';
   let requested = false;
@@ -80,13 +84,27 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     };
     const load = async () => { requested = false; await blogLoader().load(context); };
     await load();
+    expect(log.mock.calls).toHaveLength(0);
+    // A successful API response can contain fewer mappings than published posts.
+    expect(warn.mock.calls).toEqual([]);
     expect(renders).toHaveLength(2);
     expect(renders).not.toContain('DRAFT_BODY_SENTINEL');
     expect(entries.has('posts/draft')).toBe(false);
     const sitemapMetadata = () => readFile(new URL(SITEMAP_METADATA_FILE, context.config.cacheDir), 'utf8');
     expect(await sitemapMetadata()).not.toContain('PRIVATE_');
     expect(await sitemapMetadata()).not.toContain('/posts/draft/');
+    log.mockClear();
+    process.env.CONTENT_DEBUG = '1';
     await load();
+    const debugLogs = log.mock.calls.map(([message]) => String(message));
+    expect(debugLogs.some(message => message.startsWith('content:normalize:'))).toBe(true);
+    expect(debugLogs.some(message => message.startsWith('content:emit:public-data:posts:'))).toBe(true);
+    expect(debugLogs.some(message => message.startsWith('content:markdown:'))).toBe(true);
+    const summaries = debugLogs.filter(message => message.startsWith('content:prepare:'));
+    expect(summaries).toHaveLength(1);
+    expect(summaries[0]).toMatch(/^content:prepare: \d+\.\dms \(comments HTTP wait: \d+\.\dms\)$/);
+    delete process.env.CONTENT_DEBUG;
+    log.mockClear();
     expect(renders).toHaveLength(3); // Only the private article renders again.
     const cacheDir = path.join(root, '.cache/content');
     const persisted = (await Promise.all((await readdir(cacheDir)).map(file => readFile(path.join(cacheDir, file), 'utf8')))).join('');
@@ -96,6 +114,7 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     expect(JSON.stringify([...entries])).not.toContain('PRIVATE_BODY_SENTINEL');
     await writeFile(publicFile, article('renamed', '', 'Edited fixture'));
     await load();
+    expect(log.mock.calls).toHaveLength(0);
     expect(entries.has('posts/public')).toBe(false);
     expect(await sitemapMetadata()).not.toContain('/posts/public/');
     expect(await sitemapMetadata()).toContain('/posts/renamed/');
@@ -118,9 +137,12 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     expect(search).not.toContain('PRIVATE_BODY_SENTINEL');
     expect(search).not.toContain('/posts/renamed/');
   } finally {
+    log.mockRestore();
+    warn.mockRestore();
     globalThis.fetch = originalFetch;
     if (savedSecret === undefined) delete process.env.INKSTONE_PUBLIC_TOKEN_SECRET; else process.env.INKSTONE_PUBLIC_TOKEN_SECRET = savedSecret;
     if (savedEnv === undefined) delete process.env.NODE_ENV; else process.env.NODE_ENV = savedEnv;
+    if (savedDebug === undefined) delete process.env.CONTENT_DEBUG; else process.env.CONTENT_DEBUG = savedDebug;
     await rm(root, { recursive: true, force: true });
   }
 });

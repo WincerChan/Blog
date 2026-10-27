@@ -41,6 +41,8 @@ English version: `README.en.md`
 
 开发时监听新增、编辑和删除，同步路由、分类与生成文件。生产构建在渲染前过滤草稿，并提前请求评论映射，与 Markdown 处理重叠；接口超时覆盖响应头和正文。
 
+内容计时默认不输出。使用 `CONTENT_DEBUG=1 bun run build`（开发模式同样适用）开启准备总耗时、评论 HTTP 剩余等待、各阶段和 Markdown 插件的计时；HTTP 等待只统计进入准备阶段后仍需等待的时间，不是请求全程。Markdown 缓存与 OG 汇总继续显示；评论接口失败仍按原有规则报错或警告，不再仅根据映射数量与文章数量不同发出警告。
+
 Sitemap 使用官方 `/sitemap-index.xml` 和 `/sitemap-0.xml` 等文件名，`robots.txt` 指向索引，不保留旧的分组文件地址。内容 loader 将更新时间、图片与已发布译文的语言关联写入 Astro 缓存目录的 `blog-sitemap.json`，构建集成通过 `serialize` 补充这些字段；不会持久化正文、密码或评论 token。保留 XSL 样式，排除 404 与非页面资源；开发服务器不生成 sitemap，可通过生产构建及 preview 检查。
 
 Atom 保持 `/atom.xml` 和 Atom 1.0 格式，由 `src/astro/pages/atom.xml.ts` 在生产构建时预渲染、开发时按请求生成。使用 `xmlbuilder` 处理 XML 序列化与转义，不重复解析 Markdown；保留历史 feed / entry ID、内容日期、分类、标签、OG 封面与静态 `public/atom.xsl`。仅包含已发布的原文，加密文章只输出提示。`@astrojs/rss` 仅生成 RSS 2.0，因此不用于这个 Atom endpoint。

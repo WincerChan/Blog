@@ -11,6 +11,7 @@ import {
 } from "../shared";
 import { buildInkstoneToken } from "../inkstoneToken";
 import { normalizeCommentPath } from "../commentsMapping";
+import { createContentTimer } from "../timing";
 
 const ENCRYPTION_VERSION = "v1";
 const PBKDF2_ITERATIONS = 120000;
@@ -149,25 +150,26 @@ export const buildPublicData = async ({
   discussionMapping,
 }: EmitPublicDataOptions) => {
   const outputs = new Map<string, any>();
-  console.time("content:emit:public-data:collect");
+  const timing = createContentTimer();
+  timing.start("content:emit:public-data:collect");
   const visPosts = visiblePosts(posts);
   const canon = byDateDesc(canonicalPosts(posts));
   const canonSlugSet = new Set(canon.map((p) => String(p.slug)));
   const slugToPost = new Map(visPosts.map((p) => [String(p.slug), p]));
-  console.timeEnd("content:emit:public-data:collect");
+  timing.end("content:emit:public-data:collect");
 
-  console.time("content:emit:public-data:latest");
+  timing.start("content:emit:public-data:latest");
   const latest = {
     inkstoneToken: buildInkstoneToken("/", tokenSecret),
     items: canon.slice(0, 5).map((p, idx) => postMeta(p, { includeSummary: idx === 0 })),
   };
   outputs.set("latest", latest);
-  console.timeEnd("content:emit:public-data:latest");
+  timing.end("content:emit:public-data:latest");
 
-  console.time("content:emit:public-data:category");
+  timing.start("content:emit:public-data:category");
   await buildCategoryOutputs({ canon, outputs, tokenSecret });
-  console.timeEnd("content:emit:public-data:category");
-  console.time("content:emit:public-data:posts");
+  timing.end("content:emit:public-data:category");
+  timing.start("content:emit:public-data:posts");
   await buildPostOutputs({
     visPosts,
     canon,
@@ -177,14 +179,14 @@ export const buildPublicData = async ({
     tokenSecret,
     discussionMapping,
   });
-  console.timeEnd("content:emit:public-data:posts");
-  console.time("content:emit:public-data:pages");
+  timing.end("content:emit:public-data:posts");
+  timing.start("content:emit:public-data:pages");
   await buildPageOutputs({ pages, outputs, tokenSecret });
-  console.timeEnd("content:emit:public-data:pages");
+  timing.end("content:emit:public-data:pages");
 
-  console.time("content:emit:public-data:friends");
+  timing.start("content:emit:public-data:friends");
   outputs.set("friends", friends);
-  console.timeEnd("content:emit:public-data:friends");
+  timing.end("content:emit:public-data:friends");
   return {
     posts: visPosts.map(p => outputs.get(`posts/${p.slug}`)),
     pages: visiblePages(pages).map(p => outputs.get(`pages/${p.slug}`)),
