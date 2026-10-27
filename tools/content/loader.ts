@@ -7,6 +7,9 @@ import { postInput, pageInput, friendInput } from './collections';
 import { renderedMetadata } from './metadata';
 import { beginContentPreparation, prepareContent } from './prepare';
 import { contentRenderVersion, createArticleCache } from './renderCache';
+import { buildSitemapMetadata, SITEMAP_METADATA_FILE } from './sitemap';
+import { readSiteConf } from './site';
+import { writeFile } from './io';
 
 export function blogLoader(): Loader {
   let detachWatcher: (() => void) | undefined;
@@ -88,6 +91,10 @@ export function blogLoader(): Loader {
         const next = await Promise.all(entries.map(async entry => ({ ...entry,
           data: await parseData(entry), digest: generateDigest(entry.data),
         })));
+        await writeFile(fileURLToPath(new URL(SITEMAP_METADATA_FILE, config.cacheDir)),
+          JSON.stringify(buildSitemapMetadata({
+            site: await readSiteConf(root), posts: publicPosts, pages: publicPages,
+          })));
         const ids = new Set(next.map(entry => entry.id));
         for (const id of store.keys()) if (!ids.has(id)) store.delete(id);
         for (const entry of next) store.set(entry);

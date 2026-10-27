@@ -34,12 +34,14 @@ English version: `README.en.md`
 
 1. 在 `_blogs/content/posts` 与 `_blogs/content/pages` 写作。
 2. Astro loader 使用官方 `parseFrontmatter` 解析并校验元数据，交给官方 Unified processor 渲染 Markdown。标题锚点、目录数据和 Shiki 高亮由 Astro 提供；摘要、字数和搜索文本通过插件复用同一次解析的语法树。
-3. 保留原有 Atom、sitemap、搜索索引和加密逻辑；这些静态资源生成到 `.astro-public`，OG 由独立 Astro endpoint 生成。
+3. 保留原有 Atom、搜索索引和加密逻辑；公共资源生成到 `.astro-public`，OG 由独立 Astro endpoint 生成。Sitemap 由官方 `@astrojs/sitemap` 在构建结束时根据实际页面生成。
 4. 页面通过 `astro:content` 消费安全内容，生成 HTML；浏览器只激活交互 islands。
 
 目录只保留五级以内的正文标题；摘要在 `<!--more-->` 处截断（最多 260 字符），搜索保留代码、图片说明和公式原文。GFM 删除线、表格和脚注按正文语义提取，不再单独按 CommonMark 解析。迁移差异及验证见 [内容管线精简记录](experiments/astro-native-content/COMPARISON.md)。
 
 开发时监听新增、编辑和删除，同步路由、分类与生成文件。生产构建在渲染前过滤草稿，并提前请求评论映射，与 Markdown 处理重叠；接口超时覆盖响应头和正文。
+
+Sitemap 使用官方 `/sitemap-index.xml` 和 `/sitemap-0.xml` 等文件名，`robots.txt` 指向索引，不保留旧的分组文件地址。内容 loader 将更新时间、图片与已发布译文的语言关联写入 Astro 缓存目录的 `blog-sitemap.json`，构建集成通过 `serialize` 补充这些字段；不会持久化正文、密码或评论 token。保留 XSL 样式，排除 404 与非页面资源；开发服务器不生成 sitemap，可通过生产构建及 preview 检查。
 
 公开文章的 HTML、摘要、目录、字数和搜索文本持久化到 `.cache/content/`，按源文件和渲染配置校验复用。加密文章只在内存中处理，正文与密码不写入该缓存；文章转为草稿、加密或被删除时，会清除旧的公开缓存。开发模式使用进程内缓存。
 

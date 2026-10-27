@@ -13,6 +13,7 @@ import { fetchCommentsMapping } from '../tools/content/commentsMapping';
 import computeSwHash from '../tools/build/swHash';
 import { rendererDependencyFiles } from '../tools/build/rendererDependencies';
 import { stableWind } from '../src/styles/unocss/stableWind';
+import { SITEMAP_METADATA_FILE } from '../tools/content/sitemap';
 import { createGenerator } from 'unocss';
 
 const temporary = () => mkdtemp(path.join(os.tmpdir(), 'blog-pipeline-'));
@@ -64,7 +65,8 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     await writeFile(path.join(root, '_blogs/content/posts/draft.md'), article('draft', 'draft: true\n', 'DRAFT_BODY_SENTINEL'));
     const renderer = await markdownOptions.processor.createRenderer(markdownOptions);
     const context: any = {
-      config: { root: pathToFileURL(root + '/'), publicDir: pathToFileURL(root + '/public/') },
+      config: { root: pathToFileURL(root + '/'), publicDir: pathToFileURL(root + '/public/'),
+        cacheDir: pathToFileURL(root + '/node_modules/.astro/') },
       store: { keys: () => entries.keys(), delete: (id: string) => entries.delete(id), set: (entry: any) => entries.set(entry.id, entry) },
       parseData: async (entry: any) => blogSchema.parse(entry.data),
       generateDigest: (value: any) => createHash('sha256').update(JSON.stringify(value)).digest('hex'),
@@ -81,6 +83,9 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     expect(renders).toHaveLength(2);
     expect(renders).not.toContain('DRAFT_BODY_SENTINEL');
     expect(entries.has('posts/draft')).toBe(false);
+    const sitemapMetadata = () => readFile(new URL(SITEMAP_METADATA_FILE, context.config.cacheDir), 'utf8');
+    expect(await sitemapMetadata()).not.toContain('PRIVATE_');
+    expect(await sitemapMetadata()).not.toContain('/posts/draft/');
     await load();
     expect(renders).toHaveLength(3); // Only the private article renders again.
     const cacheDir = path.join(root, '.cache/content');
@@ -92,6 +97,8 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     await writeFile(publicFile, article('renamed', '', 'Edited fixture'));
     await load();
     expect(entries.has('posts/public')).toBe(false);
+    expect(await sitemapMetadata()).not.toContain('/posts/public/');
+    expect(await sitemapMetadata()).toContain('/posts/renamed/');
     expect(entries.get('posts/renamed').data.value.html).toContain('Edited fixture');
     await writeFile(publicFile, article('renamed', 'encrypt_pwd: NOW_PRIVATE\n'));
     await load();
@@ -99,6 +106,7 @@ test('loader starts API early, skips drafts, reuses public renders and evicts pr
     await writeFile(publicFile, article('renamed', 'draft: true\n'));
     await load();
     expect(entries.has('posts/renamed')).toBe(false);
+    expect(await sitemapMetadata()).not.toContain('/posts/renamed/');
     await writeFile(publicFile, article('renamed'));
     await load();
     expect(entries.has('posts/renamed')).toBe(true);
@@ -182,18 +190,14 @@ test('renderer fingerprint follows installed transitives and optional native pac
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('feed and category sitemap dates reflect their content, not build time', async () => {
+test('feed dates reflect their content, not build time', async () => {
   const { emitAtom } = await import('../tools/content/emit/atom');
-  const { emitSitemaps } = await import('../tools/content/emit/sitemap');
   const root = await temporary();
   const site = { baseURL: 'https://example.com', title: 'Site', author: 'Author', description: '', sitemap: { changeFreq: 'weekly', priority: 0.6, termPriority: 0.3 } };
   const post = { title: 'Article', slug: 'article', category: 'Category', html: '<p>Hello</p>', summary: 'Hello', tags: [], dateObj: new Date('2020-01-01'), updatedObj: new Date('2021-02-03') };
   try {
     await emitAtom({ site, publicDir: root, publishedPosts: [post], renderablePosts: [post] });
-    await emitSitemaps({ site, publicDir: root, publishedPosts: [post], renderablePosts: [post], renderablePages: [] });
     const atom = await readFile(path.join(root, 'atom.xml'), 'utf8');
-    const category = await readFile(path.join(root, 'category/sitemap.xml'), 'utf8');
     expect(atom.match(/<updated>(.*?)<\/updated>/)?.[1]).toStartWith('2021-02-03');
-    expect(category.match(/<lastmod>(.*?)<\/lastmod>/)?.[1]).toStartWith('2021-02-03');
   } finally { await rm(root, { recursive: true, force: true }); }
 });

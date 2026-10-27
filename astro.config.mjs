@@ -8,6 +8,7 @@ import { build } from 'vite';
 import { fileURLToPath } from 'node:url';
 import computeSwHash from './tools/build/swHash.ts';
 import { ogTemplate } from './tools/astro/ogTemplate.ts';
+import { blogSitemap } from './tools/astro/sitemap.ts';
 import { markdownOptions } from './tools/content/markdown.ts';
 import { existsSync } from 'node:fs';
 import site from './site.config.json' with { type: 'json' };
@@ -42,7 +43,7 @@ export default defineConfig({
       await mkdir(resolve(outDir, '404'), { recursive: true });
       await copyFile(resolve(outDir, '404.html'), resolve(outDir, '404/index.html'));
     } },
-  }],
+  }, blogSitemap()],
   vite: {
     plugins: [ogTemplate(), UnoCSS(), Icons({ compiler: 'solid' })],
     resolve: { alias: { '~': resolve('src'), '@': resolve('.') } },

@@ -4,7 +4,6 @@ import { emitAtom } from "./emit/atom";
 import { buildPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
-import { emitSitemaps } from "./emit/sitemap";
 import { emitValidPaths } from "./emit/validPaths";
 import { reportMarkdownTiming } from "./markdown";
 import { fetchCommentsMapping, resolveInkstoneBase } from "./commentsMapping";
@@ -147,16 +146,6 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
       ),
     );
   }
-
-  console.time("content:emit:sitemaps");
-  await emitSitemaps({
-    site,
-    publicDir,
-    renderablePosts,
-    renderablePages,
-    publishedPosts,
-  });
-  console.timeEnd("content:emit:sitemaps");
 
   console.time("content:emit:atom");
   await emitAtom({

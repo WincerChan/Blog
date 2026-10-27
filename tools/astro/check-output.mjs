@@ -11,7 +11,7 @@ for(const route of paths) {
  assert(!html.includes('http-equiv="refresh"'),`Unexpected redirect ${route}`);
  assert(!html.includes('encrypt_pwd'),`Raw password field in ${route}`);
 }
-for(const name of ['404.html','404/index.html','sw.js','search-index.json','atom.xml','sitemap.xml','manifest.webmanifest','og','favicon/light.svg'])assert(fs.existsSync(path.join(root,name)),`Missing ${name}`);
+for(const name of ['404.html','404/index.html','sw.js','search-index.json','atom.xml','sitemap-index.xml','manifest.webmanifest','og','favicon/light.svg'])assert(fs.existsSync(path.join(root,name)),`Missing ${name}`);
 assert(!fs.existsSync(path.join(root,'_data')));
 const sourceRoot=path.resolve('_blogs/content/posts');
 const encrypted=fs.readdirSync(sourceRoot,{recursive:true}).filter(file=>file.endsWith('.md')).map(file=>{const {frontmatter:data,content}=parseFrontmatter(fs.readFileSync(path.join(sourceRoot,file),'utf8'));return {data,content};}).filter(p=>p.data.encrypt_pwd && !p.data.draft);
