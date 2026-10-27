@@ -2,15 +2,6 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import satori from "satori";
-
-type OgFont = {
-  name: string;
-  data: Buffer;
-  weight: number;
-  style: "normal";
-};
-
 type OgTemplateInput = {
   title: string;
   subtitle?: string;
@@ -20,11 +11,10 @@ type OgTemplateInput = {
   showDate?: boolean;
   titleFontFamily?: string;
   subtitleFontFamily?: string;
-  fonts: OgFont[];
 };
 
-const OG_WIDTH = 1200;
-const OG_HEIGHT = 630;
+export const OG_WIDTH = 1200;
+export const OG_HEIGHT = 630;
 const ACCENT = "#1f6f6a";
 const BG_BASE = "#FDFBF9";
 const TEXT_DARK = "#374151";
@@ -73,7 +63,7 @@ const h = (type: any, props: Record<string, unknown> | null, ...children: any[])
   };
 };
 
-export const renderOgSvg = async ({
+export const buildOgTree = ({
   title,
   subtitle,
   date,
@@ -82,7 +72,6 @@ export const renderOgSvg = async ({
   showDate = true,
   titleFontFamily,
   subtitleFontFamily,
-  fonts,
 }: OgTemplateInput) => {
   const safeTitle = clampText(title, 90);
   const safeSubtitle = subtitle ? clampByUnits(subtitle, 40) : "";
@@ -193,8 +182,8 @@ export const renderOgSvg = async ({
   const root = (
     <div
       style={{
-        width: "100%",
-        height: "100%",
+        width: OG_WIDTH,
+        height: OG_HEIGHT,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -214,7 +203,7 @@ export const renderOgSvg = async ({
           opacity: 0.08,
         }}
       >
-        <svg width="100%" height="100%">
+        <svg width={OG_WIDTH} height={OG_HEIGHT}>
           {dotRects}
         </svg>
       </div>
@@ -227,7 +216,7 @@ export const renderOgSvg = async ({
           bottom: 0,
         }}
       >
-        <svg width="100%" height="100%" viewBox="0 0 1200 630">
+        <svg width={OG_WIDTH} height={OG_HEIGHT} viewBox="0 0 1200 630">
           <g transform="translate(1000 500)" opacity={0.15}>
             <circle r={300} fill="none" stroke={ACCENT} strokeWidth={2.5} />
             <circle
@@ -393,9 +382,5 @@ export const renderOgSvg = async ({
     </div>
   );
 
-  return await satori(root as any, {
-    width: OG_WIDTH,
-    height: OG_HEIGHT,
-    fonts,
-  });
+  return root;
 };

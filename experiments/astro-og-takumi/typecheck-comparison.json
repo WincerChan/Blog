@@ -1,0 +1,13 @@
+{
+  "baselineRef": "0d3b92b2ef419c6ae54804311ed54abab266835d",
+  "baselineDiagnostics": 160,
+  "currentDiagnostics": 159,
+  "introduced": [],
+  "resolved": [
+    {
+      "file": "tools/content/og/template.tsx",
+      "code": 2322,
+      "message": "Type 'OgFont[]' is not assignable to type 'FontOptions[]'.\n  Type 'OgFont' is not assignable to type 'FontOptions'.\n    Types of property 'weight' are incompatible.\n      Type 'number' is not assignable to type 'Weight | undefined'."
+    }
+  ]
+}

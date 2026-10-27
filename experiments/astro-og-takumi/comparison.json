@@ -1,0 +1,4496 @@
+{
+  "count": 103,
+  "dimensions": [
+    1800,
+    945
+  ],
+  "takumiPngEqualsRawSharpPixels": true,
+  "medianMeanAbsoluteRgbError": 1.0478048206937096,
+  "maxMeanAbsoluteRgbError": 2.1258612580834804,
+  "textBandCountDifferences": [],
+  "selected": [
+    {
+      "index": 0,
+      "slug": "1060d444",
+      "input": {
+        "title": "导出 QQ 聊天记录",
+        "subtitle": "前言 从 2013 年开始，手机 QQ 就已经不支持私人聊天记录的导出功能了（群聊的记录…",
+        "date": "2017-07-01",
+        "siteName": "Wincer.Blog",
+        "siteHost": "blog.itswincer.com",
+        "showDate": true,
+        "titleFontFamily": "LXGW WenKai, serif",
+        "subtitleFontFamily": "LXGW WenKai, serif"
+      }
+    },
+    {
+      "index": 41,
+      "slug": "ad42f575",
+      "input": {
+        "title": "Linux 与 Windows 10 用 GRUB 引导教程",
+        "subtitle": "前言 去年暑假的时候，写了一篇如何装 Linux 和 Windows 10 双系统的文章发在了简…",
+        "date": "2017-10-17",
+        "siteName": "Wincer.Blog",
+        "siteHost": "blog.itswincer.com",
+        "showDate": true,
+        "titleFontFamily": "LXGW WenKai, serif",
+        "subtitleFontFamily": "LXGW WenKai, serif"
+      }
+    },
+    {
+      "index": 78,
+      "slug": "solana-vanity-prefix-vs-suffix-probability-en",
+      "input": {
+        "title": "Solana Address Prefix Character Probability Analysis",
+        "subtitle": "Why Does the Same Character Have Different Difficulty?",
+        "date": "2025-05-15",
+        "siteName": "Wincer.Blog",
+        "siteHost": "blog.itswincer.com",
+        "showDate": true,
+        "titleFontFamily": "Fraunces, serif",
+        "subtitleFontFamily": "IBM Plex Sans, sans-serif"
+      }
+    },
+    {
+      "index": 66,
+      "slug": "generating-solana-vanity-addresses-using-opencl-en",
+      "input": {
+        "title": "Generating Solana Vanity Addresses Using OpenCL",
+        "subtitle": "Faster Creation of Custom Solana Addresses",
+        "date": "2024-03-04",
+        "siteName": "Wincer.Blog",
+        "siteHost": "blog.itswincer.com",
+        "showDate": true,
+        "titleFontFamily": "Fraunces, serif",
+        "subtitleFontFamily": "IBM Plex Sans, sans-serif"
+      }
+    },
+    {
+      "index": 101,
+      "slug": "page/index",
+      "input": {
+        "title": "Wincer's Blog",
+        "subtitle": "这里是 @Wincer,喜欢折腾新技术,却没多大耐心。个人博客会写得比较杂,包括日常吐槽…",
+        "date": "",
+        "siteName": "Wincer.Blog",
+        "siteHost": "blog.itswincer.com",
+        "showDate": false,
+        "titleFontFamily": "LXGW WenKai, serif",
+        "subtitleFontFamily": "LXGW WenKai, serif"
+      }
+    },
+    {
+      "index": 95,
+      "slug": "page/category/实验室",
+      "input": {
+        "title": "分类 · 实验室",
+        "subtitle": "共 19 篇文章",
+        "date": "",
+        "siteName": "Wincer.Blog",
+        "siteHost": "blog.itswincer.com",
+        "showDate": false,
+        "titleFontFamily": "LXGW WenKai, serif",
+        "subtitleFontFamily": "LXGW WenKai, serif"
+      }
+    }
+  ],
+  "results": [
+    {
+      "index": 0,
+      "slug": "1060d444",
+      "meanAbsoluteRgbError": 0.958440329218107,
+      "changedPixelFractionAbove16": 0.01276308054085832,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          407
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          407
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "slug": "11ab0263",
+      "meanAbsoluteRgbError": 0.931533215755438,
+      "changedPixelFractionAbove16": 0.012428571428571428,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "slug": "1352252a",
+      "meanAbsoluteRgbError": 1.0655680971977268,
+      "changedPixelFractionAbove16": 0.013882422104644326,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "slug": "16c559c7",
+      "meanAbsoluteRgbError": 0.9621142465216539,
+      "changedPixelFractionAbove16": 0.012768959435626103,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          524
+        ],
+        [
+          561,
+          612
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          474,
+          525
+        ],
+        [
+          560,
+          612
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "slug": "18b98ea6",
+      "meanAbsoluteRgbError": 1.764066431510876,
+      "changedPixelFractionAbove16": 0.021838330393885948,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          349
+        ],
+        [
+          374,
+          463
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          251,
+          348
+        ],
+        [
+          373,
+          463
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 5,
+      "slug": "2022-year-end-summary",
+      "meanAbsoluteRgbError": 0.9688114834411131,
+      "changedPixelFractionAbove16": 0.010577895355673134,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          518,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          517,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 6,
+      "slug": "2024-year-end-reflection",
+      "meanAbsoluteRgbError": 0.9805151871448168,
+      "changedPixelFractionAbove16": 0.010690182245737801,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 7,
+      "slug": "2848ddef",
+      "meanAbsoluteRgbError": 0.9687815010777974,
+      "changedPixelFractionAbove16": 0.013084656084656084,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 8,
+      "slug": "286f4007",
+      "meanAbsoluteRgbError": 1.0905690770135215,
+      "changedPixelFractionAbove16": 0.01445679012345679,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 9,
+      "slug": "2aa541e6",
+      "meanAbsoluteRgbError": 1.020756221830296,
+      "changedPixelFractionAbove16": 0.013423280423280424,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          410
+        ],
+        [
+          473,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          412
+        ],
+        [
+          474,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 10,
+      "slug": "2cdb7149",
+      "meanAbsoluteRgbError": 0.9846937095825985,
+      "changedPixelFractionAbove16": 0.013031158142269253,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          560,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 11,
+      "slug": "36b4c1ab",
+      "meanAbsoluteRgbError": 1.0292137958063885,
+      "changedPixelFractionAbove16": 0.013858318636096413,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 12,
+      "slug": "4a17b156",
+      "meanAbsoluteRgbError": 1.0770885753478345,
+      "changedPixelFractionAbove16": 0.014416225749559083,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          398
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          398
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 13,
+      "slug": "4aa5d46d",
+      "meanAbsoluteRgbError": 1.0877920830883794,
+      "changedPixelFractionAbove16": 0.014965314520870077,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 14,
+      "slug": "4f2b4bfb",
+      "meanAbsoluteRgbError": 1.6806455026455027,
+      "changedPixelFractionAbove16": 0.021225749559082893,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          355
+        ],
+        [
+          372,
+          459
+        ],
+        [
+          530,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          354
+        ],
+        [
+          372,
+          458
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          619,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 15,
+      "slug": "50658b02",
+      "meanAbsoluteRgbError": 1.051265138154027,
+      "changedPixelFractionAbove16": 0.013901822457378013,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          474,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 16,
+      "slug": "5873b0c0",
+      "meanAbsoluteRgbError": 1.0278928081520675,
+      "changedPixelFractionAbove16": 0.013788947677836567,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          315,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          315,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 17,
+      "slug": "58dd3c61",
+      "meanAbsoluteRgbError": 1.475299823633157,
+      "changedPixelFractionAbove16": 0.018807760141093473,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          355
+        ],
+        [
+          373,
+          462
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          354
+        ],
+        [
+          372,
+          462
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 18,
+      "slug": "5fdce618",
+      "meanAbsoluteRgbError": 1.0115553595923967,
+      "changedPixelFractionAbove16": 0.013585537918871252,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          474,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 19,
+      "slug": "65e48179",
+      "meanAbsoluteRgbError": 1.0710005878894768,
+      "changedPixelFractionAbove16": 0.014439153439153439,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 20,
+      "slug": "6619f85a",
+      "meanAbsoluteRgbError": 1.2187385851459926,
+      "changedPixelFractionAbove16": 0.014963550852439741,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          255,
+          354
+        ],
+        [
+          370,
+          463
+        ],
+        [
+          536,
+          583
+        ],
+        [
+          625,
+          663
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          254,
+          354
+        ],
+        [
+          369,
+          463
+        ],
+        [
+          536,
+          582
+        ],
+        [
+          624,
+          662
+        ]
+      ]
+    },
+    {
+      "index": 21,
+      "slug": "71f1f91c",
+      "meanAbsoluteRgbError": 1.1259159318048206,
+      "changedPixelFractionAbove16": 0.014946502057613168,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          560,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 22,
+      "slug": "72171293",
+      "meanAbsoluteRgbError": 1.0621894963746816,
+      "changedPixelFractionAbove16": 0.014475014697236919,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 23,
+      "slug": "72474942",
+      "meanAbsoluteRgbError": 0.9593586125808348,
+      "changedPixelFractionAbove16": 0.013027630805408584,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 24,
+      "slug": "790223d2",
+      "meanAbsoluteRgbError": 1.5608106995884774,
+      "changedPixelFractionAbove16": 0.020362139917695473,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          349
+        ],
+        [
+          369,
+          461
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          348
+        ],
+        [
+          369,
+          461
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 25,
+      "slug": "7a2a84c6",
+      "meanAbsoluteRgbError": 1.6388796786204194,
+      "changedPixelFractionAbove16": 0.02062610229276896,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          254,
+          355
+        ],
+        [
+          370,
+          464
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          620,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          353
+        ],
+        [
+          370,
+          463
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          619,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 26,
+      "slug": "7a8186a0",
+      "meanAbsoluteRgbError": 1.1387573976092495,
+      "changedPixelFractionAbove16": 0.01570076425631981,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          412
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          412
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 27,
+      "slug": "7e325dad",
+      "meanAbsoluteRgbError": 0.9876911620615324,
+      "changedPixelFractionAbove16": 0.012815990593768372,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          412
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          412
+        ],
+        [
+          474,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 28,
+      "slug": "7efd2818",
+      "meanAbsoluteRgbError": 1.0070072506368803,
+      "changedPixelFractionAbove16": 0.01312933568489124,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          472,
+          524
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          525
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 29,
+      "slug": "80689c8d",
+      "meanAbsoluteRgbError": 1.072408387223202,
+      "changedPixelFractionAbove16": 0.014389182833627279,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          412
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          562,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          412
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 30,
+      "slug": "8575e868",
+      "meanAbsoluteRgbError": 1.5431816578483246,
+      "changedPixelFractionAbove16": 0.019355085243974134,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          355
+        ],
+        [
+          369,
+          463
+        ],
+        [
+          530,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          354
+        ],
+        [
+          369,
+          463
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 31,
+      "slug": "859c63e4",
+      "meanAbsoluteRgbError": 0.9933223593964334,
+      "changedPixelFractionAbove16": 0.012941798941798942,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          405
+        ],
+        [
+          473,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          405
+        ],
+        [
+          474,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 32,
+      "slug": "89381f22",
+      "meanAbsoluteRgbError": 1.6332857142857142,
+      "changedPixelFractionAbove16": 0.020159905937683714,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          348
+        ],
+        [
+          373,
+          462
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          347
+        ],
+        [
+          373,
+          462
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 33,
+      "slug": "92d76830",
+      "meanAbsoluteRgbError": 1.0031171859690378,
+      "changedPixelFractionAbove16": 0.013781305114638449,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 34,
+      "slug": "9a260fa1",
+      "meanAbsoluteRgbError": 1.0902006662747403,
+      "changedPixelFractionAbove16": 0.014708406819517931,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          407
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          407
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 35,
+      "slug": "a0df572f",
+      "meanAbsoluteRgbError": 1.5464418969233784,
+      "changedPixelFractionAbove16": 0.020164609053497942,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          254,
+          348
+        ],
+        [
+          375,
+          459
+        ],
+        [
+          530,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          347
+        ],
+        [
+          373,
+          458
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 36,
+      "slug": "a5c39267",
+      "meanAbsoluteRgbError": 1.419838330393886,
+      "changedPixelFractionAbove16": 0.018042328042328044,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          254,
+          347
+        ],
+        [
+          368,
+          463
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          620,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          346
+        ],
+        [
+          368,
+          463
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          619,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 37,
+      "slug": "a6c2a51d",
+      "meanAbsoluteRgbError": 0.9875177346658828,
+      "changedPixelFractionAbove16": 0.013282186948853615,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 38,
+      "slug": "a9aef93a",
+      "meanAbsoluteRgbError": 1.0192480893592004,
+      "changedPixelFractionAbove16": 0.013580246913580247,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          560,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 39,
+      "slug": "a9d193c6",
+      "meanAbsoluteRgbError": 1.6516586321771507,
+      "changedPixelFractionAbove16": 0.020984714873603764,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          254,
+          348
+        ],
+        [
+          376,
+          472
+        ],
+        [
+          531,
+          582
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          347
+        ],
+        [
+          375,
+          472
+        ],
+        [
+          531,
+          582
+        ],
+        [
+          618,
+          667
+        ]
+      ]
+    },
+    {
+      "index": 40,
+      "slug": "about-recent-blog-updates",
+      "meanAbsoluteRgbError": 1.2295020576131688,
+      "changedPixelFractionAbove16": 0.013421516754850088,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          451
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          450
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 41,
+      "slug": "ad42f575",
+      "meanAbsoluteRgbError": 1.4778449931412894,
+      "changedPixelFractionAbove16": 0.019892416225749558,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          256,
+          349
+        ],
+        [
+          371,
+          465
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          256,
+          348
+        ],
+        [
+          371,
+          464
+        ],
+        [
+          531,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 42,
+      "slug": "b3085a7",
+      "meanAbsoluteRgbError": 1.2138522437781698,
+      "changedPixelFractionAbove16": 0.016246913580246915,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          612
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          612
+        ]
+      ]
+    },
+    {
+      "index": 43,
+      "slug": "bf0413ac",
+      "meanAbsoluteRgbError": 1.6764221046443268,
+      "changedPixelFractionAbove16": 0.021103468547912993,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          254,
+          348
+        ],
+        [
+          376,
+          460
+        ],
+        [
+          531,
+          578
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          347
+        ],
+        [
+          375,
+          459
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 44,
+      "slug": "blog-optimization-again",
+      "meanAbsoluteRgbError": 1.1150678032529884,
+      "changedPixelFractionAbove16": 0.012114050558495003,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          518,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          517,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 45,
+      "slug": "blog-search-is-ready",
+      "meanAbsoluteRgbError": 1.0084687438761513,
+      "changedPixelFractionAbove16": 0.013703703703703704,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          472,
+          524
+        ],
+        [
+          560,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          525
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 46,
+      "slug": "building-my-moments",
+      "meanAbsoluteRgbError": 1.1910456594160297,
+      "changedPixelFractionAbove16": 0.012961199294532627,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          451
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          450
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 47,
+      "slug": "c12de45e",
+      "meanAbsoluteRgbError": 1.5794417009602195,
+      "changedPixelFractionAbove16": 0.02011581422692534,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          355
+        ],
+        [
+          376,
+          460
+        ],
+        [
+          530,
+          579
+        ],
+        [
+          620,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          354
+        ],
+        [
+          375,
+          459
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          619,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 48,
+      "slug": "cfd78fa9",
+      "meanAbsoluteRgbError": 1.0434705075445816,
+      "changedPixelFractionAbove16": 0.013954732510288066,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 49,
+      "slug": "chatgpt-and-tts-work-together",
+      "meanAbsoluteRgbError": 0.7081475602586713,
+      "changedPixelFractionAbove16": 0.008262786596119929,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          392
+        ],
+        [
+          414,
+          506
+        ],
+        [
+          575,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          392
+        ],
+        [
+          414,
+          506
+        ],
+        [
+          575,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 50,
+      "slug": "chatgpt-and-tts-work-together-en",
+      "meanAbsoluteRgbError": 1.9632792475014698,
+      "changedPixelFractionAbove16": 0.01953968253968254,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          250,
+          353
+        ],
+        [
+          366,
+          445
+        ],
+        [
+          484,
+          560
+        ],
+        [
+          640,
+          679
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          249,
+          352
+        ],
+        [
+          365,
+          444
+        ],
+        [
+          483,
+          559
+        ],
+        [
+          638,
+          677
+        ]
+      ]
+    },
+    {
+      "index": 51,
+      "slug": "china-ai-breakthrough-deepseek-r1-showdown",
+      "meanAbsoluteRgbError": 0.8007552420145013,
+      "changedPixelFractionAbove16": 0.009353321575543798,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          397
+        ],
+        [
+          417,
+          505
+        ],
+        [
+          574,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          397
+        ],
+        [
+          417,
+          505
+        ],
+        [
+          574,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 52,
+      "slug": "company-departure-after-3-years",
+      "meanAbsoluteRgbError": 1.005302175191064,
+      "changedPixelFractionAbove16": 0.010741328630217518,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          451
+        ],
+        [
+          518,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          353,
+          450
+        ],
+        [
+          517,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 53,
+      "slug": "d42e79bb",
+      "meanAbsoluteRgbError": 1.7275759357240839,
+      "changedPixelFractionAbove16": 0.022333333333333334,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          349
+        ],
+        [
+          369,
+          464
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          348
+        ],
+        [
+          369,
+          463
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          619,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 54,
+      "slug": "d67271d8",
+      "meanAbsoluteRgbError": 1.1870760337056634,
+      "changedPixelFractionAbove16": 0.016439741328630218,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          267,
+          362
+        ],
+        [
+          429,
+          477
+        ],
+        [
+          517,
+          565
+        ],
+        [
+          613,
+          650
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          266,
+          361
+        ],
+        [
+          429,
+          477
+        ],
+        [
+          516,
+          564
+        ],
+        [
+          612,
+          649
+        ]
+      ]
+    },
+    {
+      "index": 55,
+      "slug": "d691e748",
+      "meanAbsoluteRgbError": 1.5303799725651577,
+      "changedPixelFractionAbove16": 0.020096413874191654,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          348
+        ],
+        [
+          370,
+          464
+        ],
+        [
+          531,
+          579
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          347
+        ],
+        [
+          369,
+          464
+        ],
+        [
+          530,
+          578
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 56,
+      "slug": "d9253d8c",
+      "meanAbsoluteRgbError": 1.0522316284538507,
+      "changedPixelFractionAbove16": 0.014033509700176366,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 57,
+      "slug": "dbcdebb",
+      "meanAbsoluteRgbError": 1.4966174799137761,
+      "changedPixelFractionAbove16": 0.01951793062904174,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          253,
+          355
+        ],
+        [
+          369,
+          464
+        ],
+        [
+          531,
+          581
+        ],
+        [
+          619,
+          667
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          252,
+          354
+        ],
+        [
+          368,
+          464
+        ],
+        [
+          530,
+          581
+        ],
+        [
+          618,
+          666
+        ]
+      ]
+    },
+    {
+      "index": 58,
+      "slug": "diy-pc-market-ai-thoughts",
+      "meanAbsoluteRgbError": 0.7607764060356653,
+      "changedPixelFractionAbove16": 0.008660199882422105,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          297,
+          393
+        ],
+        [
+          416,
+          502
+        ],
+        [
+          574,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          392
+        ],
+        [
+          416,
+          502
+        ],
+        [
+          574,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 59,
+      "slug": "e0246a27",
+      "meanAbsoluteRgbError": 0.9539923574368019,
+      "changedPixelFractionAbove16": 0.012616108171663728,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          560,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 60,
+      "slug": "e4e1357d",
+      "meanAbsoluteRgbError": 1.0226913580246915,
+      "changedPixelFractionAbove16": 0.01374838330393886,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 61,
+      "slug": "e5d13eb",
+      "meanAbsoluteRgbError": 1.071986870468352,
+      "changedPixelFractionAbove16": 0.014268077601410935,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          412
+        ],
+        [
+          473,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          412
+        ],
+        [
+          474,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 62,
+      "slug": "ee6b678",
+      "meanAbsoluteRgbError": 0.9902569077013521,
+      "changedPixelFractionAbove16": 0.01318342151675485,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 63,
+      "slug": "f011ea9c",
+      "meanAbsoluteRgbError": 1.0487777777777778,
+      "changedPixelFractionAbove16": 0.0143233392122281,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 64,
+      "slug": "f6e1eb2a",
+      "meanAbsoluteRgbError": 1.0578563590045071,
+      "changedPixelFractionAbove16": 0.013858906525573192,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          406
+        ],
+        [
+          474,
+          522
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 65,
+      "slug": "generating-solana-vanity-addresses-using-opencl",
+      "meanAbsoluteRgbError": 0.7230309621791103,
+      "changedPixelFractionAbove16": 0.008395061728395062,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          398
+        ],
+        [
+          412,
+          507
+        ],
+        [
+          575,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          397
+        ],
+        [
+          412,
+          507
+        ],
+        [
+          575,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 66,
+      "slug": "generating-solana-vanity-addresses-using-opencl-en",
+      "meanAbsoluteRgbError": 2.1258612580834804,
+      "changedPixelFractionAbove16": 0.021617283950617284,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          308,
+          410
+        ],
+        [
+          423,
+          526
+        ],
+        [
+          581,
+          620
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          308,
+          410
+        ],
+        [
+          423,
+          526
+        ],
+        [
+          580,
+          620
+        ]
+      ]
+    },
+    {
+      "index": 67,
+      "slug": "kansai-insights",
+      "meanAbsoluteRgbError": 0.7959615912208505,
+      "changedPixelFractionAbove16": 0.008293356848912404,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          358,
+          450
+        ],
+        [
+          518,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          357,
+          449
+        ],
+        [
+          517,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 68,
+      "slug": "migrating-from-hexo-to-hugo",
+      "meanAbsoluteRgbError": 0.9287105624142661,
+      "changedPixelFractionAbove16": 0.010059376837154615,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          359,
+          450
+        ],
+        [
+          518,
+          569
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          358,
+          449
+        ],
+        [
+          517,
+          568
+        ]
+      ]
+    },
+    {
+      "index": 69,
+      "slug": "open-core-boot-macos-ventura-tutorial",
+      "meanAbsoluteRgbError": 0.8086025867136978,
+      "changedPixelFractionAbove16": 0.009501469723691945,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          298,
+          398
+        ],
+        [
+          416,
+          507
+        ],
+        [
+          575,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          297,
+          397
+        ],
+        [
+          416,
+          507
+        ],
+        [
+          575,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 70,
+      "slug": "overcoming-procrastination-and-self-acceptance",
+      "meanAbsoluteRgbError": 1.1334489515970998,
+      "changedPixelFractionAbove16": 0.012325102880658436,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 71,
+      "slug": "quantumult-x-chain-proxy-setup",
+      "meanAbsoluteRgbError": 0.7476004311189496,
+      "changedPixelFractionAbove16": 0.008724279835390947,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          297,
+          391
+        ],
+        [
+          416,
+          503
+        ],
+        [
+          574,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          391
+        ],
+        [
+          416,
+          503
+        ],
+        [
+          574,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 72,
+      "slug": "reconstruct-my-blog-with-hugo-solidstart",
+      "meanAbsoluteRgbError": 0.7890452674897119,
+      "changedPixelFractionAbove16": 0.009150499706055262,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          297,
+          400
+        ],
+        [
+          412,
+          507
+        ],
+        [
+          574,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          297,
+          400
+        ],
+        [
+          412,
+          507
+        ],
+        [
+          574,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 73,
+      "slug": "refactoring-blog-architecture-with-vibe-coding",
+      "meanAbsoluteRgbError": 0.9783111894963746,
+      "changedPixelFractionAbove16": 0.0103450911228689,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          517,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 74,
+      "slug": "set-up-freebsd-server-of-mine",
+      "meanAbsoluteRgbError": 0.9799535567313346,
+      "changedPixelFractionAbove16": 0.013166372721928277,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          311,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 75,
+      "slug": "softness-and-strengh-at-28",
+      "meanAbsoluteRgbError": 1.024151087595532,
+      "changedPixelFractionAbove16": 0.011059376837154616,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          356,
+          451
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 76,
+      "slug": "software-services-I-recently-subscribed",
+      "meanAbsoluteRgbError": 1.2097577895355673,
+      "changedPixelFractionAbove16": 0.012930629041740152,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          451
+        ],
+        [
+          518,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          450
+        ],
+        [
+          517,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 77,
+      "slug": "solana-vanity-prefix-vs-suffix-probability",
+      "meanAbsoluteRgbError": 0.859843425436018,
+      "changedPixelFractionAbove16": 0.010136390358612581,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          296,
+          393
+        ],
+        [
+          415,
+          507
+        ],
+        [
+          574,
+          622
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          295,
+          392
+        ],
+        [
+          415,
+          507
+        ],
+        [
+          574,
+          622
+        ]
+      ]
+    },
+    {
+      "index": 78,
+      "slug": "solana-vanity-prefix-vs-suffix-probability-en",
+      "meanAbsoluteRgbError": 1.959551440329218,
+      "changedPixelFractionAbove16": 0.02175955320399765,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          221,
+          301
+        ],
+        [
+          337,
+          439
+        ],
+        [
+          454,
+          554
+        ],
+        [
+          611,
+          659
+        ],
+        [
+          700,
+          724
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          220,
+          300
+        ],
+        [
+          336,
+          438
+        ],
+        [
+          453,
+          553
+        ],
+        [
+          610,
+          658
+        ],
+        [
+          697,
+          724
+        ]
+      ]
+    },
+    {
+      "index": 79,
+      "slug": "start-with-a-dns-traffic-test",
+      "meanAbsoluteRgbError": 1.179376837154615,
+      "changedPixelFractionAbove16": 0.012963550852439741,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 80,
+      "slug": "summary-of-2020",
+      "meanAbsoluteRgbError": 1.0059320007838526,
+      "changedPixelFractionAbove16": 0.01352145796590241,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          608
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          309,
+          406
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 81,
+      "slug": "tlv-encoding-practice",
+      "meanAbsoluteRgbError": 1.92191789143641,
+      "changedPixelFractionAbove16": 0.021156966490299824,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          264,
+          367
+        ],
+        [
+          379,
+          482
+        ],
+        [
+          538,
+          587
+        ],
+        [
+          626,
+          665
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          263,
+          366
+        ],
+        [
+          379,
+          482
+        ],
+        [
+          536,
+          586
+        ],
+        [
+          624,
+          663
+        ]
+      ]
+    },
+    {
+      "index": 82,
+      "slug": "upgrade-reunion-with-past-self",
+      "meanAbsoluteRgbError": 1.2394021164021165,
+      "changedPixelFractionAbove16": 0.013035273368606702,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          451
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          450
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 83,
+      "slug": "when-the-world-met-me",
+      "meanAbsoluteRgbError": 1.0869004507152655,
+      "changedPixelFractionAbove16": 0.011704291593180483,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          451
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          450
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 84,
+      "slug": "yunnan-family-trip-dali-lijiang",
+      "meanAbsoluteRgbError": 1.156790515383108,
+      "changedPixelFractionAbove16": 0.012201646090534979,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          451
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          353,
+          450
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 85,
+      "slug": "page/about",
+      "meanAbsoluteRgbError": 1.0073006074857926,
+      "changedPixelFractionAbove16": 0.013362727807172252,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          313,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 86,
+      "slug": "page/about-en",
+      "meanAbsoluteRgbError": 0.9871109151479522,
+      "changedPixelFractionAbove16": 0.011006466784244563,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          322,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          568,
+          616
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          322,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          566,
+          614
+        ]
+      ]
+    },
+    {
+      "index": 87,
+      "slug": "page/archives",
+      "meanAbsoluteRgbError": 0.8982931608857535,
+      "changedPixelFractionAbove16": 0.010106995884773663,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          357,
+          449
+        ],
+        [
+          517,
+          565
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          357,
+          448
+        ],
+        [
+          516,
+          564
+        ]
+      ]
+    },
+    {
+      "index": 88,
+      "slug": "page/archives-en",
+      "meanAbsoluteRgbError": 1.6797501469723692,
+      "changedPixelFractionAbove16": 0.01564785420340976,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          568,
+          607
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          566,
+          606
+        ]
+      ]
+    },
+    {
+      "index": 89,
+      "slug": "page/friends",
+      "meanAbsoluteRgbError": 1.0478048206937096,
+      "changedPixelFractionAbove16": 0.014009994121105233,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          404
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          404
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 90,
+      "slug": "page/friends-en",
+      "meanAbsoluteRgbError": 1.797291593180482,
+      "changedPixelFractionAbove16": 0.017114050558495002,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          322,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          568,
+          618
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          322,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          566,
+          616
+        ]
+      ]
+    },
+    {
+      "index": 91,
+      "slug": "page/life",
+      "meanAbsoluteRgbError": 0.9915773074661963,
+      "changedPixelFractionAbove16": 0.012925338036449147,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          404
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          312,
+          404
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          561,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 92,
+      "slug": "page/life-en",
+      "meanAbsoluteRgbError": 1.0256643151087597,
+      "changedPixelFractionAbove16": 0.011485008818342152,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          324,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          568,
+          618
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          324,
+          399
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          566,
+          616
+        ]
+      ]
+    },
+    {
+      "index": 93,
+      "slug": "page/search",
+      "meanAbsoluteRgbError": 1.061785420340976,
+      "changedPixelFractionAbove16": 0.014044679600235156,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          561,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          310,
+          405
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 94,
+      "slug": "page/search-en",
+      "meanAbsoluteRgbError": 1.2749419949049579,
+      "changedPixelFractionAbove16": 0.013520282186948854,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          400
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          568,
+          618
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          400
+        ],
+        [
+          479,
+          529
+        ],
+        [
+          566,
+          616
+        ]
+      ]
+    },
+    {
+      "index": 95,
+      "slug": "page/category/实验室",
+      "meanAbsoluteRgbError": 0.8085559474818734,
+      "changedPixelFractionAbove16": 0.008077013521457966,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          356,
+          451
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 96,
+      "slug": "page/category/碎碎念",
+      "meanAbsoluteRgbError": 0.7880482069370959,
+      "changedPixelFractionAbove16": 0.007954144620811288,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          451
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          450
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 97,
+      "slug": "page/category/分享境",
+      "meanAbsoluteRgbError": 0.7992933568489125,
+      "changedPixelFractionAbove16": 0.008005878894767783,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          452
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          451
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 98,
+      "slug": "page/category/博客栈",
+      "meanAbsoluteRgbError": 0.7926990005878894,
+      "changedPixelFractionAbove16": 0.007926513815402705,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          450
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          354,
+          449
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 99,
+      "slug": "page/category/文字阁",
+      "meanAbsoluteRgbError": 0.753389966686263,
+      "changedPixelFractionAbove16": 0.0074750146972369196,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          356,
+          450
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          449
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 100,
+      "slug": "page/category/行走记",
+      "meanAbsoluteRgbError": 0.7421015089163238,
+      "changedPixelFractionAbove16": 0.00736331569664903,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          356,
+          450
+        ],
+        [
+          518,
+          564
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          355,
+          449
+        ],
+        [
+          517,
+          563
+        ]
+      ]
+    },
+    {
+      "index": 101,
+      "slug": "page/index",
+      "meanAbsoluteRgbError": 1.0018206937095826,
+      "changedPixelFractionAbove16": 0.013456202233980011,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          414
+        ],
+        [
+          472,
+          520
+        ],
+        [
+          560,
+          609
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          321,
+          414
+        ],
+        [
+          473,
+          521
+        ],
+        [
+          560,
+          608
+        ]
+      ]
+    },
+    {
+      "index": 102,
+      "slug": "page/404",
+      "meanAbsoluteRgbError": 0.4549706055261611,
+      "changedPixelFractionAbove16": 0.004481481481481481,
+      "alphaMismatch": 0,
+      "baselineTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          427,
+          504
+        ]
+      ],
+      "takumiTextBands": [
+        [
+          232,
+          235
+        ],
+        [
+          427,
+          504
+        ]
+      ]
+    }
+  ]
+}

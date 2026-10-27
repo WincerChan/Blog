@@ -53,7 +53,7 @@ English version: `README.en.md`
 
 ### OG 图片
 
-`src/astro/pages/og/[image].png.ts` 在生产构建时输出原有 `/og/*.png`；开发时仅在访问图片 URL 时渲染。保留现有 Satori 排版和 resvg 栅格化，使用 Sharp 异步无损编码 PNG，避免在主线程逐张压缩图片。
+`src/astro/pages/og/[image].png.ts` 在生产构建时输出原有 `/og/*.png`；开发时仅在访问图片 URL 时渲染。使用 Takumi 原生引擎完成 JSX 排版、栅格化和无损 PNG 编码，复用字体和渲染器，输出尺寸保持 1800 × 945。favicon 仍由 resvg 和 Sharp 生成。
 
 完整 PNG 缓存在 `.cache/og/`。展示内容、模板、字体、实际安装的渲染器及其传递依赖、补丁或尺寸改变时失效（无关的锁文件变更不会使全部 OG 失效）；缓存读入时校验完整性。`bun run clean` 保留该缓存，`bun run clean:og` 显式清除。CI 必须保存并恢复 `.cache/og/` 才能跨部署复用；缓存不是部署产物。旧图片不会因为仍在缓存中而重新进入发布路由。
 

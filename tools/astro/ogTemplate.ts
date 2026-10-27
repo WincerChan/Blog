@@ -1,6 +1,6 @@
 import { transformWithOxc, type Plugin } from 'vite';
 
-// Satori's JSX creates plain element objects, not Solid components.
+// OG JSX creates plain element objects for Takumi, not Solid components.
 export function ogTemplate(): Plugin {
   return {
     name: 'blog-og-template',

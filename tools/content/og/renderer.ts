@@ -9,13 +9,13 @@ import { ogFontSources, loadOgFonts } from './fonts';
 import { OG_PNG_SCALE, type OgRenderInput } from './targets';
 import templateSource from './template.tsx?raw';
 import textSource from './text.ts?raw';
-import resvgSource from './resvg.ts?raw';
+import takumiSource from './takumi.ts?raw';
 import fontsSource from './fonts.ts?raw';
 
 // Vite tracks these as module dependencies. During HMR the fingerprint follows
 // the loaded code, rather than reading a newer template before its module reloads.
-const renderSources = [templateSource, textSource, resvgSource, fontsSource];
-const rendererPackages = ['satori', '@resvg/resvg-js', 'sharp'];
+const renderSources = [templateSource, textSource, takumiSource, fontsSource];
+const rendererPackages = ['@takumi-rs/core', '@takumi-rs/helpers'];
 let current: { signature: string; service: ReturnType<typeof createPngCache> } | undefined;
 let dependencyGraph: { signature: string; files: string[] } | undefined;
 let initialization: Promise<ReturnType<typeof createPngCache>> | undefined;
@@ -36,28 +36,22 @@ async function initialize() {
     return [file, info.mtimeMs, info.ctimeMs, info.size];
   })));
   if (current?.signature === signature) return current.service;
-  const hash = createHash('sha256').update(JSON.stringify([2, OG_PNG_SCALE, process.platform, process.arch, process.versions.node, renderSources]));
+  const hash = createHash('sha256').update(JSON.stringify([3, OG_PNG_SCALE, process.platform, process.arch, process.versions.node, renderSources]));
   for (const file of files) {
     const data = await readFile(file);
     hash.update(String(data.length)).update(':').update(data);
   }
-  let resources: Promise<{
-    fonts: Awaited<ReturnType<typeof loadOgFonts>>;
-    renderOgSvg: typeof import('./template').renderOgSvg;
-    createOgPngRenderer: typeof import('./resvg').createOgPngRenderer;
-  }> | undefined;
-  let pngRenderer: ReturnType<typeof import('./resvg').createOgPngRenderer> | undefined;
+  let pngRenderer: ReturnType<typeof import('./takumi').createOgPngRenderer> | undefined;
   const service = createPngCache({
     directory: path.join(root, '.cache/og'),
     version: hash.digest('hex'),
     async render(input) {
-      // Cache hits do not load Satori/resvg or parse fonts.
-      resources ??= Promise.all([loadOgFonts(root), import('./template'), import('./resvg')])
-        .then(([fonts, template, resvg]) => ({ fonts, ...template, ...resvg }));
-      const { fonts, renderOgSvg, createOgPngRenderer } = await resources;
-      const svg = await renderOgSvg({ ...input, fonts });
-      pngRenderer ??= createOgPngRenderer(svg, { scale: OG_PNG_SCALE });
-      return (await pngRenderer)(svg);
+      // Cache hits do not load Takumi or parse fonts. Share one renderer across
+      // concurrent misses, and allow a failed initialization to be retried.
+      pngRenderer ??= Promise.all([loadOgFonts(root), import('./takumi')])
+        .then(([fonts, { createOgPngRenderer }]) => createOgPngRenderer(fonts))
+        .catch(error => { pngRenderer = undefined; throw error; });
+      return (await pngRenderer)(input);
     },
   });
   current = { signature, service };

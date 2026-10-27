@@ -1,0 +1,9 @@
+{
+  "name": "blog-og-takumi-experiment",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "satori": "0.18.3",
+    "takumi-js": "2.18.1"
+  }
+}

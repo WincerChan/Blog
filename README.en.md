@@ -51,7 +51,7 @@ If a post has `encrypt_pwd` in its front matter, the build will:
 
 ### OG images
 
-`src/astro/pages/og/[image].png.ts` emits the existing `/og/*.png` URLs during production builds and renders on demand during development. It retains Satori layout and resvg rasterization, with asynchronous lossless PNG encoding through Sharp to avoid compressing each image on the JS thread.
+`src/astro/pages/og/[image].png.ts` emits the existing `/og/*.png` URLs during production builds and renders on demand during development. Takumi's native engine handles JSX layout, rasterization and lossless PNG encoding with shared fonts and renderer state. Output remains 1800 × 945. Favicons still use resvg and Sharp.
 
 Complete PNGs are cached in `.cache/og/`, with checksums and invalidation for displayed content, template, fonts, the installed renderer dependency graph, local patches and dimensions. Unrelated lockfile changes do not invalidate all OG images. `bun run clean` preserves this cache; `bun run clean:og` removes it. CI must persist and restore `.cache/og/` to reuse it across deployments. It is not a deployment artifact; retained cache entries do not create published routes.
 

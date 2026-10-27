@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-type OgFont = {
+export type OgFont = {
   name: string;
   data: Buffer;
   weight: number;
