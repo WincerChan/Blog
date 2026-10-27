@@ -31,12 +31,14 @@
         "png2icons": "^2.0.1",
         "rehype-katex": "^7.0.1",
         "remark-math": "^6.0.0",
+        "sax": "1.6.1",
         "sharp": "^0.35.4",
         "typescript": "^5.9.2",
         "unocss": "^66.7.5",
         "unplugin-icons": "^22.1.0",
         "workbox-core": "^7.3.0",
         "workbox-routing": "^7.3.0",
+        "xmlbuilder": "15.1.1",
       },
     },
     "packages/icons": {
@@ -1232,6 +1234,8 @@
     "workbox-core": ["workbox-core@7.4.0", "", {}, "sha512-6BMfd8tYEnN4baG4emG9U0hdXM4gGuDU3ectXuVHnj71vwxTFI7WOpQJC4siTOlVtGqCUtj0ZQNsrvi6kZZTAQ=="],
 
     "workbox-routing": ["workbox-routing@7.4.0", "", { "dependencies": { "workbox-core": "7.4.0" } }, "sha512-C/ooj5uBWYAhAqwmU8HYQJdOjjDKBp9MzTQ+otpMmd+q0eF59K+NuXUek34wbL0RFrIXe/KKT+tUWcZcBqxbHQ=="],
+
+    "xmlbuilder": ["xmlbuilder@15.1.1", "", {}, "sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg=="],
 
     "xxhash-wasm": ["xxhash-wasm@1.1.0", "", {}, "sha512-147y/6YNh+tlp6nd/2pWq38i9h6mz/EuQ6njIrmW8D1BS5nCqs0P6DG+m6zTGnNz5I+uhZ0SHxBs9BsPrwcKDA=="],
 

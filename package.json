@@ -52,11 +52,13 @@
     "png2icons": "^2.0.1",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
+    "sax": "1.6.1",
     "sharp": "^0.35.4",
     "typescript": "^5.9.2",
     "unocss": "^66.7.5",
     "unplugin-icons": "^22.1.0",
     "workbox-core": "^7.3.0",
-    "workbox-routing": "^7.3.0"
+    "workbox-routing": "^7.3.0",
+    "xmlbuilder": "15.1.1"
   }
 }

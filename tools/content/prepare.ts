@@ -1,6 +1,5 @@
 import { parseDateLikeHugo } from "./time";
 import { readSiteConf } from "./site";
-import { emitAtom } from "./emit/atom";
 import { buildPublicData } from "./emit/publicData";
 import { emitPublicAssets } from "./emit/publicAssets";
 import { emitSearchIndex } from "./emit/searchIndex";
@@ -147,14 +146,6 @@ export const prepareContent = async (data: {posts: any[]; pages: any[]; friends:
     );
   }
 
-  console.time("content:emit:atom");
-  await emitAtom({
-    site,
-    publicDir,
-    publishedPosts,
-    renderablePosts,
-  });
-  console.timeEnd("content:emit:atom");
   const searchPosts = renderablePosts;
   console.time("content:emit:search-index");
   await emitSearchIndex({ publicDir, posts: searchPosts });

@@ -2,6 +2,9 @@
 
 Validated on 2026-10-27 against `687d7de`, on macOS arm64 / Node v24.12.0.
 
+This records the sitemap-only validation stage, before the subsequent
+[Atom endpoint migration](../astro-atom/MIGRATION.md).
+
 ## Implementation
 
 - `@astrojs/sitemap` 3.7.4 replaces the handwritten XML generator. Astro owns

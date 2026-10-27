@@ -189,15 +189,3 @@ test('renderer fingerprint follows installed transitives and optional native pac
     await expect(rendererDependencyFiles(root, ['renderer'])).rejects.toThrow('nested');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
-
-test('feed dates reflect their content, not build time', async () => {
-  const { emitAtom } = await import('../tools/content/emit/atom');
-  const root = await temporary();
-  const site = { baseURL: 'https://example.com', title: 'Site', author: 'Author', description: '', sitemap: { changeFreq: 'weekly', priority: 0.6, termPriority: 0.3 } };
-  const post = { title: 'Article', slug: 'article', category: 'Category', html: '<p>Hello</p>', summary: 'Hello', tags: [], dateObj: new Date('2020-01-01'), updatedObj: new Date('2021-02-03') };
-  try {
-    await emitAtom({ site, publicDir: root, publishedPosts: [post], renderablePosts: [post] });
-    const atom = await readFile(path.join(root, 'atom.xml'), 'utf8');
-    expect(atom.match(/<updated>(.*?)<\/updated>/)?.[1]).toStartWith('2021-02-03');
-  } finally { await rm(root, { recursive: true, force: true }); }
-});
