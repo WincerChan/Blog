@@ -11,9 +11,9 @@ const { post } = Astro.props;
 const blog = { ...post, slug: post.url };
 ---
 <Site title={post.title} description={post.summary} lang={post.lang} token={post.inkstoneToken} discussionUrl={post.discussionUrl} hasMath={post.hasMath} date={post.date} updated={post.updated} isTranslation={post.isTranslation} keywords={post.tags} words={post.words} subtitle={post.subtitle}>
-  <div class="w-full max-w-7xl mx-auto px-4 md:px-0 md:grid md:grid-cols-[1fr_minmax(0,42rem)_1fr] md:gap-x-8">
+  <div class="w-full max-w-7xl mx-auto px-4 xl:px-0 xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,42rem)_minmax(0,1fr)] xl:gap-x-8">
     {post.toc && <Toc toc={post.toc} slug={post.url!} lang={post.lang} client:load />}
-    <article class="w-full max-w-2xl mx-auto md:col-start-2 md:row-start-1">
+    <article class="w-full max-w-2xl mx-auto xl:col-start-2 xl:row-start-1">
       <ArticleMetadata blog={blog} />
       <div id="blog-article" class="prose dark:prose-invert md:text-[1.05rem] max-w-[42rem]">
         {post.encrypted ? <Encrypt source={post.html} client:load /> : <section set:html={post.html} />}

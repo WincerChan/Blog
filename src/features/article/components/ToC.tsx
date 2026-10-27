@@ -18,10 +18,15 @@ const ToC = ({ toc, slug, label }: ToCInterface) => {
     const [hash, setHash] = createSignal("");
     onMount(() => {
         const syncHash = () => setHash(window.location.hash);
+        const closeHiddenPanel = () => {
+            if (desktopRef?.getClientRects().length) setVisible(false);
+        };
         syncHash();
         window.addEventListener("hashchange", syncHash);
+        window.addEventListener("resize", closeHiddenPanel);
         onCleanup(() => {
             window.removeEventListener("hashchange", syncHash);
+            window.removeEventListener("resize", closeHiddenPanel);
             document.body.style.overflow = "";
             stopScrolling();
         });
@@ -219,8 +224,8 @@ const ToC = ({ toc, slug, label }: ToCInterface) => {
         if (visible()) setVisible(false);
     }
     return (
-        <div class="md:col-start-3 md:row-start-1 md:justify-self-start">
-            <aside class="hidden md:block md:sticky md:top-30">
+        <div class="min-w-0 xl:col-start-3 xl:row-start-1">
+            <aside class="hidden xl:block xl:sticky xl:top-30">
                 <div class="text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                     <span>{label ?? LL?.().sidebar.TOC()}</span>
                 </div>
@@ -236,16 +241,16 @@ const ToC = ({ toc, slug, label }: ToCInterface) => {
                 title="ToC"
                 aria-label="Open table of contents"
                 onClick={() => setVisible(true)}
-                class="md:hidden fixed bottom-6 right-6 z-40 inline-flex items-center justify-center rounded-full border border-[var(--c-border-strong)] bg-[var(--c-surface)] p-2 text-[var(--c-text-muted)] shadow-sm transition-colors hover:text-[var(--c-text)]"
+                class="xl:hidden fixed bottom-6 right-6 z-40 inline-flex items-center justify-center rounded-full border border-[var(--c-border-strong)] bg-[var(--c-surface)] p-2 text-[var(--c-text-muted)] shadow-sm transition-colors hover:text-[var(--c-text)]"
             >
                 <IconList width={20} height={20} class="block" />
             </button>
             <Show when={visible()}>
                 <div
-                    class="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-[1px]"
+                    class="xl:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-[1px]"
                     onClick={() => setVisible(false)}
                 />
-                <div class="md:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border border-[var(--c-border)] bg-[var(--c-surface)] shadow-lg">
+                <div class="xl:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border border-[var(--c-border)] bg-[var(--c-surface)] shadow-lg">
                     <div class="flex items-center justify-between px-4 pt-4 pb-2 text-sm uppercase tracking-wide text-[var(--c-text-subtle)]">
                         <span>{label ?? LL?.().sidebar.TOC()}</span>
                         <button
